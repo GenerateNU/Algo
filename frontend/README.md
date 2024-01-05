@@ -1,6 +1,9 @@
 # ReactNative + TypeScript + Expo
 
-### (With yarn, axios, and NativeWind)
+### (With yarn, axios, NativeWind, React Native Paper)
 
-This template provides a minimal setup to get React working with Expo and some ESLint rules
-
+Folders structure;
+- public
+- screens
+- services
+- components
