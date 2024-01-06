@@ -10,7 +10,7 @@ First, understand the tech stack:
 
 - The database is [PostGreSQL](https://www.postgresql.org/) and will be containerized using [Docker](https://www.docker.com/).
 - The backend is [Golang](https://go.dev/) with [Echo](https://echo.labstack.com/)
-- The frontend is [ReactNative](https://reactnative.dev/) with [TypeScript](https://www.typescriptlang.org/) and uses [Expo](https://expo.dev/) as a build tool and [React Navigation(https://reactnavigation.org/)
+- The frontend is [ReactNative](https://reactnative.dev/) with [TypeScript](https://www.typescriptlang.org/) and uses [Expo](https://expo.dev/) as a build tool and [React Navigation](https://reactnavigation.org/)
 
 
 Before compiling and running our application, we need to install several languages, package managers, and various tools.
