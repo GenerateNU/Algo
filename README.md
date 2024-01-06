@@ -16,11 +16,17 @@ First, understand the tech stack:
 Before compiling and running our application, we need to install several languages, package managers, and various tools.
 The installation process can vary, so follow the instructions for each item below!
 
-- [Go](https://go.dev/doc/install), our primary backend language
-  - Afterwards, install all go dependencies with the command `go get .` in the root directory. This needs to be re-run if dependencies change
+- [Go](https://go.dev/doc/install) - our primary backend language
+  - Afterwards, install all go dependencies with the command `go get .` in the root directory. This needs to be re-run if dependencies change.
 - [yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable) - our package manager in the frontend
   - Afterwards, install all yarn dependencies with the command `yarn --dir frontend install` in the root directory.
 
 If everything was successful, you can now compile and run the project!
 
 ## Running the project
+
+### Docker
+1. Install [Docker](https://docs.docker.com/get-docker/)
+2. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+
