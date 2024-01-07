@@ -1,11 +1,7 @@
 package controllers
 
 import (
-	"net/http"
-	"backend/src/models"
 	"backend/src/services"
-
-	"github.com/labstack/echo/v4"
 )
 
 type UserController struct {

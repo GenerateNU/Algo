@@ -1,12 +1,11 @@
 package routes
 
 import (
-	"backend/src/controllers"
 	"backend/src/services"
 
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo"
 )
 
 func UserRoutes(g *echo.Group, userService services.UserServiceInterface) {
-	userController := controllers.NewUserController(userService)
+	//userController := controllers.NewUserController(userService)
 }

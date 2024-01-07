@@ -1,0 +1,7 @@
+database:
+  host: 'localhost'
+  port: 5434
+  username: 'user'
+  password: 'pwd'
+  databasename: 'carewallet'
+  requiressl: false

@@ -17,11 +17,15 @@ Before compiling and running our application, we need to install several languag
 The installation process can vary, so follow the instructions for each item below!
 
 - [Go](https://go.dev/doc/install) - our primary backend language
-  - Afterwards, install all go dependencies with the command `go get .` in the root directory. This needs to be re-run if dependencies change.
+  - Afterwards, install all go dependencies using `make backend-dep`.
 - [yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable) - our package manager in the frontend
-  - Afterwards, install all yarn dependencies with the command `yarn --dir frontend install` in the root directory.
+  - Afterwards, install all yarn dependencies using `make frontend-dep`.
 
 If everything was successful, you can now compile and run the project!
+
+## Extra Dependencies
+
+- go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 ## Running the project
 

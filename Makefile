@@ -1,3 +1,13 @@
+# Installing frontend dependencies
+.PHONY: frontend-dep
+frontend-dep:
+	cd frontend && yarn install
+
+# Installing backend dependencies
+.PHONY: backend-dep
+backend-dep:
+	cd backend && go get .
+
 # Lint backend source code
 .PHONY: backend-lint
 backend-lint:
@@ -7,3 +17,9 @@ backend-lint:
 .PHONY: backend-format
 backend-format:
 	cd backend && go fmt
+
+# Create the database
+.PHONY: create-db
+create-db:
+	sudo docker compose -f docker-compose.db.yml up -d
+
