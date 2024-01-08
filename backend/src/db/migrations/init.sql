@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     last_name varchar NOT NULL,
 );
 
--- Insert sample data into "medication" table
+-- Insert sample data into "users" table
 INSERT INTO users (first_name, last_name)
 VALUES
   ('Ania', 'Misiorek'),

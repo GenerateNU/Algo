@@ -1,7 +1,7 @@
 package db
 
 import (
-	"carewallet/configuration"
+	"algo/configuration"
 	"fmt"
 	"os"
 

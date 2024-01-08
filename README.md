@@ -27,6 +27,12 @@ If everything was successful, you can now compile and run the project!
 
 - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
+## Tools
+We will be using some tools to make development a bit easier.
+
+- [Swagger](https://github.com/swaggo/swag) - Will allow us to visualize the API and query requests from the database.
+- [Makefile](https://opensource.com/article/18/8/what-how-makefile) - Will allow us to easily run scripts by consolidating them into Makefile commands. Make sure to read up about each command and ask questions. You should know what you are running!
+
 ## Running the project
 
 ### Docker
@@ -35,6 +41,5 @@ We will be containerizing our PostGreSQL database in Docker. Follow the steps be
 1. Install [Docker](https://docs.docker.com/get-docker/)
 You should be able to run `docker` in your terminal if this was successful.
 2. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-3. Run `make docker-db` from the root directory, this will spin up an Docker container that will hold a postgres image.
-4. Run `docker ps` to check if the container has been successfully created.
+3. Run `docker-compose up` from the root directory, this will spin up a postgres image.
 

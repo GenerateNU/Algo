@@ -18,8 +18,3 @@ backend-lint:
 backend-format:
 	cd backend && go fmt
 
-# Create the database
-.PHONY: docker-db
-docker-db:
-	sudo docker compose -f docker-compose.yml up -d
-

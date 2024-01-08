@@ -1,17 +1,20 @@
-version: '3.9'
-
 services:
-  postgres:
-    image: postgres:latest
-    container_name: algo
+  db:
+    image: postgres
+    restart: always
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-q', '-d', 'postgres', '-U', 'user']
+      timeout: 45s
+      interval: 10s
+      retries: 10
     environment:
-      POSTGRES_DB: algo-db
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pwd
+      - POSTGRES_DB=algo
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pwd
     ports:
-      - "5432:5432"
+      - '5434:5432'
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-
+      - ./backend/src/db/migrations:/docker-entrypoint-initdb.d/
 volumes:
-  postgres_data:
+  db:
+    driver: local
