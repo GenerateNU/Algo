@@ -30,7 +30,11 @@ If everything was successful, you can now compile and run the project!
 ## Running the project
 
 ### Docker
-1. Install [Docker](https://docs.docker.com/get-docker/)
-2. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+We will be containerizing our PostGreSQL database in Docker. Follow the steps below to add the DB to your local machine.
 
+1. Install [Docker](https://docs.docker.com/get-docker/)
+You should be able to run `docker` in your terminal if this was successful.
+2. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+3. Run `make docker-db` from the root directory, this will spin up an Docker container that will hold a postgres image.
+4. Run `docker ps` to check if the container has been successfully created.
 
