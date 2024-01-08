@@ -19,7 +19,7 @@ backend-format:
 	cd backend && go fmt
 
 # Create the database
-.PHONY: create-db
-create-db:
-	sudo docker compose -f docker-compose.db.yml up -d
+.PHONY: docker-db
+docker-db:
+	sudo docker compose -f docker-compose.yml up -d
 
