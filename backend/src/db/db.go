@@ -1,7 +1,7 @@
 package db
 
 import (
-	"algo/configuration"
+	configuration "backend/configurations"
 	"fmt"
 	"os"
 

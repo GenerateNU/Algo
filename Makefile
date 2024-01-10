@@ -18,3 +18,7 @@ backend-lint:
 backend-format:
 	cd backend && go fmt
 
+# Run backend
+.PHONY: backend-run
+backend-run:
+	cd backend && go run main.go

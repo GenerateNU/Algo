@@ -1,11 +1,20 @@
 package routes
 
 import (
+	"backend/src/controllers"
 	"backend/src/services"
 
-	"github.com/labstack/echo"
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-func UserRoutes(g *echo.Group, userService services.UserServiceInterface) {
-	//userController := controllers.NewUserController(userService)
+func SetupUserRoutes(router *gin.Engine, db *gorm.DB) {
+	userService := services.NewUserService(db)
+	userController := controllers.NewUserController(userService)
+
+	userRoutes := router.Group("/users")
+	{
+		userRoutes.GET("/", userController.GetAllUsers)
+		// Add more user routes as needed
+	}
 }

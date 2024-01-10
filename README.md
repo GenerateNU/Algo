@@ -26,6 +26,7 @@ If everything was successful, you can now compile and run the project!
 ## Extra Dependencies
 
 - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+- go install github.com/cosmtrek/air@latest
 
 ## Tools
 We will be using some tools to make development a bit easier.

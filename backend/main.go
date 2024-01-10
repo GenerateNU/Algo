@@ -1,13 +1,16 @@
 package main
 
 import (
-	"algo/backend/src/db"
 	"fmt"
-	"os"
 
-	_ "algo/backend/docs"
+	"backend/src/models"
+	"backend/src/routes"
 
+	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 // @title Algo API
@@ -15,28 +18,25 @@ import (
 // @description API for Algo App
 // @BasePath /api
 func main() {
-	config, err := template.GetConfiguration()
+	dsn := "host=localhost user=user password=pwd dbname=algo port=5432 sslmode=disable"
+	db, _ := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	//if err != nil {
+	//  panic("Failed to connect to database")
+	//}
 
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to retreive configuration file: %v\n", err)
-		os.Exit(1)
-	}
+	db.AutoMigrate(&models.User{})
 
-	conn := db.ConnectPosgresDatabase(config)
+	r := gin.Default()
 
-	defer conn.Close()
-
-	v1 := r.Group("/")
-	{
-		medication.GetMedicationGroup(v1, &medication.PgModel{Conn: conn})
-		//...
-	}
+	routes.SetupUserRoutes(r, db)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	err = r.Run(":8080")
 
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%v\n", err)
-		os.Exit(1)
+	// Run the server
+	port := 8080
+	addr := fmt.Sprintf(":%d", port)
+	fmt.Printf("Server is running on http://localhost%s\n", addr)
+	if err := r.Run(addr); err != nil {
+		panic("Failed to start server")
 	}
 }
