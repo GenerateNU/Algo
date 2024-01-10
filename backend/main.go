@@ -20,9 +20,9 @@ import (
 func main() {
 	dsn := "host=localhost user=user password=pwd dbname=algo port=5432 sslmode=disable"
 	db, _ := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	//if err != nil {
-	//  panic("Failed to connect to database")
-	//}
+	if err != nil {
+	  panic("Failed to connect to database")
+	}
 
 	db.AutoMigrate(&models.User{})
 
