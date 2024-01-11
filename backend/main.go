@@ -19,7 +19,7 @@ import (
 // @BasePath /api
 func main() {
 	dsn := "host=localhost user=user password=pwd dbname=algo port=5432 sslmode=disable"
-	db, _ := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 	  panic("Failed to connect to database")
 	}

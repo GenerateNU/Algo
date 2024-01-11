@@ -3,6 +3,21 @@
 frontend-dep:
 	cd frontend && yarn install
 
+# running the frontend
+.PHONY: frontend-run
+frontend-run:
+	cd frontend && yarn start
+
+# Lint the frontend source code
+.PHONY: frontend-lint
+frontend-lint:
+	cd frontend && yarn lint
+
+# Format the frontend source code
+.PHONY: frontend-format
+frontend-format:
+	cd frontend && yarn format
+
 # Installing backend dependencies
 .PHONY: backend-dep
 backend-dep:
