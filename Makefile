@@ -1,3 +1,13 @@
+# Installing frontend dependencies
+.PHONY: frontend-dep
+frontend-dep:
+	cd frontend && yarn install
+
+# Installing backend dependencies
+.PHONY: backend-dep
+backend-dep:
+	cd backend && go get .
+
 # Lint backend source code
 .PHONY: backend-lint
 backend-lint:
@@ -7,3 +17,8 @@ backend-lint:
 .PHONY: backend-format
 backend-format:
 	cd backend && go fmt
+
+# Run backend
+.PHONY: backend-run
+backend-run:
+	cd backend && go run main.go
