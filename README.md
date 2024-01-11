@@ -24,6 +24,7 @@ The installation process can vary, so follow the instructions for each item belo
 If everything was successful, you can now compile and run the project!
 
 ### Extra Dependencies
+Install these in the backend directory
 - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 - go install github.com/cosmtrek/air@latest
 
