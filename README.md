@@ -44,3 +44,8 @@ You should be able to run `docker` in your terminal if this was successful.
 2. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 3. Run `docker-compose up` from the root directory, this will spin up a postgres image.
 
+## Third party integrations
+For this project, we will be using some third-party APIs.
+
+- [Morgan Stanley E-Trade](https://apisb.etrade.com/docs/api/authorization/request_token.html) - Our users will be able to log into their account using SSO. This is where we will pull portfolio data and make trade orders if requested. For testing purposes, we _highly_ recommend opening an E-Trade account. However, we understand money and financial information is highly sensitive, so if you do not feel comfortable opening an account, please let us know.
+
