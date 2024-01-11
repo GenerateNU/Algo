@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      name: Install Linters
+      - name: Install Linters
         run: |
           cd backend
           go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
