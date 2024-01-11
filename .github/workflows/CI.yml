@@ -70,7 +70,7 @@ jobs:
       - name: Import DB seed data
         run:
           psql -d postgresql://user:pwd@172.17.0.1:5432/algo -f init.sql
-        working-directory: ./backend/db/migrations
+        working-directory: ./backend/src/db/migrations
 
       - name: Set up Go
         uses: actions/setup-go@v4
