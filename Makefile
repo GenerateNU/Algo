@@ -36,7 +36,7 @@ backend-format:
 	cd backend && go fmt
 
 # Build the docker db
-.PHONY: db-dep
+.PHONY: db-run
 backend-docker:
 	docker-compose up
 
