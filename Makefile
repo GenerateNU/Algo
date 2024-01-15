@@ -1,4 +1,5 @@
 include .env
+export
 
 # Installing frontend dependencies
 .PHONY: frontend-dep
@@ -34,6 +35,11 @@ backend-lint:
 .PHONY: backend-format
 backend-format:
 	cd backend && go fmt
+
+# Build the docker db
+.PHONY: backend-docker
+backend-docker:
+	docker-compose up
 
 # Run backend
 .PHONY: backend-run
