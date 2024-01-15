@@ -49,7 +49,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:latest
+        image: postgres:14.1-alpine
         env:
           POSTGRES_PASSWORD: pwd
           POSTGRES_USER: user
@@ -77,15 +77,9 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
-      - name: Install Task
-        uses: arduino/setup-task@v1
-        with:
-          version: 3.x
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Run Go tests
         run: |
-          task test-all
+          make backend-tests
   build:
     name: Build
     runs-on: ubuntu-latest
