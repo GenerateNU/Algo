@@ -8,17 +8,22 @@ export default function App() {
   const [users, setUsers] = useState<User[]>();
   useEffect(() => {
     getAllUsers().then((data) => setUsers(data))
-  })
+  }, [])
   return (
     <View style={styles.container}>
-      <Text className="font-bold">Open up App.js to start working on your app!</Text>
+      <Text className="font-bold mb-2 w-full text-left" >Open up App.js to start working on your app!</Text>
       {
         users &&
-        users.map((user, index) => (
-          <Text key={index} className="pb-2">
-            {`FirstName: ${user.firstName} LastName: ${user.lastName}`}
-          </Text>
-        ))}
+        <View className='w-full'>
+          {
+            users.map((user, index) => (
+              <Text key={index} className="pb-2 text-left w-100">
+                {`First Name: ${user.first_name}\n`}{`Last Name: ${user.last_name}`}
+              </Text>
+            ))
+          }
+        </View>
+      }
       <StatusBar style="auto" />
     </View>
   );
@@ -30,5 +35,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 20,
   },
 });
