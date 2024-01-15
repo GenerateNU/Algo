@@ -22,6 +22,10 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go-version }}
+      - name: 'Create env file'
+        run: |
+          touch .env
+          cat .env
 
       - name: Set up Node
         uses: actions/setup-node@v3
