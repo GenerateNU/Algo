@@ -1,0 +1,50 @@
+{
+    "basePath": "/",
+    "definitions": {
+      "types.User": {
+        "properties": {
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "pass_word": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "info": {
+      "contact": {},
+      "description": "This is an API for the Algo App.",
+      "title": "Algo API",
+      "version": "1.0"
+    },
+    "paths": {
+      "/users": {
+        "get": {
+          "description": "get all users in the database",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "items": {
+                  "$ref": "#/definitions/types.User"
+                },
+                "type": "array"
+              }
+            }
+          },
+          "summary": "Get All users",
+          "tags": ["users"]
+        }
+      }
+    },
+    "swagger": "2.0"
+}
+  

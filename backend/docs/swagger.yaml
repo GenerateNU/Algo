@@ -1,0 +1,54 @@
+basePath: /api
+definitions:
+  models.User:
+    properties:
+      created_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        example: 1
+        type: integer
+      last_name:
+        type: string
+      pass_word:
+        type: string
+      updated_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+    required:
+    - email
+    - first_name
+    - last_name
+    - pass_word
+    type: object
+info:
+  contact: {}
+  description: API for Algo App
+  title: Algo API
+  version: "1.0"
+paths:
+  /api/users/:
+    get:
+      description: Returns all users
+      operationId: get-all-users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+        "404":
+          description: Failed to fetch users
+          schema:
+            type: string
+      summary: Gets all users
+      tags:
+      - user
+swagger: "2.0"
