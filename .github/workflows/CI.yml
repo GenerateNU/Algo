@@ -79,7 +79,7 @@ jobs:
 
       - name: Run Go tests
         run: |
-          make backend-tests
+          make backend-test
   build:
     name: Build
     runs-on: ubuntu-latest
