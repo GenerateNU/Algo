@@ -22,6 +22,10 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go-version }}
+      - name: 'Create env file'
+        run: |
+          touch .env
+          cat .env
 
       - name: Set up Node
         uses: actions/setup-node@v3
@@ -36,8 +40,13 @@ jobs:
       - name: Lint Go code
         run: make backend-lint
 
+      - name: Install frontend linters
+        run: |
+          cd frontend
+          yarn install
+
       - name: Lint Frontend code
-        run: make frontent-lint
+        run: make frontend-lint
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -49,7 +58,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:latest
+        image: postgres:14.1-alpine
         env:
           POSTGRES_PASSWORD: pwd
           POSTGRES_USER: user
@@ -66,6 +75,10 @@ jobs:
           apt-get install --yes postgresql-client
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: 'Create env file'
+        run: |
+          touch .env
+          cat .env
 
       - name: Import DB seed data
         run:
@@ -77,15 +90,9 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
-      - name: Install Task
-        uses: arduino/setup-task@v1
-        with:
-          version: 3.x
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Run Go tests
         run: |
-          task test-all
+          make backend-test
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -96,6 +103,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: 'Create env file'
+        run: |
+          touch .env
+          cat .env
 
       - name: Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2

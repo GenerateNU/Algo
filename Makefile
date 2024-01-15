@@ -1,3 +1,5 @@
+include .env 
+
 # Installing frontend dependencies
 .PHONY: frontend-dep
 frontend-dep:
@@ -33,7 +35,23 @@ backend-lint:
 backend-format:
 	cd backend && go fmt
 
+# Build the docker db
+.PHONY: backend-docker
+backend-docker:
+	docker-compose up
+
 # Run backend
 .PHONY: backend-run
 backend-run:
 	cd backend && go run main.go
+
+# convert the backend link to an ngrok link
+.PHONY: backend-ngrok
+backend-ngrok:
+	@echo ${EXPO_PUBLIC_API_DOMAIN}
+	cd backend && ngrok http --domain=${EXPO_PUBLIC_API_DOMAIN} 8080
+
+# Test the backend
+.PHONY: backend-test 
+backend-test:
+	cd backend

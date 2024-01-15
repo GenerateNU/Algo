@@ -20,6 +20,10 @@ The installation process can vary, so follow the instructions for each item belo
   - Afterwards, install all go dependencies using `make backend-dep`.
 - [yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable) - our package manager in the frontend
   - Afterwards, install all yarn dependencies using `make frontend-dep`.
+- [expo-go](https://docs.expo.dev/get-started/expo-go/) - Expo allows mobile
+  devices to scan a QR code and view the code running on a mobile device
+- [ngrok](https://ngrok.com/docs/getting-started/) - Allows us to easily connect
+  - You may need to run this to authenticate; `ngrok config add-authtoken 2ayIx9Z092NTzK4g6iR635XKtp9_XqbpW4vPEZmzxB6nyRqk`
 
 If everything was successful, you can now compile and run the project!
 
@@ -33,6 +37,8 @@ We will be using some tools to make development a bit easier.
 
 - [Swagger](https://github.com/swaggo/swag) - Will allow us to visualize the API and query requests from the database.
 - [Makefile](https://opensource.com/article/18/8/what-how-makefile) - Will allow us to easily run scripts by consolidating them into Makefile commands. Make sure to read up about each command and ask questions. You should know what you are running!
+- [xcode](https://docs.expo.dev/workflow/ios-simulator/) - A simulator to view the code on an iphone from a laptop
+- [android studio](https://docs.expo.dev/workflow/android-studio-emulator/ An emulator to view the code on an android device from a laptop
 
 ### Third party integrations
 For this project, we will be using some third-party APIs.

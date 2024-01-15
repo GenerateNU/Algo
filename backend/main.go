@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"backend/src/models"
+	// "backend/src/models" not used yet
 	"backend/src/routes"
 
 	"github.com/gin-gonic/gin"
@@ -24,7 +24,7 @@ func main() {
 	  panic("Failed to connect to database")
 	}
 
-	db.AutoMigrate(&models.User{})
+	// db.AutoMigrate(&models.User{})
 
 	r := gin.Default()
 

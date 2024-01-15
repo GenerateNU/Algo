@@ -1,1 +1,1 @@
-export const API_LINK = "http://localhost:8080"
+export const API_LINK = `https://${process.env.EXPO_PUBLIC_API_DOMAIN}`;
