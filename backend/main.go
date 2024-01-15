@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"backend/src/models"
+	// "backend/src/models" not used yet
 	"backend/src/routes"
 
 	"github.com/gin-gonic/gin"

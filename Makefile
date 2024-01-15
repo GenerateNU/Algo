@@ -1,3 +1,4 @@
+
 # Installing frontend dependencies
 .PHONY: frontend-dep
 frontend-dep:
