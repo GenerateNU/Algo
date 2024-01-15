@@ -37,7 +37,7 @@ backend-format:
 
 # Build the docker db
 .PHONY: db-run
-backend-docker:
+db-run:
 	docker-compose up
 
 # Run backend

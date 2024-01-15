@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { API_LINK } from './CommonURLS';
+import { API_LINK } from './CommonDocs';
 import { User } from '../types/types';
 
 export const getAllUsers = async (): Promise<User[]>  => {
