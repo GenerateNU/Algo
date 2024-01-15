@@ -1,6 +1,3 @@
-include .env
-export
-
 # Installing frontend dependencies
 .PHONY: frontend-dep
 frontend-dep:
@@ -49,6 +46,7 @@ backend-run:
 # convert the backend link to an ngrok link
 .PHONY: backend-ngrok
 backend-ngrok:
+	include .env
 	@echo ${EXPO_PUBLIC_API_DOMAIN}
 	cd backend && ngrok http --domain=${EXPO_PUBLIC_API_DOMAIN} 8080
 
