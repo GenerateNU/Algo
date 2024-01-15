@@ -23,6 +23,7 @@ The installation process can vary, so follow the instructions for each item belo
 - [expo-go](https://docs.expo.dev/get-started/expo-go/) - Expo allows mobile
   devices to scan a QR code and view the code running on a mobile device
 - [ngrok](https://ngrok.com/docs/getting-started/) - Allows us to easily connect
+  - You may need to run this to authenticate; `ngrok config add-authtoken 2ayIx9Z092NTzK4g6iR635XKtp9_XqbpW4vPEZmzxB6nyRqk`
 
 If everything was successful, you can now compile and run the project!
 
