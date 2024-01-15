@@ -29,7 +29,7 @@ The installation process can vary, so follow the instructions for each item belo
 - [expo-go](https://docs.expo.dev/get-started/expo-go/) - Expo allows mobile
   devices to scan a QR code and view the code running on a mobile device
 - [ngrok](https://ngrok.com/docs/getting-started/) - Allows us to easily connect
-  - You may need to run this to authenticate; `ngrok config add-authtoken 2ayIx9Z092NTzK4g6iR635XKtp9_XqbpW4vPEZmzxB6nyRqk`
+  - We recommend making an ngrok account and creating a static domain. This will let you simplify the backend URL tremendously, as otherwise the ngrok link will be randomly generated each time you run it.
 
 If everything was successful, you can now compile and run the project!
 
@@ -54,6 +54,8 @@ For this project, we will be using some third-party APIs.
 - [Morgan Stanley E-Trade](https://apisb.etrade.com/docs/api/authorization/request_token.html) - Our users will be able to log into their account using SSO. This is where we will pull portfolio data and make trade orders if requested. For testing purposes, we _highly_ recommend opening an E-Trade account. However, we understand money and financial information is highly sensitive, so if you do not feel comfortable opening an account, please let us know.
 
 ## Running the project
+
+Before you run the project you will need to add an .env file at the root directory and an .env file in the frontend directory. To this file, add the variable `EXPO_PUBLIC_API_DOMAIN={your ngrok static domain here}`. This will be used to 
 
 ### Docker
 We will be containerizing our PostGreSQL database in Docker. Follow the steps below to add the DB to your local machine.
