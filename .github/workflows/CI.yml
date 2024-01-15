@@ -41,7 +41,7 @@ jobs:
         run: make backend-lint
 
       - name: Lint Frontend code
-        run: make frontent-lint
+        run: make frontend-lint
   test:
     name: Test
     runs-on: ubuntu-latest
