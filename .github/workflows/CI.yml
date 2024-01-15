@@ -40,6 +40,11 @@ jobs:
       - name: Lint Go code
         run: make backend-lint
 
+      - name: Install frontend linters
+        run: |
+          cd frontend
+          yarn install
+
       - name: Lint Frontend code
         run: make frontend-lint
   test:
