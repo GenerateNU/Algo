@@ -1,3 +1,4 @@
+include .env 
 
 # Installing frontend dependencies
 .PHONY: frontend-dep

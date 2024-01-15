@@ -66,6 +66,11 @@ jobs:
           apt-get install --yes postgresql-client
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: 'Create env file'
+        run: |
+          touch .env
+          echo EXPO_PUBLIC_API_DOMAIN="https://precious-chipmunk-brightly.ngrok-free.app" >> .env
+          cat .env
 
       - name: Import DB seed data
         run:
