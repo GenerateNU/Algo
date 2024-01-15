@@ -38,7 +38,7 @@ We will be using some tools to make development a bit easier.
 - [Swagger](https://github.com/swaggo/swag) - Will allow us to visualize the API and query requests from the database.
 - [Makefile](https://opensource.com/article/18/8/what-how-makefile) - Will allow us to easily run scripts by consolidating them into Makefile commands. Make sure to read up about each command and ask questions. You should know what you are running!
 - [xcode](https://docs.expo.dev/workflow/ios-simulator/) - A simulator to view the code on an iphone from a laptop
-- [android studio](https://docs.expo.dev/workflow/android-studio-emulator) An emulator to view the code on an android device from a laptop
+- [android studio](https://docs.expo.dev/workflow/android-studio-emulator) - An emulator to view the code on an android device from a laptop
 
 ### Third party integrations
 For this project, we will be using some third-party APIs.
