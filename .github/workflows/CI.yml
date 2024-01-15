@@ -96,6 +96,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: 'Create env file'
+        run: |
+          touch .env
+          echo EXPO_PUBLIC_API_DOMAIN="https://precious-chipmunk-brightly.ngrok-free.app" >> .env
+          cat .env
+
       - name: Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
