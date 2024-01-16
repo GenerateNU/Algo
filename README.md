@@ -55,7 +55,7 @@ For this project, we will be using some third-party APIs.
 
 ## Running the project
 
-Before you run the project you will need to add an .env file at the root directory. To this file, add the variable `EXPO_PUBLIC_API_DOMAIN={your ngrok static domain here}`. This will be used to 
+Before running the project, you must add a .env file at the root directory. To this file, add the variable `EXPO_PUBLIC_API_DOMAIN={your ngrok static domain here}`. This will allow us to expose the development environment to the Internet. AKA, it puts localhost on the web for a short period.
 
 ### Docker
 We will be containerizing our PostGreSQL database in Docker. Follow the steps below to add the DB to your local machine.
