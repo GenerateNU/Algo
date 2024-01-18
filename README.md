@@ -27,7 +27,7 @@ The installation process can vary, so follow the instructions for each item belo
 - [yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable) - our package manager in the frontend
   - Afterwards, install all yarn dependencies using `make frontend-dep`.
 - [expo-go](https://docs.expo.dev/get-started/expo-go/) - Expo allows mobile
-  devices to scan a QR code and view the code running on a mobile device
+  devices to scan a QR code and view the code running on a mobile device. For development, we will use [expo-cli](https://docs.expo.dev/more/expo-cli/), but this will be installed by the yarn `make frontend-dep` command
 - [ngrok](https://ngrok.com/docs/getting-started/) - Allows us to easily connect
   - We recommend making an ngrok account and creating a static domain. This will let you simplify the backend URL tremendously, as otherwise the ngrok link will be randomly generated each time you run it.
 
