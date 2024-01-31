@@ -18,7 +18,7 @@ var AuthorizeEndpoint = oauth1.Endpoint{
 }
 
 var OAuthConfig = oauth1.Config{
-	ConsumerKey: "<KEY HERE>",
+	ConsumerKey: "",
 	CallbackURL: "oob",
 	Endpoint:    AuthorizeEndpoint,
 }
