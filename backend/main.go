@@ -6,10 +6,10 @@ import (
 	// "backend/src/models" not used yet
 	"backend/src/routes"
 
+	_ "backend/docs"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	_ "backend/docs"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -22,7 +22,7 @@ func main() {
 	dsn := "host=localhost user=user password=pwd dbname=algo port=5434 sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-	  panic("Failed to connect to database")
+		panic("Failed to connect to database")
 	}
 
 	// db.AutoMigrate(&models.User{})
@@ -30,6 +30,7 @@ func main() {
 	r := gin.Default()
 
 	routes.SetupUserRoutes(r, db)
+	routes.SetupETradeRoutes(r, db)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
