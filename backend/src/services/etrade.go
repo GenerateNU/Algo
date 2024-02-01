@@ -66,7 +66,7 @@ func (s *ETradeService) insertOAuthReqTokens(userID int, requestToken, requestSe
 
 // GetAccessToken gets an access token and secret using the oauth verifier and request token and secret
 func (s *ETradeService) GetAccessToken(userID int, verifier string) error {
-	oauthTokens, err := s.getOAuthReqTokens(userID)
+	oauthTokens, err := s.getLatestOAuthTokens(userID)
 	if err != nil {
 		return fmt.Errorf("error getting db tokens: %v", err)
 	}
@@ -86,8 +86,8 @@ func (s *ETradeService) GetAccessToken(userID int, verifier string) error {
 	return nil
 }
 
-// getOAuthReqTokens retrieves the latest request token and secret for the given user
-func (s *ETradeService) getOAuthReqTokens(userID int) (*models.OAuthTokens, error) {
+// getLatestOAuthTokens retrieves the latest oauth token row for the given user
+func (s *ETradeService) getLatestOAuthTokens(userID int) (*models.OAuthTokens, error) {
 	var oauthTokens = models.OAuthTokens{UserID: userID}
 	tx := s.DB.Order("created_at desc").First(&oauthTokens)
 	if tx.Error != nil {
