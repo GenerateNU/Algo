@@ -11,19 +11,19 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS leaderboards (
-  leaderboard_id INT AUTO_INCREMENT PRIMARY KEY,
+  leaderboard_id SERIAL PRIMARY KEY,
   leaderboard_name VARCHAR(255) NOT NULL,
   leaderboard_description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS scores (
-  score_id INT AUTO_INCREMENT PRIMARY KEY,
+  score_id SERIAL PRIMARY KEY,
   score INT NOT NULL,
   score_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   user_id INT NOT NULL,
   leaderboard_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(user_id),
-  FOREIGN KEY (leaderboard_id) REFERENCES leaderboards(leaderboard_id),
+  FOREIGN KEY (leaderboard_id) REFERENCES leaderboards(leaderboard_id)
 );
 
 -- Insert sample data into "users" table
