@@ -1,10 +1,19 @@
 package models
 
-import "backend/src/types"
+import (
+	"backend/src/types"
+)
 
-type UserOAuth struct {
+type OAuthTokens struct {
 	types.Model
-	UserID     string `json:"user_id" validate:"required"`
-	OAuthToken string `gorm:"type:varchar(255);" json:"oauth_consumer_key" validate:"required"`
-	OAuth      string `gorm:"type:varchar(255);" json:"oauth_timestamp" validate:"required"`
+	UserID        int `json:"user_id" validate:"required"`
+	User          User
+	RequestToken  string `gorm:"type:varchar(255);"`
+	RequestSecret string `gorm:"type:varchar(255);"`
+	AccessToken   string `gorm:"type:varchar(255);"`
+	AccessSecret  string `gorm:"type:varchar(255);"`
+}
+
+func (OAuthTokens) TableName() string {
+	return "oauth_tokens"
 }

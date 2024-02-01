@@ -25,7 +25,8 @@ func main() {
 		panic("Failed to connect to database")
 	}
 
-	// db.AutoMigrate(&models.User{})
+	//db.AutoMigrate(&models.User{})
+	//db.AutoMigrate(&models.OAuthTokens{})
 
 	r := gin.Default()
 
