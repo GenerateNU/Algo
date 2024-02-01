@@ -40,6 +40,12 @@ backend-format:
 db-run:
 	docker-compose up
 
+# Rebuild the docker db
+.PHONY: db-rebuild
+db-rebuild:
+	docker-compose down
+
+
 # Run backend
 .PHONY: backend-run
 backend-run:

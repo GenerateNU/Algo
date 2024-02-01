@@ -1,0 +1,1 @@
+-- Create Leaderboard table(s)
