@@ -80,6 +80,11 @@ jobs:
           touch .env
           cat .env
 
+      - name: Debugging
+        run: |
+          pwd
+          ls -l ./backend/src/db/migrations/
+
       - name: Import DB seed data
         run: |
           for file in $(ls -1 ./backend/src/db/migrations/ | sort); do
