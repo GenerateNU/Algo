@@ -82,9 +82,12 @@ jobs:
 
       - name: Import DB seed data
         run:|
-          for file in $(ls -1 ./backend/src/db/migrations/*.sql | sort); do
-            psql -d postgresql://user:pwd@172.17.0.1:5432/algo -f "$file"
-          done
+          psql -d postgresql://user:pwd@172.17.0.1:5432/algo -f 1_init.sql
+          psql -d postgresql://user:pwd@172.17.0.1:5432/algo -f 2_USER_V1.sql
+          psql -d postgresql://user:pwd@172.17.0.1:5432/algo -f 3_FOLLOWING_V1.sql
+          psql -d postgresql://user:pwd@172.17.0.1:5432/algo -f 4_USER_GOALS_V1.sql
+          psql -d postgresql://user:pwd@172.17.0.1:5432/algo -f 5_LEADERBOARD_V1.sql
+          psql -d postgresql://user:pwd@172.17.0.1:5432/algo -f 6_USER_PORTFOLIO_V1.sql
         working-directory: ./backend/src/db/migrations
 
       - name: Set up Go
