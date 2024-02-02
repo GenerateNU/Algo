@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS following;
 DROP TABLE IF EXISTS leaderboards;
 DROP TABLE IF EXISTS scores;
 
@@ -8,6 +9,15 @@ CREATE TABLE IF NOT EXISTS users (
     last_name VARCHAR NOT NULL,
     pass_word VARCHAR NOT NULL,
     email VARCHAR NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS following (
+    following_id SERIAL PRIMARY KEY,
+    follower_user_id INT NOT NULL REFERENCES users(user_id),
+    following_user_id INT NOT NULL REFERENCES users(user_id),
+    follow_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_following_pair UNIQUE (follower_user_id, following_user_id),
+    CONSTRAINT no_self_follow CHECK (follower_user_id != following_user_id)
 );
 
 CREATE TABLE IF NOT EXISTS leaderboards (
@@ -25,7 +35,8 @@ CREATE TABLE IF NOT EXISTS scores (
   FOREIGN KEY (user_id) REFERENCES users(user_id),
   FOREIGN KEY (leaderboard_id) REFERENCES leaderboards(leaderboard_id)
 );
-
+  
+  
 -- Insert sample data into "users" table
 INSERT INTO users (first_name, last_name, pass_word, email)
 VALUES
@@ -51,6 +62,16 @@ VALUES
     ('Sofia', 'Davis', 'r4nd0m', 'email20@gmail.com'),
     ('Adam', 'Ma', 'password', 'email21@gmail.com'),
     ('Madam', 'Ahh', 'password', 'email22@gmail.com'),
+    
+
+CREATE INDEX IF NOT EXISTS idx_follower_user_id ON following(follower_user_id);
+CREATE INDEX IF NOT EXISTS idx_following_user_id ON following(following_user_id);
+
+-- Insert sample data into "following" table
+INSERT INTO following (follower_user_id, following_user_id)
+VALUES
+  (1, 2),
+  (2, 1);
 
 -- Insert sample data into "leaderboards" table
 INSERT INTO leaderboards (leaderboard_name, leaderboard_description)
