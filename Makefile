@@ -43,8 +43,7 @@ db-run:
 # Rebuild the docker db
 .PHONY: db-rebuild
 db-rebuild:
-	docker-compose down
-
+	docker-compose down 
 
 # Run backend
 .PHONY: backend-run
