@@ -22,6 +22,7 @@ export type BottomTabParamList = {
   FeedPage: undefined
   Leaderboard: undefined
   Preferences: undefined
+  Me: undefined
 }
 
 const BottomNavBar = () => {
@@ -53,6 +54,10 @@ const BottomNavBar = () => {
       <Tab.Screen name="Preferences" component={NotFound} options={{
         headerShown: true,
         title: "Preferences"
+      }} />
+      <Tab.Screen name="Me" component={NotFound} options={{
+        headerShown: true,
+        title: "Me"
       }} />
     </Tab.Navigator>
   )
