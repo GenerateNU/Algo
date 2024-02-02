@@ -81,7 +81,7 @@ jobs:
           cat .env
 
       - name: Import DB seed data
-        run:|
+        run: |
           psql -d postgresql://user:pwd@172.17.0.1:5432/algo -f 1_init.sql
           psql -d postgresql://user:pwd@172.17.0.1:5432/algo -f 2_USER_V1.sql
           psql -d postgresql://user:pwd@172.17.0.1:5432/algo -f 3_FOLLOWING_V1.sql
