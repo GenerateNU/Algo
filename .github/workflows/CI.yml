@@ -90,7 +90,7 @@ jobs:
           for file in $(ls -1 ./backend/src/db/migrations/ | sort); do
             psql -d postgresql://user:pwd@172.17.0.1:5432/algo -f "$file"
           done
-        working-directory: ./backend/src/db/migrations
+        # working-directory: ./backend/src/db/migrations/
 
       - name: Set up Go
         uses: actions/setup-go@v4
