@@ -26,7 +26,6 @@ func main() {
 	}
 
 	//db.AutoMigrate(&models.User{})
-	//db.AutoMigrate(&models.OAuthTokens{})
 
 	r := gin.Default()
 
