@@ -18,7 +18,7 @@ func SetupUserRoutes(router *gin.Engine, db *gorm.DB) {
 
 		userRoutes.POST("/:user_id/create-long-term-goal", userController.CreateLongTermGoalForUser)
 		userRoutes.GET("/:user_id/get-long-term-goals", userController.GetLongTermGoalsForUser)
-		userRoutes.POST("/:user_id/update-long-term-goal/:goal_id", userController.UpdateLongTermGoalForUser)
+		userRoutes.PUT("/:user_id/update-long-term-goal/:goal_id", userController.UpdateLongTermGoalForUser)
 		userRoutes.DELETE("/:user_id/delete-long-term-goal/:goal_id", userController.DeleteLongTermGoalForUser)
 	}
 }
