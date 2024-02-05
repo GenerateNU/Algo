@@ -29,7 +29,7 @@ func (us *UserService) GetAllUsers() ([]models.User, error) {
 func (us *UserService) CreateLongTermGoalForUser(userID uint, longTermGoal string) (models.s, error) {
     goal := models.UserLongTermGoals{
         UserID:       userID,
-        LongTermGoal: longTermGoal,
+        LongTermGoal: models.LongTermGoal(longTermGoal),
     }
 
     if err := us.DB.Create(&goal).Error; err != nil {
