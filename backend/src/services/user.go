@@ -4,6 +4,8 @@ import (
 	"backend/src/models"
 
 	"gorm.io/gorm"
+
+	"errors"
 )
 
 type UserService struct {
