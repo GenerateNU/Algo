@@ -26,21 +26,21 @@ func (us *UserService) GetAllUsers() ([]models.User, error) {
 	return users, nil
 }
 
-func (us *UserService) CreateLongTermGoalForUser(userID uint, longTermGoal string) (models.UserLongTermGoal, error) {
-    goal := models.UserLongTermGoal{
+func (us *UserService) CreateLongTermGoalForUser(userID uint, longTermGoal string) (models.s, error) {
+    goal := models.UserLongTermGoals{
         UserID:       userID,
         LongTermGoal: longTermGoal,
     }
 
     if err := us.DB.Create(&goal).Error; err != nil {
-        return models.UserLongTermGoal{}, err
+        return models.UserLongTermGoals{}, err
     }
 
     return goal, nil
 }
 
-func (us *UserService) GetLongTermGoalsForUser(userID uint) ([]models.UserLongTermGoal, error) {
-    var userLongTermGoals []models.UserLongTermGoal
+func (us *UserService) GetLongTermGoalsForUser(userID uint) ([]models.UserLongTermGoals, error) {
+    var userLongTermGoals []models.UserLongTermGoals
     if err := us.DB.Where("user_id = ?", userID).Find(&userLongTermGoals).Error; err != nil {
         return nil, err
     }
