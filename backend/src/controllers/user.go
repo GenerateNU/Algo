@@ -8,8 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"strconv"
-
-	"errors"
 )
 
 type UserController struct {
