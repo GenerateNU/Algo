@@ -26,7 +26,7 @@ func (us *UserService) GetAllUsers() ([]models.User, error) {
 	return users, nil
 }
 
-func (us *UserService) CreateLongTermGoalForUser(userID uint, longTermGoal string) (models.s, error) {
+func (us *UserService) CreateLongTermGoalForUser(userID uint, longTermGoal string) (models.UserLongTermGoals, error) {
     goal := models.UserLongTermGoals{
         UserID:       userID,
         LongTermGoal: models.LongTermGoal(longTermGoal),
