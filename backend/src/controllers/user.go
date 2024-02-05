@@ -6,6 +6,10 @@ import (
 	"backend/src/services"
 
 	"github.com/gin-gonic/gin"
+
+	"strconv"
+
+	"errors"
 )
 
 type UserController struct {
