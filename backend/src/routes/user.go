@@ -15,6 +15,9 @@ func SetupUserRoutes(router *gin.Engine, db *gorm.DB) {
 	userRoutes := router.Group("/users")
 	{
 		userRoutes.GET("/", userController.GetAllUsers)
-		// Add more user routes as needed
+		userRoutes.POST("/", userController.CreateUser)
+		userRoutes.GET("/:id", userController.GetUserById)
+		userRoutes.PUT("/:id", userController.UpdateUserById)
+		userRoutes.DELETE("/:id", userController.DeleteUserById)
 	}
 }
