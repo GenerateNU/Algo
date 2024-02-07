@@ -5,6 +5,8 @@ CREATE TYPE risk_tolerance_enum AS ENUM ('low', 'medium', 'high');
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY, -- user id
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     first_name VARCHAR NOT NULL,
     last_name VARCHAR NOT NULL,
     email VARCHAR NOT NULL,
