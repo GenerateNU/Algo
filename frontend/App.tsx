@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { getAllUsers } from './services/users';
 import { useEffect, useState } from 'react';
 import { User } from './types/types';
+import Logo from './assets/verified.svg';
 
 export default function App() {
   const [users, setUsers] = useState<User[]>();
@@ -12,6 +13,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text className="font-bold mb-2 w-full text-left" >Open up App.js to start working on your app!</Text>
+      <Logo width={120} height={40} />;
       {
         users &&
         <View className='w-full'>
