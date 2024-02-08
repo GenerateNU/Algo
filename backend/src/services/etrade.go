@@ -86,10 +86,6 @@ func (s *ETradeService) GetAccessToken(userID int, verifier string) error {
 		verifier,
 	)
 	if err != nil {
-		return err
-	}
-
-	if err != nil {
 		return fmt.Errorf("error getting access token: %v", err)
 	}
 
