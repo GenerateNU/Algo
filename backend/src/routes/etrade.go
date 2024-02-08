@@ -11,9 +11,9 @@ func SetupETradeRoutes(router *gin.Engine, db *gorm.DB) {
 	etradeService := services.NewETradeService(db)
 	etradeController := controllers.NewETradeController(etradeService)
 
-	etradeRoutes := router.Group("/etrade")
+	etradeRoutes := router.Group("/users/:user_id")
 	{
-		etradeRoutes.GET("/redirect", etradeController.GetRedirectURL)
-		etradeRoutes.POST("/verify", etradeController.Verify)
+		etradeRoutes.GET("/etrade-redirect", etradeController.GetRedirectURL)
+		etradeRoutes.POST("/etrade-verify", etradeController.Verify)
 	}
 }

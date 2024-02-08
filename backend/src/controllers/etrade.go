@@ -3,9 +3,9 @@ package controllers
 import (
 	"backend/src/services"
 	"backend/src/types"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 type ETradeController struct {
@@ -27,12 +27,18 @@ func NewETradeController(etradeService *services.ETradeService) *ETradeControlle
 //	@Produce		json
 //	@Success		200	{object}	RedirectURLResponse
 //	@Failure		500	{string}	string	"Failed to retrieve redirect URL"
-//	@Router			/etrade/redirect  [get]
+//	@Router			/users/{user_id}/etrade-redirect  [get]
 func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
-	// TODO: Remove hardcoded UserID when auth is setup
-	url, err := etc.etradeService.GetETradeRedirectURL(1)
+	userIdParam := c.Param("user_id")
+
+	userId, err := strconv.Atoi(userIdParam)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user_id invalid"})
+		return
+	}
+
+	url, err := etc.etradeService.GetETradeRedirectURL(userId)
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve redirect URL"})
 		return
 	}
@@ -56,17 +62,25 @@ func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
 //	@Success		200		{string}	string				"ok"
 //	@Failure		400		{string}	string				"Failed to validate JSON body"
 //	@Failure		500		{string}	string				"Failed to retrieve access token"
-//	@Router			/etrade/verify  [post]
+//	@Router			/users/{user_id}/etrade-verify  [post]
 func (etc *ETradeController) Verify(c *gin.Context) {
+	userIdParam := c.Param("user_id")
+
+	userId, err := strconv.Atoi(userIdParam)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user_id invalid"})
+		return
+	}
+
 	var json types.VerifyRequest
 	if err := c.ShouldBindJSON(&json); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	// TODO: Remove hardcoded UserID when auth is setup
-	err := etc.etradeService.GetAccessToken(1, json.Verifier)
+
+	err = etc.etradeService.GetAccessToken(userId, json.Verifier)
 	if err != nil {
-		fmt.Println(err)
+		println(err.Error())
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve access token"})
 		return
 	}

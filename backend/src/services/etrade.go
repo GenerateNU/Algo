@@ -3,24 +3,20 @@ package services
 import (
 	"backend/src/models"
 	"fmt"
-	"github.com/dghubble/oauth1"
+	"github.com/gomodule/oauth1/oauth"
 	"gorm.io/gorm"
 	"os"
 )
 
-const EtradeApiBase = "https://api.etrade.com"
-
-var AuthorizeEndpoint = oauth1.Endpoint{
-	RequestTokenURL: "https://api.etrade.com/oauth/request_token",
-	AuthorizeURL:    "https://us.etrade.com/e/t/etws/authorize",
-	AccessTokenURL:  "https://api.etrade.com/oauth/access_token",
-}
-
-var OAuthConfig = oauth1.Config{
-	ConsumerKey:    os.Getenv("OAUTH_KEY"),
-	ConsumerSecret: os.Getenv("OAUTH_SECRET"),
-	CallbackURL:    "oob",
-	Endpoint:       AuthorizeEndpoint,
+var oauthClient = oauth.Client{
+	Credentials: oauth.Credentials{
+		Token:  os.Getenv("OAUTH_KEY"),
+		Secret: os.Getenv("OAUTH_SECRET"),
+	},
+	TemporaryCredentialRequestURI: "https://apisb.etrade.com/oauth/request_token",
+	ResourceOwnerAuthorizationURI: "https://us.etrade.com/e/t/etws/authorize",
+	TokenRequestURI:               "https://apisb.etrade.com/oauth/access_token",
+	SignatureMethod:               oauth.HMACSHA1,
 }
 
 type ETradeService struct {
@@ -33,24 +29,32 @@ func NewETradeService(db *gorm.DB) *ETradeService {
 	}
 }
 
-// GetETradeRedirectURL gets a requestToken and uses it to retrieve a redirect URL from the E*Trade API
+// GetETradeRedirectURL gets a requestToken and uses it to retrieve a redirect URL from the etrade API
 func (s *ETradeService) GetETradeRedirectURL(userID int) (string, error) {
-	requestToken, requestSecret, err := OAuthConfig.RequestToken()
+	err := s.clearOAuthTokens(userID)
 	if err != nil {
-		return "", fmt.Errorf("error retrieving request token: %v", err)
+		return "", fmt.Errorf("error clearing user tokens: %v", err)
 	}
 
-	err = s.insertOAuthReqTokens(userID, requestToken, requestSecret)
+	tempCred, err := oauthClient.RequestTemporaryCredentials(nil, "oob", nil)
+
+	err = s.insertOAuthReqTokens(userID, tempCred.Token, tempCred.Secret)
 	if err != nil {
 		return "", fmt.Errorf("error inserting oauth token row: %v", err)
 	}
 
-	authorizationURL, err := OAuthConfig.AuthorizationURL(requestToken)
-	if err != nil {
-		return "", fmt.Errorf("error creating authroization url: %v", err)
-	}
+	// can't use oauth lib as etrade requires a custom param names (etrade devs are too cool to follow the RFC)
+	redirectURL := fmt.Sprintf(
+		"%s?key=%s&token=%s", oauthClient.ResourceOwnerAuthorizationURI, oauthClient.Credentials.Token, tempCred.Token,
+	)
 
-	return authorizationURL.String(), nil
+	return redirectURL, nil
+}
+
+// clearOAuthTokens clears all the oauth tokens associated with a user when a new redirect URL is created
+func (s *ETradeService) clearOAuthTokens(userID int) error {
+	tx := s.DB.Where("user_id = ?", userID).Delete(&models.OAuthTokens{})
+	return tx.Error
 }
 
 // insertOAuthReqTokens stores the requestToken and requestSecret in the db for use in GetAccessToken
@@ -71,16 +75,24 @@ func (s *ETradeService) GetAccessToken(userID int, verifier string) error {
 		return fmt.Errorf("error getting db tokens: %v", err)
 	}
 
-	accessToken, accessSecret, err := OAuthConfig.AccessToken(
-		oauthTokens.RequestToken, oauthTokens.RequestSecret, verifier,
+	tokens, _, err := oauthClient.RequestToken(
+		nil, &oauth.Credentials{
+			Token:  oauthTokens.RequestToken,
+			Secret: oauthTokens.RequestSecret,
+		},
+		verifier,
 	)
+	if err != nil {
+		return err
+	}
+
 	if err != nil {
 		return fmt.Errorf("error getting access token: %v", err)
 	}
 
 	// save the access token and secret to the db
-	oauthTokens.AccessToken = accessToken
-	oauthTokens.AccessSecret = accessSecret
+	oauthTokens.AccessToken = tokens.Token
+	oauthTokens.AccessSecret = tokens.Secret
 	s.DB.Save(&oauthTokens)
 
 	return nil
