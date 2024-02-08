@@ -50,6 +50,7 @@ func (uc *UserController) GetAllUsers(c *gin.Context) {
 //		@Produce		json
 //		@Param			first_name		body	string	true		"First name of the user"
 //		@Param			last_name		body	string	true		"Last name of the user"
+//		@Param			username		body	string	true		"Username of the user"
 //		@Param			email			body	string	true		"Email of the user"
 //		@Param			password		body	string	true		"Password of the user"
 //		@Success		201	  {object}	  models.User
@@ -109,6 +110,7 @@ func (uc *UserController) GetUserById(c *gin.Context) {
 //		@Param			id		path	int	true		"ID of the user"
 //		@Param			first_name		body	string	true		"First name of the user"
 //		@Param			last_name		body	string	true		"Last name of the user"
+//		@Param			username		body	string	true		"Username of the user"
 //		@Param			email			body	string	true		"Email of the user"
 //		@Param			password		body	string	true		"Password of the user"
 //		@Success		200	  {object}	  models.User
