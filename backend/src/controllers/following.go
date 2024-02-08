@@ -1,6 +1,8 @@
 package controllers
 
 //TODO: Figure out what I'm doing here
+//Seems to dispatch queries to services
+//Handles any errors thrown by DB connection?
 
 import (
 	"net/http"
@@ -22,7 +24,7 @@ func NewFollowingController(followingService *services.FollowingService) *Follow
 
 // GetAllFollowing godoc
 //
-//		@Summary		Gets all following
+//		@Summary		Gets all following, CRUD: Retrieve
 //		@Description	Returns all following
 //		@ID				get-all-following
 //		@Tags			following
@@ -39,3 +41,11 @@ func (fol *FollowingController) GetAllFollowing(c *gin.Context) {
 
 	c.JSON(http.StatusOK, following)
 }
+
+// TODO: Update
+// TODO: Delete
+func (fol *FollowingController) unfollowUser(c *gin.Context) {
+
+}
+
+//TODO: Create?

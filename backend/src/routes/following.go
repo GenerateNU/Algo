@@ -20,3 +20,5 @@ func SetupFollowingRoutes(router *gin.Engine, db *gorm.DB) {
 		// Add more user routes as needed
 	}
 }
+
+//Set up various

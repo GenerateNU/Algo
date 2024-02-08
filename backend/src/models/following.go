@@ -1,16 +1,15 @@
 package models
 
-//TODO: Figure out what I'm doing here
+import (
+	"backend/src/types"
+	"github.com/jackc/pgx/pgtype"
+)
 
-import "backend/src/types"
-
-// Unique tags for ID's?
-//Should I be looking up users here? Or sufficient to store ID's
-
+// Following Potential issues
+// GORM:  more qualifiers needed?
 type Following struct {
 	types.Model
-	FollowerID  int    `gorm:"type:int;unique" json:"first_name" validate:"required"`
-	FollowingID int    `gorm:"type:int;unique" json:"last_name" validate:"required"`
-	FollowDate  string `gorm:"type:timestamp" json:"follow_date" validate:"required"`
-	Email       string `gorm:"type:varchar(255);unique" json:"email" validate:"required,email"`
+	FollowerUserID User        `gorm:"type:int;" json:"follower_user_id" validate:"required"`
+	FollowedUserID User        `gorm:"type:int;" json:"following_user_id" validate:"required"`
+	FollowDate     pgtype.Date `gorm:"type:timestamp" json:"follow_date" validate:"required"`
 }
