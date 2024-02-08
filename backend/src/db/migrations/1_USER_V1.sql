@@ -1,7 +1,7 @@
 -- init.sql
 DROP TABLE IF EXISTS users;
 
-CREATE TYPE risk_tolerance_enum AS ENUM ('low', 'medium', 'high');
+CREATE TYPE risk_tolerance_enum AS ENUM ('low', 'medium', 'high', '');
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY, -- user id
@@ -9,11 +9,11 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     first_name VARCHAR NOT NULL,
     last_name VARCHAR NOT NULL,
-    email VARCHAR NOT NULL,
+    username VARCHAR NOT NULL UNIQUE,
     pass_word VARCHAR NOT NULL,
-    username VARCHAR NOT NULL,
-    risk_tolerance risk_tolerance_enum,
-    years_of_experience INTEGER
+    email VARCHAR NOT NULL UNIQUE,
+    risk_tolerance risk_tolerance_enum NULL DEFAULT '',
+    years_of_experience INTEGER NULL DEFAULT 0
 );
 
   -- Insert sample data into "users" table
