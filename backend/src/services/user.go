@@ -100,7 +100,7 @@ func (us *UserService) CreateShortTermGoalForUser(userID uint, shortTermGoalID u
 
 func (us *UserService) GetShortTermGoalsForUser(userID uint) ([]models.UserShortTermGoals, error) {
 	var userShortTermGoals []models.UserShortTermGoals
-	if err := us.DB.Where("user_id = ?", userID).Find(&userShortTermGoals).Error; err != nil {
+	if err := us.DB.Preload("User").Preload("ShortTermGoal").Where("user_id = ?", userID).Find(&userShortTermGoals).Error; err != nil {
 		return nil, err
 	}
 	return userShortTermGoals, nil
