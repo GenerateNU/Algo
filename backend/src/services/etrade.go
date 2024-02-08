@@ -37,6 +37,9 @@ func (s *ETradeService) GetETradeRedirectURL(userID int) (string, error) {
 	}
 
 	tempCred, err := oauthClient.RequestTemporaryCredentials(nil, "oob", nil)
+	if err != nil {
+		return "", fmt.Errorf("error requesting temp creds: %v", err)
+	}
 
 	err = s.insertOAuthReqTokens(userID, tempCred.Token, tempCred.Secret)
 	if err != nil {
