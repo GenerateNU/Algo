@@ -43,7 +43,7 @@ func (us *UserService) CreateLongTermGoalForUser(userID uint, longTermGoalID uin
 
 func (us *UserService) GetLongTermGoalsForUser(userID uint) ([]models.UserLongTermGoals, error) {
 	var userLongTermGoals []models.UserLongTermGoals
-	if err := us.DB.Where("user_id = ?", userID).Find(&userLongTermGoals).Error; err != nil {
+	if err := us.DB.Preload("User").Preload("LongTermGoal").Where("user_id = ?", userID).Find(&userLongTermGoals).Error; err != nil {
 		return nil, err
 	}
 	return userLongTermGoals, nil
