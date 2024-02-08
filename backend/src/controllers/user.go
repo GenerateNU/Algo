@@ -40,6 +40,10 @@ func (uc *UserController) GetAllUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 // CreateLongTermGoalForUser godoc
 //
 //	@Summary        Creates a long-term goal for a user
@@ -189,6 +193,166 @@ func (uc *UserController) DeleteLongTermGoalForUser(c *gin.Context) {
 			c.JSON(http.StatusForbidden, gin.H{"error": "User does not have permission to delete this goal"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete long-term goal"})
+		}
+		return
+	}
+
+	c.Status(http.StatusNoContent)
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// CreateShortTermGoalForUser godoc
+//
+//	@Summary        Creates a short-term goal for a user
+//	@Description    Adds a new short-term goal associated with a specific user ID
+//	@ID             create-short-term-goal-for-user
+//	@Tags           usershorttermgoals
+//	@Accept         json
+//	@Produce        json
+//	@Param          user_id       path      int                    true  "User ID"
+//	@Param          body          body      {short_term_goal:string} true "Short Term Goal"
+//	@Success        200           {object}  models.UserShortTermGoal
+//	@Failure        400           {string}  string "Invalid request parameters"
+//	@Failure        500           {string}  string "Failed to create short-term goal"
+//	@Router         /api/users/{user_id}/create-short-term-goal [post]
+func (uc *UserController) CreateShortTermGoalForUser(c *gin.Context) {
+	var input struct {
+		ShortTermGoalID uint `json:"short_term_goal"`
+	}
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
+		return
+	}
+
+	userID, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		return
+	}
+
+	goal, err := uc.userService.CreateShortTermGoalForUser(uint(userID), input.ShortTermGoalID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create short-term goal"})
+		return
+	}
+
+	c.JSON(http.StatusOK, goal)
+}
+
+// GetShortTermGoalsForUser godoc
+//
+//	@Summary        Gets all short-term goals for a user
+//	@Description    Returns all short-term goals associated with a specific user ID
+//	@ID             get-short-term-goals-for-user
+//	@Tags           usershorttermgoals
+//	@Accept         json
+//	@Produce        json
+//	@Param          id   path      int  true  "User ID"
+//	@Success        200  {object}  []models.UserShortTermGoal
+//	@Failure        404  {string}  string "Failed to fetch short-term goals"
+//	@Router         /api/users/{id}/short-term-goals [get]
+func (uc *UserController) GetShortTermGoalsForUser(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		return
+	}
+
+	userShortTermGoals, err := uc.userService.GetShortTermGoalsForUser(uint(id))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch short-term goals"})
+		return
+	}
+
+	c.JSON(http.StatusOK, userShortTermGoals)
+}
+
+// UpdateShortTermGoalForUser godoc
+//
+// @Summary        Updates a short-term goal for a user
+// @Description    Updates an existing short-term goal associated with a specific user ID by goal ID
+// @ID             update-short-term-goal-for-user
+// @Tags           usershorttermgoals
+// @Accept         json
+// @Produce        json
+// @Param          user_id       path      int     true  "User ID"
+// @Param          goal_id       path      int     true  "Goal ID"
+// @Param          body          body      {short_term_goal:string} true "Updated Short Term Goal"
+// @Success        200           {object}  models.UserShortTermGoals
+// @Failure        400           {string}  string "Invalid request parameters"
+// @Failure        403           {string}  string "User does not have permission to update this goal"
+// @Failure        500           {string}  string "Failed to update short-term goal"
+// @Router         /api/users/{user_id}/update-short-term-goal/{goal_id} [put]
+func (uc *UserController) UpdateShortTermGoalForUser(c *gin.Context) {
+	userID, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		return
+	}
+
+	goalID, err := strconv.ParseUint(c.Param("goal_id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid goal ID"})
+		return
+	}
+
+	var input struct {
+		ShortTermGoalID uint `json:"short_term_goal_id"`
+	}
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
+		return
+	}
+
+	updatedGoal, err := uc.userService.UpdateShortTermGoalForUser(uint(userID), uint(goalID), input.ShortTermGoalID)
+	if err != nil {
+		if err.Error() == "User does not have permission to update this goal" {
+			c.JSON(http.StatusForbidden, gin.H{"error": "User does not have permission to update this goal"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update short-term goal"})
+		}
+		return
+	}
+
+	c.JSON(http.StatusOK, updatedGoal)
+}
+
+// DeleteShortTermGoalForUser godoc
+//
+// @Summary        Deletes a short-term goal for a user
+// @Description    Deletes an existing short-term goal associated with a specific user ID by goal ID
+// @ID             delete-short-term-goal-for-user
+// @Tags           usershorttermgoals
+// @Accept         json
+// @Produce        json
+// @Param          user_id       path      int     true  "User ID"
+// @Param          goal_id       path      int     true  "Goal ID"
+// @Success        204           {string}  string "No Content"
+// @Failure        400           {string}  string "Invalid request parameters"
+// @Failure        403           {string}  string "User does not have permission to delete this goal"
+// @Failure        500           {string}  string "Failed to delete short-term goal"
+// @Router         /api/users/{user_id}/delete-short-term-goal/{goal_id} [delete]
+func (uc *UserController) DeleteShortTermGoalForUser(c *gin.Context) {
+	userID, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		return
+	}
+
+	goalID, err := strconv.ParseUint(c.Param("goal_id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid goal ID"})
+		return
+	}
+
+	if err := uc.userService.DeleteShortTermGoalForUser(uint(userID), uint(goalID)); err != nil {
+		if err.Error() == "User does not have permission to delete this goal" {
+			c.JSON(http.StatusForbidden, gin.H{"error": "User does not have permission to delete this goal"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete short-term goal"})
 		}
 		return
 	}

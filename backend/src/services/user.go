@@ -26,6 +26,8 @@ func (us *UserService) GetAllUsers() ([]models.User, error) {
 	return users, nil
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 func (us *UserService) CreateLongTermGoalForUser(userID uint, longTermGoalID uint) (models.UserLongTermGoals, error) {
 	goal := models.UserLongTermGoals{
 		UserID:         userID,
@@ -75,6 +77,63 @@ func (us *UserService) DeleteLongTermGoalForUser(userID uint, goalID uint) error
 	}
 
 	if err := us.DB.Delete(&userLongTermGoal).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (us *UserService) CreateShortTermGoalForUser(userID uint, shortTermGoalID uint) (models.UserShortTermGoals, error) {
+	goal := models.UserShortTermGoals{
+		UserID:         userID,
+		ShortTermGoalID: shortTermGoalID,
+	}
+
+	if err := us.DB.Create(&goal).Error; err != nil {
+		return models.UserShortTermGoals{}, err
+	}
+
+	return goal, nil
+}
+
+func (us *UserService) GetShortTermGoalsForUser(userID uint) ([]models.UserShortTermGoals, error) {
+	var userShortTermGoals []models.UserShortTermGoals
+	if err := us.DB.Where("user_id = ?", userID).Find(&userShortTermGoals).Error; err != nil {
+		return nil, err
+	}
+	return userShortTermGoals, nil
+}
+
+func (us *UserService) UpdateShortTermGoalForUser(userID uint, goalID uint, shortTermGoalID uint) (models.UserShortTermGoals, error) {
+	var userShortTermGoal models.UserShortTermGoals
+	if err := us.DB.First(&userShortTermGoal, goalID).Error; err != nil {
+		return models.UserShortTermGoals{}, err
+	}
+
+	if userShortTermGoal.UserID != userID {
+		return models.UserShortTermGoals{}, errors.New("User does not have permission to update this goal")
+	}
+
+	if err := us.DB.Save(&shortTermGoalID).Error; err != nil {
+		return models.UserShortTermGoals{}, err
+	}
+
+	return userShortTermGoal, nil
+}
+
+func (us *UserService) DeleteShortTermGoalForUser(userID uint, goalID uint) error {
+	var userShortTermGoal models.UserShortTermGoals
+	if err := us.DB.First(&userShortTermGoal, goalID).Error; err != nil {
+		return err
+	}
+
+	if userShortTermGoal.UserID != userID {
+		return errors.New("User does not have permission to delete this goal")
+	}
+
+	if err := us.DB.Delete(&userShortTermGoal).Error; err != nil {
 		return err
 	}
 
