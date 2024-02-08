@@ -41,20 +41,17 @@ func (us *UserService) GetUserById(id uint) (*models.User, error) {
 
 func (us *UserService) UpdateUserById(id uint, user *models.User) (*models.User, error) {
 	// Retrieve the existing user from the database
-	existingUser, err := us.GetUserById(id)
+	_, err := us.GetUserById(id)
 	if err != nil {
 		return nil, err
 	}
 
-	// Update the fields of the existing user with the new values
-	existingUser = user
-
 	// Save the updated user back to the database
-	if err := us.DB.Save(existingUser).Error; err != nil {
+	if err := us.DB.Save(user).Error; err != nil {
 		return nil, err
 	}
 
-	return existingUser, nil
+	return user, nil
 }
 
 func (us *UserService) DeleteUserById(id uint) (*models.User, error) {

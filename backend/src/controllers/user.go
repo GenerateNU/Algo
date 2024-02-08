@@ -118,7 +118,7 @@ func (uc *UserController) GetUserById(c *gin.Context) {
 //		@Router			/api/users/{id}  [put]
 func (uc *UserController) UpdateUserById(c *gin.Context) {
 	id := c.Param("id")
-	userID, err := strconv.ParseUint(id, 10, 32)
+	userID, _ := strconv.ParseUint(id, 10, 32)
 	var user *models.User
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
@@ -147,7 +147,7 @@ func (uc *UserController) UpdateUserById(c *gin.Context) {
 //		@Router			/api/users/{id}  [delete]
 func (uc *UserController) DeleteUserById(c *gin.Context) {
 	id := c.Param("id")
-	userID, err := strconv.ParseUint(id, 10, 32)
+	userID, _ := strconv.ParseUint(id, 10, 32)
 	user, err := uc.userService.DeleteUserById(uint(userID))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Failed to delete user"})
