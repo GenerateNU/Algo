@@ -92,7 +92,7 @@ func (s *ETradeService) GetAccessToken(userID int, verifier string) error {
 	// save the access token and secret to the db
 	oauthTokens.AccessToken = tokens.Token
 	oauthTokens.AccessSecret = tokens.Secret
-	s.DB.Save(&oauthTokens)
+	s.DB.Where("user_id = ?", userID).Save(&oauthTokens)
 
 	return nil
 }
