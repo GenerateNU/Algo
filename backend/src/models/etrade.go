@@ -1,11 +1,6 @@
 package models
 
-import (
-	"backend/src/types"
-)
-
 type OAuthTokens struct {
-	types.Model
 	UserID        int `json:"user_id" validate:"required"`
 	User          User
 	RequestToken  string `gorm:"type:varchar(255);"`
