@@ -1,3 +1,4 @@
 .env
 .expo
 .idea/
+package-lock.json
