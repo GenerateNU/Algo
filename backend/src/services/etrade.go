@@ -30,7 +30,7 @@ func NewETradeService(db *gorm.DB) *ETradeService {
 }
 
 // GetETradeRedirectURL gets a requestToken and uses it to retrieve a redirect URL from the etrade API
-func (s *ETradeService) GetETradeRedirectURL(userID int) (string, error) {
+func (s *ETradeService) GetETradeRedirectURL(userID uint) (string, error) {
 	err := s.clearOAuthTokens(userID)
 	if err != nil {
 		return "", fmt.Errorf("error clearing user tokens: %v", err)
@@ -55,13 +55,13 @@ func (s *ETradeService) GetETradeRedirectURL(userID int) (string, error) {
 }
 
 // clearOAuthTokens clears all the oauth tokens associated with a user when a new redirect URL is created
-func (s *ETradeService) clearOAuthTokens(userID int) error {
+func (s *ETradeService) clearOAuthTokens(userID uint) error {
 	tx := s.DB.Where("user_id = ?", userID).Delete(&models.OAuthTokens{})
 	return tx.Error
 }
 
 // insertOAuthReqTokens stores the requestToken and requestSecret in the db for use in GetAccessToken
-func (s *ETradeService) insertOAuthReqTokens(userID int, requestToken, requestSecret string) error {
+func (s *ETradeService) insertOAuthReqTokens(userID uint, requestToken, requestSecret string) error {
 	oauthTokens := models.OAuthTokens{
 		UserID:        userID,
 		RequestToken:  requestToken,
@@ -72,7 +72,7 @@ func (s *ETradeService) insertOAuthReqTokens(userID int, requestToken, requestSe
 }
 
 // GetAccessToken gets an access token and secret using the oauth verifier and request token and secret
-func (s *ETradeService) GetAccessToken(userID int, verifier string) error {
+func (s *ETradeService) GetAccessToken(userID uint, verifier string) error {
 	oauthTokens, err := s.getLastOAuthTokens(userID)
 	if err != nil {
 		return fmt.Errorf("error getting db tokens: %v", err)
@@ -98,7 +98,7 @@ func (s *ETradeService) GetAccessToken(userID int, verifier string) error {
 }
 
 // getLastOAuthTokens retrieves the oauth token row for the given user
-func (s *ETradeService) getLastOAuthTokens(userID int) (*models.OAuthTokens, error) {
+func (s *ETradeService) getLastOAuthTokens(userID uint) (*models.OAuthTokens, error) {
 	var oauthTokens = models.OAuthTokens{UserID: userID}
 	tx := s.DB.First(&oauthTokens)
 	if tx.Error != nil {

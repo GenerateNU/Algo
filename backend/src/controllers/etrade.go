@@ -3,6 +3,7 @@ package controllers
 import (
 	"backend/src/services"
 	"backend/src/types"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -31,14 +32,15 @@ func NewETradeController(etradeService *services.ETradeService) *ETradeControlle
 func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
 	userIdParam := c.Param("user_id")
 
-	userId, err := strconv.Atoi(userIdParam)
+	userId, err := strconv.ParseUint(userIdParam, 10, 32)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "user_id invalid"})
 		return
 	}
 
-	url, err := etc.etradeService.GetETradeRedirectURL(userId)
+	url, err := etc.etradeService.GetETradeRedirectURL(uint(userId))
 	if err != nil {
+		fmt.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve redirect URL"})
 		return
 	}
@@ -66,7 +68,7 @@ func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
 func (etc *ETradeController) Verify(c *gin.Context) {
 	userIdParam := c.Param("user_id")
 
-	userId, err := strconv.Atoi(userIdParam)
+	userId, err := strconv.ParseUint(userIdParam, 10, 32)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "user_id invalid"})
 		return
@@ -78,9 +80,9 @@ func (etc *ETradeController) Verify(c *gin.Context) {
 		return
 	}
 
-	err = etc.etradeService.GetAccessToken(userId, json.Verifier)
+	err = etc.etradeService.GetAccessToken(uint(userId), json.Verifier)
 	if err != nil {
-		println(err.Error())
+		fmt.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve access token"})
 		return
 	}

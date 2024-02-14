@@ -1,7 +1,7 @@
 package models
 
 type OAuthTokens struct {
-	UserID        int `json:"user_id" validate:"required"`
+	UserID        uint `json:"user_id" validate:"required"`
 	User          User
 	RequestToken  string `gorm:"type:varchar(255);"`
 	RequestSecret string `gorm:"type:varchar(255);"`
