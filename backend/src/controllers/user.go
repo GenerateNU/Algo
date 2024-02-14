@@ -342,6 +342,10 @@ func (uc *UserController) CreateShortTermGoalForUser(c *gin.Context) {
 	}
 
 	userID, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
+		return
+	}
 
 	goal, err := uc.userService.CreateShortTermGoalForUser(uint(userID), input.ShortTermGoalID)
 	if err != nil {
