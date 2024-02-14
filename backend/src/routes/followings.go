@@ -14,10 +14,9 @@ func SetupFollowingRoutes(router *gin.Engine, db *gorm.DB) {
 	followingService := services.NewFollowingService(db)
 	followingController := controllers.NewFollowingController(followingService)
 
-	followingRoutes := router.Group("/following")
+	followingRoutes := router.Group("/followings")
 	{
 		followingRoutes.GET("/", followingController.GetAllFollowing)
-		// Add more user routes as needed
 	}
 }
 
