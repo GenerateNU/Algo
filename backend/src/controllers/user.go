@@ -344,8 +344,6 @@ func (uc *UserController) CreateShortTermGoalForUser(c *gin.Context) {
 	}
 
 	userID, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
-  
-  <<<<<<< adam-user-long-term-goals
 
 	goal, err := uc.userService.CreateShortTermGoalForUser(uint(userID), input.ShortTermGoalID)
 	if err != nil {
