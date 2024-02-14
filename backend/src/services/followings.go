@@ -22,8 +22,9 @@ func NewFollowingService(db *gorm.DB) *FollowingService {
 
 /////////////////////////////////////READ////////////////////////////////////
 
-// GetAllFollowing godoc
-func (fol *FollowingService) GetAllFollowing() ([]models.Followings, error) {
+// GetAllFollowings godoc
+// Gets all Followings relations
+func (fol *FollowingService) GetAllFollowings() ([]models.Followings, error) {
 	var following []models.Followings
 	//Q for Ania- How does this work if following uses User instead of int
 	if err := fol.DB.Find(&following).Error; err != nil {
@@ -32,8 +33,10 @@ func (fol *FollowingService) GetAllFollowing() ([]models.Followings, error) {
 	return following, nil
 }
 
-// GetAllUserFollowing Get all users a user is following
-func (fol *FollowingService) GetAllUserFollowing(user models.User) ([]models.User, error) {
+// GetAllUserFollowings godoc
+// Get all users a user is following
+// input user -> [user][user][user][user][user][user]
+func (fol *FollowingService) GetAllUserFollowings(user models.User) ([]models.User, error) {
 	var following []models.Followings
 	//Retrieve all Followings relations where the follower user is
 	if err := fol.DB.Where(models.Followings{FollowerUser: user}).Find(&following).Error; err != nil {
@@ -47,8 +50,9 @@ func (fol *FollowingService) GetAllUserFollowing(user models.User) ([]models.Use
 	return targetUsers, nil
 }
 
-// GetAllUserFollowers
+// GetAllUserFollowers godoc
 // Get all users a user is followed By
+// [user][user][user][user][user][user] -> input user
 func (fol *FollowingService) GetAllUserFollowers(user models.User) ([]models.User, error) {
 	var following []models.Followings
 	//Retrieve all Followings relations where the follower user is

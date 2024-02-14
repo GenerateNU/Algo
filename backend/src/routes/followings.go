@@ -16,7 +16,7 @@ func SetupFollowingRoutes(router *gin.Engine, db *gorm.DB) {
 
 	followingRoutes := router.Group("/followings")
 	{
-		followingRoutes.GET("/", followingController.GetAllFollowing)
+		followingRoutes.GET("/", followingController.GetAllFollowings)
 	}
 }
 
