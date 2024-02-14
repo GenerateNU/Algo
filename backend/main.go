@@ -25,11 +25,12 @@ func main() {
 		panic("Failed to connect to database")
 	}
 
-	// db.AutoMigrate(&models.User{})
+	//db.AutoMigrate(&models.User{})
 
 	r := gin.Default()
 
 	routes.SetupUserRoutes(r, db)
+	routes.SetupETradeRoutes(r, db)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 

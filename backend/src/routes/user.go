@@ -15,7 +15,11 @@ func SetupUserRoutes(router *gin.Engine, db *gorm.DB) {
 	userRoutes := router.Group("/users")
 	{
 		userRoutes.GET("/", userController.GetAllUsers)
-
+		userRoutes.POST("/", userController.CreateUser)
+		userRoutes.GET("/:id", userController.GetUserById)
+		userRoutes.PUT("/:id", userController.UpdateUserById)
+		userRoutes.DELETE("/:id", userController.DeleteUserById)
+    
 		userRoutes.POST("/:user_id/create-long-term-goal", userController.CreateLongTermGoalForUser)
 		userRoutes.GET("/:user_id/get-long-term-goals", userController.GetLongTermGoalsForUser)
 		userRoutes.PUT("/:user_id/update-long-term-goal/:goal_id", userController.UpdateLongTermGoalForUser)
