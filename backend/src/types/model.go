@@ -9,3 +9,11 @@ type Model struct {
 	CreatedAt time.Time `gorm:"type:timestamp;default:CURRENT_TIMESTAMP" json:"created_at" example:"2023-09-20T16:34:50Z"`
 	UpdatedAt time.Time `gorm:"type:timestamp;default:CURRENT_TIMESTAMP" json:"updated_at" example:"2023-09-20T16:34:50Z"`
 }
+
+type RedirectURLResponse struct {
+	RedirectURL string `json:"redirect_url"`
+}
+
+type VerifyRequest struct {
+	Verifier string `json:"verifier" binding:"required"`
+}

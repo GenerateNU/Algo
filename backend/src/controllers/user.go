@@ -22,14 +22,14 @@ func NewUserController(userService *services.UserService) *UserController {
 
 // GetAllUsers godoc
 //
-//		@Summary		Gets all users
-//		@Description	Returns all users
-//		@ID				get-all-users
-//		@Tags			user
-//		@Produce		json
-//		@Success		200	  {object}	  []models.User
-//	    @Failure        404   {string}    string "Failed to fetch users"
-//		@Router			/api/users/  [get]
+//	@Summary		Gets all users
+//	@Description	Returns all users
+//	@ID				get-all-users
+//	@Tags			user
+//	@Produce		json
+//	@Success		200	{object}	[]models.User
+//	@Failure		404	{string}	string	"Failed to fetch users"
+//	@Router			/api/users/  [get]
 func (uc *UserController) GetAllUsers(c *gin.Context) {
 	users, err := uc.userService.GetAllUsers()
 	if err != nil {
