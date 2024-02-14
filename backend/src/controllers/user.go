@@ -8,8 +8,6 @@ import (
 	"backend/src/services"
 
 	"github.com/gin-gonic/gin"
-
-	"strconv"
 )
 
 type UserController struct {
