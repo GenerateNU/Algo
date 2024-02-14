@@ -30,8 +30,8 @@ func NewFollowingController(followingService *services.FollowingService) *Follow
 //		@Tags			following
 //		@Produce		json
 //		@Success		200	  {object}	  []models.Following
-//	    @Failure        404   {string}    string "Failed to fetch users"
-//		@Router			/api/users/  [get]
+//	    @Failure        404   {string}    string "Failed to fetch followers: 404 Error"
+//		@Router			/api/following/  [get]
 func (fol *FollowingController) GetAllFollowing(c *gin.Context) {
 	following, err := fol.followingService.GetAllFollowing()
 	if err != nil {

@@ -36,13 +36,13 @@ func (fol *FollowingService) GetAllFollowing() ([]models.Following, error) {
 func (fol *FollowingService) GetAllUserFollowing(user models.User) ([]models.User, error) {
 	var following []models.Following
 	//Retrieve all Following relations where the follower user is
-	if err := fol.DB.Where(models.Following{FollowerUserID: user}).Find(&following).Error; err != nil {
+	if err := fol.DB.Where(models.Following{FollowerUser: user}).Find(&following).Error; err != nil {
 		return nil, err
 	}
 	///
 	var targetUsers []models.User
 	for _, target := range following {
-		targetUsers = append(targetUsers, target.FollowedUserID)
+		targetUsers = append(targetUsers, target.FollowedUser)
 	}
 	return targetUsers, nil
 }
@@ -52,12 +52,12 @@ func (fol *FollowingService) GetAllUserFollowing(user models.User) ([]models.Use
 func (fol *FollowingService) GetAllUserFollowers(user models.User) ([]models.User, error) {
 	var following []models.Following
 	//Retrieve all Following relations where the follower user is
-	if err := fol.DB.Where(models.Following{FollowedUserID: user}).Find(&following).Error; err != nil {
+	if err := fol.DB.Where(models.Following{FollowedUser: user}).Find(&following).Error; err != nil {
 		return nil, err
 	}
 	var targetUsers []models.User
 	for _, target := range following {
-		targetUsers = append(targetUsers, target.FollowerUserID)
+		targetUsers = append(targetUsers, target.FollowerUser)
 	}
 	return targetUsers, nil
 }
