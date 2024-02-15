@@ -7,8 +7,11 @@ export default function TestPage() {
   const [users, setUsers] = useState<User[]>();
 
   useEffect(() => {
-    getAllUsers().then((data) => setUsers(data))
+    getAllUsers().then((data) => setUsers(data.slice(8)))
   }, [])
+  useEffect(() => {
+    console.log(users)
+  }, [users])
   
   return (
     <View style={styles.container}>
@@ -32,8 +35,8 @@ export default function TestPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'flex-start',
     backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
   },

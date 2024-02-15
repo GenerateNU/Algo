@@ -36,12 +36,12 @@ const BottomNavBar = () => {
         headerShown: false,
         
       }} />
-      <Tab.Screen name="Leaderboard" component={NotFound} options={{
+      <Tab.Screen name="Leaderboard" component={AuthPage} options={{
         headerShown: false,
         title: "Leaderboard"
       }} />
       <Tab.Screen name="Profile" component={NotFound} options={{
-        headerShown: true,
+        headerShown: false,
       }} />
     </Tab.Navigator>
   )
