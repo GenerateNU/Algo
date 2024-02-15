@@ -16,7 +16,7 @@ const tabBarIconMapping: Record<TabRouteName, string> = {
 }
 
 const screenOptionsIcon = (route: RouteProp<BottomTabParamList, keyof BottomTabParamList>, color: string) => {
-  var iconName = tabBarIconMapping[route.name]
+  const iconName = tabBarIconMapping[route.name]
   return (
     <Icon type='material-community' name={iconName} size={22} color={color} />
   )

@@ -17,13 +17,14 @@ const AuthPage = () => {
   }, [redirectUrl])
 
   // router the user to the feed page
-  const onClicked = async () => {
-    await Alert.alert('Signed In');
-    //navigation.navigate('FeedPage');
-  }
+  // const onClicked = async () => {
+  //   await Alert.alert('Signed In');
+  //   //navigation.navigate('FeedPage');
+  // }
 
   const authenticate = async () => {
     const callback: Redirect = await getCallbackUrl(2);
+    await Alert.alert('E-trade login reached');
     console.log(callback)
     setVisible(true);
     setRedirectUrl(callback.redirect_url);
