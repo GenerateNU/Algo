@@ -1,1 +1,1 @@
-export const API_LINK = `https://${process.env.EXPO_PUBLIC_API_DOMAIN}`;
+export const API_LINK = process.env.EXPO_PUBLIC_API_DOMAIN;

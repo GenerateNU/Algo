@@ -4,3 +4,7 @@ export interface User {
     pass_word: string;
     email: string;
 }
+
+export interface Redirect {
+    redirect_url: string;
+}
