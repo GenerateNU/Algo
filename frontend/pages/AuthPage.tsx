@@ -1,14 +1,14 @@
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Alert, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-native-paper'
-import { useNavigation } from '@react-navigation/native'
+//import { useNavigation } from '@react-navigation/native'
 import { getCallbackUrl } from '../services/users'
 import WebViewModal from '../components/WebViewModal';
 import { Redirect } from '../types/types'
 import WebViewItem from '../components/WebViewItem'
 
 const AuthPage = () => {
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState("");
 

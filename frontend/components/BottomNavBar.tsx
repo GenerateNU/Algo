@@ -1,19 +1,25 @@
 import React from "react"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { Text } from "react-native"
 import NotFound from "../pages/NotFound"
 import TestPage from "../pages/TestPage"
 import AuthPage from "../pages/AuthPage"
+import { Icon } from "@rneui/themed"
+import { RouteProp } from "@react-navigation/native"
 
 const Tab = createBottomTabNavigator<BottomTabParamList>()
-type TabRouteName = "SignUp" | "Home" | "PostListing" | "PublicProfile" | "Me"
+type TabRouteName = "Explore" | "Leaderboard" | "Profile"
 
 const tabBarIconMapping: Record<TabRouteName, string> = {
-  "SignUp": "ios-person",
-  "Home": "ios-calendar",
-  "PostListing": "ios-add-circle-outline",
-  "PublicProfile": "ios-person",
-  "Me": "ios-person"
+  "Explore": "feature-search",
+  "Leaderboard": "podium",
+  "Profile": "account-circle",
+}
+
+const screenOptionsIcon = (route: RouteProp<BottomTabParamList, keyof BottomTabParamList>, color: string) => {
+  var iconName = tabBarIconMapping[route.name]
+  return (
+    <Icon type='material-community' name={iconName} size={22} color={color} />
+  )
 }
 
 export type BottomTabParamList = {
@@ -30,6 +36,8 @@ const BottomNavBar = () => {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarHideOnKeyboard: true,
+        tabBarIcon: ({ color }) => 
+          screenOptionsIcon(route, color)
       })}
     >
       <Tab.Screen name="Explore" component={TestPage} options={{

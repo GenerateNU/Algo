@@ -1,4 +1,4 @@
-import { StatusBar, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { User } from '../types/types';
 import { getAllUsers } from '../services/users';

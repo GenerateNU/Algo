@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native';
+import React, { useEffect } from 'react'
+import { StyleSheet } from 'react-native';
 import { Modal } from "react-native-paper"
 import WebViewItem from './WebViewItem';
 

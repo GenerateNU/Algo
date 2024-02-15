@@ -13,6 +13,8 @@
     "@expo/ngrok": "^4.1.0",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
+    "@rneui/base": "^4.0.0-rc.8",
+    "@rneui/themed": "^4.0.0-rc.8",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.4",
     "eslint-plugin-typescript": "^0.14.0",
