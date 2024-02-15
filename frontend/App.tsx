@@ -6,7 +6,7 @@ import { User } from './types/types';
 
 import { NavigationContainer } from '@react-navigation/native';
 import BottomNavBar from './components/BottomNavBar';
-import { SafeAreaView } from 'react-native-safe-area-context';
+//import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
   const [users, setUsers] = useState<User[]>();

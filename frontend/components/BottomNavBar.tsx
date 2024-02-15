@@ -9,20 +9,17 @@ const Tab = createBottomTabNavigator<BottomTabParamList>()
 type TabRouteName = "SignUp" | "Home" | "PostListing" | "PublicProfile" | "Me"
 
 const tabBarIconMapping: Record<TabRouteName, string> = {
-  SignUp: "ios-person",
-  Home: "ios-calendar",
+  "SignUp": "ios-person",
+  "Home": "ios-calendar",
   "PostListing": "ios-add-circle-outline",
   "PublicProfile": "ios-person",
   "Me": "ios-person"
 }
 
 export type BottomTabParamList = {
-  Home: undefined
-  SignUp: undefined
-  FeedPage: undefined
   Leaderboard: undefined
-  Preferences: undefined
-  Me: undefined
+  Explore: undefined
+  Profile: undefined
 }
 
 const BottomNavBar = () => {
@@ -35,29 +32,16 @@ const BottomNavBar = () => {
         tabBarHideOnKeyboard: true,
       })}
     >
-      <Tab.Screen name="Home" component={TestPage} options={{
-        headerShown: true,
-        title: "DEV Test Home"
-      }} />
-      <Tab.Screen name="SignUp" component={AuthPage} options={{
-        headerShown: true,
-        title: "DEV Auth"
-      }} />
-      <Tab.Screen name="FeedPage" component={NotFound} options={{
-        headerShown: true,
-        title: "Feed Page"
+      <Tab.Screen name="Explore" component={TestPage} options={{
+        headerShown: false,
+        
       }} />
       <Tab.Screen name="Leaderboard" component={NotFound} options={{
-        headerShown: true,
+        headerShown: false,
         title: "Leaderboard"
       }} />
-      <Tab.Screen name="Preferences" component={NotFound} options={{
+      <Tab.Screen name="Profile" component={NotFound} options={{
         headerShown: true,
-        title: "Preferences"
-      }} />
-      <Tab.Screen name="Me" component={NotFound} options={{
-        headerShown: true,
-        title: "Me"
       }} />
     </Tab.Navigator>
   )
