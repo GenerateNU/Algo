@@ -68,13 +68,13 @@ func (fol *FollowingService) GetAllUserFollowers(user models.User) ([]models.Use
 
 // //////////////////////////////////////// CREATE ///////////////////////////////////////////////
 
-// CreateFollowings
+// CreateFollowings TODO: Confirm Correct return type: No reason I can think of that Following ID would be needed
 // Add a following relation to the Followings Table
-func (fol *FollowingService) CreateFollowings(following *models.Followings) (*models.Followings, error) {
-	if err := fol.DB.Create(fol).Error; err != nil {
-		return nil, err
+func (fol *FollowingService) CreateFollowings(following *models.Followings) error {
+	if err := fol.DB.Create(following).Error; err != nil {
+		return err
 	}
-	return following, nil
+	return nil
 }
 
 // //////////////////////////////////////// DELETE ////////////////////////////////////////////////

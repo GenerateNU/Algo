@@ -47,7 +47,7 @@ func (fol *FollowingController) GetAllFollowings(c *gin.Context) {
 //		@Summary		Gets all followings relations
 //		@Description	Returns all users following the input user
 //		@ID				get-all-followers
-//		@Tags			user-followers
+//		@Tags			user-followings
 //		@Produce		json
 //		@Success		200	  {object}	  []models.Users
 //	    @Failure        404   {string}    string "Failed to fetch followers: 404 Error"
@@ -81,14 +81,14 @@ func (fol *FollowingController) GetAllUserFollowings(c *gin.Context, user models
 	c.JSON(http.StatusOK, followings)
 }
 
-// GetAllUserFollowings godoc
+// unfollowUser godoc
 //
 //		@Summary		Gets all users followed by an input user
 //		@ID				get-all-user-followings
 //		@Tags			user-followings
 //		@Produce		json
 //		@Success		200	  {string} string "User unfollowed successfully"
-//	    @Failure        404   {string}    string "Failed to fetch followers: 404 Error"
+//	    @Failure        404   {string}    string "Failed to unfollow user: 404 Error"
 //		@Router			todo: /api/following/  [get]
 func (fol *FollowingController) unfollowUser(c *gin.Context, follower uint, following uint) {
 	err := fol.followingService.DeleteFollowing(follower, following)
@@ -98,4 +98,42 @@ func (fol *FollowingController) unfollowUser(c *gin.Context, follower uint, foll
 	}
 
 	c.JSON(http.StatusOK, gin.H{"msg": "User unfollowed successfully"})
+}
+
+// removeUserFromFollowings godoc
+//
+//		@Summary		Gets all users followed by an input user
+//		@ID				get-all-user-followings
+//		@Tags			user-followings
+//		@Produce		json
+//		@Success		200	  {string} string "User removed from followings table successfully"
+//	    @Failure        404   {string}    string "Failed to remove user: 404 Error"
+//		@Router			todo: /api/following/  [get]
+func (fol *FollowingController) removeUserFromFollowings(c *gin.Context, user uint) {
+	err := fol.followingService.DeleteAllUserFollowings(user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to remove user"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"msg": "User removed from followings table successfully"})
+}
+
+// CreateFollowings godoc
+//
+//		@Summary		Creates a Followings relation
+//		@ID				create-followings
+//		@Tags			followings
+//		@Produce		json
+//		@Success		200	  {string} string "Following created successfully
+//	    @Failure        404   {string}    string "Failed to create following: 404 Error"
+//		@Router			todo: /api/following/  [get]
+func (fol *FollowingController) CreateFollowings(c *gin.Context, followings *models.Followings) {
+	err := fol.followingService.CreateFollowings(followings)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create following"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"msg": "Following created successfully"})
 }
