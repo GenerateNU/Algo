@@ -7,7 +7,7 @@ import { User } from './types/types';
 export default function App() {
   const [users, setUsers] = useState<User[]>();
   useEffect(() => {
-    getAllUsers().then((data) => setUsers(data))
+    getAllUsers().then((data) => setUsers(data.slice(10)))
   }, [])
   return (
     <View style={styles.container}>
