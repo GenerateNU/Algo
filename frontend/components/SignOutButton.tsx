@@ -10,8 +10,11 @@ const SignOut = () => {
     <View>
       <Button
         title="Sign Out"
-        onPress={() => {
-          signOut();
+        onPress={async () => {
+          console.log("Signing out")
+          await signOut();
+          console.log("Signed out")
+
         }}
       />
     </View>
