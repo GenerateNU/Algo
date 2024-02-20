@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -73,7 +72,7 @@ export default function SignUpScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View className="flex justify-center items-center flex-grow">
       {!pendingVerification && (
         <View>
           <View>
@@ -82,7 +81,7 @@ export default function SignUpScreen() {
               value={username}
               placeholder="Username..."
               onChangeText={username => setUsername(username)}
-              style={styles.inputBox}
+              className="w-52 border-2 border-gray-400 rounded-lg mb-4 pl-2"
             />
           </View>
           <View>
@@ -91,7 +90,7 @@ export default function SignUpScreen() {
               value={emailAddress}
               placeholder="Email..."
               onChangeText={email => setEmailAddress(email)}
-              style={styles.inputBox}
+              className="w-52 border-2 border-gray-400 rounded-lg mb-4 pl-2"
             />
           </View>
 
@@ -101,11 +100,13 @@ export default function SignUpScreen() {
               placeholder="Password..."
               secureTextEntry={true}
               onChangeText={password => setPassword(password)}
-              style={styles.inputBox}
+              className="w-52 border-2 border-gray-400 rounded-lg mb-4 pl-2"
             />
           </View>
 
-          <TouchableOpacity onPress={onSignUpPress} style={styles.button}>
+          <TouchableOpacity
+            onPress={onSignUpPress}
+            className="w-20 h-10 border border-gray-400 p-2 rounded-2xl mb-4 bg-gray-400 flex justify-center items-center">
             <Text>Sign up</Text>
           </TouchableOpacity>
         </View>
@@ -127,32 +128,3 @@ export default function SignUpScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputBox: {
-    width: 200,
-    height: 40,
-    borderWidth: 1,
-    borderColor: 'gray',
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  button: {
-    width: 150,
-    height: 40,
-    borderWidth: 1,
-    borderColor: 'gray',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
-    backgroundColor: '#ccc',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

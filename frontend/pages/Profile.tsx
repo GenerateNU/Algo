@@ -13,7 +13,7 @@ const Profile = () => {
       // User has navigated to the page
       console.log(`Profile Page | session user: ${session?.user}`);
       // console.log('Profile Page | session: ', JSON.stringify(session))
-      if (session?.user === undefined) {
+      if (session?.user.username === undefined) {
         /* Unsure why casting to never is required, issue to look into */
         navigation.navigate('Signin' as never);
       }
