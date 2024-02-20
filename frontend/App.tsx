@@ -1,9 +1,8 @@
+import React from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { ClerkProvider } from '@clerk/clerk-expo';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomNavBar from './components/BottomNavBar';
-import { CLERK_KEY } from './services/CommonDocs';
-// import AuthStackNavigator from './router/AuthStackNavigator';
 
 const tokenCache = {
   async getToken(key: string) {
@@ -24,12 +23,10 @@ const tokenCache = {
 
 export default function App() {
   return (
-    <ClerkProvider publishableKey={CLERK_KEY as string} tokenCache={tokenCache}>
+    <ClerkProvider
+      publishableKey={process.env.EXPO_PUBLIC_CLERK_API_KEY as string}
+      tokenCache={tokenCache}>
       <NavigationContainer>
-        {/* Initial AuthStack implementation, currently cannot use due to 
-            Maximum of 1 navigation container per navigation tree requirement.
-            Will decide which is better to use.
-        <AuthStackNavigator /> */}
         <BottomNavBar />
       </NavigationContainer>
     </ClerkProvider>

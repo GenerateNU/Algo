@@ -1,18 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { useClerk } from '@clerk/clerk-react';
+import { useSession } from '@clerk/clerk-expo';
 import SignOut from '../components/SignOutButton';
 
 const Profile = () => {
-  const { user } = useClerk();
-  const userSignedIn = user !== null;
+  const { session } = useSession();
   const navigation = useNavigation();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       // User has navigated to the page
-      if (!userSignedIn) {
+      console.log(`Profile Page | session user: ${session?.user}`);
+      // console.log('Profile Page | session: ', JSON.stringify(session))
+      if (session?.user === undefined) {
         /* Unsure why casting to never is required, issue to look into */
         navigation.navigate('Signin' as never);
       }
@@ -23,7 +24,7 @@ const Profile = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Hello {user?.username}!</Text>
+      <Text style={styles.text}>Hello {session?.user.username}!</Text>
       <SignOut />
     </View>
   );

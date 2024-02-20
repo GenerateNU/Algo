@@ -8,7 +8,7 @@ import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
 import SignInScreen from '../pages/SignInScreen';
 import SignUpScreen from '../pages/SignUpScreen';
-import { useClerk } from '@clerk/clerk-expo';
+import { useSession } from '@clerk/clerk-expo';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 type TabRouteName =
@@ -45,14 +45,13 @@ export type BottomTabParamList = {
 };
 
 const BottomNavBar = () => {
-  const { user } = useClerk();
+  const { session } = useSession();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarHideOnKeyboard: true,
         tabBarIcon: ({ color }) => screenOptionsIcon(route, color),
-        // tabBarVisible: route.name !== 'Signin' && route.name !== 'Registration',
       })}>
       <Tab.Screen
         name="Explore"
@@ -69,16 +68,14 @@ const BottomNavBar = () => {
           title: 'Leaderboard',
         }}
       />
-      {user !== null && (
-        <Tab.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            headerShown: false,
-          }}
-        />
-      )}
-      {user === null && (
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+        }}
+      />
+      {session?.user === undefined && (
         <Tab.Screen
           name="Signin"
           component={SignInScreen}
@@ -87,7 +84,7 @@ const BottomNavBar = () => {
           }}
         />
       )}
-      {user === null && (
+      {session?.user === undefined && (
         <Tab.Screen
           name="Registration"
           component={SignUpScreen}

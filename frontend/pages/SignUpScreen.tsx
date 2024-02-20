@@ -21,7 +21,7 @@ export default function SignUpScreen() {
 
   // start the sign up process.
   const onSignUpPress = async () => {
-    /* TEMPORARY ADDITIONS TO PREVENT CLERK ERRORS */
+    // TODO: replace with proper error handling
     if (
       !isLoaded ||
       !username ||
@@ -34,7 +34,7 @@ export default function SignUpScreen() {
 
     try {
       // create the user.
-      await signUp.create({
+      const signupResource = await signUp.create({
         username,
         emailAddress,
         password,
@@ -45,6 +45,7 @@ export default function SignUpScreen() {
 
       // change the UI to our pending section.
       setPendingVerification(true);
+      console.log('signupResource status: ', signupResource.status);
     } catch (error) {
       // const errorObject = JSON.stringify(error);
       console.log(JSON.stringify(error));

@@ -5,8 +5,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useSignIn } from '@clerk/clerk-expo';
 import { useNavigation } from '@react-navigation/native';
+import { useSignIn } from '@clerk/clerk-expo';
 
 export default function SignInScreen() {
   const { signIn, setActive, isLoaded } = useSignIn();

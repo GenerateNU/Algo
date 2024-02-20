@@ -33,7 +33,7 @@ const AuthPage = () => {
   return (
     <View className="mt-10 p-3 h-full">
       <Text className='font-bold mb-8 text-lg'>Login with E-Trade </Text>
-      <Button onPress={authenticate}>Authenticat with E-Trade</Button>
+      <Button onPress={authenticate}>Authenticate with E-Trade</Button>
 
       <WebViewModal url={redirectUrl} displaying={visible} setVisible={setVisible}/>
       {
