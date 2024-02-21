@@ -19,13 +19,20 @@ func SetupAuthRoutes(router *gin.Engine, db *gorm.DB) {
 	authService := services.NewAuthService(db)
 	authController := controllers.NewAuthController(authService)
 
-	userRoutes := router.Group("/auth")
+	injectActiveSession, err := SetupClerkStore()
+	if err != nil {
+		log.Fatal("Error setting up Clerk store")
+	}
+
+	authRoutes := router.Group("/auth")
 	{
-		userRoutes.GET("/", authController.AuthenticateSession)
+		authRoutes.GET("/", authController.AuthenticateSession)
 	}
 }
 
-func SetupAuthMiddleware(router *gin.Engine) (func(handler http.Handler) http.Handler, error) {
+// router.Use(adaptHTTPHandler(injectActiveSession(http.HandlerFunc(returnActiveSession))))
+
+func SetupClerkStore() (func(handler http.Handler) http.Handler, error) {
 	err := godotenv.Load("../.env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
@@ -40,9 +47,6 @@ func SetupAuthMiddleware(router *gin.Engine) (func(handler http.Handler) http.Ha
 
 	// Initialize Clerk middleware
 	injectActiveSession := clerk.WithSessionV2(client)
-
-	// Apply middleware to desired routes or groups (makes all routes require authentication)
-	router.Use(adaptHTTPHandler(injectActiveSession(http.HandlerFunc(returnActiveSession))))
 
 	return injectActiveSession, nil
 }
@@ -62,7 +66,6 @@ func returnActiveSession(w http.ResponseWriter, req *http.Request) {
 		// handle non-authenticated user
 		fmt.Println(w, "No active session found.")
 	}
-
 }
 
 func removeMiddleware(router *gin.Engine) {
