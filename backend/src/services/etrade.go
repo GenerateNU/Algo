@@ -6,6 +6,7 @@ import (
 	"github.com/gomodule/oauth1/oauth"
 	"gorm.io/gorm"
 	"os"
+	"time"
 )
 
 var oauthClient = oauth.Client{
@@ -106,4 +107,22 @@ func (s *ETradeService) getLastOAuthTokens(userID uint) (*models.OAuthTokens, er
 	}
 
 	return &oauthTokens, nil
+}
+
+func (s *ETradeService) GetAccessTokenStatus(userID uint) (string, error) {
+	oauthTokens, err := s.getLastOAuthTokens(userID)
+	if err != nil {
+		return "", fmt.Errorf("error getting db tokens: %v", err)
+	}
+
+	twoHoursAgo := time.Now().Add(-2 * time.Hour)
+	today := time.Now().Day()
+
+	if oauthTokens.AccessToken != "" &&
+		oauthTokens.AccessSecret != "" &&
+		oauthTokens.UpdatedAt.Before(twoHoursAgo) &&
+		oauthTokens.UpdatedAt.Day() == today {
+		return "active", nil
+	}
+	return "inactive", nil
 }
