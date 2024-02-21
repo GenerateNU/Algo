@@ -15,11 +15,14 @@ func SetupUserRoutes(router *gin.Engine, db *gorm.DB) {
 	userRoutes := router.Group("/users")
 	{
 		userRoutes.GET("/", userController.GetAllUsers)
-		userRoutes.POST("/", userController.CreateUser)
 		userRoutes.GET("/:id", userController.GetUserById)
+
+		// Requires Authentication, apply auth middleware
+		SetupAuthMiddleware(router)
+		userRoutes.POST("/", userController.CreateUser)
 		userRoutes.PUT("/:id", userController.UpdateUserById)
 		userRoutes.DELETE("/:id", userController.DeleteUserById)
-    
+
 		userRoutes.POST("/long-term-goal/:user_id", userController.CreateLongTermGoalForUser)
 		userRoutes.GET("/long-term-goal/:user_id/", userController.GetLongTermGoalsForUser)
 		userRoutes.PUT("/long-term-goal/:user_id/:goal_id", userController.UpdateLongTermGoalForUser)

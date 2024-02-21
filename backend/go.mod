@@ -14,10 +14,13 @@ require (
 	gorm.io/gorm v1.25.6
 )
 
+require github.com/go-jose/go-jose/v3 v3.0.0 // indirect
+
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
+	github.com/clerkinc/clerk-sdk-go v1.49.0
 	github.com/cockroachdb/apd v1.1.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
@@ -38,6 +41,7 @@ require (
 	github.com/jackc/pgx/v5 v5.4.3 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/joho/godotenv v1.5.1
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
