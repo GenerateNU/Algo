@@ -1,0 +1,39 @@
+.root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 393px;
+    height: min-content;
+    place-content: space-between;
+    align-items: flex-start;
+    padding: 16px 50px;
+    overflow: hidden;
+    box-shadow: inset 0px 1px 0px #00000014;
+  }
+  .frame27808 {
+    width: 24px;
+    height: 24px;
+    overflow: visible;
+  }
+  .icon {
+    width: 100%;
+    height: 100%;
+  }
+  .frame27809 {
+    width: 24px;
+    height: 24px;
+    overflow: visible;
+  }
+  .icon2 {
+    width: 100%;
+    height: 100%;
+  }
+  .note11 {
+    width: 24px;
+    height: 24px;
+  }
+  .icon3 {
+    width: 100%;
+    height: 100%;
+  }
+  
