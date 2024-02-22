@@ -1,18 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, /*useState*/ } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect /*useState*/ } from 'react';
 // import { User } from '../types/types';
 // import { getAllUsers } from '../services/users';
+import { testClerkAuth } from '../services/users';
 
 export default function TestPage() {
   // const [users, setUsers] = useState<User[]>();
 
   useEffect(() => {
     // getAllUsers().then((data) => setUsers(data.slice(8)))
-  }, [])
-  
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text className="font-bold mb-2 w-full text-left" >Open up App.js to start working on your app!</Text>
+      <Text className="font-bold mb-2 w-full text-left">
+        Open up App.js to start working on your app!
+      </Text>
       {/* {
         users &&
         <View className='w-full'>
@@ -25,8 +28,16 @@ export default function TestPage() {
           }
         </View>
       } */}
+      <TouchableOpacity
+        onPress={() => {
+          testClerkAuth();
+        }}
+        className='bg-blue-500 p-2 rounded-md w-1/4 text-center mt-2'
+        >
+        <Text>Authenticate</Text>
+      </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

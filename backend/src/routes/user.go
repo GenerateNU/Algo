@@ -18,7 +18,7 @@ func SetupUserRoutes(router *gin.Engine, db *gorm.DB) {
 		userRoutes.GET("/:id", userController.GetUserById)
 
 		// Requires Authentication, apply auth middleware
-		SetupAuthMiddleware(router)
+		// SetupAuthMiddleware(router)
 		userRoutes.POST("/", userController.CreateUser)
 		userRoutes.PUT("/:id", userController.UpdateUserById)
 		userRoutes.DELETE("/:id", userController.DeleteUserById)

@@ -4,7 +4,6 @@ import (
 	"backend/src/controllers"
 	"backend/src/services"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -19,36 +18,37 @@ func SetupAuthRoutes(router *gin.Engine, db *gorm.DB) {
 	authService := services.NewAuthService(db)
 	authController := controllers.NewAuthController(authService)
 
-	injectActiveSession, err := SetupClerkStore()
+	client, err := SetupClerkStore()
 	if err != nil {
 		log.Fatal("Error setting up Clerk store")
 	}
 
+	// Initialize Clerk middleware
+	// injectActiveSession := clerk.WithSessionV2(client)
+	// router.Use(adaptHTTPHandler(injectActiveSession(http.HandlerFunc(returnActiveSession))))
+
 	authRoutes := router.Group("/auth")
 	{
-		authRoutes.GET("/", authController.AuthenticateSession)
+		authRoutes.GET("/", func(c *gin.Context) {
+			authController.AuthenticateSession(c, client)
+		})
 	}
 }
 
-// router.Use(adaptHTTPHandler(injectActiveSession(http.HandlerFunc(returnActiveSession))))
-
-func SetupClerkStore() (func(handler http.Handler) http.Handler, error) {
+func SetupClerkStore() (clerk.Client, error) {
 	err := godotenv.Load("../.env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
 	clerkApiSecretKey := os.Getenv("EXPO_PUBLIC_CLERK_SECRET_KEY")
-	fmt.Println(clerkApiSecretKey)
+	log.Println(clerkApiSecretKey)
 	client, err := clerk.NewClient(clerkApiSecretKey)
 	if err != nil {
 		return nil, err
 	}
 
-	// Initialize Clerk middleware
-	injectActiveSession := clerk.WithSessionV2(client)
-
-	return injectActiveSession, nil
+	return client, nil
 }
 
 func adaptHTTPHandler(handler http.Handler) gin.HandlerFunc {
@@ -61,10 +61,10 @@ func returnActiveSession(w http.ResponseWriter, req *http.Request) {
 	sessionClaims, ok := clerk.SessionFromContext(req.Context())
 	if ok {
 		jsonResp, _ := json.Marshal(sessionClaims)
-		fmt.Println(w, string(jsonResp))
+		log.Println(w, string(jsonResp))
 	} else {
 		// handle non-authenticated user
-		fmt.Println(w, "No active session found.")
+		log.Println(w, "No active session found.")
 	}
 }
 

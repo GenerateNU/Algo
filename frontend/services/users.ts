@@ -14,3 +14,11 @@ export const getCallbackUrl = async (id: number): Promise<Redirect> => {
     console.log(response.data);
     return response.data;
 }
+
+export const testClerkAuth = async () => {
+  const response: AxiosResponse<Redirect> = await axios.get<Redirect>(
+    `http://${API_LINK}/auth/`,
+  );
+  console.log(JSON.stringify(response));
+  return response;
+};
