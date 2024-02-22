@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { LoginPageNavigationProp } from '../types/navigationTypes'; 
 
-const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const LoginPage: React.FC = () => {
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const navigation = useNavigation<LoginPageNavigationProp>();
 
   const handleLogin = () => {
-    // Handle the login logic here
+    // TODO: Connect to BE and handle the login logic here
     console.log(username, password);
+    // after login, navigate to the next screen
+    // navigation.navigate('NextScreenRouteName');
+  };
+
+  const navigateToSignUp = () => {
+    navigation.navigate('SignInPage');
   };
 
   return (
@@ -40,7 +49,7 @@ const LoginPage = () => {
         <Text style={styles.linkText}>Forgot username or password</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={navigateToSignUp}>
         <Text style={styles.signUpText}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
     </View>
@@ -48,49 +57,61 @@ const LoginPage = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-    backgroundColor: '#fff', // Set your desired background color
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 20,
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  description: {
-    fontSize: 16,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  input: {
-    marginBottom: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderColor: 'grey', // Set your desired border color
-    borderRadius: 5, // Set your desired border radius
-  },
-  button: {
-    backgroundColor: 'black', // Set your desired button color
-    paddingVertical: 10,
-  },
-  linkText: {
-    marginTop: 20,
-    textAlign: 'center',
-    color: 'blue', // Set your desired link text color
-  },
-  signUpText: {
-    marginTop: 10,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-});
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 20,
+      backgroundColor: '#f5f5f5', // You can set your own color scheme
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: '#333', // Choose a color that fits your app theme
+      marginBottom: 20,
+    },
+    subtitle: {
+      fontSize: 18,
+      color: '#666', // Adjust color to match your theme
+      marginBottom: 10,
+    },
+    description: {
+      fontSize: 16,
+      color: '#888', // Adjust color to match your theme
+      marginBottom: 30,
+    },
+    input: {
+      height: 50,
+      width: '100%', // Adjust width as per your layout
+      backgroundColor: '#fff', // Background color for the input
+      borderWidth: 1,
+      borderColor: '#ddd', // Border color for the input
+      borderRadius: 5,
+      padding: 10,
+      marginBottom: 15,
+      fontSize: 16,
+    },
+    button: {
+      width: '100%', // Adjust button width as per your layout
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      borderRadius: 5,
+      elevation: 3,
+      backgroundColor: '#34A853', // Button color, you can change it
+    },
+    linkText: {
+      fontSize: 14,
+      color: '#007BFF', // Link text color, change as needed
+      marginTop: 15,
+    },
+    signUpText: {
+      fontSize: 14,
+      color: '#007BFF', // Sign-up text color, change as needed
+      marginTop: 15,
+    },
+  });  
 
 export default LoginPage;
