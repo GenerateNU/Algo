@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"time"
+
 	// "backend/src/models" not used yet
 	"backend/src/routes"
 
@@ -19,7 +21,7 @@ import (
 // @BasePath /api
 func main() {
 	dsn := "host=localhost user=user password=pwd dbname=algo port=5434 sslmode=disable"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{NowFunc: time.Now().UTC})
 	if err != nil {
 		panic("Failed to connect to database")
 	}

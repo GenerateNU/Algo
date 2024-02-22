@@ -112,17 +112,18 @@ func (s *ETradeService) getLastOAuthTokens(userID uint) (*models.OAuthTokens, er
 func (s *ETradeService) GetAccessTokenStatus(userID uint) (string, error) {
 	oauthTokens, err := s.getLastOAuthTokens(userID)
 	if err != nil {
-		return "", fmt.Errorf("error getting db tokens: %v", err)
+		return "inactive", nil
 	}
 
-	twoHoursAgo := time.Now().Add(-2 * time.Hour)
-	today := time.Now().Day()
+	today := time.Now().UTC().Day()
+	twoHoursAgo := time.Now().UTC().Add(-2 * time.Hour)
 
 	if oauthTokens.AccessToken != "" &&
 		oauthTokens.AccessSecret != "" &&
-		oauthTokens.UpdatedAt.Before(twoHoursAgo) &&
+		!oauthTokens.UpdatedAt.Before(twoHoursAgo) &&
 		oauthTokens.UpdatedAt.Day() == today {
 		return "active", nil
 	}
+
 	return "inactive", nil
 }
