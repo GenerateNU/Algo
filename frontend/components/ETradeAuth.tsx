@@ -19,6 +19,8 @@ const AuthPage = (props: { successCallback: () => void }) => {
     const verifierStatus: HttpStatusCode = await verifyToken(2, verifierToken);
     if (verifierStatus === HttpStatusCode.Ok) {
       props.successCallback()
+    } else {
+      console.log("Error verifying token!")
     }
   }
 
