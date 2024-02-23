@@ -3,9 +3,10 @@ package controllers
 import (
 	"log"
 	"net/http"
-	"strings"
 
-	// "strconv"
+	// "strings"
+
+	"strconv"
 
 	// "backend/src/models"
 	"backend/src/services"
@@ -29,24 +30,41 @@ func (ac *AuthController) Login(c *gin.Context) {
 
 func (ac *AuthController) AuthenticateSession(c *gin.Context, client clerk.Client) {
 	// get session token from Authorization header
-	sessionToken := c.Request.Header.Get("Authorization")
-	sessionToken = strings.TrimPrefix(sessionToken, "Bearer ")
+	// sessionToken := c.Request.Header.Get("Authorization")
+
+	// var requestBody struct {
+	// 	SessionToken string `json:"sessionToken"`
+	// }
+
+	// if err := c.Bind(&requestBody); err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
+	// log.Println("IMPORTANTTTTTTTTTTTTTTTTTT")
+	// log.Println(requestBody.SessionToken)
+	// sessionToken = strings.TrimPrefix(sessionToken, "Bearer ")
+
+	// c.BindHeader("Authorization")
+	id := c.Param("id")
+	sessionToken, _ := strconv.ParseUint(id, 10, 32)
 	log.Println(sessionToken)
-	log.Println("AuthenticateSession")
+	log.Println(c.Request)
 
 	// verify the session
-	sessClaims, err := client.VerifyToken(sessionToken)
-	if err != nil {
-		c.Writer.WriteHeader(http.StatusUnauthorized)
-		c.Writer.Write([]byte("Unauthorized"))
-		return
-	}
-	// get the user, and say welcome!
-	user, err := client.Users().Read(sessClaims.Claims.Subject)
-	if err != nil {
-		panic(err)
-	}
+	// sessClaims, clerkErr := client.VerifyToken(sessionToken)
+	// if clerkErr != nil {
+	// 	c.Writer.WriteHeader(http.StatusUnauthorized)
+	// 	return
+	// }
+	// // get the user, and say welcome!
+	// user, clerkErr := client.Users().Read(sessClaims.Claims.Subject)
+	// if clerkErr != nil {
+	// 	panic(clerkErr)
+	// }
 
-	c.Writer.Write([]byte("Welcome " + *user.FirstName))
+	// _, err := c.Writer.Write([]byte("Welcome " + *user.FirstName))
+	// if err != nil {
+	// 	panic(err)
+	// }
 	c.JSON(http.StatusOK, "AuthenticateSession")
 }

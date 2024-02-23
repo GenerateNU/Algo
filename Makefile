@@ -10,6 +10,18 @@ frontend-dep:
 frontend-run:
 	cd frontend && yarn start
 
+# running the frontend
+.PHONY: frontend-tunnel
+frontend-tunnel:
+	cd frontend && yarn tunnel
+
+
+# running ios frontend
+.PHONY: frontend-ios
+frontend-ios:
+	cd frontend && yarn ios
+
+
 # Lint the frontend source code
 .PHONY: frontend-lint
 frontend-lint:

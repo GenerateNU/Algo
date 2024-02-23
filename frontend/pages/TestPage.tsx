@@ -3,12 +3,16 @@ import React, { useEffect /*useState*/ } from 'react';
 // import { User } from '../types/types';
 // import { getAllUsers } from '../services/users';
 import { testClerkAuth } from '../services/users';
+import { useSession } from '@clerk/clerk-expo';
 
 export default function TestPage() {
+    const { session } = useSession();
   // const [users, setUsers] = useState<User[]>();
+
 
   useEffect(() => {
     // getAllUsers().then((data) => setUsers(data.slice(8)))
+    // session?.getToken();
   }, []);
 
   return (
@@ -30,7 +34,7 @@ export default function TestPage() {
       } */}
       <TouchableOpacity
         onPress={() => {
-          testClerkAuth();
+          testClerkAuth(session?.id as string);
         }}
         className='bg-blue-500 p-2 rounded-md w-1/4 text-center mt-2'
         >
