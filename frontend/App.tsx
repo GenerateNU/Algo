@@ -5,6 +5,7 @@ import { RootStackParamList } from './types/navigationTypes';
 import SplashScreen from './pages/SplashScreen'; 
 import LoginPage from './pages/LoginPage'; 
 import SignInPage from './pages/SignInPage';
+import GoalsPage from './pages/GoalsPage';
 
 // Create a stack navigator
 const Stack = createStackNavigator<RootStackParamList>();
@@ -28,6 +29,11 @@ export default function App() {
          <Stack.Screen
           name="SignInPage"
           component={SignInPage}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="GoalsPage"
+          component={GoalsPage}
           options={{ headerShown: false }}
         />
         {/* add more screens here */}

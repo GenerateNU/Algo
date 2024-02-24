@@ -13,6 +13,7 @@ const SignInPage: React.FC = () => {
   const handleSignUp = () => {
     // TODO: Implement sign-up logic or connect to BE here
     console.log(name, phone, password);
+    navigation.navigate('GoalsPage');
   };
 
   // Example function to handle navigation back to login page
@@ -76,12 +77,12 @@ const styles = StyleSheet.create({
       },
       subtitle: {
         fontSize: 18,
-        color: '#666', // Adjust color to match your theme
+        color: '#7C7C7C', // Adjust color to match your theme
         marginBottom: 10,
       },
       description: {
         fontSize: 16,
-        color: '#888', // Adjust color to match your theme
+        color: '#7C7C7C', // Adjust color to match your theme
         marginBottom: 30,
       },
       input: {
@@ -104,16 +105,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         borderRadius: 5,
         elevation: 3,
-        backgroundColor: '#34A853', // Button color, you can change it
+        backgroundColor: '#6F6F6F', // Button color, you can change it
       },
       linkText: {
         fontSize: 14,
-        color: '#007BFF', // Link text color, change as needed
+        color: '#7C7C7C', // Link text color, change as needed
         marginTop: 15,
       },
       signUpText: {
         fontSize: 14,
-        color: '#007BFF', // Sign-up text color, change as needed
+        color: '#7C7C7C', // Sign-up text color, change as needed
         marginTop: 15,
       },
   loginText: {
