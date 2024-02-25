@@ -8,3 +8,7 @@ export interface User {
 export interface Redirect {
     redirect_url: string;
 }
+
+export interface TokenStatus {
+    status: string;
+}
