@@ -13,7 +13,7 @@ const SignInPage: React.FC = () => {
   const handleSignUp = () => {
     // TODO: Implement sign-up logic or connect to BE here
     console.log(name, phone, password);
-    navigation.navigate('GoalsPage');
+    navigation.navigate('ConnectPage');
   };
 
   // Example function to handle navigation back to login page

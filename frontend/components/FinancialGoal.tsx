@@ -36,19 +36,19 @@ const styles = StyleSheet.create({
   goalSelected: {
     padding: 10,
     borderWidth: 1,
-    borderColor: '#34A853', // A green border color
+    borderColor: '#6F6F6F',
     borderRadius: 20,
     marginBottom: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#34A853', // A green background color
+    backgroundColor: '#6F6F6F', 
     marginHorizontal: 5, // Keep the horizontal margin consistent
   },
   goalText: {
     color: '#000',
   },
   goalTextSelected: {
-    color: '#fff',
+    color: '#6F6F6F',
   },
 });
 

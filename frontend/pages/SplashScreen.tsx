@@ -11,7 +11,7 @@ const SplashScreen: React.FC = () => {
     // Wait for 1 second then navigate to the LoginPage
     const timer = setTimeout(() => {
       navigation.navigate('LoginPage'); // Ensure 'LoginPage' is defined in your navigation types
-    }, 1000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [navigation]);
