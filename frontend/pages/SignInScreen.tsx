@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSignIn } from '@clerk/clerk-expo';
 
@@ -18,7 +13,7 @@ export default function SignInScreen() {
 
   const onSignInPress = async () => {
     if (!isLoaded) {
-      console.error("Error: Clerk not loaded")
+      console.error('Error: Clerk not loaded');
       return;
     }
 
@@ -35,7 +30,7 @@ export default function SignInScreen() {
     }
   };
   return (
-    <View className="flex justify-center items-center flex-grow">
+    <View className="pt-0 mt-0 lex justify-center items-center flex-grow">
       <View>
         <TextInput
           autoCapitalize="none"

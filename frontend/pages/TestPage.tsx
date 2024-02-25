@@ -34,11 +34,10 @@ export default function TestPage() {
       } */}
       <TouchableOpacity
         onPress={async () => {
-          const authtoken = await getToken() as string;
+          const authtoken = (await getToken()) as string;
           authenticateSession(authtoken);
         }}
-        className='bg-blue-500 p-2 rounded-md w-1/4 text-center mt-2'
-        >
+        className="bg-blue-500 p-2 rounded-md w-1/4 text-center mt-2">
         <Text>Authenticate</Text>
       </TouchableOpacity>
     </View>
@@ -54,3 +53,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 });
+/*
+if signin is sent,
+if isn't available in clerk, then check backend
+if available in backend, then create session and create user in clerk
+
+
+*/

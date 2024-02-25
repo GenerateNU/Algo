@@ -1,7 +1,7 @@
 import React from 'react';
 import { ClerkProvider } from '@clerk/clerk-expo';
 import { NavigationContainer } from '@react-navigation/native';
-import BottomNavBar from './components/BottomNavBar';
+import BottomNavBar from './router/BottomNavBar';
 import * as SecureStore from 'expo-secure-store';
 
 const tokenCache = {
