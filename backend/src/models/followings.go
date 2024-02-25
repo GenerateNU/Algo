@@ -1,20 +1,25 @@
 package models
 
-import (
-	"backend/src/types"
-	"github.com/jackc/pgx/pgtype"
-)
+import "time"
 
-// Followings Potential issues
-// GORM:  more qualifiers needed?
+// Followings represents a following relationship between two users.
+// It defines the structure of a following entry in the database.
 type Followings struct {
-	types.Model
+	FollowerUserID uint      `gorm:"type:int;" json:"follower_user_id" validate:"required"`
+	FollowedUserID uint      `gorm:"type:int;" json:"followed_user_id" validate:"required"`
+	CreatedAt      time.Time `gorm:"type:timestamp" json:"created_at" validate:"required"`
 
-	FollowerUserID uint        `gorm:"type:int;" json:"follower_user_id" validate:"required"`
-	FollowedUserID uint        `gorm:"type:int;" json:"followed_user_id" validate:"required"`
-	FollowDate     pgtype.Date `gorm:"type:timestamp" json:"follow_date" validate:"required"`
+	//User objects: User must be preloaded for gorm reads
+	FollowerUser User `gorm:"foreignKey:FollowerUserID;references:ID"`
+	FollowedUser User `gorm:"foreignKey:FollowedUserID;references:ID"`
+}
 
-	//Not sure if these will be useful or not, but best to have them?
-	FollowerUser User `gorm:"foreignKey:FollowerUserID"`
-	FollowedUser User `gorm:"foreignKey:FollowedUserID"`
+// NewFollowings creates a new instance of Followings with the provided follower and followed user IDs.
+// It initializes the struct fields and returns a pointer to the newly created Followings object.
+func NewFollowings(followerID, followedID uint) *Followings {
+	return &Followings{
+
+		FollowerUserID: followerID,
+		FollowedUserID: followedID,
+	}
 }

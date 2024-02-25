@@ -2,10 +2,10 @@
 DROP TABLE IF EXISTS followings;
 
 CREATE TABLE IF NOT EXISTS followings (
-    followings_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     follower_user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     following_user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    follow_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT unique_following_pair UNIQUE (follower_user_id, followed_user_id),
     CONSTRAINT no_self_follow CHECK (follower_user_id != followed_user_id)
 );
