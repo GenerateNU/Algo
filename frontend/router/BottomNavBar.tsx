@@ -7,9 +7,9 @@ import AuthPage from '../pages/AuthPage';
 import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
 // import SignInScreen from '../pages/SignInScreen';
-import SignUpScreen from '../pages/SignUpScreen';
-import { useSession } from '@clerk/clerk-expo';
-import OnBoardingNavigator from '../router/Onboarding';
+// import SignUpScreen from '../pages/SignUpScreen';
+// import { useSession } from '@clerk/clerk-expo';
+// import OnBoardingNavigator from '../router/Onboarding';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 type TabRouteName =
@@ -46,7 +46,7 @@ export type BottomTabParamList = {
 };
 
 const BottomNavBar = () => {
-  const { session } = useSession();
+  // const { session } = useSession();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -76,7 +76,7 @@ const BottomNavBar = () => {
           headerShown: false,
         }}
       />
-      {session?.user === undefined && (
+      {/* {session?.user === undefined && (
         <Tab.Screen
           name="Signin"
           component={OnBoardingNavigator}
@@ -93,7 +93,7 @@ const BottomNavBar = () => {
             headerShown: false,
           }}
         />
-      )}
+      )} */}
     </Tab.Navigator>
   );
 };

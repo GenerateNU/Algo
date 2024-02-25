@@ -7,6 +7,7 @@ import LoginPage from '../pages/LoginPage';
 const Stack = createStackNavigator();
 
 const OnBoardingNavigator = () => {
+  
   return (
     <Stack.Navigator initialRouteName="LoginPage">
       <Stack.Screen
