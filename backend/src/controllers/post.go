@@ -30,10 +30,37 @@ func NewPostController(postService *services.PostService) *PostController {
 //	@Success		200	{object}	[]models.Post
 //	@Failure		404	{string}	string	"Failed to fetch posts"
 //	@Router			/api/posts/  [get]
-func (uc *PostController) GetAllPosts(c *gin.Context) {
-	posts, err := uc.postService.GetAllPosts()
+func (pc *PostController) GetAllPosts(c *gin.Context) {
+	posts, err := pc.postService.GetAllPosts()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch posts"})
+		return
+	}
+
+	c.JSON(http.StatusOK, posts)
+}
+
+// GetPostsByUserId godoc
+//
+//	@Summary		Gets posts by user ID
+//	@Description	Returns all posts for a specific user by user ID
+//	@ID				get-posts-by-user-id
+//	@Tags			post
+//	@Produce		json
+//	@Param			userId	path	uint	true	"User ID"
+//	@Success		200		{object}	[]models.Post
+//	@Failure		404		{string}	string	"Failed to fetch posts"
+//	@Router			/api/posts/user/{userId} [get]
+func (pc *PostController) GetPostsByUserId(c *gin.Context) {
+	userId, err := strconv.ParseUint(c.Param("userId"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		return
+	}
+
+	posts, err := pc.postService.GetPostsByUserId(uint(userId))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch posts"})
 		return
 	}
 
@@ -56,14 +83,14 @@ func (uc *PostController) GetAllPosts(c *gin.Context) {
 //		@Success		201	  {object}	  models.Post
 //	    @Failure        400   {string}    string "Failed to create post"
 //		@Router			/api/posts/  [post]
-func (uc *PostController) CreatePost(c *gin.Context) {
+func (pc *PostController) CreatePost(c *gin.Context) {
 	var post models.Post
 	if err := c.ShouldBindJSON(&post); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
 		return
 	}
 
-	createdPost, err := uc.postService.CreatePost(&post)
+	createdPost, err := pc.postService.CreatePost(&post)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to create post"})
 		return
@@ -83,7 +110,7 @@ func (uc *PostController) CreatePost(c *gin.Context) {
 //		@Success		200	  {object}	  models.Post
 //	    @Failure        404   {string}    string "Failed to fetch post"
 //		@Router			/api/posts/{id}  [get]
-func (uc *PostController) GetPostById(c *gin.Context) {
+func (pc *PostController) GetPostById(c *gin.Context) {
 	id := c.Param("id")
 	postID, err := strconv.ParseUint(id, 10, 32)
 	if err != nil {
@@ -91,7 +118,7 @@ func (uc *PostController) GetPostById(c *gin.Context) {
 		return
 	}
 
-	post, err := uc.postService.GetPostById(uint(postID))
+	post, err := pc.postService.GetPostById(uint(postID))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch post"})
 		return
@@ -117,7 +144,7 @@ func (uc *PostController) GetPostById(c *gin.Context) {
 //		@Success		200	  {object}	  models.Post
 //	    @Failure        400   {string}    string "Failed to update post"
 //		@Router			/api/posts/{id}  [put]
-func (uc *PostController) UpdatePostById(c *gin.Context) {
+func (pc *PostController) UpdatePostById(c *gin.Context) {
 	id := c.Param("id")
 	postID, _ := strconv.ParseUint(id, 10, 32)
 	var post *models.Post
@@ -126,7 +153,7 @@ func (uc *PostController) UpdatePostById(c *gin.Context) {
 		return
 	}
 
-	updatedPost, err := uc.postService.UpdatePostById(uint(postID), post)
+	updatedPost, err := pc.postService.UpdatePostById(uint(postID), post)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to update post"})
 		return
@@ -146,10 +173,10 @@ func (uc *PostController) UpdatePostById(c *gin.Context) {
 //		@Success		200	  {object}	  models.Post
 //	    @Failure        404   {string}    string "Failed to delete post"
 //		@Router			/api/posts/{id}  [delete]
-func (uc *PostController) DeletePostById(c *gin.Context) {
+func (pc *PostController) DeletePostById(c *gin.Context) {
 	id := c.Param("id")
 	postID, _ := strconv.ParseUint(id, 10, 32)
-	post, err := uc.postService.DeletePostById(uint(postID))
+	post, err := pc.postService.DeletePostById(uint(postID))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Failed to delete post"})
 		return

@@ -16,49 +16,57 @@ func NewPostService(db *gorm.DB) *PostService {
 	}
 }
 
-func (us *PostService) GetAllPosts() ([]models.Post, error) {
+func (ps *PostService) GetAllPosts() ([]models.Post, error) {
 	var posts []models.Post
-	if err := us.DB.Find(&posts).Error; err != nil {
+	if err := ps.DB.Find(&posts).Error; err != nil {
 		return nil, err
 	}
 	return posts, nil
 }
 
-//TODO: Add GetAllPostsFromFollowing once Cam is done
+func (ps *PostService) GetPostsByUserId(userId uint) ([]models.Post, error) {
+	var posts []models.Post
+	if err := ps.DB.Where("user_id = ?", userId).Find(&posts).Error; err != nil {
+		return nil, err
+	}
+	return posts, nil
+}
 
-func (us *PostService) CreatePost(post *models.Post) (*models.Post, error) {
-	if err := us.DB.Create(post).Error; err != nil {
+//TODO: Add GetPostsFromFollowedUsers once Cam is done
+
+func (ps *PostService) CreatePost(post *models.Post) (*models.Post, error) {
+	if err := ps.DB.Create(post).Error; err != nil {
 		return nil, err
 	}
 	return post, nil
 }
 
-func (us *PostService) GetPostById(id uint) (*models.Post, error) {
+func (ps *PostService) GetPostById(id uint) (*models.Post, error) {
 	post := &models.Post{}
-	if err := us.DB.First(post, id).Error; err != nil {
+	if err := ps.DB.First(post, id).Error; err != nil {
 		return nil, err
 	}
 	return post, nil
 }
 
-func (us *PostService) UpdatePostById(id uint, post *models.Post) (*models.Post, error) {
+func (ps *PostService) UpdatePostById(id uint, post *models.Post) (*models.Post, error) {
 	// Retrieve the existing post from the database
-	_, err := us.GetPostById(id)
+	_, err := ps.GetPostById(id)
 	if err != nil {
 		return nil, err
 	}
 
 	// Save the updated post back to the database
-	if err := us.DB.Save(post).Error; err != nil {
+	if err := ps.DB.Save(post).Error; err != nil {
 		return nil, err
 	}
 
 	return post, nil
 }
 
-func (us *PostService) DeletePostById(id uint) (*models.Post, error) {
+func (ps *PostService) DeletePostById(id uint) (*models.Post, error) {
 	post := &models.Post{}
-	if err := us.DB.Delete(post, id).Error; err != nil {
+	if err := ps.DB.Delete(post, id).Error; err != nil {
 		return nil, err
 	}
 	return post, nil
