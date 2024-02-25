@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"backend/src/models"
 	"backend/src/services"
 	"backend/src/types"
 
@@ -22,6 +23,21 @@ func NewAuthController(authService *services.AuthService) *AuthController {
 }
 
 func (ac *AuthController) Register(c *gin.Context) {
+	// parse user info from body
+	var user models.User
+	if err := c.ShouldBindJSON(&user); err != nil {
+		log.Fatal(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error(), "body": c.Request.Body})
+		return
+	}
+
+	clerkErr := ac.authService.Register(user)
+	if clerkErr != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": clerkErr.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "User registered successfully"})
 }
 
 func (ac *AuthController) AuthenticateSession(c *gin.Context, client clerk.Client) {
@@ -33,20 +49,10 @@ func (ac *AuthController) AuthenticateSession(c *gin.Context, client clerk.Clien
 		return
 	}
 	sessionToken := authRequest.Body.SessionToken
-
-	// verify the session
-	sessClaims, clerkErr := client.VerifyToken(sessionToken)
+	user, clerkErr := ac.authService.AuthenticateSession(client, sessionToken)
 	if clerkErr != nil {
-		log.Println(clerkErr.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"error": clerkErr.Error()})
 		return
-	}
-
-	// get the user
-	user, clerkErr := client.Users().Read(sessClaims.Claims.Subject)
-	if clerkErr != nil {
-		log.Println(clerkErr.Error())
-		c.JSON(http.StatusBadRequest, gin.H{"error": clerkErr.Error()})
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Welcome " + *user.Username})

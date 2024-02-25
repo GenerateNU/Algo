@@ -20,6 +20,6 @@ type VerifyRequest struct {
 
 type AuthRequest struct {
 	Body struct {
-		SessionToken string `json:"sessionToken" binding:"required"`
+		SessionToken string `json:"sessionToken"`
 	} `json:"body"`
 }

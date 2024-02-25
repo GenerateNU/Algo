@@ -15,7 +15,7 @@ func SetupUserRoutes(router *gin.Engine, db *gorm.DB, clerkClient clerk.Client) 
 
 	userRoutes := router.Group("/users")
 	{
-		/* Protecteed Routes */
+		/* Protected Routes */
 		SetupAuthMiddleware(clerkClient, router)
 		userRoutes.POST("/", userController.CreateUser)
 		userRoutes.PUT("/:id", userController.UpdateUserById)

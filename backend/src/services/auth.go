@@ -1,9 +1,11 @@
 package services
 
 import (
-	// "backend/src/models"
-	// "errors"
+	"backend/src/models"
 
+	"log"
+
+	"github.com/clerkinc/clerk-sdk-go/clerk"
 	"gorm.io/gorm"
 )
 
@@ -17,12 +19,23 @@ func NewAuthService(db *gorm.DB) *AuthService {
 	}
 }
 
-func (as *AuthService) Register() error {
-
+func (as *AuthService) Register(user models.User) error {
 	return nil
 }
 
-func (as *AuthService) Authenticate() error {
+func (as *AuthService) AuthenticateSession(client clerk.Client, sessionToken string) (*clerk.User, error) {
+	// verify the session
+	sessClaims, clerkErr := client.VerifyToken(sessionToken)
+	if clerkErr != nil {
+		log.Println(clerkErr.Error())
+		return nil, clerkErr
+	}
 
-	return nil
+	// get the user
+	user, clerkErr := client.Users().Read(sessClaims.Claims.Subject)
+	if clerkErr != nil {
+		log.Println(clerkErr.Error())
+		return nil, clerkErr
+	}
+	return user, nil
 }
