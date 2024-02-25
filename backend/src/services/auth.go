@@ -17,6 +17,11 @@ func NewAuthService(db *gorm.DB) *AuthService {
 	}
 }
 
+func (as *AuthService) Register() error {
+
+	return nil
+}
+
 func (as *AuthService) Authenticate() error {
 
 	return nil

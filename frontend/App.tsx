@@ -22,8 +22,6 @@ const tokenCache = {
 };
 
 export default function App() {
-  console.log('Starting App')
-  console.log(process.env.EXPO_PUBLIC_CLERK_API_KEY)
   return (
     <ClerkProvider
       publishableKey={process.env.EXPO_PUBLIC_CLERK_API_KEY as string}

@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect /*useState*/ } from 'react';
 // import { User } from '../types/types';
 // import { getAllUsers } from '../services/users';
-import { testClerkAuth } from '../services/users';
+import { authenticateSession } from '../services/auth';
 import { useAuth } from '@clerk/clerk-expo';
 
 export default function TestPage() {
@@ -35,7 +35,7 @@ export default function TestPage() {
       <TouchableOpacity
         onPress={async () => {
           const authtoken = await getToken() as string;
-          testClerkAuth(authtoken);
+          authenticateSession(authtoken);
         }}
         className='bg-blue-500 p-2 rounded-md w-1/4 text-center mt-2'
         >

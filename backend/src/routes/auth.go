@@ -3,10 +3,9 @@ package routes
 import (
 	"backend/src/controllers"
 	"backend/src/services"
-
-	// "encoding/json"
+	"encoding/json"
 	"log"
-	// "net/http"
+	"net/http"
 	"os"
 
 	"github.com/clerkinc/clerk-sdk-go/clerk"
@@ -15,7 +14,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func SetupAuthRoutes(router *gin.Engine, db *gorm.DB) {
+func SetupAuthRoutes(router *gin.Engine, db *gorm.DB) clerk.Client {
 	authService := services.NewAuthService(db)
 	authController := controllers.NewAuthController(authService)
 
@@ -24,16 +23,35 @@ func SetupAuthRoutes(router *gin.Engine, db *gorm.DB) {
 		log.Fatal("Error setting up Clerk store")
 	}
 
-	// Initialize Clerk middleware
-	// injectActiveSession := clerk.WithSessionV2(client)
-	// router.Use(adaptHTTPHandler(injectActiveSession(http.HandlerFunc(returnActiveSession))))
-
 	authRoutes := router.Group("/auth")
 	{
-		authRoutes.POST("", func(c *gin.Context) {
+		// Initialize Clerk middleware
+		// injectActiveSession := clerk.WithSessionV2(client)
+		// router.Use(adaptHTTPHandler(injectActiveSession(http.HandlerFunc(returnActiveSession))))
+
+		authRoutes.POST("/register", func(c *gin.Context) {
+			authController.AuthenticateSession(c, client)
+		})
+		authRoutes.POST("/authenticate", func(c *gin.Context) {
 			authController.AuthenticateSession(c, client)
 		})
 	}
+
+	return client
+}
+
+// Initialize Clerk middleware
+func SetupAuthMiddleware(client clerk.Client, router *gin.Engine) {
+	injectActiveSession := clerk.WithSessionV2(client)
+	router.Use(AdaptHTTPHandler(injectActiveSession(http.HandlerFunc(ReturnActiveSession))))
+}
+
+func RemoveMiddleware(router *gin.Engine) {
+	// Remove the middleware from the router
+	router.Use(func(c *gin.Context) {
+		// This function will be executed before the routes without the middleware
+		c.Next()
+	})
 }
 
 func SetupClerkStore() (clerk.Client, error) {
@@ -52,29 +70,19 @@ func SetupClerkStore() (clerk.Client, error) {
 	return client, nil
 }
 
-// func adaptHTTPHandler(handler http.Handler) gin.HandlerFunc {
-// 	return func(c *gin.Context) {
-// 		handler.ServeHTTP(c.Writer, c.Request)
-// 	}
-// }
+func AdaptHTTPHandler(handler http.Handler) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		handler.ServeHTTP(c.Writer, c.Request)
+	}
+}
 
-// func returnActiveSession(w http.ResponseWriter, req *http.Request) {
-// 	sessionClaims, ok := clerk.SessionFromContext(req.Context())
-// 	if ok {
-// 		jsonResp, _ := json.Marshal(sessionClaims)
-// 		log.Println(w, string(jsonResp))
-// 	} else {
-// 		// handle non-authenticated user
-// 		log.Println(w, "No active session found.")
-// 	}
-// }
-
-// func removeMiddleware(router *gin.Engine) {
-// 	// Remove the middleware from the router
-// 	router.Use(func(c *gin.Context) {
-// 		// Your custom logic here
-// 		// This function will be executed before the routes
-// 		// without the middleware
-// 		c.Next()
-// 	})
-// }
+func ReturnActiveSession(w http.ResponseWriter, req *http.Request) {
+	sessionClaims, ok := clerk.SessionFromContext(req.Context())
+	if ok {
+		jsonResp, _ := json.Marshal(sessionClaims)
+		log.Println(w, string(jsonResp))
+	} else {
+		// handle non-authenticated user
+		log.Println(w, "No active session found.")
+	}
+}

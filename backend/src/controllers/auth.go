@@ -21,7 +21,7 @@ func NewAuthController(authService *services.AuthService) *AuthController {
 	}
 }
 
-func (ac *AuthController) Login(c *gin.Context) {
+func (ac *AuthController) Register(c *gin.Context) {
 }
 
 func (ac *AuthController) AuthenticateSession(c *gin.Context, client clerk.Client) {
@@ -33,7 +33,6 @@ func (ac *AuthController) AuthenticateSession(c *gin.Context, client clerk.Clien
 		return
 	}
 	sessionToken := authRequest.Body.SessionToken
-	log.Println("SessionToken:", sessionToken)
 
 	// verify the session
 	sessClaims, clerkErr := client.VerifyToken(sessionToken)

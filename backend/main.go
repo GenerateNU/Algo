@@ -39,9 +39,9 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	routes.SetupUserRoutes(r, db)
+	clerkClient := routes.SetupAuthRoutes(r, db)
+	routes.SetupUserRoutes(r, db, clerkClient)
 	routes.SetupETradeRoutes(r, db)
-	routes.SetupAuthRoutes(r, db)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
