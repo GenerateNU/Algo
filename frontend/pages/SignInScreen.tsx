@@ -18,6 +18,7 @@ export default function SignInScreen() {
 
   const onSignInPress = async () => {
     if (!isLoaded) {
+      console.error("Error: Clerk not loaded")
       return;
     }
 

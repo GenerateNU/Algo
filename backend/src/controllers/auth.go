@@ -4,12 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	// "strings"
-
-	"strconv"
-
-	// "backend/src/models"
 	"backend/src/services"
+	"backend/src/types"
 
 	"github.com/clerkinc/clerk-sdk-go/clerk"
 	"github.com/gin-gonic/gin"
@@ -29,42 +25,30 @@ func (ac *AuthController) Login(c *gin.Context) {
 }
 
 func (ac *AuthController) AuthenticateSession(c *gin.Context, client clerk.Client) {
-	// get session token from Authorization header
-	// sessionToken := c.Request.Header.Get("Authorization")
-
-	// var requestBody struct {
-	// 	SessionToken string `json:"sessionToken"`
-	// }
-
-	// if err := c.Bind(&requestBody); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
-	// log.Println("IMPORTANTTTTTTTTTTTTTTTTTT")
-	// log.Println(requestBody.SessionToken)
-	// sessionToken = strings.TrimPrefix(sessionToken, "Bearer ")
-
-	// c.BindHeader("Authorization")
-	id := c.Param("id")
-	sessionToken, _ := strconv.ParseUint(id, 10, 32)
-	log.Println(sessionToken)
-	log.Println(c.Request)
+	// parse sessionToken from body using AuthRequest struct
+	var authRequest types.AuthRequest
+	if err := c.ShouldBindJSON(&authRequest); err != nil {
+		log.Fatal(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error(), "body": c.Request.Body})
+		return
+	}
+	sessionToken := authRequest.Body.SessionToken
+	log.Println("SessionToken:", sessionToken)
 
 	// verify the session
-	// sessClaims, clerkErr := client.VerifyToken(sessionToken)
-	// if clerkErr != nil {
-	// 	c.Writer.WriteHeader(http.StatusUnauthorized)
-	// 	return
-	// }
-	// // get the user, and say welcome!
-	// user, clerkErr := client.Users().Read(sessClaims.Claims.Subject)
-	// if clerkErr != nil {
-	// 	panic(clerkErr)
-	// }
+	sessClaims, clerkErr := client.VerifyToken(sessionToken)
+	if clerkErr != nil {
+		log.Println(clerkErr.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": clerkErr.Error()})
+		return
+	}
 
-	// _, err := c.Writer.Write([]byte("Welcome " + *user.FirstName))
-	// if err != nil {
-	// 	panic(err)
-	// }
-	c.JSON(http.StatusOK, "AuthenticateSession")
+	// get the user
+	user, clerkErr := client.Users().Read(sessClaims.Claims.Subject)
+	if clerkErr != nil {
+		log.Println(clerkErr.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": clerkErr.Error()})
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Welcome " + *user.Username})
 }

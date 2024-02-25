@@ -66,7 +66,7 @@ backend-run:
 .PHONY: backend-ngrok
 backend-ngrok:
 	@echo ${EXPO_PUBLIC_API_DOMAIN}
-	cd backend && ngrok http --domain=${EXPO_PUBLIC_API_DOMAIN} 8080
+	cd backend && ngrok http --request-header-add "Authorization: value" --domain=${EXPO_PUBLIC_API_DOMAIN} 8080
 
 # Test the backend
 .PHONY: backend-test 

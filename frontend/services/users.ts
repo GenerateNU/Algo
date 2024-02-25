@@ -21,16 +21,16 @@ export const getCallbackUrl = async (id: number): Promise<Redirect> => {
 
 export const testClerkAuth = async (sessionToken: string) => {
   console.log(sessionToken);
-  const response: AxiosResponse<Redirect> = await axios.get<Redirect>(
-    `http://${API_LINK}/auth/`,
+  const response: AxiosResponse<Redirect> = await axios.post<Redirect>(
+    `http://${API_LINK}/auth`,
     {
-      headers: {
-        Authorization: `Bearer ${sessionToken}`,
-      },
-      data: {
+      // headers: {
+      //   'Content-Type': 'application/json',
+      //   'Authorization': `Bearer ${sessionToken}`,
+      // },
+      body: {
         sessionToken: sessionToken,
-      },
-      params: { sessionToken: sessionToken },
+      }
     },
   );
   console.log(response.data);

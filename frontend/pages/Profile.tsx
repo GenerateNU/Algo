@@ -11,8 +11,9 @@ const Profile = () => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       // User has navigated to the page
-      console.log(`Profile Page | session user: ${session?.user}`);
+      // console.log(`Profile Page | session token: ${JSON.stringify(session?.getToken())}`);
       // console.log('Profile Page | session: ', JSON.stringify(session))
+      console.log(`Profile Page | session token: ${session?.getToken()}`);
       if (session?.user.username === undefined) {
         /* Unsure why casting to never is required, issue to look into */
         navigation.navigate('Signin' as never);

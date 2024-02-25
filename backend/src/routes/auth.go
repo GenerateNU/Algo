@@ -30,7 +30,7 @@ func SetupAuthRoutes(router *gin.Engine, db *gorm.DB) {
 
 	authRoutes := router.Group("/auth")
 	{
-		authRoutes.GET("/:id", func(c *gin.Context) {
+		authRoutes.POST("", func(c *gin.Context) {
 			authController.AuthenticateSession(c, client)
 		})
 	}
