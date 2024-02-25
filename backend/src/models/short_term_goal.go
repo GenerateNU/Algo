@@ -6,5 +6,5 @@ import (
 
 type ShortTermGoal struct {
 	types.Model
-	ShortTermGoalName string `gorm:"type:text" json:"short_term_goal_name"`
+	ShortTermGoal string `gorm:"type:text" json:"short_term_goal"`
 }
