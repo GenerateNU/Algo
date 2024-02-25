@@ -57,3 +57,14 @@ func (ac *AuthController) AuthenticateSession(c *gin.Context, client clerk.Clien
 
 	c.JSON(http.StatusOK, gin.H{"message": "Welcome " + *user.Username})
 }
+
+func (ac *AuthController) GetSession(c *gin.Context, client clerk.Client) {
+
+	claims, activeSession := clerk.SessionFromContext(c)
+
+	if !activeSession {
+		c.JSON(http.StatusOK, gin.H{"message": "No active session"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"Session ID": claims.SessionID})
+}

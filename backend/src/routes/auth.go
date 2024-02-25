@@ -25,15 +25,14 @@ func SetupAuthRoutes(router *gin.Engine, db *gorm.DB) clerk.Client {
 
 	authRoutes := router.Group("/auth")
 	{
-		// Initialize Clerk middleware
-		// injectActiveSession := clerk.WithSessionV2(client)
-		// router.Use(adaptHTTPHandler(injectActiveSession(http.HandlerFunc(returnActiveSession))))
-
 		authRoutes.POST("/register", func(c *gin.Context) {
-			authController.AuthenticateSession(c, client)
+			authController.Register(c)
 		})
 		authRoutes.POST("/authenticate", func(c *gin.Context) {
 			authController.AuthenticateSession(c, client)
+		})
+		authRoutes.GET("/session", func(c *gin.Context) {
+			authController.GetSession(c, client)
 		})
 	}
 

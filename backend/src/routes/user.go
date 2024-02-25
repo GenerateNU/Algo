@@ -16,7 +16,20 @@ func SetupUserRoutes(router *gin.Engine, db *gorm.DB, clerkClient clerk.Client) 
 	userRoutes := router.Group("/users")
 	{
 		/* Protected Routes */
-		SetupAuthMiddleware(clerkClient, router)
+
+		/*
+			!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			Clerk middleware currently doesn't work since ngrok does not allow us to
+			edit request headers.
+
+			We can:
+			- implement our own clerk middleware
+			- find out how to modify request headers with axios and bypass ngrok
+			- find out how to modify request headers with ngrok options dynamically
+			- add middleware to filter all requests and attach headers once they reach the backend (might conflict with clerk)
+
+		*/
+		// SetupAuthMiddleware(clerkClient, router)
 		userRoutes.PUT("/:id", userController.UpdateUserById)
 		userRoutes.DELETE("/:id", userController.DeleteUserById)
 
@@ -27,7 +40,7 @@ func SetupUserRoutes(router *gin.Engine, db *gorm.DB, clerkClient clerk.Client) 
 		userRoutes.DELETE("/short-term-goal/:user_id/:goal_id", userController.DeleteShortTermGoalForUser)
 
 		/* Public Routes */
-		RemoveMiddleware(router)
+		// RemoveMiddleware(router)
 		userRoutes.POST("/", userController.CreateUser)
 		userRoutes.GET("/", userController.GetAllUsers)
 		userRoutes.GET("/:id", userController.GetUserById)
