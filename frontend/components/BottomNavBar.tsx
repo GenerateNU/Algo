@@ -98,3 +98,28 @@ const BottomNavBar = () => {
 };
 
 export default BottomNavBar;
+
+/*
+<Stack.Navigator initialRouteName="SplashScreen">
+        <Stack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          options={{ headerShown: false }} // Hide the header for the splash screen
+        />
+        <Stack.Screen
+          name="LoginPage"
+          component={LoginPage}
+          options={{ headerShown: false }} // You can set this to true if you want a header on the login page
+        />
+         <Stack.Screen
+          name="SignInPage"
+          component={SignInPage}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="GoalsPage"
+          component={GoalsPage}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+*/
