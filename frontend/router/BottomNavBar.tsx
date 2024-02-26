@@ -6,9 +6,9 @@ import TestPage from '../pages/TestPage';
 import AuthPage from '../pages/AuthPage';
 import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
-// import SignInScreen from '../pages/SignInScreen';
-// import SignUpScreen from '../pages/SignUpScreen';
-// import { useSession } from '@clerk/clerk-expo';
+import { useSession } from '@clerk/clerk-expo';
+import Login from '../pages/Login';
+import Signup from '../pages/Signup';
 // import OnBoardingNavigator from '../router/Onboarding';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -16,15 +16,15 @@ type TabRouteName =
   | 'Explore'
   | 'Leaderboard'
   | 'Profile'
-  | 'Signin'
-  | 'Registration';
+  | 'Login'
+  | 'Signup';
 
 const tabBarIconMapping: Record<TabRouteName, string> = {
   Explore: 'feature-search',
   Leaderboard: 'podium',
   Profile: 'account-circle',
-  Signin: 'login',
-  Registration: 'account-plus',
+  Login: 'login',
+  Signup: 'account-plus',
 };
 
 const screenOptionsIcon = (
@@ -41,12 +41,12 @@ export type BottomTabParamList = {
   Leaderboard: undefined;
   Explore: undefined;
   Profile: undefined;
-  Signin: undefined;
-  Registration: undefined;
+  Login: undefined;
+  Signup: undefined;
 };
 
 const BottomNavBar = () => {
-  // const { session } = useSession();
+  const { session } = useSession();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -76,10 +76,10 @@ const BottomNavBar = () => {
           headerShown: false,
         }}
       />
-      {/* {session?.user === undefined && (
+      {session?.user === undefined && (
         <Tab.Screen
-          name="Signin"
-          component={OnBoardingNavigator}
+          name="Login"
+          component={Login}
           options={{
             headerShown: false,
           }}
@@ -87,13 +87,13 @@ const BottomNavBar = () => {
       )}
       {session?.user === undefined && (
         <Tab.Screen
-          name="Registration"
-          component={SignUpScreen}
+          name="Signup"
+          component={Signup}
           options={{
             headerShown: false,
           }}
         />
-      )} */}
+      )}
     </Tab.Navigator>
   );
 };

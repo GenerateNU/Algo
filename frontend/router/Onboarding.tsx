@@ -2,17 +2,17 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from '../pages/SplashScreen';
 import GoalsPage from '../pages/GoalsPage';
-import LoginPage from '../pages/LoginPage';
+import Signup from '../pages/Signup';
 
 const Stack = createStackNavigator();
 
 const OnBoardingNavigator = () => {
   
   return (
-    <Stack.Navigator initialRouteName="LoginPage">
+    <Stack.Navigator initialRouteName="Signup">
       <Stack.Screen
-        name="LoginPage"
-        component={LoginPage}
+        name="Signup"
+        component={Signup}
         options={{ headerShown: false }}
       />
       <Stack.Screen

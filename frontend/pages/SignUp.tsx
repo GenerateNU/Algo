@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
 // import { useDispatch } from 'react-redux';
 
-export default function SignUp() {
+export default function Signup() {
   // const dispatch = useDispatch();
   const navigation = useNavigation();
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -20,12 +20,12 @@ export default function SignUp() {
   // dispatch();
 
   const [username, setUsername] = React.useState('');
-  const [email, setEmail] = React.useState('');
+  const [emailAddress, setEmailAddress] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [code, setCode] = React.useState('');
 
   const handleSignUp = async () => {
-    if (!isLoaded || !username || !email || !password || password.length < 8) {
+    if (!isLoaded || !username || !emailAddress || !password || password.length < 8) {
       return;
     }
 
@@ -33,7 +33,7 @@ export default function SignUp() {
       // create the user.
       const signupResource = await signUp.create({
         username,
-        emailAddress: email,
+        emailAddress,
         password,
       });
 
@@ -83,13 +83,13 @@ export default function SignUp() {
         style={styles.input}
         onChangeText={setUsername}
         value={username}
-        placeholder="username"
+        placeholder="Username"
       />
 
       <TextInput
         style={styles.input}
-        onChangeText={setEmail}
-        value={email}
+        onChangeText={setEmailAddress}
+        value={emailAddress}
         placeholder="Email"
       />
 

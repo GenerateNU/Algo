@@ -1,23 +1,37 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
-// import { useNavigation } from '@react-navigation/native';
-// import { LoginPageNavigationProp } from '../types/navigationTypes'; 
+import { useSignIn } from '@clerk/clerk-expo';
+import { useNavigation } from '@react-navigation/native';
+import { LoginPageNavigationProp } from '../types/navigationTypes'; 
 
-const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState<string>('');
+const Login: React.FC = () => {
+  const navigation = useNavigation<LoginPageNavigationProp>();
+  const { signIn, setActive, isLoaded } = useSignIn();
+  const [identifier, setIdentifier] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  // const navigation = useNavigation<LoginPageNavigationProp>();
 
-  const handleLogin = () => {
-    // TODO: Connect to BE and handle the login logic here
-    console.log(username, password);
-    // after login, navigate to the next screen
-    // navigation.navigate('NextScreenRouteName');
+  const handleLogin = async () => {
+    if (!isLoaded) {
+      console.error('Error: Clerk not loaded');
+      return;
+    }
+
+    try {
+      const completeSignIn = await signIn.create({
+        identifier,
+        password,
+      });
+
+      await setActive({ session: completeSignIn.createdSessionId });
+      navigation.navigate('Profile' as never);
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
   };
 
   const navigateToSignUp = () => {
-    // navigation.navigate('Signup');
+    navigation.navigate('Registration' as never);
   };
 
   return (
@@ -28,9 +42,9 @@ const LoginPage: React.FC = () => {
       
       <TextInput
         style={styles.input}
-        onChangeText={setUsername}
-        value={username}
-        placeholder="Phone Number or Username"
+        onChangeText={setIdentifier}
+        value={identifier}
+        placeholder="Email or Username"
       />
       
       <TextInput
@@ -114,4 +128,4 @@ const styles = StyleSheet.create({
     },
   });  
 
-export default LoginPage;
+export default Login;
