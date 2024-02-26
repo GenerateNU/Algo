@@ -18,7 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20.x]
         go-version: [1.21.x]
     steps:
       - name: Checkout
