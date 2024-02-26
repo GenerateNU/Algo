@@ -1,9 +1,15 @@
-name: CI (Linting, Testing, Building)
+name: Backend CI (Linting, Testing, Formatting, Building)
 
 on:
   push:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yaml'
     branches: ['main']
   pull_request:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yaml'
     branches: ['main']
 
 jobs:
@@ -22,15 +28,17 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go-version }}
+      - name: Cache Go Modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
       - name: 'Create env file'
         run: |
           touch .env
           cat .env
-
-      - name: Set up Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: Install Linters
         run: |
@@ -39,20 +47,11 @@ jobs:
 
       - name: Lint Go code
         run: make backend-lint
-
-      - name: Install frontend linters
-        run: |
-          cd frontend
-          yarn install
-
-      - name: Lint Frontend code
-        run: make frontend-lint
   test:
     name: Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20.x]
         go-version: [1.21.x]
     container: node:latest
 
@@ -79,12 +78,6 @@ jobs:
         run: |
           touch .env
           cat .env
-
-      - name: Debugging
-        run: |
-          pwd
-          ls -l ./backend/src/db/migrations/
-
       - name: Import DB seed data
         run: |
           for file in $(ls -1 ./ | sort); do
@@ -96,16 +89,52 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go-version }}
-
+      - name: Cache Go Modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Install Dependencies
+        run: make backend-dep
       - name: Run Go tests
         run: |
           make backend-test
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: [1.21.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: 'Create env file'
+        run: |
+          touch .env
+          cat .env
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Cache Go Modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Format Go Code
+        run: |
+          make backend-format
   build:
     name: Build
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20.x]
         go-version: [1.21.x]
     steps:
       - name: Checkout
@@ -116,15 +145,18 @@ jobs:
           touch .env
           cat .env
 
-      - name: Install Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go-version }}
+
+      - name: Cache Go Modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
 
       - name: Build Go app
         run: |
