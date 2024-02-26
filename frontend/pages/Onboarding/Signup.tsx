@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -9,15 +10,20 @@ import {
 import { useSignUp } from '@clerk/clerk-expo';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import {
+  updateUsername,
+  updateEmail,
+  updatePassword,
+  beginOnboarding,
+} from '../../reducers/onboarding/onboardingReducer';
+import { ClerkErrorResponse } from '../../types/types';
 
 export default function Signup() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const { isLoaded, signUp, setActive } = useSignUp();
   const [pendingVerification, setPendingVerification] = React.useState(false);
-
-  // dispatch();
 
   const [username, setUsername] = React.useState('');
   const [emailAddress, setEmailAddress] = React.useState('');
@@ -25,7 +31,12 @@ export default function Signup() {
   const [code, setCode] = React.useState('');
 
   const handleSignUp = async () => {
-    if (!isLoaded || !username || !emailAddress || !password || password.length < 8) {
+    if (!isLoaded || !username || !emailAddress || !password) {
+      Alert.alert('Please fill in all fields');
+      return;
+    }
+    if (password.length < 8) {
+      Alert.alert('Password must be at least 8 characters long');
       return;
     }
 
@@ -37,15 +48,22 @@ export default function Signup() {
         password,
       });
 
+      console.log('signupResource status: ', signupResource.status);
+      // if (signupResource.status === 'missing_requirements') {
+      //   Alert.alert('Invalid fields. Please try again.');
+      //   return;
+      // }
+
       // send the email.
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
 
       // change the UI to our pending section.
       setPendingVerification(true);
-      console.log('signupResource status: ', signupResource.status);
     } catch (error) {
-      // const errorObject = JSON.stringify(error);
       console.log(JSON.stringify(error));
+      const clerkError = error as ClerkErrorResponse;
+      const clerkMessage = clerkError.errors[0].message;
+      Alert.alert(clerkMessage);
     }
   };
 
@@ -61,19 +79,42 @@ export default function Signup() {
         code,
       });
 
+      dispatch(beginOnboarding());
+
       // set the user as active.
       await setActive({ session: completeSignUp.createdSessionId });
-      navigation.navigate('Profile' as never);
+
+      dispatch(updateUsername(username));
+      dispatch(updateEmail(emailAddress));
+      dispatch(updatePassword(password));
+
+      navigation.navigate('GoalsPage' as never);
     } catch (error) {
       console.log(JSON.stringify(error));
     }
   };
 
-  // Example function to handle navigation back to login page
   const navigateToLogin = () => {
     navigation.navigate('Login' as never);
   };
 
+  if (pendingVerification) {
+    return (
+      <View style={styles.container}>
+        <View>
+          <TextInput
+            value={code}
+            placeholder="Code . . ."
+            onChangeText={code => setCode(code)}
+            style={styles.input}
+          />
+        </View>
+        <TouchableOpacity onPress={onPressVerify} style={styles.button}>
+          <Text>Verify Email</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign up</Text>
@@ -108,21 +149,6 @@ export default function Signup() {
       <TouchableOpacity onPress={navigateToLogin}>
         <Text style={styles.loginText}>Already have an account? Login</Text>
       </TouchableOpacity>
-
-      {pendingVerification && (
-        <View>
-          <View>
-            <TextInput
-              value={code}
-              placeholder="Code..."
-              onChangeText={code => setCode(code)}
-            />
-          </View>
-          <TouchableOpacity onPress={onPressVerify}>
-            <Text>Verify Email</Text>
-          </TouchableOpacity>
-        </View>
-      )}
     </View>
   );
 }
@@ -190,4 +216,3 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
 });
-

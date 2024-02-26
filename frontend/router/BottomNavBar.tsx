@@ -1,15 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import NotFound from '../pages/NotFound';
-import Profile from '../pages/Profile';
 import TestPage from '../pages/TestPage';
 import AuthPage from '../pages/AuthPage';
 import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
-import { useSession } from '@clerk/clerk-expo';
-import Login from '../pages/Login';
-import Signup from '../pages/Signup';
-// import OnBoardingNavigator from '../router/Onboarding';
+import AuthNavigator from './AuthNavigation';
+// import { useSession } from '@clerk/clerk-expo';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 type TabRouteName =
@@ -46,7 +42,7 @@ export type BottomTabParamList = {
 };
 
 const BottomNavBar = () => {
-  const { session } = useSession();
+  // const { session } = useSession();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -71,29 +67,11 @@ const BottomNavBar = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={AuthNavigator}
         options={{
           headerShown: false,
         }}
       />
-      {session?.user === undefined && (
-        <Tab.Screen
-          name="Login"
-          component={Login}
-          options={{
-            headerShown: false,
-          }}
-        />
-      )}
-      {session?.user === undefined && (
-        <Tab.Screen
-          name="Signup"
-          component={Signup}
-          options={{
-            headerShown: false,
-          }}
-        />
-      )}
     </Tab.Navigator>
   );
 };

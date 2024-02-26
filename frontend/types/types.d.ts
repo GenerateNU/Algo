@@ -12,3 +12,15 @@ export interface Redirect {
 export interface TokenStatus {
     status: string;
 }
+
+export type ClerkErrorResponse = {
+  status: number;
+  clerkError: string;
+  errors: ClerkError[];
+};
+
+export type ClerkError = {
+  code: string;
+  message: string;
+  longMessage: string;
+};

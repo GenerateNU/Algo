@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useSignIn } from '@clerk/clerk-expo';
 import { useNavigation } from '@react-navigation/native';
 import { LoginPageNavigationProp } from '../types/navigationTypes'; 
+import { ClerkErrorResponse } from '../types/types';
 
 const Login: React.FC = () => {
   const navigation = useNavigation<LoginPageNavigationProp>();
@@ -26,12 +27,18 @@ const Login: React.FC = () => {
       await setActive({ session: completeSignIn.createdSessionId });
       navigation.navigate('Profile' as never);
     } catch (error) {
-      console.log(JSON.stringify(error));
+      const clerkError = error as ClerkErrorResponse;
+      const clerkMessage = clerkError.errors[0].message;
+      if(clerkMessage === "Couldn't find your account.") {
+        Alert.alert('Username or email does not exist');
+        return;
+      }
+      Alert.alert('Invalid password. Please try again.');
     }
   };
 
   const navigateToSignUp = () => {
-    navigation.navigate('Registration' as never);
+    navigation.navigate('Signup' as never);
   };
 
   return (

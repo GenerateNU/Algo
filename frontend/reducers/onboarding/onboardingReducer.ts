@@ -3,17 +3,21 @@ import { createSlice } from '@reduxjs/toolkit';
 const onboardingSlice = createSlice({
   name: 'onboarding',
   initialState: {
-    completed: false,
-    financialGoals: [],
-    financialLiteracy: [],
-    yearsOfExperience: 0,
+    isOnboarding: false,
     username: '',
     email: '',
     password: '',
+    financialGoals: [],
+    financialLiteracy: [],
+    risk: '',
+    yearsOfExperience: 0,
   },
   reducers: {
     completeOnboarding(state) {
-      state.completed = true;
+      state.isOnboarding = false;
+    },
+    beginOnboarding(state) {
+      state.isOnboarding = true;
     },
     updateFinancialGoals(state, action) {
       state.financialGoals = action.payload;
@@ -33,16 +37,21 @@ const onboardingSlice = createSlice({
     updatePassword(state, action) {
       state.password = action.payload;
     },
+    updateRisk(state, action) {
+      state.risk = action.payload;
+    },
   },
 });
 
 export const {
   completeOnboarding,
+  beginOnboarding,
   updateFinancialGoals,
   updateFinancialLiteracy,
   updateYearsOfExperience,
   updateUsername,
   updateEmail,
   updatePassword,
+  updateRisk,
 } = onboardingSlice.actions;
 export default onboardingSlice.reducer;

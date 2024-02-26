@@ -4,9 +4,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 export type RootStackParamList = {
   SplashScreen: undefined;
-  LoginPage: undefined;
-  SignInPage: undefined;
+  Login: undefined;
+  Signin: undefined;
   GoalsPage: undefined;
+  ExperienceAndRisk: undefined;
   // define other screens here
 };
 
@@ -17,17 +18,22 @@ export type SplashScreenNavigationProp = StackNavigationProp<
 
 export type LoginPageNavigationProp = StackNavigationProp<
   RootStackParamList,
-  'LoginPage'
+  'Login'
 >;
 
 export type SignInPageNavigationProp = StackNavigationProp<
   RootStackParamList,
-  'SignInPage'
+  'Signin'
 >;
 
 export type GoalsPageNavigationProp = StackNavigationProp<
   RootStackParamList,
   'GoalsPage'
+>;
+
+export type ExperienceAndRiskNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'ExperienceAndRisk'
 >;
 
 export type SplashScreenRouteProp = RouteProp<RootStackParamList, 'SplashScreen'>;
