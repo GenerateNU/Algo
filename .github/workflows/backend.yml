@@ -1,4 +1,4 @@
-name: Backend CI (Linting, Testing, Formatting, Building)
+name: Backend
 
 on:
   push:
