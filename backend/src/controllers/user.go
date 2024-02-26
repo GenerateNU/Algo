@@ -474,6 +474,16 @@ func (uc *UserController) DeleteShortTermGoalForUser(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
+// OnbaordUser godoc
+//
+//	@Summary		Onboards a user
+//	@Description	Returns the onboarded user
+//	@ID				onboard-user
+//	@Tags			user
+//	@Produce		json
+//	@Success		200	{object}	[]models.User
+//	@Failure		404	{string}	string	"Failed to onboard user"
+//	@Router			/api/users/  [get]
 func (uc *UserController) OnboardUser(c *gin.Context) {
 	var input struct {
 		User           models.User            `json:"user"`
