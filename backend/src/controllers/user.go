@@ -473,3 +473,24 @@ func (uc *UserController) DeleteShortTermGoalForUser(c *gin.Context) {
 
 	c.Status(http.StatusNoContent)
 }
+
+func (uc *UserController) OnboardUser(c *gin.Context) {
+	var input struct {
+		User           models.User            `json:"user"`
+		ShortTermGoals []models.ShortTermGoal `json:"short_term_goals"`
+		LongTermGoals  []models.LongTermGoal  `json:"long_term_goals"`
+	}
+
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
+		return
+	}
+
+	user, err := uc.userService.OnboardUser(&input.User, input.ShortTermGoals, input.LongTermGoals)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to onboard user"})
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
+}

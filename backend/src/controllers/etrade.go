@@ -3,10 +3,12 @@ package controllers
 import (
 	"backend/src/services"
 	"backend/src/types"
+	"log"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 type ETradeController struct {
@@ -28,7 +30,7 @@ func NewETradeController(etradeService *services.ETradeService) *ETradeControlle
 //	@Produce		json
 //	@Success		200	{object}	RedirectURLResponse
 //	@Failure		500	{string}	string	"Failed to retrieve redirect URL"
-//	@Router			/users/{user_id}/etrade-redirect  [get]
+//	@Router			/etrade/{user_id}/redirect  [get]
 func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
 	userIdParam := c.Param("user_id")
 
@@ -40,13 +42,13 @@ func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
 
 	url, err := etc.etradeService.GetETradeRedirectURL(uint(userId))
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve redirect URL"})
 		return
 	}
 
-	data := map[string]interface{}{
-		"redirect_url": url,
+	data := types.RedirectURLResponse{
+		RedirectURL: url,
 	}
 
 	c.JSON(http.StatusOK, data)
@@ -64,7 +66,7 @@ func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
 //	@Success		200		{string}	string				"ok"
 //	@Failure		400		{string}	string				"Failed to validate JSON body"
 //	@Failure		500		{string}	string				"Failed to retrieve access token"
-//	@Router			/users/{user_id}/etrade-verify  [post]
+//	@Router			/etrade/{user_id}/verify  [post]
 func (etc *ETradeController) Verify(c *gin.Context) {
 	userIdParam := c.Param("user_id")
 
@@ -82,10 +84,44 @@ func (etc *ETradeController) Verify(c *gin.Context) {
 
 	err = etc.etradeService.GetAccessToken(uint(userId), json.Verifier)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve access token"})
 		return
 	}
 
 	c.Status(http.StatusOK)
+}
+
+// Status godoc
+//
+//	@Summary		Get the status of the user's E*Trade access token
+//	@Description	Returns the status
+//	@ID				oauth-status
+//	@Tags			etrade
+//	@Accept			json
+//	@Produce		json
+//	@Success		200		{object}	StatusResponse
+//	@Failure		500		{string}	string				"Failed to retrieve access token status"
+//	@Router			/etrade/{user_id}/status  [post]
+func (etc *ETradeController) Status(c *gin.Context) {
+	userIdParam := c.Param("user_id")
+
+	userId, err := strconv.ParseUint(userIdParam, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user_id invalid"})
+		return
+	}
+
+	status, err := etc.etradeService.GetAccessTokenStatus(uint(userId))
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve access token status"})
+		return
+	}
+
+	data := types.StatusResponse{
+		Status: status,
+	}
+
+	c.JSON(http.StatusOK, data)
 }

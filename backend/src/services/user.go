@@ -94,7 +94,7 @@ func (us *UserService) UpdateLongTermGoalForUser(userID uint, goalID uint, longT
 	}
 
 	if userLongTermGoal.UserID != userID {
-		return models.UserLongTermGoals{}, errors.New("User does not have permission to update this goal")
+		return models.UserLongTermGoals{}, errors.New("user does not have permission to update this goal")
 	}
 
 	if err := us.DB.Save(&longTermGoalID).Error; err != nil {
@@ -111,7 +111,7 @@ func (us *UserService) DeleteLongTermGoalForUser(userID uint, goalID uint) error
 	}
 
 	if userLongTermGoal.UserID != userID {
-		return errors.New("User does not have permission to delete this goal")
+		return errors.New("user does not have permission to delete this goal")
 	}
 
 	if err := us.DB.Delete(&userLongTermGoal).Error; err != nil {
@@ -125,7 +125,7 @@ func (us *UserService) DeleteLongTermGoalForUser(userID uint, goalID uint) error
 
 func (us *UserService) CreateShortTermGoalForUser(userID uint, shortTermGoalID uint) (models.UserShortTermGoals, error) {
 	goal := models.UserShortTermGoals{
-		UserID:         userID,
+		UserID:          userID,
 		ShortTermGoalID: shortTermGoalID,
 	}
 
@@ -151,7 +151,7 @@ func (us *UserService) UpdateShortTermGoalForUser(userID uint, goalID uint, shor
 	}
 
 	if userShortTermGoal.UserID != userID {
-		return models.UserShortTermGoals{}, errors.New("User does not have permission to update this goal")
+		return models.UserShortTermGoals{}, errors.New("user does not have permission to update this goal")
 	}
 
 	if err := us.DB.Save(&shortTermGoalID).Error; err != nil {
@@ -168,7 +168,7 @@ func (us *UserService) DeleteShortTermGoalForUser(userID uint, goalID uint) erro
 	}
 
 	if userShortTermGoal.UserID != userID {
-		return errors.New("User does not have permission to delete this goal")
+		return errors.New("user does not have permission to delete this goal")
 	}
 
 	if err := us.DB.Delete(&userShortTermGoal).Error; err != nil {
@@ -176,4 +176,24 @@ func (us *UserService) DeleteShortTermGoalForUser(userID uint, goalID uint) erro
 	}
 
 	return nil
+}
+
+func (us *UserService) OnboardUser(user *models.User, shortTermGoals []models.ShortTermGoal, longTermGoals []models.LongTermGoal) (*models.User, error) {
+	if _, err := us.CreateUser(user); err != nil {
+		return nil, err
+	}
+
+	for _, shortTermGoal := range shortTermGoals {
+		if _, err := us.CreateShortTermGoalForUser(user.ID, shortTermGoal.ID); err != nil {
+			return nil, err
+		}
+	}
+
+	for _, longTermGoal := range longTermGoals {
+		if _, err := us.CreateLongTermGoalForUser(user.ID, longTermGoal.ID); err != nil {
+			return nil, err
+		}
+	}
+
+	return user, nil
 }
