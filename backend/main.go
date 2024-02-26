@@ -31,8 +31,6 @@ func main() {
 
 	r := gin.Default()
 
-	routes.SetupUserRoutes(r, db)
-	routes.SetupETradeRoutes(r, db)
 	//Sets up CRUD Routes for Users, Following
 	routesHelper(r, db)
 
@@ -51,5 +49,6 @@ func main() {
 // @Ania, double check?
 func routesHelper(r *gin.Engine, db *gorm.DB) {
 	routes.SetupUserRoutes(r, db)
+	routes.SetupETradeRoutes(r, db)
 	routes.SetupFollowingRoutes(r, db)
 }
