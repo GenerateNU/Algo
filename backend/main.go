@@ -43,6 +43,7 @@ func main() {
 	clerkClient := routes.SetupAuthRoutes(r, db)
 	routes.SetupUserRoutes(r, db, clerkClient)
 	routes.SetupETradeRoutes(r, db)
+	routes.SetupOnboardingRoutes(r, db)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 

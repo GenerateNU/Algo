@@ -177,3 +177,23 @@ func (us *UserService) DeleteShortTermGoalForUser(userID uint, goalID uint) erro
 
 	return nil
 }
+
+func (us *UserService) OnboardUser(user *models.User, shortTermGoals []models.ShortTermGoal, longTermGoals []models.LongTermGoal) (*models.User, error) {
+	if _, err := us.CreateUser(user); err != nil {
+		return nil, err
+	}
+
+	for _, shortTermGoal := range shortTermGoals {
+		if _, err := us.CreateShortTermGoalForUser(user.ID, shortTermGoal.ID); err != nil {
+			return nil, err
+		}
+	}
+
+	for _, longTermGoal := range longTermGoals {
+		if _, err := us.CreateLongTermGoalForUser(user.ID, longTermGoal.ID); err != nil {
+			return nil, err
+		}
+	}
+
+	return user, nil
+}

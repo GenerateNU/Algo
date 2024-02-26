@@ -30,7 +30,7 @@ func NewETradeController(etradeService *services.ETradeService) *ETradeControlle
 //	@Produce		json
 //	@Success		200	{object}	RedirectURLResponse
 //	@Failure		500	{string}	string	"Failed to retrieve redirect URL"
-//	@Router			/etrade/{user_id}/etrade-redirect  [get]
+//	@Router			/etrade/{user_id}/redirect  [get]
 func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
 	userIdParam := c.Param("user_id")
 
@@ -66,7 +66,7 @@ func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
 //	@Success		200		{string}	string				"ok"
 //	@Failure		400		{string}	string				"Failed to validate JSON body"
 //	@Failure		500		{string}	string				"Failed to retrieve access token"
-//	@Router			/etrade/{user_id}/etrade-verify  [post]
+//	@Router			/etrade/{user_id}/verify  [post]
 func (etc *ETradeController) Verify(c *gin.Context) {
 	userIdParam := c.Param("user_id")
 

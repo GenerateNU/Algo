@@ -18,12 +18,12 @@ type VerifyRequest struct {
 	Verifier string `json:"verifier" binding:"required"`
 }
 
-type StatusResponse struct {
-	Status string `json:"status"`
-}
-
 type AuthRequest struct {
 	Body struct {
 		SessionToken string `json:"sessionToken"`
 	} `json:"body"`
+}
+
+type StatusResponse struct {
+	Status string `json:"status"`
 }
