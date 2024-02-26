@@ -1,7 +1,5 @@
 name: Frontend CI (Linting)
 
-permissions: read-all
-
 on:
   push:
     paths:

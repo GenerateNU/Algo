@@ -1,7 +1,5 @@
 name: Backend CI (Linting, Testing, Formatting, Building)
 
-permissions: read-all
-
 on:
   push:
     paths:
