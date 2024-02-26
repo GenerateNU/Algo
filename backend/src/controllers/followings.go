@@ -78,9 +78,9 @@ func (fol *FollowingController) GetTimeline(c *gin.Context) {
 // @Failure 404 {string} string "Failed to fetch followers: 404 Error"
 // @Router /api/followers/{followed_user_id} [get]
 func (fol *FollowingController) GetFollowers(c *gin.Context) {
-	user, err := strconv.ParseUint(c.Param("followed_user_id"), 10, 64)
+	user, err := strconv.ParseUint(c.Param("following_user_id"), 10, 64)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid followed_user_id"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid following_user_id"})
 		return
 	}
 	followings, err := fol.followingService.GetFollowers(uint(user))
@@ -111,7 +111,7 @@ func (fol *FollowingController) CreateFollowings(c *gin.Context) {
 	// Define Struct for JSON binding
 	var requestBody struct {
 		Follower uint `json:"follower_user_id"`
-		Followed uint `json:"followed_user_id"`
+		Followed uint `json:"following_user_id"`
 	}
 	// Bind the JSON body to the struct
 	if err := c.ShouldBindJSON(&requestBody); err != nil {
@@ -155,9 +155,9 @@ func (fol *FollowingController) UnfollowUser(c *gin.Context) {
 		return
 	}
 
-	followed, err := strconv.ParseUint(c.Param("followed_user_id"), 10, 64)
+	followed, err := strconv.ParseUint(c.Param("following_user_id"), 10, 64)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid followed_user_id"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid following_user_id"})
 		return
 	}
 

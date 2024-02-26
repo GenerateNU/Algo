@@ -6,7 +6,7 @@ import "time"
 // It defines the structure of a following entry in the database.
 type Followings struct {
 	FollowerUserID uint      `gorm:"type:int;" json:"follower_user_id" validate:"required"`
-	FollowedUserID uint      `gorm:"type:int;" json:"followed_user_id" validate:"required"`
+	FollowedUserID uint      `gorm:"type:int;" json:"following_user_id" validate:"required"`
 	CreatedAt      time.Time `gorm:"type:timestamp" json:"created_at" validate:"required"`
 
 	//User objects: User must be preloaded for gorm reads

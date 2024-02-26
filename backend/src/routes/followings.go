@@ -26,7 +26,7 @@ func SetupFollowingRoutes(router *gin.Engine, db *gorm.DB) {
 		// Create a following relation: Done
 		followingRoutes.POST("", followingController.CreateFollowings)
 		//Delete a following relation
-		followingRoutes.DELETE("/:follower_user_id/:followed_user_id", followingController.UnfollowUser)
+		followingRoutes.DELETE("/:follower_user_id/:following_user_id", followingController.UnfollowUser)
 
 	}
 	timelineRoutes := router.Group("/timelines")
@@ -38,7 +38,7 @@ func SetupFollowingRoutes(router *gin.Engine, db *gorm.DB) {
 	followersRoutes := router.Group("/followers")
 	{
 		// Get all of a users followers
-		followersRoutes.GET("/:followed_user_id", followingController.GetFollowers)
+		followersRoutes.GET("/:following_user_id", followingController.GetFollowers)
 	}
 
 }

@@ -85,7 +85,7 @@ func (fol *FollowingService) GetTimeline(user uint) ([]models.User, error) {
 func (fol *FollowingService) GetFollowers(user uint) ([]models.User, error) {
 	var following []models.Followings
 	//Retrieve all Followings relations where the follower user is
-	if err := fol.DB.Preload("FollowerUser").Preload("FollowedUser").Where("followed_user_id = ?", user).Find(&following).Error; err != nil {
+	if err := fol.DB.Preload("FollowerUser").Preload("FollowedUser").Where("following_user_id = ?", user).Find(&following).Error; err != nil {
 		return nil, err
 	}
 
@@ -127,6 +127,6 @@ func (fol *FollowingService) CreateFollowings(following *models.Followings) erro
 // Returns:
 //   - An error if any database operation fails.
 func (fol *FollowingService) DeleteFollowing(follower uint, followed uint) error {
-	err := fol.DB.Where("follower_user_id = ? AND followed_user_id = ?", follower, followed).Delete(&models.Followings{})
+	err := fol.DB.Where("follower_user_id = ? AND following_user_id = ?", follower, followed).Delete(&models.Followings{})
 	return err.Error
 }
