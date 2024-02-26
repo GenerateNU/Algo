@@ -1,15 +1,17 @@
 name: Backend CI (Linting, Testing, Formatting, Building)
 
+permissions: read-all
+
 on:
   push:
     paths:
-      - 'backend/**'
-      - '.github/workflows/backend.yaml'
+      - backend/**
+      - .github/workflows/backend.yaml
     branches: ['main']
   pull_request:
     paths:
-      - 'backend/**'
-      - '.github/workflows/backend.yaml'
+      - backend/**
+      - .github/workflows/backend.yaml
     branches: ['main']
 
 jobs:
