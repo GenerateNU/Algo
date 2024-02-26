@@ -8,9 +8,9 @@ import (
 type PostType string
 
 const (
-	OneMonthSummary PostType = "1 month summary"
-	RecentTrade     PostType = "Recent trade"
-	ShareComment    PostType = "Share comment"
+	ONE_MONTH_SUMMARY PostType = "1 month summary"
+	RECENT_TRADE      PostType = "Recent trade"
+	SHARE_COMMENT     PostType = "Share comment"
 )
 
 type Post struct {
