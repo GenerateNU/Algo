@@ -4,21 +4,35 @@ import (
 	"backend/src/controllers"
 	"backend/src/services"
 
+	"github.com/clerkinc/clerk-sdk-go/clerk"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
-func SetupUserRoutes(router *gin.Engine, db *gorm.DB) {
+func SetupUserRoutes(router *gin.Engine, db *gorm.DB, clerkClient clerk.Client) {
 	userService := services.NewUserService(db)
 	userController := controllers.NewUserController(userService)
 
 	userRoutes := router.Group("/users")
 	{
-		userRoutes.GET("/", userController.GetAllUsers)
-		userRoutes.POST("/", userController.CreateUser)
-		userRoutes.GET("/:id", userController.GetUserById)
+		/* Protected Routes */
+
+		/*
+			!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			Clerk middleware currently doesn't work since ngrok does not allow us to
+			edit request headers.
+
+			We can:
+			- implement our own clerk middleware
+			- find out how to modify request headers with axios and bypass ngrok
+			- find out how to modify request headers with ngrok options dynamically
+			- add middleware to filter all requests and attach headers once they reach the backend (might conflict with clerk)
+
+		*/
+		// SetupAuthMiddleware(clerkClient, router)
 		userRoutes.PUT("/:id", userController.UpdateUserById)
 		userRoutes.DELETE("/:id", userController.DeleteUserById)
+
 
 		userRoutes.POST("/long-term-goal/:user_id", userController.CreateLongTermGoalForUser)
 		userRoutes.GET("/long-term-goal/:user_id/", userController.GetLongTermGoalsForUser)
