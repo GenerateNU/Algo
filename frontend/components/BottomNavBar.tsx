@@ -5,6 +5,7 @@ import TestPage from "../pages/TestPage"
 import AuthPage from "../pages/AuthPage"
 import { Icon } from "@rneui/themed"
 import { RouteProp } from "@react-navigation/native"
+import { MainAppNavigationProp } from "../types/navigationTypes"
 
 const Tab = createBottomTabNavigator<BottomTabParamList>()
 type TabRouteName = "Explore" | "Leaderboard" | "Profile"

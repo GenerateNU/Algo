@@ -7,6 +7,10 @@ import LoginPage from './pages/LoginPage';
 import SignInPage from './pages/SignInPage';
 import GoalsPage from './pages/GoalsPage';
 import LevelPage from './pages/LevelPage';
+import ConnectPage from './pages/ConnectPage';
+import TutorialPage from './pages/TutorialPage';
+import BottomNavBar from './components/BottomNavBar';
+import AuthPage from './pages/AuthPage';
 
 // Create a stack navigator
 const Stack = createStackNavigator<RootStackParamList>();
@@ -40,6 +44,26 @@ export default function App() {
         <Stack.Screen
           name="LevelPage"
           component={LevelPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ConnectPage"
+          component={ConnectPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TutorialPage"
+          component={TutorialPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MainApp"
+          component={BottomNavBar}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AuthPage"
+          component={AuthPage}
           options={{ headerShown: false }}
         />
         {/* add more screens here */}

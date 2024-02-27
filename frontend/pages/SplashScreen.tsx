@@ -1,6 +1,6 @@
 // SplashScreen.tsx
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SplashScreenNavigationProp } from '../types/navigationTypes';
 
@@ -19,7 +19,7 @@ const SplashScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       {/* Placeholder for the logo */}
-      <Text style={styles.logo}>Your Logo Here</Text>
+      <Image source={require('../assets/logomark.png')} style={styles.logo} />
       {/* You can replace the Text with an Image component if you have a logo image */}
     </View>
   );
@@ -33,10 +33,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff', // Change the background color if needed
   },
   logo: {
-    // Style for your logo text or image
-    fontSize: 24, // Example size, adjust as needed
-    fontWeight: 'bold', // Example weight, adjust as needed
-    // Add more styling for your logo here
+    width: 150, // Adjust the width as needed
+    height: 150, // Adjust the height as needed
+    marginBottom: 20, // Adjust the space between the logo and the "Sign Up" text
+    alignSelf: 'center', // This centers the logo horizontally in the container
   },
 });
 

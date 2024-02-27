@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { GoalsPageNavigationProp } from '../types/navigationTypes';
 
@@ -9,9 +9,8 @@ type FinancialGoalProps = {
   onSelect: (goal: string) => void;
 };
 
-// The FinancialGoal component
 const FinancialGoal: React.FC<FinancialGoalProps> = ({ goal, isSelected, onSelect }) => {
-  // Based on the isSelected prop, we determine the styles to apply
+  // Based on the isSelected prop determine the styles to apply
   const goalStyle = isSelected ? styles.goalSelected : styles.goal;
   const goalTextStyle = isSelected ? styles.goalTextSelected : styles.goalText;
 
@@ -22,48 +21,52 @@ const FinancialGoal: React.FC<FinancialGoalProps> = ({ goal, isSelected, onSelec
   );
 };
 
-// The main page component where the FinancialGoal components will be used
+// main component
 const GoalsPage: React.FC = () => {
-  const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
-  const navigate = useNavigation<GoalsPageNavigationProp>();
-
-  const handleSelectGoal = (goal: string) => {
-    setSelectedGoals(prevGoals => {
-      if (prevGoals.includes(goal)) {
-        return prevGoals.filter(g => g !== goal);
-      } else {
-        return [...prevGoals, goal];
-      }
-    });
+    const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
+    const navigate = useNavigation<GoalsPageNavigationProp>();
+  
+    const handleSelectGoal = (goal: string) => {
+      setSelectedGoals(prevGoals => {
+        if (prevGoals.includes(goal)) {
+          return prevGoals.filter(g => g !== goal);
+        } else {
+          return [...prevGoals, goal];
+        }
+      });
+    };
+  
+    const handleSelectContinue = () => {
+      navigate.navigate('ConnectPage');
+    };
+  
+    const goals = ['Save for retirement', 'Pay off debt', 'Buy a home', 'Invest in stocks', 'Save for vacation'];
+  
+    // apply the active style when there are selected goals
+    const continueButtonStyle = selectedGoals.length > 0 ? styles.continueButtonActive : pageStyles.continueButton;
+  
+    return (
+      <SafeAreaView style={styles.SafeAreaView}> 
+        <View style={pageStyles.container}>
+          <Text style={pageStyles.title}>Let's get started</Text>
+          <Text style={pageStyles.subtitle}>What are your financial goals?</Text>
+          <ScrollView style={pageStyles.goalsContainer}>
+            {goals.map((goal, index) => (
+              <FinancialGoal
+                key={index}
+                goal={goal}
+                isSelected={selectedGoals.includes(goal)}
+                onSelect={handleSelectGoal}
+              />
+            ))}
+          </ScrollView>
+          <TouchableOpacity onPress={handleSelectContinue} style={continueButtonStyle}>
+            <Text style={pageStyles.continueButtonText}>Continue →</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
   };
-
-  const handleSelectContinue = () => {
-    navigate.navigate('LevelPage');
-  };
-
-  // Dummy data for the list of goals, replace with your actual data
-  const goals = ['Save for retirement', 'Pay off debt', 'Buy a home', 'Invest in stocks', 'Save for vacation'];
-
-  return (
-    <View style={pageStyles.container}>
-      <Text style={pageStyles.title}>Let's get started</Text>
-      <Text style={pageStyles.subtitle}>What are your financial goals?</Text>
-      <ScrollView style={pageStyles.goalsContainer}>
-        {goals.map((goal, index) => (
-          <FinancialGoal
-            key={index}
-            goal={goal}
-            isSelected={selectedGoals.includes(goal)}
-            onSelect={handleSelectGoal}
-          />
-        ))}
-      </ScrollView>
-      <TouchableOpacity onPress={handleSelectContinue} style={pageStyles.continueButton}>
-        <Text style={pageStyles.continueButtonText}>Continue →</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   goal: {
@@ -94,21 +97,34 @@ const styles = StyleSheet.create({
   goalTextSelected: {
     color: '#fff', // Text color for selected goal
   },
+  continueButtonActive: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#6F6F6F', // Darker color when active
+    borderRadius: 30,
+    padding: 10,
+  },
+  SafeAreaView: {
+        flex: 1,
+    backgroundColor: '#ffffff', // Background color for the SafeAreaView
+    },
 });
 
 const pageStyles = StyleSheet.create({
-  container: {
+container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-start', // Align content to the top
+    justifyContent: 'center',
     padding: 20,
-    backgroundColor: '#ffffff', // Background color for the page
-  },
+    paddingTop: 140,
+    backgroundColor: '#FFFFFF', // The background color is white
+    },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#000000', // Black color for the title
-    marginBottom: 10,
+    marginBottom: 40,
   },
   subtitle: {
     fontSize: 18,

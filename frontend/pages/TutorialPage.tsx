@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { TutorialPageNavigationProp } from '../types/navigationTypes';
 
 const TutorialPage: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<TutorialPageNavigationProp>();
 
   const handleContinue = () => {
-    // Navigate to the next part of the app
+    navigation.navigate('MainApp');
   };
 
   return (

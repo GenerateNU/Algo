@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LevelPageNavigationProp } from '../types/navigationTypes';
 
@@ -9,19 +9,19 @@ const FinancialLiteracyLevelPage: React.FC = () => {
 
   const handleSelection = (option: string) => {
     setSelectedOption(option);
-    // TODO: Handle the selection here, possibly update the state or navigate
   };
 
   const handleContinue = () => {
-    // TODO: Navigate to the next screen or handle the continue action
     console.log(selectedOption);
     navigation.navigate('TutorialPage');
   };
 
+  // Dynamically determine the continue button's background color
+  const continueButtonStyle = selectedOption !== '' ? styles.continueButtonActive : styles.continueButton;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Let's get started</Text>
-      <Text style={styles.question}>What’s your current level of financial literacy?</Text>
+      <Text style={styles.title}>What’s your current level of financial literacy?</Text>
       
       <View style={styles.optionsContainer}>
         <TouchableOpacity onPress={() => handleSelection('Beginner')} style={selectedOption === 'Beginner' ? styles.selectedOption : styles.option}>
@@ -37,7 +37,7 @@ const FinancialLiteracyLevelPage: React.FC = () => {
         </TouchableOpacity>
       </View>
       
-      <TouchableOpacity onPress={handleContinue} style={styles.continueButton}>
+      <TouchableOpacity onPress={handleContinue} style={continueButtonStyle}>
         <Text style={styles.continueButtonText}>Continue →</Text>
       </TouchableOpacity>
     </View>
@@ -52,11 +52,34 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#ffffff', // White background as seen in the image
   },
+  continueButton: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 30,
+    backgroundColor: '#C0C0C0', // Original grey color
+    position: 'absolute', // Position button over the component
+    bottom: 20, // Distance from the bottom
+    right: 20, // Distance from the right
+  },
+  continueButtonActive: {
+    // Duplicate the continueButton styles here
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 30,
+    position: 'absolute', // Position button over the component
+    bottom: 20, // Distance from the bottom
+    right: 20, // Distance from the right
+    backgroundColor: '#6F6F6F', // Darker grey color for active state
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#000000', // Black color for the title
-    marginBottom: 20,
+    marginBottom: 60,
   },
   question: {
     fontSize: 18,
@@ -82,19 +105,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#000000', // Black border color for the selected option
     borderRadius: 20,
-    backgroundColor: '#000000', // Black background for the selected option
+    backgroundColor: '#6F6F6F', // Black background for the selected option
   },
   optionText: {
     color: '#000000', // Black text color for the option
-  },
-  continueButton: {
-    width: '100%',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
-    borderRadius: 5,
-    backgroundColor: '#C0C0C0', // Grey color for the continue button as seen in the image
   },
   continueButtonText: {
     color: '#ffffff', // White text color for the continue button

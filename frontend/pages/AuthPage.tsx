@@ -1,14 +1,15 @@
 import { Alert, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-native-paper'
-//import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { getCallbackUrl } from '../services/users'
 import WebViewModal from '../components/WebViewModal';
 import { Redirect } from '../types/types'
 import WebViewItem from '../components/WebViewItem'
+import { AuthPageNavigationProp } from '../types/navigationTypes'
 
 const AuthPage = () => {
-  //const navigation = useNavigation();
+  const navigation = useNavigation<AuthPageNavigationProp>();
   const [visible, setVisible] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState("");
 
@@ -17,10 +18,10 @@ const AuthPage = () => {
   }, [redirectUrl])
 
   // router the user to the feed page
-  // const onClicked = async () => {
-  //   await Alert.alert('Signed In');
-  //   //navigation.navigate('FeedPage');
-  // }
+  const onClicked = async () => {
+    await Alert.alert('Signed In');
+    navigation.navigate('MainApp');
+  }
 
   const authenticate = async () => {
     const callback: Redirect = await getCallbackUrl(2);

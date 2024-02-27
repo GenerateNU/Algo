@@ -9,7 +9,9 @@ export type RootStackParamList = {
   GoalsPage: undefined;
   LevelPage: undefined;
   ConnectPage: undefined;
+  AuthPage: undefined;
   TutorialPage: undefined;
+  MainApp: undefined;
   // define other screens here
 };
 
@@ -46,6 +48,16 @@ export type ConnectPageNavigationProp = StackNavigationProp<
 export type TutorialPageNavigationProp = StackNavigationProp<
   RootStackParamList,
   'TutorialPage'
+>;
+
+export type MainAppNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'MainApp'
+>;
+
+export type AuthPageNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'AuthPage'
 >;
 
 export type SplashScreenRouteProp = RouteProp<RootStackParamList, 'SplashScreen'>;

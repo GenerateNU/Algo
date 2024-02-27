@@ -14,24 +14,26 @@ const ConnectPage: React.FC = () => {
   };
 
   const handleSkip = () => {
-    navigation.navigate('GoalsPage');
+    navigation.navigate('LevelPage');
   };
 
+  const handleBack = () => {
+    navigation.navigate('GoalsPage'); 
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Let's get started</Text>
-      <Text style={styles.subtitle}>Connect your brokerage</Text>
+      <Text style={styles.title}>Connect your brokerage</Text>
 
-      <Button mode="outlined" onPress={() => handleConnect('Brokerage Option 1')} style={styles.button}>
+      <Button mode="outlined" onPress={() => handleConnect('Brokerage Option 1')} style={styles.button} labelStyle={{ color: 'black'}}>
         Brokerage Option 1
       </Button>
       
-      <Button mode="outlined" onPress={() => handleConnect('Brokerage Option 2')} style={styles.button}>
+      <Button mode="outlined" onPress={() => handleConnect('Brokerage Option 2')} style={styles.button} labelStyle={{ color: 'black'}}>
         Brokerage Option 2
       </Button>
       
-      <Button mode="outlined" onPress={() => handleConnect('Brokerage Option 3')} style={styles.button}>
+      <Button mode="outlined" onPress={() => handleConnect('Brokerage Option 3')} style={styles.button} labelStyle={{ color: 'black'}}>
         Brokerage Option 3
       </Button>
 
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 40,
   },
   subtitle: {
     fontSize: 18,
