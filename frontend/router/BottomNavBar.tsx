@@ -1,10 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import TestPage from '../pages/TestPage';
 import AuthPage from '../pages/AuthPage';
 import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
 import Profile from '../pages/Profile';
+import FeedPage from '../pages/FeedPage';
 // import AuthNavigator from './AuthNavigation';
 // import { useSession } from '@clerk/clerk-expo';
 
@@ -13,15 +13,11 @@ type TabRouteName =
   | 'Explore'
   | 'Leaderboard'
   | 'Profile'
-  | 'Login'
-  | 'Signup';
 
 const tabBarIconMapping: Record<TabRouteName, string> = {
   Explore: 'feature-search',
   Leaderboard: 'podium',
   Profile: 'account-circle',
-  Login: 'login',
-  Signup: 'account-plus',
 };
 
 const screenOptionsIcon = (
@@ -38,8 +34,6 @@ export type BottomTabParamList = {
   Leaderboard: undefined;
   Explore: undefined;
   Profile: undefined;
-  Login: undefined;
-  Signup: undefined;
 };
 
 const BottomNavBar = () => {
@@ -53,7 +47,7 @@ const BottomNavBar = () => {
       })}>
       <Tab.Screen
         name="Explore"
-        component={TestPage}
+        component={FeedPage}
         options={{
           headerShown: false,
         }}
