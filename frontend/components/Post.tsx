@@ -3,7 +3,6 @@ import React from 'react';
 // import { User } from '../types/types';
 // import { getAllUsers } from '../services/users';
 // import Logo from '../assets/test.svg';
-import { SvgXml } from 'react-native-svg';
 
 interface PostProps {
   name: string;

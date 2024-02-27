@@ -14,14 +14,6 @@ const AddSvg = `
 `;
 
 export default function FeedPage() {
-  //   const [users, setUsers] = useState<User[]>();
-  //   // const logoXml = Logo ? Logo.toString() : '';
-  //   useEffect(() => {
-  //     getAllUsers().then(data => setUsers(data.slice(8)));
-  //   }, []);
-  //   useEffect(() => {
-  //     console.log(users);
-  //   }, [users]);
 
   return (
     <View>
