@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
-    marginHorizontal: 5, // Add some horizontal margin for better spacing
+    marginVertical: 4,
   },
   goalSelected: {
     padding: 10,
@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#34A853', // A green background color
-    marginHorizontal: 5, // Keep the horizontal margin consistent
   },
   goalText: {
     color: '#000',

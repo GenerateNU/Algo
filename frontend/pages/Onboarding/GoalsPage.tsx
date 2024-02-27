@@ -19,15 +19,15 @@ const GoalsPage: React.FC = () => {
 
   const shortTermGoals = [
     'Learn more about investing',
-    'Track spending patterns',
     'Diversify portfolio',
+    'Track spending patterns',
     'Set a savings target',
   ];
 
   const longTermGoals = [
-    'Create a passive income stream',
     'Build a legacy portfolio',
     'Build a retirement fund',
+    'Create a passive income stream',
     'Fund a major life goal',
   ];
 
@@ -61,33 +61,39 @@ const GoalsPage: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Let's get started</Text>
-      <Text style={styles.subtitle}>What are your financial goals?</Text>
-      <View style={styles.goalsContainer}>
-        {shortTermGoals.map(goal => (
-          <FinancialGoal
-            key={goal}
-            goal={goal}
-            isSelected={selectedShortTermGoals.includes(goal)}
-            onSelect={handleSelectShortTermGoal}
-          />
-        ))}
+      <View>
+        <Text style={styles.subtitle}>What are you short term financial goals?</Text>
+        <View style={styles.goalsContainer}>
+          {shortTermGoals.map(goal => (
+            <FinancialGoal
+              key={goal}
+              goal={goal}
+              isSelected={selectedShortTermGoals.includes(goal)}
+              onSelect={handleSelectShortTermGoal}
+            />
+          ))}
+        </View>
+        <Text style={styles.subtitle}>What are you long term financial goals?</Text>
+        <View style={styles.goalsContainer}>
+          {longTermGoals.map(goal => (
+            <FinancialGoal
+              key={goal}
+              goal={goal}
+              isSelected={selectedLongTermGoals.includes(goal)}
+              onSelect={handleSelectLongTermGoal}
+            />
+          ))}
+        </View>
       </View>
-      <View style={styles.goalsContainer}>
-        {longTermGoals.map(goal => (
-          <FinancialGoal
-            key={goal}
-            goal={goal}
-            isSelected={selectedLongTermGoals.includes(goal)}
-            onSelect={handleSelectLongTermGoal}
-          />
-        ))}
-      </View>
-      {selectedShortTermGoals.length > 0 && (
+      
+      {selectedShortTermGoals.length > 0 || selectedLongTermGoals.length > 0 ? (
         <TouchableOpacity
           style={styles.continueButton}
           onPress={handleContinue}>
           <Text style={styles.continueButtonText}>Continue</Text>
         </TouchableOpacity>
+      ) : (
+        <View style={styles.empty}></View>
       )}
     </View>
   );
@@ -98,20 +104,25 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#fff',
+    justifyContent: "space-between"
   },
   title: {
     fontSize: 22,
+    marginTop: "10%",
     fontWeight: 'bold',
     marginBottom: 10,
   },
   subtitle: {
     fontSize: 18,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   goalsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    width: "100%",
+    marginBottom: 18,
+    gap: 4
   },
   goal: {
     padding: 10,
@@ -140,6 +151,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#34A853',
     alignItems: 'center',
     marginTop: 20,
+    marginBottom: "10%"
+  },
+  empty: {
+    padding: 15,
+    borderRadius: 20,
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: "14%"
   },
   continueButtonText: {
     color: '#fff',
