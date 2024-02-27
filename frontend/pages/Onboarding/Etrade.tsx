@@ -13,7 +13,11 @@ const Etrade = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const verifyCallback = async () => {
-    Alert.alert('E*Trade Auth Successful');
+    Alert.alert('Success!', 'E*Trade Auth Successful',
+    [ {
+      text: "OK",
+      onPress: () => navigation.navigate('Confirmation')
+      }]);
     await getETradeTokenStatus();
   };
 
