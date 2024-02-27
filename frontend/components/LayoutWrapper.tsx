@@ -2,10 +2,10 @@ import React from 'react';
 import { ClerkProvider } from '@clerk/clerk-expo';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomNavBar from '../router/BottomNavBar';
-import { useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import * as SecureStore from 'expo-secure-store';
 import onboardingReducer from '../reducers/onboarding/onboardingReducer';
+// import { useSelector } from 'react-redux';
 
 const store = configureStore({
   reducer: {
@@ -34,22 +34,22 @@ const tokenCache = {
 };
 
 export default function LayoutWrapper() {
-  const onboarding = useSelector((state: RootState) => {
-    return state.onboarding;
-  });
+  // const onboarding = useSelector((state: RootState) => {
+  //   return state.onboarding;
+  // });
   return (
       <ClerkProvider
         publishableKey={process.env.EXPO_PUBLIC_CLERK_API_KEY as string}
         tokenCache={tokenCache}>
-        {onboarding.completed ? (
+        {/* {!onboarding.isOnboarding ? (
           <NavigationContainer>
             <BottomNavBar />
           </NavigationContainer>
-        ) : (
+        ) : ( */}
           <NavigationContainer>
             <BottomNavBar />
           </NavigationContainer>
-        )}
+        {/* )} */}
       </ClerkProvider>
   );
 }
