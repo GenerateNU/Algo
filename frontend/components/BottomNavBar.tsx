@@ -12,8 +12,6 @@ type TabRouteName =
   | 'Explore'
   | 'Leaderboard'
   | 'Profile'
-  | 'Signin'
-  | 'Registration';
 
 const tabBarIconMapping: Record<TabRouteName, string> = {
   "Explore": "feature-search",
@@ -54,7 +52,7 @@ const BottomNavBar = () => {
         headerShown: false,
         title: "Leaderboard"
       }} />
-      <Tab.Screen name="Profile" component={NotFound} options={{
+      <Tab.Screen name="Profile" component={Profile} options={{
         headerShown: false,
       }} />
     </Tab.Navigator>
