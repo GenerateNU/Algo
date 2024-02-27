@@ -34,9 +34,6 @@ func main() {
 	r := gin.Default()
 
 
-	//Sets up CRUD Routes for Users, Following
-	routesHelper(r, db)
-
 	// Add CORS middleware
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
@@ -49,6 +46,7 @@ func main() {
 	routes.SetupUserRoutes(r, db, clerkClient)
 	routes.SetupETradeRoutes(r, db)
 	routes.SetupOnboardingRoutes(r, db)
+	routes.SetupFollowingRoutes(r, db)
 
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -60,12 +58,4 @@ func main() {
 	if err := r.Run(addr); err != nil {
 		panic("Failed to start server")
 	}
-}
-
-// Set up all DB routes, refactored from main for style
-// @Ania, double check?
-func routesHelper(r *gin.Engine, db *gorm.DB) {
-	routes.SetupUserRoutes(r, db)
-	routes.SetupETradeRoutes(r, db)
-	routes.SetupFollowingRoutes(r, db)
 }
