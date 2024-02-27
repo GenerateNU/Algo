@@ -9,6 +9,7 @@ import Signup from '../pages/Onboarding/Signup';
 import Fullname from '../pages/Onboarding/Fullname';
 import GoalsPage from '../pages/Onboarding/GoalsPage';
 import ExperienceAndRisk from '../pages/Onboarding/ExperienceAndRisk';
+import Etrade from '../pages/Onboarding/Etrade';
 import Confirmation from '../pages/Onboarding/Confirmation';
 import Login from '../pages/Login';
 // import Profile from '../pages/Profile';
@@ -57,6 +58,11 @@ const AuthNavigator = () => {
       <Stack.Screen
         name="ExperienceAndRisk"
         component={ExperienceAndRisk}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Etrade"
+        component={Etrade}
         options={{ headerShown: false }}
       />
       <Stack.Screen

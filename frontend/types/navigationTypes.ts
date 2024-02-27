@@ -9,6 +9,7 @@ export type RootStackParamList = {
   Fullname: undefined;
   GoalsPage: undefined;
   ExperienceAndRisk: undefined;
+  Etrade: undefined;
   Confirmation: undefined;
 };
 
