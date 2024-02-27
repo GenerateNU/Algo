@@ -32,7 +32,24 @@ func (ps *PostService) GetPostsByUserId(userId uint) ([]models.Post, error) {
 	return posts, nil
 }
 
-//TODO: Add GetPostsFromFollowedUsers once Cam is done
+func (ps *PostService) GetPostsFromFollowedUsers(userId uint) ([]models.Post, error) {
+	var followedUserIDs []uint
+    if err := ps.DB.Model(&models.Followings{}).Where("follower_user_id = ?", userId).Pluck("following_user_id", &followedUserIDs).Error; err != nil {
+        return nil, err
+    }
+
+	var posts []models.Post
+	for _, id := range followedUserIDs {
+		var userPosts []models.Post
+		if err := ps.DB.Where("user_id = ?", id).Find(&userPosts).Error; err != nil {
+			return nil, err
+		}
+		posts = append(posts, userPosts...)
+	}
+
+	return posts, nil
+}
+
 
 func (ps *PostService) CreatePost(post *models.Post) (*models.Post, error) {
 	if err := ps.DB.Create(post).Error; err != nil {
