@@ -4,7 +4,6 @@ import React from 'react';
 // import { getAllUsers } from '../services/users';
 // import Logo from '../assets/test.svg';
 import { SvgXml } from 'react-native-svg';
-// import './Feed-Page.css';
 import Post from '../components/Post';
 
 const AddSvg = `

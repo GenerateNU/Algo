@@ -1,10 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 // import { User } from '../types/types';
 // import { getAllUsers } from '../services/users';
 // import Logo from '../assets/test.svg';
 import { SvgXml } from 'react-native-svg';
-// import './Feed-Page.css';
 
 interface PostProps {
   name: string;
