@@ -45,6 +45,7 @@ func main() {
 	clerkClient := routes.SetupAuthRoutes(r, db)
 	routes.SetupUserRoutes(r, db, clerkClient)
 	routes.SetupETradeRoutes(r, db)
+	routes.SetupPostRoutes(r, db)
 	routes.SetupOnboardingRoutes(r, db)
 	routes.SetupFollowingRoutes(r, db)
 
