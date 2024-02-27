@@ -1,15 +1,17 @@
 // AuthStack.js
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSession } from '@clerk/clerk-expo';
 import { useSelector } from 'react-redux';
 import { RootState } from '../components/LayoutWrapper';
 import SplashScreen from '../pages/SplashScreen';
-import GoalsPage from '../pages/Onboarding/GoalsPage';
-import Signup from '../pages/Onboarding/Signup';
-import Login from '../pages/Login';
+import Signup from '../pages/onboarding/Signup';
+import Fullname from '../pages/onboarding/Fullname';
+import GoalsPage from '../pages/onboarding/GoalsPage';
+import ExperienceAndRisk from '../pages/onboarding/ExperienceAndRisk';
+import Confirmation from '../pages/onboarding/Confirmation';
 import Profile from '../pages/Profile';
-import ExperienceAndRisk from '../pages/Onboarding/ExperienceAndRisk';
-import Confirmation from '../pages/Onboarding/Confirmation';
+import Login from '../pages/Login';
 
 const Stack = createStackNavigator();
 
@@ -40,6 +42,11 @@ const AuthNavigator = () => {
       <Stack.Screen
         name="Signup"
         component={Signup}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Fullname"
+        component={Fullname}
         options={{ headerShown: false }}
       />
       <Stack.Screen

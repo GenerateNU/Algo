@@ -1,35 +1,34 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { GoalsPageNavigationProp } from '../../types/navigationTypes';
 import FinancialGoal from '../../components/FinancialGoal';
 import { useDispatch } from 'react-redux';
 import { updateFinancialGoals } from '../../reducers/onboarding/onboardingReducer';
+import { AuthNavigationProp } from '../../types/navigationTypes';
 
 const GoalsPage: React.FC = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation<GoalsPageNavigationProp>();
-  const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
+  const navigation = useNavigation<AuthNavigationProp>();
+  const [selectedShortTermGoals, setSelectedShortTermGoals] = useState<string[]>([]);
   
-  const goals = [
+  const shortTermGoals = [
     'Save for retirement',
     'Buy a house',
     'Start a business',
     'Save for vacation',
     'Emergency fund',
-    // Add more goals as needed
   ];
 
   const handleSelectGoal = (goal: string) => {
-    if (selectedGoals.includes(goal)) {
-      setSelectedGoals(selectedGoals.filter(item => item !== goal));
+    if (selectedShortTermGoals.includes(goal)) {
+      setSelectedShortTermGoals(selectedShortTermGoals.filter(item => item !== goal));
     } else {
-      setSelectedGoals([...selectedGoals, goal]);
+      setSelectedShortTermGoals([...selectedShortTermGoals, goal]);
     }
   };
 
   const handleContinue = () => {
-    dispatch(updateFinancialGoals(selectedGoals));
+    dispatch(updateFinancialGoals(selectedShortTermGoals));
     // Navigate to the next page
     navigation.navigate('ExperienceAndRisk');
   };
@@ -39,16 +38,16 @@ const GoalsPage: React.FC = () => {
       <Text style={styles.title}>Let's get started</Text>
       <Text style={styles.subtitle}>What are your financial goals?</Text>
       <View style={styles.goalsContainer}>
-        {goals.map(goal => (
+        {shortTermGoals.map(goal => (
           <FinancialGoal
             key={goal}
             goal={goal}
-            isSelected={selectedGoals.includes(goal)}
+            isSelected={selectedShortTermGoals.includes(goal)}
             onSelect={handleSelectGoal}
           />
         ))}
       </View>
-      {selectedGoals.length > 0 && (
+      {selectedShortTermGoals.length > 0 && (
         <TouchableOpacity
           style={styles.continueButton}
           onPress={handleContinue}>

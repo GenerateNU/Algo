@@ -1,9 +1,16 @@
 export interface User {
     first_name: string;
     last_name: string;
+    username: string;
     pass_word: string;
     email: string;
+    risk_tolerance: string;
+    years_of_experience: number;
 }
+
+export type FinancialGoal = {
+    goal: string;
+};
 
 export interface Redirect {
     redirect_url: string;

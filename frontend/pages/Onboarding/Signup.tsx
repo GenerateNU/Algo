@@ -18,10 +18,11 @@ import {
   beginOnboarding,
 } from '../../reducers/onboarding/onboardingReducer';
 import { ClerkErrorResponse } from '../../types/types';
+import { AuthNavigationProp } from '../../types/navigationTypes';
 
 export default function Signup() {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useNavigation<AuthNavigationProp>();
   const { isLoaded, signUp, setActive } = useSignUp();
   const [pendingVerification, setPendingVerification] = React.useState(false);
 
@@ -31,7 +32,11 @@ export default function Signup() {
   const [code, setCode] = React.useState('');
 
   const handleSignUp = async () => {
-    if (!isLoaded || !username || !emailAddress || !password) {
+    if (!isLoaded) {
+      Alert.alert('Clerk not loaded.');
+      return;
+  }
+    if (!username || !emailAddress || !password) {
       Alert.alert('Please fill in all fields');
       return;
     }
@@ -88,14 +93,14 @@ export default function Signup() {
       dispatch(updateEmail(emailAddress));
       dispatch(updatePassword(password));
 
-      navigation.navigate('GoalsPage' as never);
+      navigation.navigate('Fullname');
     } catch (error) {
       console.log(JSON.stringify(error));
     }
   };
 
   const navigateToLogin = () => {
-    navigation.navigate('Login' as never);
+    navigation.navigate('Login');
   };
 
   if (pendingVerification) {

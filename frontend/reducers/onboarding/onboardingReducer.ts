@@ -3,30 +3,23 @@ import { createSlice } from '@reduxjs/toolkit';
 const onboardingSlice = createSlice({
   name: 'onboarding',
   initialState: {
-    isOnboarding: false,
+    firstName: '',
+    lastName: '',
     username: '',
-    email: '',
     password: '',
-    financialGoals: [],
-    financialLiteracy: [],
+    email: '',
     risk: '',
     yearsOfExperience: 0,
+    financialGoals: [],
+    financialLiteracy: [],
+    isOnboarding: false,
   },
   reducers: {
-    completeOnboarding(state) {
-      state.isOnboarding = false;
+    updateFirstName(state, action) {
+      state.firstName = action.payload;
     },
-    beginOnboarding(state) {
-      state.isOnboarding = true;
-    },
-    updateFinancialGoals(state, action) {
-      state.financialGoals = action.payload;
-    },
-    updateFinancialLiteracy(state, action) {
-      state.financialLiteracy = action.payload;
-    },
-    updateYearsOfExperience(state, action) {
-      state.yearsOfExperience = action.payload;
+    updateLastName(state, action) {
+      state.lastName = action.payload;
     },
     updateUsername(state, action) {
       state.username = action.payload;
@@ -40,18 +33,35 @@ const onboardingSlice = createSlice({
     updateRisk(state, action) {
       state.risk = action.payload;
     },
+    updateYearsOfExperience(state, action) {
+      state.yearsOfExperience = action.payload;
+    },
+    updateFinancialGoals(state, action) {
+      state.financialGoals = action.payload;
+    },
+    updateFinancialLiteracy(state, action) {
+      state.financialLiteracy = action.payload;
+    },
+    beginOnboarding(state) {
+      state.isOnboarding = true;
+    },
+    completeOnboarding(state) {
+      state.isOnboarding = false;
+    },
   },
 });
 
 export const {
-  completeOnboarding,
-  beginOnboarding,
-  updateFinancialGoals,
-  updateFinancialLiteracy,
-  updateYearsOfExperience,
+  updateFirstName,
+  updateLastName,
   updateUsername,
   updateEmail,
   updatePassword,
   updateRisk,
+  updateYearsOfExperience,
+  updateFinancialGoals,
+  updateFinancialLiteracy,
+  completeOnboarding,
+  beginOnboarding,
 } = onboardingSlice.actions;
 export default onboardingSlice.reducer;

@@ -30,9 +30,11 @@ func SetupUserRoutes(router *gin.Engine, db *gorm.DB, clerkClient clerk.Client) 
 
 		*/
 		// SetupAuthMiddleware(clerkClient, router)
+		userRoutes.GET("/", userController.GetAllUsers)
+		userRoutes.POST("/", userController.CreateUser)
+		userRoutes.GET("/:id", userController.GetUserById)
 		userRoutes.PUT("/:id", userController.UpdateUserById)
 		userRoutes.DELETE("/:id", userController.DeleteUserById)
-
 
 		userRoutes.POST("/long-term-goal/:user_id", userController.CreateLongTermGoalForUser)
 		userRoutes.GET("/long-term-goal/:user_id/", userController.GetLongTermGoalsForUser)

@@ -4,11 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { updateRisk } from '../../reducers/onboarding/onboardingReducer';
 import Slider from '@react-native-community/slider';
-import { GoalsPageNavigationProp } from '../../types/navigationTypes';
+import { AuthNavigationProp } from '../../types/navigationTypes';
 
 const ExperienceAndRisk: React.FC = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation<GoalsPageNavigationProp>();
+  const navigation = useNavigation<AuthNavigationProp>();
 
   const [risk, setRisk] = useState<string | null>();
   // const [experience, setExperience] = useState<number | null>();
@@ -30,7 +30,7 @@ const ExperienceAndRisk: React.FC = () => {
     dispatch(updateRisk(risk));
     // dispatch(updateExperience(experience));
     // Navigate to the next page
-    navigation.navigate('Confirmation' as never);
+    navigation.navigate('Confirmation');
   };
 
   return (

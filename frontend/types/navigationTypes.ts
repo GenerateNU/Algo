@@ -3,37 +3,17 @@ import { StackNavigationProp } from '@react-navigation/stack';
 // import { createStackNavigator } from '@react-navigation/stack';
 
 export type RootStackParamList = {
-  SplashScreen: undefined;
   Login: undefined;
-  Signin: undefined;
+  SplashScreen: undefined;
+  Signup: undefined;
+  Fullname: undefined;
   GoalsPage: undefined;
   ExperienceAndRisk: undefined;
-  // define other screens here
+  Confirmation: undefined;
 };
 
-export type SplashScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'SplashScreen'
->;
-
-export type LoginPageNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Login'
->;
-
-export type SignInPageNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Signin'
->;
-
-export type GoalsPageNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'GoalsPage'
->;
-
-export type ExperienceAndRiskNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'ExperienceAndRisk'
+export type AuthNavigationProp = StackNavigationProp<
+  RootStackParamList
 >;
 
 export type SplashScreenRouteProp = RouteProp<RootStackParamList, 'SplashScreen'>;
