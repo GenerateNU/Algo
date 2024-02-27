@@ -63,7 +63,7 @@ const Login: React.FC = () => {
       />
       
       <Button mode="contained" onPress={handleLogin} style={styles.button}>
-        Login
+        <Text style={styles.logInButtonText}>Login</Text>
       </Button>
       
       <TouchableOpacity onPress={() => {}}>
@@ -117,8 +117,6 @@ const styles = StyleSheet.create({
       height: 50,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingVertical: 10,
-      paddingHorizontal: 12,
       borderRadius: 5,
       elevation: 3,
       backgroundColor: '#6F6F6F', // Button color, you can change it
@@ -127,6 +125,14 @@ const styles = StyleSheet.create({
       fontSize: 14,
       color: '#7C7C7C', // Link text color, change as needed
       marginTop: 15,
+    },
+    logInButtonText: {
+      fontSize: 14,
+      color: '#FFFFFF', // Sign-up text color, change as needed
+      marginTop: 15,
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      height: '100%',
     },
     signUpText: {
       fontSize: 14,
