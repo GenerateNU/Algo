@@ -32,14 +32,16 @@ CREATE TABLE user_long_term_goals (
 INSERT INTO short_term_goals (short_term_goal)
 VALUES
   ('Learn more about investing'),
+  ('Track spending patterns'),
   ('Diversify portfolio'),
-  ('Save for a big event');
+  ('Set a savings target');
 
 INSERT INTO long_term_goals (long_term_goal) 
 VALUES
-  ('Save for retirement'),
-  ('Save for children’s education'),
-  ('Save for a down payment');
+  ('Create a passive income stream'),
+  ('Build a legacy portfolio'),
+  ('Build a retirement fund'),
+  ('Fund a major life goal');
 
 INSERT INTO user_long_term_goals (user_id, long_term_goal_id)
 VALUES

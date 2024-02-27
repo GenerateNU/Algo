@@ -15,11 +15,13 @@
     "@babel/runtime": "^7.20.6",
     "@clerk/clerk-expo": "^0.20.5",
     "@expo/ngrok": "^2.5.0",
+    "@react-native-community/slider": "^4.5.0",
     "@react-native/metro-config": "^0.73.5",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.21",
-    "@rneui/base": "4.0.0-rc.7",
+    "@reduxjs/toolkit": "^2.2.1",
+    "@rneui/base": "^4.0.0-rc.8",
     "@rneui/themed": "^4.0.0-rc.8",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.4",
@@ -42,7 +44,8 @@
     "react-native-screens": "3.29.0",
     "react-native-svg": "^15.0.0",
     "react-native-vector-icons": "10.0.3",
-    "react-native-webview": "13.6.4"
+    "react-native-webview": "13.6.4",
+    "react-redux": "^9.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

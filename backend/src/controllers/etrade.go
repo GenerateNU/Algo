@@ -3,8 +3,8 @@ package controllers
 import (
 	"backend/src/services"
 	"backend/src/types"
-	"log"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
