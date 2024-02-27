@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import onboardingReducer from './reducers/onboarding/onboardingReducer';
 import LayoutWrapper from './components/LayoutWrapper';
+import { ClerkProvider } from '@clerk/clerk-expo';
+import * as SecureStore from 'expo-secure-store';
 
 const store = configureStore({
   reducer: {
@@ -10,10 +12,31 @@ const store = configureStore({
   },
 });
 
+const tokenCache = {
+  async getToken(key: string) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (err) {
+      return null;
+    }
+  },
+  async saveToken(key: string, value: string) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      return;
+    }
+  },
+};
+
 export default function App() {
   return (
-    <Provider store={store}>
-      <LayoutWrapper />
-    </Provider>
+    <ClerkProvider
+      publishableKey={process.env.EXPO_PUBLIC_CLERK_API_KEY as string}
+      tokenCache={tokenCache}>
+      <Provider store={store}>
+        <LayoutWrapper />
+      </Provider>
+    </ClerkProvider>
   );
 }

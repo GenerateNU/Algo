@@ -1,30 +1,30 @@
 // AuthStack.js
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useSession } from '@clerk/clerk-expo';
-import { useSelector } from 'react-redux';
-import { RootState } from '../components/LayoutWrapper';
+// import { useSession } from '@clerk/clerk-expo';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../components/LayoutWrapper';
 import SplashScreen from '../pages/SplashScreen';
 import Signup from '../pages/Onboarding/Signup';
 import Fullname from '../pages/Onboarding/Fullname';
 import GoalsPage from '../pages/Onboarding/GoalsPage';
 import ExperienceAndRisk from '../pages/Onboarding/ExperienceAndRisk';
 import Confirmation from '../pages/Onboarding/Confirmation';
-import Profile from '../pages/Profile';
 import Login from '../pages/Login';
+// import Profile from '../pages/Profile';
 
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => {
-  const { session } = useSession();
+  // const { session } = useSession();
 
-  const onboarding = useSelector((state: RootState) => {
-    return state.onboarding;
-  });
+  // const onboarding = useSelector((state: RootState) => {
+  //   return state.onboarding;
+  // });
 
-  if (session?.user !== undefined && !onboarding.isOnboarding) {
-    return <Profile />;
-  }
+  // if (session?.user !== undefined && !onboarding.isOnboarding) {
+  //   return <Profile />;
+  // }
   return (
     <Stack.Navigator initialRouteName="SplashScreen">
       {/* The SplashScreen component is diplayed first for 1 second or while the app loads*/}

@@ -4,7 +4,8 @@ import TestPage from '../pages/TestPage';
 import AuthPage from '../pages/AuthPage';
 import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
-import AuthNavigator from './AuthNavigation';
+import Profile from '../pages/Profile';
+// import AuthNavigator from './AuthNavigation';
 // import { useSession } from '@clerk/clerk-expo';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -67,7 +68,7 @@ const BottomNavBar = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={AuthNavigator}
+        component={Profile}
         options={{
           headerShown: false,
         }}

@@ -3,11 +3,11 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'reac
 import { Button } from 'react-native-paper';
 import { useSignIn } from '@clerk/clerk-expo';
 import { useNavigation } from '@react-navigation/native';
-import { LoginPageNavigationProp } from '../types/navigationTypes'; 
+import { AuthNavigationProp } from '../types/navigationTypes'; 
 import { ClerkErrorResponse } from '../types/types';
 
 const Login: React.FC = () => {
-  const navigation = useNavigation<LoginPageNavigationProp>();
+  const navigation = useNavigation<AuthNavigationProp>();
   const { signIn, setActive, isLoaded } = useSignIn();
   const [identifier, setIdentifier] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -25,7 +25,6 @@ const Login: React.FC = () => {
       });
 
       await setActive({ session: completeSignIn.createdSessionId });
-      navigation.navigate('Profile' as never);
     } catch (error) {
       const clerkError = error as ClerkErrorResponse;
       const clerkMessage = clerkError.errors[0].message;
@@ -38,7 +37,7 @@ const Login: React.FC = () => {
   };
 
   const navigateToSignUp = () => {
-    navigation.navigate('Signup' as never);
+    navigation.navigate('Signup');
   };
 
   return (
