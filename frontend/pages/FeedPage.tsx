@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -1,
     left: 10,
-    fontFamily: 'Circular Std',
+    
     fontWeight: '500',
     fontSize: 17,
     opacity: 1,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -1,
     left: 179,
-    fontFamily: 'Circular Std',
+    
     fontWeight: '500',
     fontSize: 17,
     opacity: 1,
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 28,
-    fontFamily: 'Circular Std',
+    
     fontWeight: '500',
     fontSize: 17,
     opacity: 1,
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     top: 0,
     left: 0,
-    fontFamily: 'Circular Std',
+    
     fontWeight: '500',
     fontSize: 17,
     opacity: 1,
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 29,
     left: 0,
-    fontFamily: 'Circular Std',
+    
     fontWeight: 'normal',
     fontSize: 17,
     opacity: 0.5,
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     top: 0,
     left: 0,
-    fontFamily: 'Circular Std',
+    
     fontWeight: '500',
     fontSize: 17,
     opacity: 1,
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 29,
     left: 0,
-    fontFamily: 'Circular Std',
+    
     fontWeight: 'normal',
     fontSize: 17,
     opacity: 0.5,
@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    fontFamily: 'Circular Std',
+    
     fontWeight: '500',
     fontSize: 17,
     opacity: 1,
@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 29,
     left: 0,
-    fontFamily: 'Circular Std',
+    
     fontWeight: 'normal',
     fontSize: 17,
     opacity: 0.5,
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 29,
-    fontFamily: 'Circular Std',
+    
     fontWeight: '500',
     fontSize: 17,
     opacity: 1,
@@ -482,7 +482,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    fontFamily: 'Circular Std',
+    
     fontWeight: 'normal',
     fontSize: 16,
     opacity: 1,
@@ -533,7 +533,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    fontFamily: 'Circular Std',
+    
     fontWeight: 'normal',
     fontSize: 16,
     opacity: 1,
@@ -585,7 +585,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    fontFamily: 'Circular Std',
+    
     fontWeight: 'normal',
     fontSize: 16,
     opacity: 1,
@@ -624,7 +624,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 12,
     left: 24,
-    fontFamily: 'SF Pro Text',
     fontWeight: '600',
     fontSize: 17,
     opacity: 0.6000000238418579,
