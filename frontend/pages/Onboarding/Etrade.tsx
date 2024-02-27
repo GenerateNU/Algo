@@ -19,6 +19,7 @@ const Etrade = () => {
 
   const getETradeTokenStatus = async () => {
     const callback: TokenStatus = await getTokenStatus(2);
+    console.log('callback: ', callback.status);
     if (callback.status === 'active') {
       setAuthenticated(true);
       navigation.navigate('Confirmation');

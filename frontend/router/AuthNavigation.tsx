@@ -9,23 +9,16 @@ import Signup from '../pages/Onboarding/Signup';
 import Fullname from '../pages/Onboarding/Fullname';
 import GoalsPage from '../pages/Onboarding/GoalsPage';
 import ExperienceAndRisk from '../pages/Onboarding/ExperienceAndRisk';
+import LevelPage from '../pages/Onboarding/LevelPage';
+import ConnectPage from '../pages/Onboarding/ConnectPage';
 import Etrade from '../pages/Onboarding/Etrade';
-import Confirmation from '../pages/Onboarding/Confirmation';
+import Confirmation from '../pages/Onboarding/ConfirmationOld';
 import Login from '../pages/Login';
 // import Profile from '../pages/Profile';
 
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => {
-  // const { session } = useSession();
-
-  // const onboarding = useSelector((state: RootState) => {
-  //   return state.onboarding;
-  // });
-
-  // if (session?.user !== undefined && !onboarding.isOnboarding) {
-  //   return <Profile />;
-  // }
   return (
     <Stack.Navigator initialRouteName="SplashScreen">
       {/* The SplashScreen component is diplayed first for 1 second or while the app loads*/}
@@ -58,6 +51,16 @@ const AuthNavigator = () => {
       <Stack.Screen
         name="ExperienceAndRisk"
         component={ExperienceAndRisk}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LevelPage"
+        component={LevelPage}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ConnectPage"
+        component={ConnectPage}
         options={{ headerShown: false }}
       />
       <Stack.Screen

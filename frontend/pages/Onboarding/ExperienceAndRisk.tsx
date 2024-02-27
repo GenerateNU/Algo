@@ -35,7 +35,7 @@ const ExperienceAndRisk: React.FC = () => {
     dispatch(updateRisk(risk));
     // dispatch(updateExperience(experience));
     // Navigate to the next page
-    navigation.navigate('Etrade');
+    navigation.navigate('LevelPage');
   };
 
   return (

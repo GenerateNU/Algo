@@ -7,7 +7,7 @@ export const getAllUsers = async (): Promise<User[]> => {
   const response: AxiosResponse<User[]> = await axios.get<User[]>(
     `http://${API_LINK}/users`,
   );
-  console.log(response.data);
+  // console.log(response.data);
   return response.data;
 };
 
@@ -50,6 +50,6 @@ export const registerUser = async (
       LongTermGoals: longTermGoals,
     },
   );
-  console.log(JSON.stringify(response));
+  // console.log(JSON.stringify(response));
   return response.data;
 };

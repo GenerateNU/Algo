@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useSignIn } from '@clerk/clerk-expo';
 import { useNavigation } from '@react-navigation/native';
@@ -42,17 +42,17 @@ const Login: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Carbon Mark</Text>
+      <Image source={require('../assets/logomark.png')} style={styles.logo} />
       <Text style={styles.subtitle}>Login</Text>
       <Text style={styles.description}>Get back into investing</Text>
-      
+
       <TextInput
         style={styles.input}
         onChangeText={setIdentifier}
         value={identifier}
         placeholder="Email or Username"
       />
-      
+
       <TextInput
         style={styles.input}
         onChangeText={setPassword}
@@ -60,11 +60,11 @@ const Login: React.FC = () => {
         secureTextEntry
         placeholder="Password"
       />
-      
+
       <Button mode="contained" onPress={handleLogin} style={styles.button}>
         <Text style={styles.logInButtonText}>Login</Text>
       </Button>
-      
+
       <TouchableOpacity onPress={() => {}}>
         <Text style={styles.linkText}>Forgot username or password</Text>
       </TouchableOpacity>
@@ -138,6 +138,12 @@ const styles = StyleSheet.create({
       color: '#7C7C7C', // Sign-up text color, change as needed
       marginTop: 20,
     },
+    logo: {
+    width: 100,
+    height: 100,
+    marginBottom: 40, 
+    alignSelf: 'center', 
+  },
   });  
 
 export default Login;

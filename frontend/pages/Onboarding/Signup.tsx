@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native';
 import { useSignUp } from '@clerk/clerk-expo';
 import { useNavigation } from '@react-navigation/native';
@@ -35,7 +36,7 @@ export default function Signup() {
     if (!isLoaded) {
       Alert.alert('Clerk not loaded.');
       return;
-  }
+    }
     if (!username || !emailAddress || !password) {
       Alert.alert('Please fill in all fields');
       return;
@@ -114,7 +115,7 @@ export default function Signup() {
             style={styles.input}
           />
         </View>
-        <TouchableOpacity onPress={onPressVerify} style={styles.button}>
+        <TouchableOpacity onPress={onPressVerify} style={styles.verifyButton}>
           <Text>Verify Email</Text>
         </TouchableOpacity>
       </View>
@@ -122,7 +123,8 @@ export default function Signup() {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign up</Text>
+      <Image source={require('../../assets/logomark.png')} style={styles.logo} />
+      {/* <Text style={styles.title}>Sign up</Text> */}
       <Text style={styles.subtitle}>Start investing smarter with friends</Text>
 
       <TextInput
@@ -147,8 +149,13 @@ export default function Signup() {
         placeholder="Password"
       />
 
-      <Button mode="contained" onPress={handleSignUp} style={styles.button}>
-        <Text style={styles.signUpButton}>Sign up</Text>
+      <Button
+        mode="contained"
+        onPress={handleSignUp}
+        style={styles.button}
+        contentStyle={styles.buttonContent}
+        labelStyle={{ color: 'white', fontSize: 20 }}>
+        Sign Up
       </Button>
 
       <TouchableOpacity onPress={navigateToLogin}>
@@ -176,7 +183,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     color: '#7C7C7C', // Adjust color to match your theme
-    marginBottom: 10,
+    marginBottom: 20,
   },
   description: {
     fontSize: 16,
@@ -195,13 +202,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    width: '100%', // Adjust button width as per your layout
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: '100%',
+    // Removed explicit height to allow content to define the button's size
     borderRadius: 5,
-    elevation: 3,
-    backgroundColor: '#6F6F6F', // Button color, you can change it
+    backgroundColor: '#6F6F6F',
+  },
+  buttonContent: {
+    // Adjusted for better control over the button's internal padding
+    paddingVertical: 8,
   },
   linkText: {
     fontSize: 14,
@@ -210,20 +218,29 @@ const styles = StyleSheet.create({
   },
   signUpText: {
     fontSize: 14,
-    color: '#7C7C7C', // Sign-up text color, change as needed
+    color: '#fff', // Sign-up text color, change as needed
     marginTop: 15,
-  },
-  signUpButton: {
-    fontSize: 14,
-    color: '#FFFFFF', // Sign-up text color, change as needed
-    marginTop: 15,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    height: '100%',
   },
   loginText: {
-    fontSize: 14,
-    color: '#007BFF', // Use the same style as signUpText from LoginPage for consistency
+    fontSize: 16,
+    color: '#7C7C7C', // Use the same style as signUpText from LoginPage for consistency
     marginTop: 15,
+  },
+  logo: {
+    width: 100, // Adjust the width as needed
+    height: 100, // Adjust the height as needed
+    marginBottom: 40, // Adjust the space between the logo and the "Sign Up" text
+    alignSelf: 'center', // This centers the logo horizontally in the container
+  },
+  verifyButton: {
+    width: '100%', // Adjust button width as per your layout
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+    elevation: 3,
+    backgroundColor: '#6F6F6F', // Button color, you can change it
   },
 });
