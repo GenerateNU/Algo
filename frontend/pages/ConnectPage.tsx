@@ -9,8 +9,7 @@ const ConnectPage: React.FC = () => {
 
   // You might want to handle selection or connection logic here
   const handleConnect = (option: string) => {
-    console.log(`Connect to ${option}`);
-    // Handle the connection logic here
+    navigation.navigate('AuthPage');
   };
 
   const handleSkip = () => {
