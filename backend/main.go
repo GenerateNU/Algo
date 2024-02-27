@@ -9,6 +9,7 @@ import (
 
 	_ "backend/docs"
 
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -32,6 +33,7 @@ func main() {
 
 	r := gin.Default()
 
+
 	// Add CORS middleware
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
@@ -44,6 +46,8 @@ func main() {
 	routes.SetupUserRoutes(r, db, clerkClient)
 	routes.SetupETradeRoutes(r, db)
 	routes.SetupOnboardingRoutes(r, db)
+	routes.SetupFollowingRoutes(r, db)
+
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
