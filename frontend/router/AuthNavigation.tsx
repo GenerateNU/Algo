@@ -5,11 +5,11 @@ import { useSession } from '@clerk/clerk-expo';
 import { useSelector } from 'react-redux';
 import { RootState } from '../components/LayoutWrapper';
 import SplashScreen from '../pages/SplashScreen';
-import Signup from '../pages/onboarding/Signup';
-import Fullname from '../pages/onboarding/Fullname';
-import GoalsPage from '../pages/onboarding/GoalsPage';
-import ExperienceAndRisk from '../pages/onboarding/ExperienceAndRisk';
-import Confirmation from '../pages/onboarding/Confirmation';
+import Signup from '../pages/Onboarding/Signup';
+import Fullname from '../pages/Onboarding/Fullname';
+import GoalsPage from '../pages/Onboarding/GoalsPage';
+import ExperienceAndRisk from '../pages/Onboarding/ExperienceAndRisk';
+import Confirmation from '../pages/Onboarding/Confirmation';
 import Profile from '../pages/Profile';
 import Login from '../pages/Login';
 

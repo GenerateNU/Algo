@@ -34,9 +34,12 @@ const Confirmation: React.FC = () => {
   };
 
   return (
-    <View>
-      <Text>All Set!</Text>
-      <Text>Welcome to Carbon!</Text>
+    <View style={styles.container}>
+      <View>
+        <Text style={styles.title}>All Set!</Text>
+        <Text style={styles.subtitle}>Welcome to Carbon!</Text>
+      </View>
+      
       <TouchableOpacity style={styles.continueButton} onPress={handleContinue}>
         <Text style={styles.continueButtonText}>Continue</Text>
       </TouchableOpacity>
@@ -55,6 +58,23 @@ const styles = StyleSheet.create({
   continueButtonText: {
     color: '#fff',
     fontSize: 16,
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+    flexDirection: "column",
+    justifyContent: "space-around",
+    backgroundColor: '#fff',
+  },
+  title: {
+    marginTop: "10%",
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 18,
+    marginBottom: 20,
   },
 });
 

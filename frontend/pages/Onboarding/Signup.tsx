@@ -148,7 +148,7 @@ export default function Signup() {
       />
 
       <Button mode="contained" onPress={handleSignUp} style={styles.button}>
-        Sign up
+        <Text style={styles.signUpButton}>Sign up</Text>
       </Button>
 
       <TouchableOpacity onPress={navigateToLogin}>
@@ -199,8 +199,6 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 12,
     borderRadius: 5,
     elevation: 3,
     backgroundColor: '#6F6F6F', // Button color, you can change it
@@ -214,6 +212,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#7C7C7C', // Sign-up text color, change as needed
     marginTop: 15,
+  },
+  signUpButton: {
+    fontSize: 14,
+    color: '#FFFFFF', // Sign-up text color, change as needed
+    marginTop: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    height: '100%',
   },
   loginText: {
     fontSize: 14,
