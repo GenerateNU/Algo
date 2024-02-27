@@ -1,14 +1,17 @@
-import React from "react"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import NotFound from "../pages/NotFound"
-import TestPage from "../pages/TestPage"
-import AuthPage from "../pages/AuthPage"
-import { Icon } from "@rneui/themed"
-import { RouteProp } from "@react-navigation/native"
-// import { MainAppNavigationProp } from "../types/navigationTypes"
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Tab = createBottomTabNavigator<BottomTabParamList>()
-type TabRouteName = "Explore" | "Leaderboard" | "Profile"
+import Profile from '../pages/Profile';
+import TestPage from '../pages/TestPage';
+import AuthPage from '../pages/AuthPage';
+import { Icon } from '@rneui/themed';
+import { RouteProp } from '@react-navigation/native';
+
+const Tab = createBottomTabNavigator<BottomTabParamList>();
+type TabRouteName =
+  | 'Explore'
+  | 'Leaderboard'
+  | 'Profile'
 
 const tabBarIconMapping: Record<TabRouteName, string> = {
   "Explore": "feature-search",
@@ -49,7 +52,7 @@ const BottomNavBar = () => {
         headerShown: false,
         title: "Leaderboard"
       }} />
-      <Tab.Screen name="Profile" component={NotFound} options={{
+      <Tab.Screen name="Profile" component={Profile} options={{
         headerShown: false,
       }} />
     </Tab.Navigator>
