@@ -1,8 +1,16 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import onboardingReducer from './reducers/onboarding/onboardingReducer';
+import LayoutWrapper from './components/LayoutWrapper';
 import { ClerkProvider } from '@clerk/clerk-expo';
-import { NavigationContainer } from '@react-navigation/native';
-import BottomNavBar from './components/BottomNavBar';
 import * as SecureStore from 'expo-secure-store';
+
+const store = configureStore({
+  reducer: {
+    onboarding: onboardingReducer,
+  },
+});
 
 const tokenCache = {
   async getToken(key: string) {
@@ -25,11 +33,10 @@ export default function App() {
   return (
     <ClerkProvider
       publishableKey={process.env.EXPO_PUBLIC_CLERK_API_KEY as string}
-      tokenCache={tokenCache}
-      >
-      <NavigationContainer>
-        <BottomNavBar />
-      </NavigationContainer>
+      tokenCache={tokenCache}>
+      <Provider store={store}>
+        <LayoutWrapper />
+      </Provider>
     </ClerkProvider>
   );
 }
