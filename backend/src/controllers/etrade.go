@@ -3,6 +3,7 @@ package controllers
 import (
 	"backend/src/services"
 	"backend/src/types"
+	"log"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -41,7 +42,7 @@ func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
 
 	url, err := etc.etradeService.GetETradeRedirectURL(uint(userId))
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve redirect URL"})
 		return
 	}
@@ -83,7 +84,7 @@ func (etc *ETradeController) Verify(c *gin.Context) {
 
 	err = etc.etradeService.GetAccessToken(uint(userId), json.Verifier)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve access token"})
 		return
 	}

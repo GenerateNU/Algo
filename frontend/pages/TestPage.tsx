@@ -1,22 +1,26 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { User } from '../types/types';
-import { getAllUsers } from '../services/users';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect /*useState*/ } from 'react';
+// import { User } from '../types/types';
+// import { getAllUsers } from '../services/users';
+import { authenticateSession } from '../services/auth';
+import { useAuth } from '@clerk/clerk-expo';
 
 export default function TestPage() {
-  const [users, setUsers] = useState<User[]>();
+    const { getToken } = useAuth();
+  // const [users, setUsers] = useState<User[]>();
+
 
   useEffect(() => {
-    getAllUsers().then((data) => setUsers(data.slice(8)))
-  }, [])
-  useEffect(() => {
-    console.log(users)
-  }, [users])
-  
+    // getAllUsers().then((data) => setUsers(data.slice(8)))
+    // session?.getToken();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text className="font-bold mb-2 w-full text-left" >Open up App.js to start working on your app!</Text>
-      {
+      <Text className="font-bold mb-2 w-full text-left">
+        Open up App.js to start working on your app!
+      </Text>
+      {/* {
         users &&
         <View className='w-full'>
           {
@@ -27,9 +31,18 @@ export default function TestPage() {
             ))
           }
         </View>
-      }
+      } */}
+      <TouchableOpacity
+        onPress={async () => {
+          const authtoken = await getToken() as string;
+          authenticateSession(authtoken);
+        }}
+        className='bg-blue-500 p-2 rounded-md w-1/4 text-center mt-2'
+        >
+        <Text>Authenticate</Text>
+      </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
