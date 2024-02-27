@@ -67,6 +67,33 @@ func (pc *PostController) GetPostsByUserId(c *gin.Context) {
 	c.JSON(http.StatusOK, posts)
 }
 
+// GetPostsFromFollowedUsers godoc
+//
+// @Summary Gets posts from followed users
+// @Description Returns all posts from users followed by the specified user ID
+// @ID get-posts-from-followed-users
+// @Tags post
+// @Produce json
+// @Param userId path uint true "User ID"
+// @Success 200 {object} []models.Post
+// @Failure 404 {string} string "Failed to fetch posts"
+// @Router /api/posts/followed/{userId} [get]
+func (pc *PostController) GetPostsFromFollowedUsers(c *gin.Context) {
+	userId, err := strconv.ParseUint(c.Param("userId"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		return
+	}
+
+	posts, err := pc.postService.GetPostsFromFollowedUsers(uint(userId))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch posts"})
+		return
+	}
+
+	c.JSON(http.StatusOK, posts)
+}
+
 // CreatePost godoc
 //
 //		@Summary		Creates a post

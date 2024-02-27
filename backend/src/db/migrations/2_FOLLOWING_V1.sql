@@ -17,4 +17,5 @@ CREATE INDEX IF NOT EXISTS idx_following_user_id ON followings(following_user_id
 INSERT INTO followings (follower_user_id, following_user_id)
 VALUES
   (1, 2),
+  (1, 3),
   (2, 1);

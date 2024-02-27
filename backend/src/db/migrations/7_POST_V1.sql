@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS posts (
 INSERT INTO posts (user_id, post_type, num_data, ticker_symbol, comment, title)
 VALUES
   (1, '1 month summary', 100, 'AAPL', 'I made a 100% return on my investment in Apple this month!', 'Apple Investment'),
-  (1, 'Recent trade', 200, 'TSLA', 'I just bought 200 shares of Tesla!', 'Tesla Investment'),
-  (1, 'Share comment', 150, 'MSFT', 'I think Microsoft is a great company to invest in!', 'Microsoft Comment'),
-  (1, '1 month summary', 250, 'GOOGL', 'I made a 250% return on my investment in Google this month!', 'Google Investment'),
-  (1, 'Recent trade', 300, 'AMZN', 'I just bought 300 shares of Amazon!', 'Amazon Investment'),
-  (1, 'Share comment', 400, 'FB', 'I think Facebook is a great company to invest in!', 'Facebook Comment');
+  (2, 'Recent trade', 200, 'TSLA', 'I just bought 200 shares of Tesla!', 'Tesla Investment'),
+  (2, 'Share comment', 150, 'MSFT', 'I think Microsoft is a great company to invest in!', 'Microsoft Comment'),
+  (2, '1 month summary', 250, 'GOOGL', 'I made a 250% return on my investment in Google this month!', 'Google Investment'),
+  (3, 'Recent trade', 300, 'AMZN', 'I just bought 300 shares of Amazon!', 'Amazon Investment'),
+  (3, 'Share comment', 400, 'FB', 'I think Facebook is a great company to invest in!', 'Facebook Comment');
