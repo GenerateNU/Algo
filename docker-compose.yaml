@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-q",
+          "-d",
+          "postgres",
+          "-U",
+          "user"
+        ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_DB=algo
+      - POSTGRES_PASSWORD=pwd
+    ports:
+      - '5434:5432'
+    volumes:
+      - ./backend/src/db/migrations:/docker-entrypoint-initdb.d/
+volumes:
+  db:
+    driver: local
