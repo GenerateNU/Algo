@@ -43,7 +43,7 @@ export const registerUser = async (
   longTermGoals: Array<FinancialGoal>,
 ): Promise<User> => {
   const response: AxiosResponse<User> = await axios.post<User>(
-    `http://${API_LINK}/onboard`,
+    `http://${API_LINK}/users/onboard`,
     {
       User: user,
       ShortTermGoals: shortTermGoals,

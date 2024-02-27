@@ -3,32 +3,57 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FinancialGoal from '../../components/FinancialGoal';
 import { useDispatch } from 'react-redux';
-import { updateFinancialGoals } from '../../reducers/onboarding/onboardingReducer';
+import { updateFinancialGoalsShortTerm, updateFinancialGoalsLongTerm } from '../../reducers/onboarding/onboardingReducer';
 import { AuthNavigationProp } from '../../types/navigationTypes';
 
 const GoalsPage: React.FC = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<AuthNavigationProp>();
-  const [selectedShortTermGoals, setSelectedShortTermGoals] = useState<string[]>([]);
-  
+  const [selectedShortTermGoals, setSelectedShortTermGoals] = useState<
+    string[]
+  >([]);
+
+  const [selectedLongTermGoals, setSelectedLongTermGoals] = useState<string[]>(
+    [],
+  );
+
   const shortTermGoals = [
-    'Save for retirement',
-    'Buy a house',
-    'Start a business',
-    'Save for vacation',
-    'Emergency fund',
+    'Learn more about investing',
+    'Track spending patterns',
+    'Diversify portfolio',
+    'Set a savings target',
   ];
 
-  const handleSelectGoal = (goal: string) => {
+  const longTermGoals = [
+    'Create a passive income stream',
+    'Build a legacy portfolio',
+    'Build a retirement fund',
+    'Fund a major life goal',
+  ];
+
+  const handleSelectShortTermGoal = (goal: string) => {
     if (selectedShortTermGoals.includes(goal)) {
-      setSelectedShortTermGoals(selectedShortTermGoals.filter(item => item !== goal));
+      setSelectedShortTermGoals(
+        selectedShortTermGoals.filter(item => item !== goal),
+      );
     } else {
       setSelectedShortTermGoals([...selectedShortTermGoals, goal]);
     }
   };
 
+  const handleSelectLongTermGoal = (goal: string) => {
+    if (selectedLongTermGoals.includes(goal)) {
+      setSelectedLongTermGoals(
+        selectedLongTermGoals.filter(item => item !== goal),
+      );
+    } else {
+      setSelectedLongTermGoals([...selectedLongTermGoals, goal]);
+    }
+  };
+
   const handleContinue = () => {
-    dispatch(updateFinancialGoals(selectedShortTermGoals));
+    dispatch(updateFinancialGoalsShortTerm(selectedShortTermGoals));
+    dispatch(updateFinancialGoalsLongTerm(selectedLongTermGoals));
     // Navigate to the next page
     navigation.navigate('ExperienceAndRisk');
   };
@@ -43,7 +68,17 @@ const GoalsPage: React.FC = () => {
             key={goal}
             goal={goal}
             isSelected={selectedShortTermGoals.includes(goal)}
-            onSelect={handleSelectGoal}
+            onSelect={handleSelectShortTermGoal}
+          />
+        ))}
+      </View>
+      <View style={styles.goalsContainer}>
+        {longTermGoals.map(goal => (
+          <FinancialGoal
+            key={goal}
+            goal={goal}
+            isSelected={selectedLongTermGoals.includes(goal)}
+            onSelect={handleSelectLongTermGoal}
           />
         ))}
       </View>

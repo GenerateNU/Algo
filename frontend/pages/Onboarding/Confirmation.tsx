@@ -23,7 +23,7 @@ const Confirmation: React.FC = () => {
       risk_tolerance: onboarding.risk,
       years_of_experience: onboarding.yearsOfExperience,
     };
-    const newUser = await registerUser(user, onboarding.financialGoals, []);
+    const newUser = await registerUser(user, onboarding.financialGoalsShortTerm, onboarding.financialGoalsLongTerm);
     
     if (newUser) {
       dispatch(completeOnboarding());
