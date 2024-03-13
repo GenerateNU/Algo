@@ -28,44 +28,38 @@ const ProfileBanner = ({ user }: ProfileBannerProps) => {
           source={{ uri: "currentAuth?.photoURL" }}
         />
 
-        <View style={{ display: "flex", flexDirection: 'row', alignItems: "flex-end", justifyContent: 'space-evenly', flex: 1 }}>
-          <View style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Text style={{ fontSize: 20 }}>{"user.username"}</Text>
-            <Text style={{ fontSize: 15 }}>
-              first_name last_name
-            </Text>
-            <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ }}>
-              {"user?.email"}
-            </Text>
-          </View>
+        <View style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          <View style={{ display: "flex", flexDirection: 'row', alignItems: "flex-end", justifyContent: 'space-evenly', flex: 1 }}>
 
-          <View style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Text style={{ fontSize: 20 }}>{user.vouchers.length}</Text>
-            <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ fontSize: 15 }}>
-              Vouches
-            </Text>
+            <View style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <Text style={{ fontSize: 20 }}>10</Text>
+              <Text style={{ fontSize: 15 }}>
+                Followers
+              </Text>
+            </View>
+
+            <View style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <Text style={{ fontSize: 20 }}>{10}</Text>
+              <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ fontSize: 15 }}>
+                Following
+              </Text>
+            </View>
+          </View>
+          <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
+            <Button mode="contained" onPress={navigateToEditProfile}>Edit Profile</Button>
           </View>
         </View>
+
       </View>
 
-      <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
-        {
-          // <ActionButton title="Edit Profile" onPress={navigateToEditProfile} />
-          <Button mode="contained" onPress={navigateToEditProfile}>Edit Profile</Button>
-        }
+      <View style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+        <Text>@username</Text>
+        <Text>first_name last_name</Text>
+        <Text>
+          profile description? Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Praesent vel nisi sed diam ultricies viverra sit amet nec dolor....
+        </Text>
       </View>
-
-      {/*
-      user.id === currentAuth.uid ? (
-        <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Button mode="contained" onPress={navigateToEditProfile}>Edit Profile</Button>
-        </View>
-      ) : (
-        <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Button mode="contained" onPress={() => { }}>Follow</Button>
-        </View>
-      )
-      */}
     </View>
   )
 }
