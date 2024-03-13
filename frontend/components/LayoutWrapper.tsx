@@ -28,7 +28,7 @@ export default function LayoutWrapper() {
       {session?.user !== undefined && !onboarding.isOnboarding ? (
         <BottomNavBar />
       ) : (
-        <AuthNavigator />
+        <BottomNavBar />
       )}
     </NavigationContainer>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import onboardingReducer from './reducers/onboarding/onboardingReducer';
@@ -30,9 +30,13 @@ const tokenCache = {
 };
 
 export default function App() {
+  useEffect(() => {
+    console.log(process.env.EXPO_USERNAME);
+  }, []);
+
   return (
     <ClerkProvider
-      publishableKey={process.env.EXPO_PUBLIC_CLERK_API_KEY as string}
+      publishableKey={"pk_test_ZWxlY3RyaWMtbW9uaXRvci03OC5jbGVyay5hY2NvdW50cy5kZXYk" as string}
       tokenCache={tokenCache}>
       <Provider store={store}>
         <LayoutWrapper />
