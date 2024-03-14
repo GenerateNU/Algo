@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { useSession } from '@clerk/clerk-expo';
 import SignOut from '../components/SignOutButton';
-import ProfileBanner from '../components/ProfileBanner';
 
 const Profile = () => {
   const { session } = useSession();
@@ -23,9 +22,7 @@ const Profile = () => {
 
   return (
     <View style={styles.container}>
-      <ProfileBanner />
       <Text style={styles.text}>Hello {session?.user.username}!</Text>
-
       <SignOut />
     </View>
   );
