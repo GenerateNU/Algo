@@ -58,9 +58,9 @@ func (fol *FollowingService) GetAllFollowings() ([]models.Followings, error) {
 // ORDER BY COUNT(*) DESC;
 
 // TODO
-func (fol *FollowingService) GetLeaders() ([]models.User, error) {
+func (fol *FollowingService) GetLeaders() ([]models.Leader, error) {
 
-	var followingSlice []models.Leader
+	var leaders []models.Leader
 
 	if err := fol.DB.Table("followings").
 		//Preload("FollowerUser").
@@ -69,15 +69,10 @@ func (fol *FollowingService) GetLeaders() ([]models.User, error) {
 		Group("following_user_id").
 		Order("appearance_count DESC").
 		Limit(10).
-		Find(&followingSlice).Error; err != nil {
+		Find(&leaders).Error; err != nil {
 		return nil, err
 	}
 
-	var leaders []models.User
-
-	for _, leader := range followingSlice {
-		leaders = append(leaders, leader.FollowingUser)
-	}
 	return leaders, nil
 }
 
