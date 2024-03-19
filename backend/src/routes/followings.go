@@ -38,4 +38,10 @@ func SetupFollowingRoutes(router *gin.Engine, db *gorm.DB) {
 		followersRoutes.GET("/:following_user_id", followingController.GetFollowers)
 	}
 
+	leaderRoutes := router.Group("/leaders")
+	{
+		//Get the 10 users with the most followers
+		leaderRoutes.GET("/", followingController.GetLeaders)
+	}
+
 }

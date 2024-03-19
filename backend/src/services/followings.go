@@ -42,6 +42,45 @@ func (fol *FollowingService) GetAllFollowings() ([]models.Followings, error) {
 	return following, nil
 }
 
+// GetLeaders retrieves the users with the most followers
+//
+// This method queries the database to fetch all Followings relations, including details about the follower and followed users.
+//
+// Returns:
+//   - A slice of User models containing the retrieved User relations.
+//   - An error if any database operation fails.
+//
+// Finish writing this sql query in the below Gorm function
+// SQL Equivalent:
+// SELECT followed
+// FROM followings
+// GROUP BY followed
+// ORDER BY COUNT(*) DESC;
+
+// TODO
+func (fol *FollowingService) GetLeaders() ([]models.User, error) {
+
+	var followingSlice []models.Leader
+
+	if err := fol.DB.Table("followings").
+		//Preload("FollowerUser").
+		Preload("FollowingUser").
+		Select("following_user_id, COUNT(*) as appearance_count").
+		Group("following_user_id").
+		Order("appearance_count DESC").
+		Limit(10).
+		Find(&followingSlice).Error; err != nil {
+		return nil, err
+	}
+
+	var leaders []models.User
+
+	for _, leader := range followingSlice {
+		leaders = append(leaders, leader.FollowingUser)
+	}
+	return leaders, nil
+}
+
 // GetTimeline retrieves all followings where the specified user is the follower.
 //
 // This method queries the database to fetch all followings where the given user is the follower,
