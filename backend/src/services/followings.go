@@ -65,9 +65,9 @@ func (fol *FollowingService) GetLeaders() ([]models.Leader, error) {
 	if err := fol.DB.Table("followings").
 		//Preload("FollowerUser").
 		Preload("FollowingUser").
-		Select("following_user_id, COUNT(*) as appearance_count").
+		Select("following_user_id, COUNT(*) as follower_count").
 		Group("following_user_id").
-		Order("appearance_count DESC").
+		Order("follower_count DESC").
 		Limit(10).
 		Find(&leaders).Error; err != nil {
 		return nil, err
