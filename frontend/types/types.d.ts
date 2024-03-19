@@ -18,6 +18,11 @@ export interface Redirect {
     redirect_url: string;
 }
 
+export type Leader = {
+  leader_user: User;
+  follower_count: number;
+}
+
 export interface TokenStatus {
     status: string;
 }

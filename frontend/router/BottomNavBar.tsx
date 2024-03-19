@@ -5,6 +5,7 @@ import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
 import Profile from '../pages/Profile';
 import FeedPage from '../pages/FeedPage';
+import Leaderboard from '../pages/Leaderboard';
 // import AuthNavigator from './AuthNavigation';
 // import { useSession } from '@clerk/clerk-expo';
 
@@ -54,7 +55,7 @@ const BottomNavBar = () => {
       />
       <Tab.Screen
         name="Leaderboard"
-        component={AuthPage}
+        component={Leaderboard}
         options={{
           headerShown: false,
           title: 'Leaderboard',
