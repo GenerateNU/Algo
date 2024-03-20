@@ -118,14 +118,14 @@ func (pc *PostController) GetPostsFromSearch(c *gin.Context) {
         return
     }
 
-	targetUserId, _ := strconv.ParseUint(c.Query("targetUserId"), 10, 32)
+	userNameSearchTerm := c.Query("userNameSearchTerm")
     postType := c.Query("postType")
 	tickerSymbolSearchTerm := c.Query("tickerSymbolSearchTerm")
 	commentSearchTerm := c.Query("commentSearchTerm")
     titleSearchTerm := c.Query("titleSearchTerm")
     ofFollowedOnly, _ := strconv.ParseBool(c.Query("ofFollowedOnly"))
 
-    posts, err := pc.postService.GetPostsFromSearch(uint(userId), uint(targetUserId), models.PostType(postType), tickerSymbolSearchTerm, commentSearchTerm, titleSearchTerm, ofFollowedOnly)
+    posts, err := pc.postService.GetPostsFromSearch(uint(userId), userNameSearchTerm, models.PostType(postType), tickerSymbolSearchTerm, commentSearchTerm, titleSearchTerm, ofFollowedOnly)
     if err != nil {
         c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch posts"})
         return
