@@ -64,6 +64,23 @@ func (us *UserService) DeleteUserById(id uint) (*models.User, error) {
 	return user, nil
 }
 
+func (us *UserService) GetUsersFromSearch(userNameSearchTerm string) {
+	var users []models.user
+
+	query := us.DB.Model(&models.User{})
+
+	if userNameSearchTerm != "" {
+		userNameSearch := "%" + userNameSearchTerm + "%"
+		query = query.Where("username LIKE ? OR first_name LIKE ? OR last_name LIKE ?", userNameSearch, userNameSearch, userNameSearch)
+	}
+
+	if err := query.Find(&users).Error; err != nil {
+		return nil, err
+	}
+
+	return users, nil
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func (us *UserService) CreateLongTermGoalForUser(userID uint, longTermGoalID uint) (models.UserLongTermGoals, error) {

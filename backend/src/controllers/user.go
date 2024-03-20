@@ -158,6 +158,31 @@ func (uc *UserController) DeleteUserById(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
+// GetUsersFromSearch godoc
+//
+// @Summary Gets users based on search criteria
+// @Description Searches for users by username, first name, or last name based on the provided search term.
+// @ID get-users-from-search
+// @Tags user
+// @Produce json
+// @Param userId path uint true "User ID"
+// @Param userNameSearchTerm query string true "Search term for user name"
+// @Success 200 {object} []models.User
+// @Failure 400 {string} string "Invalid parameters"
+// @Failure 404 {string} string "Failed to fetch users"
+// @Router /api/users/search [get]
+func (uc *UserController) GetUsersFromSearch(c *gin.Context) {
+    userNameSearchTerm := c.Query("userNameSearchTerm")
+
+    users, err := uc.userService.GetUsersFromSearch(userNameSearchTerm)
+    if err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch users"})
+        return
+    }
+
+    c.JSON(http.StatusOK, users)
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // CreateLongTermGoalForUser godoc
