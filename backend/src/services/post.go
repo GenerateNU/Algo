@@ -52,7 +52,7 @@ func (ps *PostService) GetPostsFromFollowedUsers(userId uint) ([]models.Post, er
 
 
 // Abstracted Get Posts Function, Add More Parameters as Needed
-func (ps *PostService) GetPostsFromSearch(userId uint, userNameSearchTerm string, postType models.PostType, tickerSymbolSearchTerm string, commentSearchTerm string, titleSearchTerm string, ofFollowedOnly bool) ([]models.Post, error) {
+func (ps *PostService) GetPostsFromSearch(userNameSearchTerm string, postType models.PostType, tickerSymbolSearchTerm string, commentSearchTerm string, titleSearchTerm string) ([]models.Post, error) {
     var posts []models.Post
 
     // Start with a base query
@@ -88,6 +88,7 @@ func (ps *PostService) GetPostsFromSearch(userId uint, userNameSearchTerm string
         query = query.Where("title LIKE ?", "%"+titleSearchTerm+"%")
     }
 
+	/*
     if ofFollowedOnly {
         // Get the list of followed user IDs
         var followedUserIDs []uint
@@ -98,6 +99,7 @@ func (ps *PostService) GetPostsFromSearch(userId uint, userNameSearchTerm string
         // Filter posts by followed user IDs
         query = query.Where("user_id IN (?)", followedUserIDs)
     }
+	*/
 
     // Execute the query
     if err := query.Find(&posts).Error; err != nil {

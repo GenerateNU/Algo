@@ -112,20 +112,22 @@ func (pc *PostController) GetPostsFromFollowedUsers(c *gin.Context) {
 // @Failure 404 {string} string "Failed to fetch posts"
 // @Router /api/posts [get]
 func (pc *PostController) GetPostsFromSearch(c *gin.Context) {
+	/*
     userId, err := strconv.ParseUint(c.Param("userId"), 10, 32)
     if err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
         return
     }
+	*/
 
 	userNameSearchTerm := c.Query("userNameSearchTerm")
     postType := c.Query("postType")
 	tickerSymbolSearchTerm := c.Query("tickerSymbolSearchTerm")
 	commentSearchTerm := c.Query("commentSearchTerm")
     titleSearchTerm := c.Query("titleSearchTerm")
-    ofFollowedOnly, _ := strconv.ParseBool(c.Query("ofFollowedOnly"))
+    //ofFollowedOnly, _ := strconv.ParseBool(c.Query("ofFollowedOnly"))
 
-    posts, err := pc.postService.GetPostsFromSearch(uint(userId), userNameSearchTerm, models.PostType(postType), tickerSymbolSearchTerm, commentSearchTerm, titleSearchTerm, ofFollowedOnly)
+    posts, err := pc.postService.GetPostsFromSearch(userNameSearchTerm, models.PostType(postType), tickerSymbolSearchTerm, commentSearchTerm, titleSearchTerm)
     if err != nil {
         c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch posts"})
         return
