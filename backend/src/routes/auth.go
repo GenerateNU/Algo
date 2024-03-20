@@ -4,14 +4,12 @@ import (
 	"backend/src/controllers"
 	"backend/src/services"
 	"encoding/json"
-	"log"
-	"net/http"
-	"os"
-
 	"github.com/clerkinc/clerk-sdk-go/clerk"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"
+	"log"
+	"net/http"
 )
 
 func SetupAuthRoutes(router *gin.Engine, db *gorm.DB) clerk.Client {
@@ -25,15 +23,21 @@ func SetupAuthRoutes(router *gin.Engine, db *gorm.DB) clerk.Client {
 
 	authRoutes := router.Group("/auth")
 	{
-		authRoutes.POST("/register", func(c *gin.Context) {
-			authController.Register(c)
-		})
-		authRoutes.POST("/authenticate", func(c *gin.Context) {
-			authController.AuthenticateSession(c, client)
-		})
-		authRoutes.GET("/session", func(c *gin.Context) {
-			authController.GetSession(c, client)
-		})
+		authRoutes.POST(
+			"/register", func(c *gin.Context) {
+				authController.Register(c)
+			},
+		)
+		authRoutes.POST(
+			"/authenticate", func(c *gin.Context) {
+				authController.AuthenticateSession(c, client)
+			},
+		)
+		authRoutes.GET(
+			"/session", func(c *gin.Context) {
+				authController.GetSession(c, client)
+			},
+		)
 	}
 
 	return client
@@ -47,10 +51,12 @@ func SetupAuthMiddleware(client clerk.Client, router *gin.Engine) {
 
 func RemoveMiddleware(router *gin.Engine) {
 	// Remove the middleware from the router
-	router.Use(func(c *gin.Context) {
-		// This function will be executed before the routes without the middleware
-		c.Next()
-	})
+	router.Use(
+		func(c *gin.Context) {
+			// This function will be executed before the routes without the middleware
+			c.Next()
+		},
+	)
 }
 
 func SetupClerkStore() (clerk.Client, error) {
@@ -59,7 +65,7 @@ func SetupClerkStore() (clerk.Client, error) {
 		log.Fatal("Error loading .env file")
 	}
 
-	clerkApiSecretKey := os.Getenv("EXPO_PUBLIC_CLERK_SECRET_KEY")
+	clerkApiSecretKey := "pk_test_c3BlY2lhbC1zZXJ2YWwtMzguY2xlcmsuYWNjb3VudHMuZGV2JA"
 	log.Println(clerkApiSecretKey)
 	client, err := clerk.NewClient(clerkApiSecretKey)
 	if err != nil {
