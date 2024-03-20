@@ -152,16 +152,23 @@ func (s *ETradeService) SyncPortfolio(userID uint) ([]models.UserPortfolio, erro
 	}
 
 	visitedAccounts := make(map[string]bool)
-	var positions []models.UserPortfolio
+	var positions []models.Position
+
+	var dbPortfolio models.UserPortfolio
+	if err := s.DB.Where("user_id = ?", userID).FirstOrCreate(
+		&dbPortfolio, models.UserPortfolio{UserID: userID},
+	).Error; err != nil {
+		return []models.UserPortfolio{}, fmt.Errorf("error retrieving portfolio from the database: %s", err)
+	}
 
 	// Retrieve current positions from the database
-	var dbPositions []models.UserPortfolio
-	if err := s.DB.Where("user_id = ?", userID).Find(&dbPositions).Error; err != nil {
+	var dbPositions []models.Position
+	if err := s.DB.Where("user_portfolio_id = ?", dbPortfolio.ID).Find(&dbPositions).Error; err != nil {
 		return []models.UserPortfolio{}, fmt.Errorf("error retrieving positions from the database: %s", err)
 	}
 
 	// Map to store existing positions for quick lookup
-	existingPositions := make(map[int]models.UserPortfolio)
+	existingPositions := make(map[int]models.Position)
 	for _, pos := range dbPositions {
 		existingPositions[pos.PositionID] = pos
 	}
@@ -197,17 +204,17 @@ func (s *ETradeService) SyncPortfolio(userID uint) ([]models.UserPortfolio, erro
 				} else {
 					// Add new position
 					positions = append(
-						positions, models.UserPortfolio{
-							UserID:       userID,
-							PositionID:   position.PositionID,
-							Ticker:       position.SymbolDescription,
-							Quantity:     position.Quantity,
-							Cost:         position.CostPerShare,
-							DayGain:      position.DaysGain,
-							DayGainPct:   position.DaysGainPct,
-							TotalGain:    position.TotalGain,
-							TotalGainPct: position.TotalGainPct,
-							Type:         models.TradeType(position.PositionType),
+						positions, models.Position{
+							UserPortfolioID: dbPortfolio.ID,
+							PositionID:      position.PositionID,
+							Ticker:          position.SymbolDescription,
+							Quantity:        position.Quantity,
+							Cost:            position.CostPerShare,
+							DayGain:         position.DaysGain,
+							DayGainPct:      position.DaysGainPct,
+							TotalGain:       position.TotalGain,
+							TotalGainPct:    position.TotalGainPct,
+							Type:            models.TradeType(position.PositionType),
 						},
 					)
 				}
@@ -286,7 +293,7 @@ func getETradePortfolio(client *http.Client, tokens *models.OAuthTokens, account
 // GetUserPortfolio returns the user portfolio from our db
 func (s *ETradeService) GetUserPortfolio(userID uint) ([]models.UserPortfolio, error) {
 	var allPositions []models.UserPortfolio
-	if err := s.DB.Where("user_id = ?", userID).Find(&allPositions).Error; err != nil {
+	if err := s.DB.Preload("Positions").Where("user_id = ?", userID).Find(&allPositions).Error; err != nil {
 		return []models.UserPortfolio{}, fmt.Errorf("error retrieving all positions from the database: %s", err)
 	}
 
