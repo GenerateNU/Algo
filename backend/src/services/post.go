@@ -4,6 +4,8 @@ import (
 	"backend/src/models"
 
 	"gorm.io/gorm"
+
+	"time"
 )
 
 type PostService struct {
@@ -48,6 +50,56 @@ func (ps *PostService) GetPostsFromFollowedUsers(userId uint) ([]models.Post, er
 	}
 
 	return posts, nil
+}
+
+
+// Abstracted Get Posts Function, Add More Parameters as Needed
+func (ps *PostService) GetPostsFromSearch(userId uint, targetUserId uint, postType models.PostType, tickerSymbolSearchTerm string, commentSearchTerm string, titleSearchTerm string, ofFollowedOnly bool) ([]models.Post, error) {
+    var posts []models.Post
+
+    // Start with a base query
+    query := ps.DB.Model(&models.Post{})
+
+	// Filter posts by targetUserId if targetUserId is not empty
+	if targetUserId != 0 {
+		query = query.Where("user_id = ?", targetUserId)
+	}
+
+	// Filter posts by PostType if postType is not empty
+    if postType != "" {
+        query = query.Where("post_type = ?", postType)
+    }
+
+	if tickerSymbolSearchTerm != "" {
+		query = query.Where("ticker_symbol = ?", tickerSymbolSearchTerm)
+	}
+
+	if commentSearchTerm != "" {
+		query = query.Where("comment LIKE ?", "%"+commentSearchTerm+"%")
+	}
+
+    // Filter posts by searchTerm in their name if searchTerm is not empty
+    if titleSearchTerm != "" {
+        query = query.Where("title LIKE ?", "%"+titleSearchTerm+"%")
+    }
+
+    if ofFollowedOnly {
+        // Get the list of followed user IDs
+        var followedUserIDs []uint
+        if err := ps.DB.Model(&models.Followings{}).Where("follower_user_id = ?", userId).Pluck("following_user_id", &followedUserIDs).Error; err != nil {
+            return nil, err
+        }
+
+        // Filter posts by followed user IDs
+        query = query.Where("user_id IN (?)", followedUserIDs)
+    }
+
+    // Execute the query
+    if err := query.Find(&posts).Error; err != nil {
+        return nil, err
+    }
+
+    return posts, nil
 }
 
 

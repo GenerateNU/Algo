@@ -17,6 +17,7 @@ func SetupPostRoutes(router *gin.Engine, db *gorm.DB) {
 		postRoutes.GET("/", postController.GetAllPosts)
 		postRoutes.GET("/user-posts/:userId", postController.GetPostsByUserId)
 		postRoutes.GET("/followed-posts/:userId", postController.GetPostsFromFollowedUsers)
+		postRoutes.GET("/search-posts/:userId", postController.GetPostsFromSearch)
 		postRoutes.POST("/", postController.CreatePost)
 		postRoutes.GET("/:id", postController.GetPostById)
 		postRoutes.PUT("/:id", postController.UpdatePostById)
