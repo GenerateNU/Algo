@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable, Touchable, TouchableOpacity } from 'react-native'
 // import { theme } from '../../theme'
 import React, { useContext } from 'react'
 // import ActionButton from '../ActionButton'
-import { useNavigation } from '@react-navigation/native'
+// import { useNavigation } from '@react-navigation/native'
 import { Button } from 'react-native-paper'
+import ProfileBio from './ProfileBio'
 
 const PROFILE_IMAGE_SIZE = 100
 
@@ -14,52 +15,53 @@ interface ProfileBannerProps {
 const ProfileBanner = ({ user }: ProfileBannerProps) => {
   // const { currentAuth } = useContext(AuthContext)
 
-  const navigation = useNavigation()
+  // const navigation = useNavigation()
 
   const navigateToEditProfile = () => {
     // navigation.navigate({ name: "Edit My Profile" })
   }
 
   return (
-    <View style={{ paddingHorizontal: "0%" }}>
-      <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5, paddingVertical: 10 }}>
+    <View className='flex flex-col px-3 mb-2'>
+
+      <View className='flex flex-row items-center justify-between gap-1 mb-4'>
         <Image
+          // must be a perfect circle
+          className='w-32 h-32'
           style={profileStyles.profileImage}
           source={{ uri: "currentAuth?.photoURL" }}
         />
 
-        <View style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-          <View style={{ display: "flex", flexDirection: 'row', alignItems: "flex-end", justifyContent: 'space-evenly', flex: 1 }}>
-
-            <View style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <Text style={{ fontSize: 20 }}>10</Text>
-              <Text style={{ fontSize: 15 }}>
+        <View className='flex flex-col flex-1 gap-2'>
+          <View className='flex flex-row justify-evenly flex-1' >
+            
+            <View className='flex flex-col items-center px-4 py-2'>
+              <Text className='text-sm font-semibold'>10</Text>
+              <Text className='text-sm font-semibold'>
                 Followers
               </Text>
             </View>
 
-            <View style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <Text style={{ fontSize: 20 }}>{10}</Text>
-              <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ fontSize: 15 }}>
+            <View className='flex flex-col items-center px-4 py-2'>
+              <Text className='text-sm font-semibold'>{10}</Text>
+              <Text adjustsFontSizeToFit={true} numberOfLines={1} className='text-sm font-semibold'>
                 Following
               </Text>
             </View>
           </View>
-          <View style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
-            <Button mode="contained" onPress={navigateToEditProfile}>Edit Profile</Button>
-          </View>
+
+          <TouchableOpacity className='flex items-center justify-center flex-1 bg-[#E7E7E7]' style={profileStyles.followButton}>
+            <Text className='font-semibold' style={{ color: "black" }}>Edit Profile</Text>
+          </TouchableOpacity>
         </View>
-
       </View>
 
-      <View style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-        <Text>@username</Text>
-        <Text>first_name last_name</Text>
-        <Text>
-          profile description? Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Praesent vel nisi sed diam ultricies viverra sit amet nec dolor....
-        </Text>
-      </View>
+      <ProfileBio
+        username="username"
+        fullName="first_name last_name"
+        description="profile description? Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent vel nisi sed diam ultricies viverra sit amet nec dolor...."
+      />
+
     </View>
   )
 }
@@ -69,20 +71,18 @@ export default ProfileBanner
 
 const profileStyles = StyleSheet.create({
   profileImage: {
-    maxWidth: PROFILE_IMAGE_SIZE,
-    maxHeight: PROFILE_IMAGE_SIZE,
-    width: 250,
-    height: 250,
+    //maxWidth: PROFILE_IMAGE_SIZE,
+    // maxHeight: PROFILE_IMAGE_SIZE,
+    //width: 250,
+    // height: 250,
     borderRadius: 180,
     borderColor: "black", // theme.colors.NEU_RED,
     borderWidth: 2,
   },
   followButton: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "black", //theme.colors.NEU_RED,
+    backgroundColor: "#E7E7E7", //theme.colors.NEU_RED,
     paddingVertical: 5,
     paddingHorizontal: 20,
-    borderRadius: 5
+    borderRadius: 10
   },
 })
