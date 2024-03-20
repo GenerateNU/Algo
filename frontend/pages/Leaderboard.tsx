@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     leaderboard: {
         flex: 1,
         justifyContent: 'flex-start',
-        borderColor: '#777777',
+        borderColor: '#999999',
         borderWidth: 2,
         marginTop: 12,
-        padding: 8,
+        padding: 18,
     }
 });  
 
