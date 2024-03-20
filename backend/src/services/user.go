@@ -64,8 +64,8 @@ func (us *UserService) DeleteUserById(id uint) (*models.User, error) {
 	return user, nil
 }
 
-func (us *UserService) GetUsersFromSearch(userNameSearchTerm string) {
-	var users []models.user
+func (us *UserService) GetUsersFromSearch(userNameSearchTerm string) ([]models.User, error) {
+	var users []models.User
 
 	query := us.DB.Model(&models.User{})
 
