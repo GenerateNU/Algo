@@ -35,7 +35,6 @@ func SetupUserRoutes(router *gin.Engine, db *gorm.DB, clerkClient clerk.Client) 
 		userRoutes.GET("/:id", userController.GetUserById)
 		userRoutes.PUT("/:id", userController.UpdateUserById)
 		userRoutes.DELETE("/:id", userController.DeleteUserById)
-		userRoutes.GET("/search", userController.GetUsersFromSearch)
 
 		userRoutes.POST("/long-term-goal/:user_id", userController.CreateLongTermGoalForUser)
 		userRoutes.GET("/long-term-goal/:user_id/", userController.GetLongTermGoalsForUser)
