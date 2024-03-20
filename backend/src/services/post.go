@@ -52,15 +52,22 @@ func (ps *PostService) GetPostsFromFollowedUsers(userId uint) ([]models.Post, er
 
 
 // Abstracted Get Posts Function, Add More Parameters as Needed
-func (ps *PostService) GetPostsFromSearch(userId uint, targetUserId uint, postType models.PostType, tickerSymbolSearchTerm string, commentSearchTerm string, titleSearchTerm string, ofFollowedOnly bool) ([]models.Post, error) {
+func (ps *PostService) GetPostsFromSearch(userId uint, userNameSearchTerm string, postType models.PostType, tickerSymbolSearchTerm string, commentSearchTerm string, titleSearchTerm string, ofFollowedOnly bool) ([]models.Post, error) {
     var posts []models.Post
 
     // Start with a base query
     query := ps.DB.Model(&models.Post{})
 
-	// Filter posts by targetUserId if targetUserId is not empty
-	if targetUserId != 0 {
-		query = query.Where("user_id = ?", targetUserId)
+	if userNameSearchTerm != "" {
+		var userIDs []uint
+		userNameSearch := "%" + userNameSearchTerm + "%"
+		if err := ps.DB.Model(&models.User{}).
+			Where("username LIKE ? OR first_name LIKE ? OR last_name LIKE ?", userNameSearch, userNameSearch, userNameSearch).
+			Pluck("id", &userIDs).Error; err != nil {
+			return nil, err
+		}
+
+		query = query.Where("user_id IN (?)", userIDs)
 	}
 
 	// Filter posts by PostType if postType is not empty
