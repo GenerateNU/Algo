@@ -72,7 +72,7 @@ func (ps *PostService) GetPostsFromSearch(userNameSearchTerm string, postContent
 
 	if postContentSearchTerm != "" {
 		postContentSearch := "%" + postContentSearchTerm + "%"
-		query = query.Where("post_type LIKE ? OR ticker_symbol LIKE ? OR comment LIKE ? OR title LIKE ?", postContentSearch, postContentSearch, postContentSearch, postContentSearch)
+		query = query.Where("post_type = ? OR ticker_symbol LIKE ? OR comment LIKE ? OR title LIKE ?", models.PostType(postContentSearchTerm), postContentSearch, postContentSearch, postContentSearch)
 	}
 
 	/*
