@@ -36,7 +36,7 @@ export default function App() {
 
   return (
     <ClerkProvider
-      publishableKey={"" as string}
+      publishableKey={"pk_test_Y29tcGxldGUtcGFudGhlci05NS5jbGVyay5hY2NvdW50cy5kZXYk" as string}
       tokenCache={tokenCache}>
       <Provider store={store}>
         <LayoutWrapper />

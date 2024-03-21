@@ -5,6 +5,7 @@ import React, { useContext } from 'react'
 // import { useNavigation } from '@react-navigation/native'
 import { Button } from 'react-native-paper'
 import ProfileBio from './ProfileBio'
+import { useSession } from '@clerk/clerk-expo'
 
 const PROFILE_IMAGE_SIZE = 100
 
@@ -14,7 +15,7 @@ interface ProfileBannerProps {
 
 const ProfileBanner = ({ user }: ProfileBannerProps) => {
   // const { currentAuth } = useContext(AuthContext)
-
+  const { session } = useSession()
   // const navigation = useNavigation()
 
   const navigateToEditProfile = () => {
