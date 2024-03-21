@@ -16,7 +16,7 @@ const SubTabButton = ({ title, selected, onPress }: SubTabButtonProps) => {
         isSelected ? 'border-black' : ' border-[#D5D5D5]'
       }`}
       onPress={() => {
-        setIsSelected(true);
+        //setIsSelected(!isSelected);
         onPress();
       }}
     >

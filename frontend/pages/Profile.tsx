@@ -5,6 +5,9 @@ import { useSession } from '@clerk/clerk-expo';
 import ProfileBanner from '../components/ProfileBanner';
 import SubTabButton from '../components/SubTabButton';
 import { Icon } from '@rneui/themed';
+import ActivityItem from '../components/ActivityItem';
+import { ProfileActivityData } from '../constants';
+import ProfilePerformance from '../components/ProfilePerformance';
 import SignOut from '../components/SignOutButton';
 // import SettingsSvg from '../assets/SettingsIcon.svg';
 
@@ -15,45 +18,29 @@ const Profile = () => {
   const navigation = useNavigation();
   const [isPortfolioSelected, setIsPortfolioSelected] = useState<boolean>(true);
   const [isActivitySelected, setIsActivitySelected] = useState<boolean>(false);
-  const SettingsSvg = require('../assets/SettingsIcon.svg');
 
-  const Data = [
-    {
-      id: 1,
-      title: 'Activity 1',
-    },
-    {
-      id: 2,
-      title: 'Activity 2',
-    },
-    {
-      id: 3,
-      title: 'Activity 3',
-    },
-    {
-      id: 4,
-      title: 'Activity 4',
-    },
-    {
-      id: 5,
-      title: 'Activity 5',
-    }
-  ];
+  const OnActivitySelected = () => {
+    setIsPortfolioSelected(false);
+    setIsActivitySelected(true);
+  }
+
+  const OnPortfolioSelected = () => {
+    setIsPortfolioSelected(true);
+    setIsActivitySelected(false);
+  }
 
   useEffect(() => {
     // set the title of the page
     navigation.setOptions({
       headerShown: true,
-      headerTitle: '@username',
+      headerTitle: `@${session?.user.username}`,
       headerTitleAlign: 'center',
       headerRight: () => (
-        // a gear icon
         <Icon type='material-community' name='cog' size={30} color='black' />
       ),
       headerLeft: () => (
-        // a back button
         <Pressable onPress={() => navigation.goBack()}>
-        <Icon type='material-community' name='chevron-left' size={30} color='black' />
+          <Icon type='material-community' name='chevron-left' size={30} color='black' />
         </Pressable>
       ),
     })
@@ -75,67 +62,33 @@ const Profile = () => {
         <ProfileBanner />
 
         <View className='flex flex-row'>
-          <SubTabButton title='Portfolio' selected={isPortfolioSelected} onPress={() => {
-          }} />
-          <SubTabButton title='Activity' selected={isActivitySelected} onPress={() => {
-          }} />
+          <SubTabButton title='Portfolio' selected={true} onPress={OnPortfolioSelected} />
+          <SubTabButton title='Activity' selected={true} onPress={OnActivitySelected} />
         </View>
 
-        <View>
-        <FlatList
-          data={Data}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <View>
-              <Text>{item.title}</Text>
-            </View>
-          )}
-        />
-        </View>
-        <SignOut />
+        {isPortfolioSelected && (
+          <View className='flex flex-col'>
+            <ProfilePerformance portfolioValue='+10000.99' />
+          </View>
+        )}
+
+        {isActivitySelected && (
+          <View className='flex flex-col'>
+            <FlatList
+              data={ProfileActivityData}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item }) => (
+                <ActivityItem
+                  title={item.title}
+                  description={item.description}
+                  icon={item.icon} />
+              )} />
+          </View>
+        )}
       </View>
+      <SignOut />
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 24,
-    textAlign: 'center',
-  },
-  v124_1304: {
-    margin: 0,
-    position: 'absolute',
-    top: 9,
-    right: 10,
-    overflow: 'hidden',
-  },
-});
-
-const profileStyles = StyleSheet.create({
-  profileImage: {
-    maxWidth: PROFILE_IMAGE_SIZE,
-    maxHeight: PROFILE_IMAGE_SIZE,
-    width: 250,
-    height: 250,
-    borderRadius: 180,
-    borderColor: "red",
-    borderWidth: 2,
-  },
-  followButton: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "red",
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 5
-  },
-})
-
 
 export default Profile;
