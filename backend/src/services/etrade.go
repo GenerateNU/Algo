@@ -173,9 +173,12 @@ func (s *ETradeService) SyncPortfolio(userID uint) ([]models.UserPortfolio, erro
 		existingPositions[pos.PositionID] = pos
 	}
 
+	var totalGain, totalDayGain float64
+	var totalPortfolioValue float64
+	var portfolioList []types.AccountPortfolio
 	// Iterate over portfolioList to update, add, and delete positions
 	for _, account := range accounts {
-		portfolioList, err := getETradePortfolio(client, oauthTokens, account.AccountIDKey)
+		portfolioList, err = getETradePortfolio(client, oauthTokens, account.AccountIDKey)
 		if err != nil {
 			return []models.UserPortfolio{}, fmt.Errorf("error getting portfolio: %s", err)
 		}
@@ -186,6 +189,19 @@ func (s *ETradeService) SyncPortfolio(userID uint) ([]models.UserPortfolio, erro
 			}
 			visitedAccounts[portfolio.AccountID] = true
 			for _, position := range portfolio.PositionList {
+				var positionValue float64
+				if position.PositionType == "SHORT" {
+					// For short positions, subtract the gains from the total gains
+					totalGain -= position.TotalGain
+					totalDayGain -= position.DaysGain
+					positionValue = float64(position.Quantity) * position.CostPerShare * -1 // Negate the position value for short positions
+				} else {
+					// For long positions, add the gains to the total gains
+					totalGain += position.TotalGain
+					totalDayGain += position.DaysGain
+					positionValue = float64(position.Quantity) * position.CostPerShare
+				}
+				totalPortfolioValue += positionValue
 				// Update existing position or add new position
 				if existingPos, ok := existingPositions[position.PositionID]; ok {
 					existingPos.Ticker = position.SymbolDescription
@@ -220,6 +236,21 @@ func (s *ETradeService) SyncPortfolio(userID uint) ([]models.UserPortfolio, erro
 				}
 			}
 		}
+	}
+
+	var dayGainPct, totalGainPct float64
+	if totalPortfolioValue != 0 {
+		dayGainPct = (totalDayGain / totalPortfolioValue) * 100
+		totalGainPct = (totalGain / totalPortfolioValue) * 100
+	}
+
+	dbPortfolio.TotalGain = totalGain
+	dbPortfolio.TotalGainPct = totalGainPct
+	dbPortfolio.DayGain = totalDayGain
+	dbPortfolio.DayGainPct = dayGainPct
+
+	if err := s.DB.Save(&dbPortfolio).Error; err != nil {
+		return []models.UserPortfolio{}, fmt.Errorf("error updating portfolio: %s", err)
 	}
 
 	// Delete positions that are not present in the current data set
