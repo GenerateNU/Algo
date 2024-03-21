@@ -10,8 +10,8 @@ interface ProfileBioProps {
 const ProfileBio = ({ username, fullName, description }: ProfileBioProps) => {
   return (
     <View className='flex flex-col space-y-1'>
-      <Text className='font-medium'>@{username}</Text>
-      <Text className='font-semibold'>{fullName}</Text>
+      <Text className='text-base font-medium'>@{username}</Text>
+      <Text className='text-base font-bold'>{fullName}</Text>
       <Text>{description}</Text>
     </View>
   )
