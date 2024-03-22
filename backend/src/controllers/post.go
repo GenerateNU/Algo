@@ -120,7 +120,7 @@ func (pc *PostController) GetPostsFromSearch(c *gin.Context) {
     }
 	*/
 
-	userNameSearchTerm := c.Query("userNameSearchTerm")
+	//userNameSearchTerm := c.Query("userNameSearchTerm")
 	postContentSearchTerm := c.Query("postContentSearchTerm")
     //postType := c.Query("postType")
 	//tickerSymbolSearchTerm := c.Query("tickerSymbolSearchTerm")
@@ -128,7 +128,7 @@ func (pc *PostController) GetPostsFromSearch(c *gin.Context) {
     //titleSearchTerm := c.Query("titleSearchTerm")
     //ofFollowedOnly, _ := strconv.ParseBool(c.Query("ofFollowedOnly"))
 
-    posts, err := pc.postService.GetPostsFromSearch(userNameSearchTerm, postContentSearchTerm)
+    posts, err := pc.postService.GetPostsFromSearch(postContentSearchTerm)
     if err != nil {
         c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch posts"})
         return

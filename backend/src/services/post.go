@@ -52,63 +52,17 @@ func (ps *PostService) GetPostsFromFollowedUsers(userId uint) ([]models.Post, er
 
 
 // Abstracted Get Posts Function, Add More Parameters as Needed
-func (ps *PostService) GetPostsFromSearch(userNameSearchTerm string, postContentSearchTerm string) ([]models.Post, error) {
+func (ps *PostService) GetPostsFromSearch(postContentSearchTerm string) ([]models.Post, error) {
     var posts []models.Post
 
     // Start with a base query
     query := ps.DB.Model(&models.Post{})
-
-	if userNameSearchTerm != "" {
-		var userIDs []uint
-		userNameSearch := "%" + userNameSearchTerm + "%"
-		if err := ps.DB.Model(&models.User{}).
-			Where("username LIKE ? OR first_name LIKE ? OR last_name LIKE ?", userNameSearch, userNameSearch, userNameSearch).
-			Pluck("id", &userIDs).Error; err != nil {
-			return nil, err
-		}
-
-		query = query.Where("user_id IN (?)", userIDs)
-	}
 
 	if postContentSearchTerm != "" {
 		postContentSearch := "%" + postContentSearchTerm + "%"
 		query = query.Where("ticker_symbol LIKE ? OR comment LIKE ? OR title LIKE ?", postContentSearch, postContentSearch, postContentSearch)
 	}
 
-	/*
-	// Filter posts by PostType if postType is not empty
-    if postType != "" {
-        query = query.Where("post_type = ?", postType)
-    }
-
-	if tickerSymbolSearchTerm != "" {
-		query = query.Where("ticker_symbol = ?", tickerSymbolSearchTerm)
-	}
-
-	if commentSearchTerm != "" {
-		query = query.Where("comment LIKE ?", "%"+commentSearchTerm+"%")
-	}
-
-    // Filter posts by searchTerm in their name if searchTerm is not empty
-    if titleSearchTerm != "" {
-        query = query.Where("title LIKE ?", "%"+titleSearchTerm+"%")
-    }
-	*/
-
-	/*
-    if ofFollowedOnly {
-        // Get the list of followed user IDs
-        var followedUserIDs []uint
-        if err := ps.DB.Model(&models.Followings{}).Where("follower_user_id = ?", userId).Pluck("following_user_id", &followedUserIDs).Error; err != nil {
-            return nil, err
-        }
-
-        // Filter posts by followed user IDs
-        query = query.Where("user_id IN (?)", followedUserIDs)
-    }
-	*/
-
-    // Execute the query
     if err := query.Find(&posts).Error; err != nil {
         return nil, err
     }
