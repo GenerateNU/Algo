@@ -30,7 +30,7 @@ func NewETradeController(etradeService *services.ETradeService) *ETradeControlle
 //	@Produce		json
 //	@Success		200	{object}	RedirectURLResponse
 //	@Failure		500	{string}	string	"Failed to retrieve redirect URL"
-//	@Router			/etrade/{user_id}/redirect  [get]
+//	@Router			/etrade/redirect/{user_id}  [get]
 func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
 	userIdParam := c.Param("user_id")
 
@@ -66,7 +66,7 @@ func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
 //	@Success		200		{string}	string				"ok"
 //	@Failure		400		{string}	string				"Failed to validate JSON body"
 //	@Failure		500		{string}	string				"Failed to retrieve access token"
-//	@Router			/etrade/{user_id}/verify  [post]
+//	@Router			/etrade/verify/{user_id}  [post]
 func (etc *ETradeController) Verify(c *gin.Context) {
 	userIdParam := c.Param("user_id")
 
@@ -102,7 +102,7 @@ func (etc *ETradeController) Verify(c *gin.Context) {
 //	@Produce		json
 //	@Success		200		{object}	StatusResponse
 //	@Failure		500		{string}	string				"Failed to retrieve access token status"
-//	@Router			/etrade/{user_id}/status  [post]
+//	@Router			/etrade/status/{user_id}  [post]
 func (etc *ETradeController) Status(c *gin.Context) {
 	userIdParam := c.Param("user_id")
 
@@ -124,4 +124,62 @@ func (etc *ETradeController) Status(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, data)
+}
+
+// Sync godoc
+//
+//	@Summary		Get the latest user portfolio data from E*Trade
+//	@Description	Syncs and returns the portfolio data
+//	@ID				etrade-sync-portfolio
+//	@Tags			etrade
+//	@Produce		json
+//	@Success		200		{object}	[]UserPortfolio
+//	@Failure		500		{string}	string				"Failed to sync portfolio"
+//	@Router			/etrade/sync/{user_id}  [post]
+func (etc *ETradeController) Sync(c *gin.Context) {
+	userIdParam := c.Param("user_id")
+
+	userId, err := strconv.ParseUint(userIdParam, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user_id invalid"})
+		return
+	}
+
+	positions, err := etc.etradeService.SyncPortfolio(uint(userId))
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to sync portfolio"})
+		return
+	}
+
+	c.JSON(http.StatusOK, positions)
+}
+
+// GetPortfolio godoc
+//
+//	@Summary		Get the user portfolio
+//	@Description	Returns the portfolio data
+//	@ID				etrade-get-portfolio
+//	@Tags			etrade
+//	@Produce		json
+//	@Success		200		{object}	[]UserPortfolio
+//	@Failure		500		{string}	string				"Failed to sync portfolio"
+//	@Router			/etrade/portfolio/{user_id}  [get]
+func (etc *ETradeController) GetPortfolio(c *gin.Context) {
+	userIdParam := c.Param("user_id")
+
+	userId, err := strconv.ParseUint(userIdParam, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user_id invalid"})
+		return
+	}
+
+	positions, err := etc.etradeService.GetUserPortfolio(uint(userId))
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get portfolio"})
+		return
+	}
+
+	c.JSON(http.StatusOK, positions)
 }
