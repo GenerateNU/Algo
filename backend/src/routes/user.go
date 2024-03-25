@@ -12,6 +12,7 @@ import (
 func SetupUserRoutes(router *gin.Engine, db *gorm.DB, clerkClient clerk.Client) {
 	userService := services.NewUserService(db)
 	userController := controllers.NewUserController(userService)
+	userClerkController := controllers.NewUserClerkController()
 
 	userRoutes := router.Group("/users")
 	{
@@ -45,6 +46,10 @@ func SetupUserRoutes(router *gin.Engine, db *gorm.DB, clerkClient clerk.Client) 
 		userRoutes.GET("/short-term-goal/:user_id", userController.GetShortTermGoalsForUser)
 		userRoutes.PUT("/short-term-goal/:user_id/:goal_id", userController.UpdateShortTermGoalForUser)
 		userRoutes.DELETE("/short-term-goal/:user_id/:goal_id", userController.DeleteShortTermGoalForUser)
+
+		userRoutes.GET("/clerk", userClerkController.GetAllUsers)
+		userRoutes.GET("/clerk/:id", userClerkController.GetUserById)
+		userRoutes.GET("/clerk/search/:query", userClerkController.SearchUserByQuery)
 
 		userRoutes.POST("/onboard", userController.OnboardUser)
 	}
