@@ -1,11 +1,35 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import PopularLeaderboard from '../components/PopularLeaderboard';
 import TabHeader from '../components/TabHeader';
+import {Leader} from "../types/types";
+import {getPopularLeaderboard} from "../services/leaderboard";
 
 const Leaderboard: React.FC = () => {
-    const [leaderboard, setLeaderboard] = useState([]);
+    //Fetch Leaders
+    const [leaderboard, setLeaderboard] = useState<Leader[]>([]);
+    useEffect(() => {
+        const fetchLeaderboard = async () => {
+            try {
+                const leaders = await getPopularLeaderboard();
+                setLeaderboard(leaders);
+            } catch (error) {
+                console.error('Error fetching leaderboard:', error);
+            }
+        };
+
+        fetchLeaderboard();
+
+        // Cleanup function if needed
+       // return () => {
+            // Perform any cleanup if necessary
+       // };
+    }, []);
+
+
+
+    //END ATTEMPT
     const [tab, setTab] = useState("Popular Now");
     const allTabs = ["Popular Now", "All time Bests"];
     return (

@@ -14,8 +14,9 @@ const PopularLeaderboard: React.FC<PopularProps> = ({leaderboard}: PopularProps)
         <View>
             {
                 leaderboard.map((leader, index) => (
-                    <PopularUser key={index} leader={leader} />
-            ))} 
+                   <PopularUser key={index} leader={leader} />
+            ))}
+
         </View>
     )
 }
