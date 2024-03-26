@@ -17,5 +17,7 @@ func SetupETradeRoutes(router *gin.Engine, db *gorm.DB) {
 		etradeRoutes.GET("/redirect/:user_id", etradeController.GetRedirectURL)
 		etradeRoutes.POST("/verify/:user_id", etradeController.Verify)
 		etradeRoutes.GET("/status/:user_id", etradeController.Status)
+		etradeRoutes.POST("/sync/:user_id", etradeController.Sync)
+		etradeRoutes.GET("/portfolio/:user_id", etradeController.GetPortfolio)
 	}
 }
