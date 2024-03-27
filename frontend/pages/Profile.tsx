@@ -2,12 +2,12 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView, Button, FlatList, Image, Pressable } from 'react-native';
 import { useSession } from '@clerk/clerk-expo';
-import ProfileBanner from '../components/ProfileBanner';
 import SubTabButton from '../components/SubTabButton';
 import { Icon } from '@rneui/themed';
 import ActivityItem from '../components/ActivityItem';
 import { ProfileActivityData } from '../constants';
 import ProfilePerformance from '../components/ProfilePerformance';
+import ProfileBanner from '../components/ProfileBanner';
 // import SettingsSvg from '../assets/SettingsIcon.svg';
 
 const PROFILE_IMAGE_SIZE = 100;
@@ -90,8 +90,9 @@ const Profile = () => {
                   <ActivityItem
                     title={item.title}
                     description={item.description}
-                    icon={item.icon} />
-                )} />
+                    icon={item.icon}
+                  />
+              )} />
             )}
           </View>
         </ScrollView>

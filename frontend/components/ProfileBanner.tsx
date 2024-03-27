@@ -27,6 +27,7 @@ const ProfileBanner = ({ user }: ProfileBannerProps) => {
 
       <View className='flex flex-row items-center justify-between gap-1 mb-4'>
         <Image
+        
           // must be a perfect circle
           className='w-32 h-32'
           style={profileStyles.profileImage}

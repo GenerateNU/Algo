@@ -51,6 +51,26 @@ func (ps *PostService) GetPostsFromFollowedUsers(userId uint) ([]models.Post, er
 }
 
 
+// Abstracted Get Posts Function, Add More Parameters as Needed
+func (ps *PostService) GetPostsFromSearch(postContentSearchTerm string) ([]models.Post, error) {
+    var posts []models.Post
+
+    // Start with a base query
+    query := ps.DB.Model(&models.Post{})
+
+	if postContentSearchTerm != "" {
+		postContentSearch := "%" + postContentSearchTerm + "%"
+		query = query.Where("ticker_symbol LIKE ? OR comment LIKE ? OR title LIKE ?", postContentSearch, postContentSearch, postContentSearch)
+	}
+
+    if err := query.Find(&posts).Error; err != nil {
+        return nil, err
+    }
+
+    return posts, nil
+}
+
+
 func (ps *PostService) CreatePost(post *models.Post) (*models.Post, error) {
 	if err := ps.DB.Create(post).Error; err != nil {
 		return nil, err
