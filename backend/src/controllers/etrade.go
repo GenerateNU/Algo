@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,15 +31,9 @@ func NewETradeController(etradeService *services.ETradeService) *ETradeControlle
 //	@Failure		500	{string}	string	"Failed to retrieve redirect URL"
 //	@Router			/etrade/redirect/{user_id}  [get]
 func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
-	userIdParam := c.Param("user_id")
+	userId := c.Param("user_id")
 
-	userId, err := strconv.ParseUint(userIdParam, 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user_id invalid"})
-		return
-	}
-
-	url, err := etc.etradeService.GetETradeRedirectURL(uint(userId))
+	url, err := etc.etradeService.GetETradeRedirectURL(userId)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve redirect URL"})
@@ -68,13 +61,7 @@ func (etc *ETradeController) GetRedirectURL(c *gin.Context) {
 //	@Failure		500		{string}	string				"Failed to retrieve access token"
 //	@Router			/etrade/verify/{user_id}  [post]
 func (etc *ETradeController) Verify(c *gin.Context) {
-	userIdParam := c.Param("user_id")
-
-	userId, err := strconv.ParseUint(userIdParam, 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user_id invalid"})
-		return
-	}
+	userId := c.Param("user_id")
 
 	var json types.VerifyRequest
 	if err := c.ShouldBindJSON(&json); err != nil {
@@ -82,7 +69,7 @@ func (etc *ETradeController) Verify(c *gin.Context) {
 		return
 	}
 
-	err = etc.etradeService.GetAccessToken(uint(userId), json.Verifier)
+	err := etc.etradeService.GetAccessToken(userId, json.Verifier)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve access token"})
@@ -104,15 +91,9 @@ func (etc *ETradeController) Verify(c *gin.Context) {
 //	@Failure		500		{string}	string				"Failed to retrieve access token status"
 //	@Router			/etrade/status/{user_id}  [post]
 func (etc *ETradeController) Status(c *gin.Context) {
-	userIdParam := c.Param("user_id")
+	userId := c.Param("user_id")
 
-	userId, err := strconv.ParseUint(userIdParam, 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user_id invalid"})
-		return
-	}
-
-	status, err := etc.etradeService.GetAccessTokenStatus(uint(userId))
+	status, err := etc.etradeService.GetAccessTokenStatus(userId)
 	if err != nil {
 		fmt.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve access token status"})
@@ -137,15 +118,9 @@ func (etc *ETradeController) Status(c *gin.Context) {
 //	@Failure		500		{string}	string				"Failed to sync portfolio"
 //	@Router			/etrade/sync/{user_id}  [post]
 func (etc *ETradeController) Sync(c *gin.Context) {
-	userIdParam := c.Param("user_id")
+	userId := c.Param("user_id")
 
-	userId, err := strconv.ParseUint(userIdParam, 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user_id invalid"})
-		return
-	}
-
-	positions, err := etc.etradeService.SyncPortfolio(uint(userId))
+	positions, err := etc.etradeService.SyncPortfolio(userId)
 	if err != nil {
 		fmt.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to sync portfolio"})
@@ -166,15 +141,9 @@ func (etc *ETradeController) Sync(c *gin.Context) {
 //	@Failure		500		{string}	string				"Failed to sync portfolio"
 //	@Router			/etrade/portfolio/{user_id}  [get]
 func (etc *ETradeController) GetPortfolio(c *gin.Context) {
-	userIdParam := c.Param("user_id")
+	userId := c.Param("user_id")
 
-	userId, err := strconv.ParseUint(userIdParam, 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user_id invalid"})
-		return
-	}
-
-	positions, err := etc.etradeService.GetUserPortfolio(uint(userId))
+	positions, err := etc.etradeService.GetUserPortfolio(userId)
 	if err != nil {
 		fmt.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get portfolio"})

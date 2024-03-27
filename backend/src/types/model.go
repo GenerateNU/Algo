@@ -112,3 +112,9 @@ type TickerInfo struct {
 	TotalQuantity int
 	AverageCost   float64
 }
+
+type ClerkWebhookEvent struct {
+	Data   map[string]interface{} `json:"data"`
+	Object string                 `json:"object"`
+	Type   string                 `json:"type"`
+}

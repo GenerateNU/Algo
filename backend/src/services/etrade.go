@@ -5,12 +5,13 @@ import (
 	"backend/src/types"
 	"encoding/json"
 	"fmt"
-	"github.com/gomodule/oauth1/oauth"
-	"gorm.io/gorm"
 	"io"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/gomodule/oauth1/oauth"
+	"gorm.io/gorm"
 )
 
 const APIEnv = "apisb" // "apisb" = SANDBOX, "api" = PROD
@@ -37,7 +38,7 @@ func NewETradeService(db *gorm.DB) *ETradeService {
 }
 
 // GetETradeRedirectURL gets a requestToken and uses it to retrieve a redirect URL from the etrade API
-func (s *ETradeService) GetETradeRedirectURL(userID uint) (string, error) {
+func (s *ETradeService) GetETradeRedirectURL(userID string) (string, error) {
 	err := s.clearOAuthTokens(userID)
 	if err != nil {
 		return "", fmt.Errorf("error clearing user tokens: %v", err)
@@ -62,13 +63,13 @@ func (s *ETradeService) GetETradeRedirectURL(userID uint) (string, error) {
 }
 
 // clearOAuthTokens clears all the oauth tokens associated with a user when a new redirect URL is created
-func (s *ETradeService) clearOAuthTokens(userID uint) error {
+func (s *ETradeService) clearOAuthTokens(userID string) error {
 	tx := s.DB.Where("user_id = ?", userID).Delete(&models.OAuthTokens{})
 	return tx.Error
 }
 
 // insertOAuthReqTokens stores the requestToken and requestSecret in the db for use in GetAccessToken
-func (s *ETradeService) insertOAuthReqTokens(userID uint, requestToken, requestSecret string) error {
+func (s *ETradeService) insertOAuthReqTokens(userID string, requestToken, requestSecret string) error {
 	oauthTokens := models.OAuthTokens{
 		UserID:        userID,
 		RequestToken:  requestToken,
@@ -79,7 +80,7 @@ func (s *ETradeService) insertOAuthReqTokens(userID uint, requestToken, requestS
 }
 
 // GetAccessToken gets an access token and secret using the oauth verifier and request token and secret
-func (s *ETradeService) GetAccessToken(userID uint, verifier string) error {
+func (s *ETradeService) GetAccessToken(userID string, verifier string) error {
 	oauthTokens, err := s.getLastOAuthTokens(userID)
 	if err != nil {
 		return fmt.Errorf("error getting db tokens: %v", err)
@@ -105,7 +106,7 @@ func (s *ETradeService) GetAccessToken(userID uint, verifier string) error {
 }
 
 // getLastOAuthTokens retrieves the oauth token row for the given user
-func (s *ETradeService) getLastOAuthTokens(userID uint) (*models.OAuthTokens, error) {
+func (s *ETradeService) getLastOAuthTokens(userID string) (*models.OAuthTokens, error) {
 	var oauthTokens = models.OAuthTokens{UserID: userID}
 	tx := s.DB.First(&oauthTokens)
 	if tx.Error != nil {
@@ -117,7 +118,7 @@ func (s *ETradeService) getLastOAuthTokens(userID uint) (*models.OAuthTokens, er
 
 // GetAccessTokenStatus returns the status of the OAuth token based on
 // its presence in the db and creation datetime
-func (s *ETradeService) GetAccessTokenStatus(userID uint) (string, error) {
+func (s *ETradeService) GetAccessTokenStatus(userID string) (string, error) {
 	oauthTokens, err := s.getLastOAuthTokens(userID)
 	if err != nil {
 		return "inactive", nil
@@ -138,7 +139,7 @@ func (s *ETradeService) GetAccessTokenStatus(userID uint) (string, error) {
 
 // SyncPortfolio fetches the portfolio data for each account
 // inserts new trades, updates existing, and deletes ones not returned from ETrade
-func (s *ETradeService) SyncPortfolio(userID uint) ([]models.UserPortfolio, error) {
+func (s *ETradeService) SyncPortfolio(userID string) ([]models.UserPortfolio, error) {
 	oauthTokens, err := s.getLastOAuthTokens(userID)
 	if err != nil {
 		return []models.UserPortfolio{}, fmt.Errorf("error getting oauth token: %s", err)
@@ -322,7 +323,7 @@ func getETradePortfolio(client *http.Client, tokens *models.OAuthTokens, account
 }
 
 // GetUserPortfolio returns the user portfolio from our db
-func (s *ETradeService) GetUserPortfolio(userID uint) ([]models.UserPortfolio, error) {
+func (s *ETradeService) GetUserPortfolio(userID string) ([]models.UserPortfolio, error) {
 	var allPositions []models.UserPortfolio
 	if err := s.DB.Preload("Positions").Where("user_id = ?", userID).Find(&allPositions).Error; err != nil {
 		return []models.UserPortfolio{}, fmt.Errorf("error retrieving all positions from the database: %s", err)

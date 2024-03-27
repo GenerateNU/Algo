@@ -47,18 +47,14 @@ func (pc *PostController) GetAllPosts(c *gin.Context) {
 //	@ID				get-posts-by-user-id
 //	@Tags			post
 //	@Produce		json
-//	@Param			userId	path	uint	true	"User ID"
+//	@Param			user_id	path	uint	true	"User ID"
 //	@Success		200		{object}	[]models.Post
 //	@Failure		404		{string}	string	"Failed to fetch posts"
-//	@Router			/api/posts/user/{userId} [get]
+//	@Router			/api/posts/user/{user_id} [get]
 func (pc *PostController) GetPostsByUserId(c *gin.Context) {
-	userId, err := strconv.ParseUint(c.Param("userId"), 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-		return
-	}
+	userId := c.Param("user_id")
 
-	posts, err := pc.postService.GetPostsByUserId(uint(userId))
+	posts, err := pc.postService.GetPostsByUserId(userId)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch posts"})
 		return
@@ -74,18 +70,14 @@ func (pc *PostController) GetPostsByUserId(c *gin.Context) {
 // @ID get-posts-from-followed-users
 // @Tags post
 // @Produce json
-// @Param userId path uint true "User ID"
+// @Param user_id path uint true "User ID"
 // @Success 200 {object} []models.Post
 // @Failure 404 {string} string "Failed to fetch posts"
-// @Router /api/posts/followed/{userId} [get]
+// @Router /api/posts/followed/{user_id} [get]
 func (pc *PostController) GetPostsFromFollowedUsers(c *gin.Context) {
-	userId, err := strconv.ParseUint(c.Param("userId"), 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-		return
-	}
+	userId := c.Param("user_id")
 
-	posts, err := pc.postService.GetPostsFromFollowedUsers(uint(userId))
+	posts, err := pc.postService.GetPostsFromFollowedUsers(userId)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch posts"})
 		return
@@ -112,29 +104,15 @@ func (pc *PostController) GetPostsFromFollowedUsers(c *gin.Context) {
 // @Failure 404 {string} string "Failed to fetch posts"
 // @Router /api/posts [get]
 func (pc *PostController) GetPostsFromSearch(c *gin.Context) {
-	/*
-    userId, err := strconv.ParseUint(c.Param("userId"), 10, 32)
-    if err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-        return
-    }
-	*/
+	postContentSearchTerm := c.Query("query")
 
-	//userNameSearchTerm := c.Query("userNameSearchTerm")
-	postContentSearchTerm := c.Query("postContentSearchTerm")
-    //postType := c.Query("postType")
-	//tickerSymbolSearchTerm := c.Query("tickerSymbolSearchTerm")
-	//commentSearchTerm := c.Query("commentSearchTerm")
-    //titleSearchTerm := c.Query("titleSearchTerm")
-    //ofFollowedOnly, _ := strconv.ParseBool(c.Query("ofFollowedOnly"))
+	posts, err := pc.postService.GetPostsFromSearch(postContentSearchTerm)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch posts"})
+		return
+	}
 
-    posts, err := pc.postService.GetPostsFromSearch(postContentSearchTerm)
-    if err != nil {
-        c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch posts"})
-        return
-    }
-
-    c.JSON(http.StatusOK, posts)
+	c.JSON(http.StatusOK, posts)
 }
 
 // CreatePost godoc

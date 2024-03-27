@@ -6,8 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-////////////////////////////////////// Type Definitions  + Constructor  //////////////////////////////////////////////////
-
 // FollowingService represents a service for managing followings in carbon.
 //
 // It contains a reference to the algo db.
@@ -28,8 +26,6 @@ func NewFollowingService(db *gorm.DB) *FollowingService {
 	}
 }
 
-/////////////////////////////////////READ////////////////////////////////////////
-
 // GetAllFollowings retrieves all Followings relations from the database.
 //
 // This method queries the database to fetch all Followings relations, including details about the follower and followed users.
@@ -40,7 +36,7 @@ func NewFollowingService(db *gorm.DB) *FollowingService {
 func (fol *FollowingService) GetAllFollowings() ([]models.Followings, error) {
 
 	var following []models.Followings
-	if err := fol.DB.Preload("FollowerUser").Preload("FollowedUser").Find(&following).Error; err != nil {
+	if err := fol.DB.Preload("FollowingUser").Preload("FollowingUser").Find(&following).Error; err != nil {
 		return nil, err
 	}
 	return following, nil
@@ -57,16 +53,16 @@ func (fol *FollowingService) GetAllFollowings() ([]models.Followings, error) {
 // Returns:
 //   - A slice of User models representing the users being followed by the specified user (the target users).
 //   - An error if any database operation fails.
-func (fol *FollowingService) GetTimeline(user uint) ([]models.User, error) {
+func (fol *FollowingService) GetTimeline(user string) ([]models.User, error) {
 	var following []models.Followings
 	//Retrieve all Followings relations where the follower user is
-	if err := fol.DB.Preload("FollowerUser").Preload("FollowedUser").Where("follower_user_id = ?", user).Find(&following).Error; err != nil {
+	if err := fol.DB.Preload("FollowerUser").Preload("FollowingUser").Where("follower_user_id = ?", user).Find(&following).Error; err != nil {
 		return nil, err
 	}
 	///
 	var targetUsers []models.User
 	for _, target := range following {
-		targetUsers = append(targetUsers, target.FollowedUser)
+		targetUsers = append(targetUsers, target.FollowingUser)
 	}
 	return targetUsers, nil
 }
@@ -82,10 +78,10 @@ func (fol *FollowingService) GetTimeline(user uint) ([]models.User, error) {
 // Returns:
 //   - A slice of User models representing the users who are following the specified user (the followers).
 //   - An error if any database operation fails.
-func (fol *FollowingService) GetFollowers(user uint) ([]models.User, error) {
+func (fol *FollowingService) GetFollowers(user string) ([]models.User, error) {
 	var following []models.Followings
 	//Retrieve all Followings relations where the follower user is
-	if err := fol.DB.Preload("FollowerUser").Preload("FollowedUser").Where("following_user_id = ?", user).Find(&following).Error; err != nil {
+	if err := fol.DB.Preload("FollowerUser").Preload("FollowingUser").Where("following_user_id = ?", user).Find(&following).Error; err != nil {
 		return nil, err
 	}
 
@@ -126,7 +122,7 @@ func (fol *FollowingService) CreateFollowings(following *models.Followings) erro
 //
 // Returns:
 //   - An error if any database operation fails.
-func (fol *FollowingService) DeleteFollowing(follower uint, followed uint) error {
+func (fol *FollowingService) DeleteFollowing(follower string, followed string) error {
 	err := fol.DB.Where("follower_user_id = ? AND following_user_id = ?", follower, followed).Delete(&models.Followings{})
 	return err.Error
 }

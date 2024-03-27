@@ -4,12 +4,9 @@ import (
 	"backend/src/models"
 	"backend/src/services"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
-
-////////////////////////////// Types + Constructors/////////////////////////
 
 type FollowingController struct {
 	followingService *services.FollowingService
@@ -20,8 +17,6 @@ func NewFollowingController(followingService *services.FollowingService) *Follow
 		followingService: followingService,
 	}
 }
-
-///////////////////////Read//////////////////////////////////////////////////
 
 // GetAllFollowings godoc
 //
@@ -53,12 +48,9 @@ func (fol *FollowingController) GetAllFollowings(c *gin.Context) {
 // @Failure 404 {string} string "Failed to fetch followers: 404 Error"
 // @Router  /api/following/ [get]
 func (fol *FollowingController) GetTimeline(c *gin.Context) {
-	user, err := strconv.ParseUint(c.Param("follower_user_id"), 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid follower_user_id"})
-		return
-	}
-	followings, err := fol.followingService.GetTimeline(uint(user))
+	user := c.Param("follower_user_id")
+
+	followings, err := fol.followingService.GetTimeline(user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users"})
 		return
@@ -78,12 +70,9 @@ func (fol *FollowingController) GetTimeline(c *gin.Context) {
 // @Failure 404 {string} string "Failed to fetch followers: 404 Error"
 // @Router /api/followers/{followed_user_id} [get]
 func (fol *FollowingController) GetFollowers(c *gin.Context) {
-	user, err := strconv.ParseUint(c.Param("following_user_id"), 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid following_user_id"})
-		return
-	}
-	followings, err := fol.followingService.GetFollowers(uint(user))
+	user := c.Param("following_user_id")
+
+	followings, err := fol.followingService.GetFollowers(user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users"})
 		return
@@ -91,8 +80,6 @@ func (fol *FollowingController) GetFollowers(c *gin.Context) {
 
 	c.JSON(http.StatusOK, followings)
 }
-
-//////////////////////////////////////////Create////////////////////////////////////////
 
 // CreateFollowings godoc
 //
@@ -110,8 +97,8 @@ func (fol *FollowingController) CreateFollowings(c *gin.Context) {
 
 	// Define Struct for JSON binding
 	var requestBody struct {
-		Follower uint `json:"follower_user_id"`
-		Followed uint `json:"following_user_id"`
+		Follower string `json:"follower_user_id"`
+		Followed string `json:"following_user_id"`
 	}
 	// Bind the JSON body to the struct
 	if err := c.ShouldBindJSON(&requestBody); err != nil {
@@ -133,8 +120,6 @@ func (fol *FollowingController) CreateFollowings(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"msg": "Following created successfully"})
 }
 
-///////////////////////////////Delete////////////////////////////////
-
 // UnfollowUser godoc
 //
 // @Summary Unfollows a user
@@ -149,19 +134,10 @@ func (fol *FollowingController) CreateFollowings(c *gin.Context) {
 func (fol *FollowingController) UnfollowUser(c *gin.Context) {
 
 	// Convert follower_user_id and followed_user_id to uint
-	follower, err := strconv.ParseUint(c.Param("follower_user_id"), 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid follower_user_id"})
-		return
-	}
+	follower := c.Param("follower_user_id")
+	followed := c.Param("following_user_id")
 
-	followed, err := strconv.ParseUint(c.Param("following_user_id"), 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid following_user_id"})
-		return
-	}
-
-	err = fol.followingService.DeleteFollowing(uint(follower), uint(followed))
+	err := fol.followingService.DeleteFollowing(follower, followed)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to unfollow user", "error info": err})
 		return
