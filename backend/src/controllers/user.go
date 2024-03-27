@@ -7,7 +7,6 @@ import (
 
 	"backend/src/models"
 	"backend/src/services"
-	"backend/src/types"
 
 	"github.com/clerk/clerk-sdk-go/v2"
 	"github.com/clerk/clerk-sdk-go/v2/user"
@@ -87,48 +86,6 @@ func (uc *UserController) CreateUser(c *gin.Context) {
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
 		return
-	}
-
-	createdUser, err := uc.userService.CreateUser(&user)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to create user"})
-		return
-	}
-
-	c.JSON(http.StatusCreated, createdUser)
-}
-
-// CreateUser godoc
-//
-//		@Summary		Webhook for createUser in Clerk
-//		@Description	Creates a user in the DB to match Clerk
-//		@ID				create-user
-//		@Tags			user
-//		@Accept			json
-//		@Produce		json
-//		@Param			first_name		body	string	true		"First name of the user"
-//		@Param			last_name		body	string	true		"Last name of the user"
-//		@Param			username		body	string	true		"Username of the user"
-//		@Param			email			body	string	true		"Email of the user"
-//		@Param			password		body	string	true		"Password of the user"
-//		@Success		201	  {object}	  models.User
-//	    @Failure        400   {string}    string "Failed to create user"
-//		@Router			/api/users/  [post]
-func (uc *UserController) CreateUserWebhook(c *gin.Context) {
-	// Parse JSON body into ClerkWebhookEvent struct
-	var event types.ClerkWebhookEvent
-	if err := c.BindJSON(&event); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Access data and transform it to User model
-	userData := event.Data // Access data field from JSON
-	user := models.User{
-		ID:        userData["id"].(string),
-		FirstName: userData["first_name"].(string),
-		LastName:  userData["last_name"].(string),
-		Username:  userData["username"].(string),
 	}
 
 	createdUser, err := uc.userService.CreateUser(&user)

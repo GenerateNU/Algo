@@ -58,7 +58,7 @@ func (us *UserService) UpdateUserById(id string, user *models.User) (*models.Use
 
 func (us *UserService) DeleteUserById(id string) (*models.User, error) {
 	user := &models.User{}
-	if err := us.DB.Delete(user, id).Error; err != nil {
+	if err := us.DB.Where("id = ?", id).Delete(&user).Error; err != nil {
 		return nil, err
 	}
 	return user, nil
