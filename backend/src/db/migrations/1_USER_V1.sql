@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS users;
 
 -- Create User table
 CREATE TABLE users (
-    id VARCHAR(255) PRIMARY KEY,
+    "id" VARCHAR(255) PRIMARY KEY,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     first_name VARCHAR(255),

@@ -42,7 +42,6 @@ func SetupUserRoutes(router *gin.Engine, db *gorm.DB, clerkClient clerk.Client) 
 		userRoutes.GET("/clerk", userController.GetAllClerkUsers)
 		userRoutes.GET("/clerk/:id", userController.GetClerkUserById)
 		userRoutes.GET("/search-users", userController.SearchUserByQuery)
-		userRoutes.POST("/create-webhook", userController.CreateUserWebhook)
 
 		userRoutes.POST("/long-term-goal/:user_id", userController.CreateLongTermGoalForUser)
 		userRoutes.GET("/long-term-goal/:user_id", userController.GetLongTermGoalsForUser)
