@@ -6,7 +6,7 @@ CREATE TABLE user_portfolios
     id             SERIAL PRIMARY KEY,
     created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    user_id        INTEGER REFERENCES users (id),
+    user_id        VARCHAR(255) REFERENCES users (id),
     day_gain       NUMERIC(12, 2),
     day_gain_pct   NUMERIC(12, 2),
     total_gain     NUMERIC(12, 2),

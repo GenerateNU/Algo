@@ -18,14 +18,14 @@ CREATE TABLE long_term_goals (
 -- Create UserShortTermGoals table
 CREATE TABLE user_short_term_goals (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
+    user_id VARCHAR(255) REFERENCES users(id),
     short_term_goal_id INTEGER REFERENCES short_term_goals(id)
 );
 
 -- Create UserLongTermGoals table
 CREATE TABLE user_long_term_goals (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
+    user_id VARCHAR(255) REFERENCES users(id),
     long_term_goal_id INTEGER REFERENCES long_term_goals(id)
 );
 
@@ -45,10 +45,10 @@ VALUES
 
 INSERT INTO user_long_term_goals (user_id, long_term_goal_id)
 VALUES
-  (1, 1),
-  (1, 2);
+  ('user_2dv5XFsCMYc4qLcsAnEJ1aUbxnk', 1),
+  ('user_2dv5XFsCMYc4qLcsAnEJ1aUbxnk', 2);
 
 INSERT INTO user_short_term_goals (user_id, short_term_goal_id)
 VALUES
-  (2, 3),
-  (2, 1);
+  ('user_2chL8dX6HdbBAuvu3DDM9f9NzKK', 3),
+  ('user_2chL8dX6HdbBAuvu3DDM9f9NzKK', 1);

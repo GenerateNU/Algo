@@ -33,15 +33,15 @@ func (us *UserService) CreateUser(user *models.User) (*models.User, error) {
 	return user, nil
 }
 
-func (us *UserService) GetUserById(id uint) (*models.User, error) {
+func (us *UserService) GetUserById(id string) (*models.User, error) {
 	user := &models.User{}
-	if err := us.DB.First(user, id).Error; err != nil {
+	if err := us.DB.First(user, "id = ?", id).Error; err != nil {
 		return nil, err
 	}
 	return user, nil
 }
 
-func (us *UserService) UpdateUserById(id uint, user *models.User) (*models.User, error) {
+func (us *UserService) UpdateUserById(id string, user *models.User) (*models.User, error) {
 	// Retrieve the existing user from the database
 	_, err := us.GetUserById(id)
 	if err != nil {
@@ -56,7 +56,7 @@ func (us *UserService) UpdateUserById(id uint, user *models.User) (*models.User,
 	return user, nil
 }
 
-func (us *UserService) DeleteUserById(id uint) (*models.User, error) {
+func (us *UserService) DeleteUserById(id string) (*models.User, error) {
 	user := &models.User{}
 	if err := us.DB.Delete(user, id).Error; err != nil {
 		return nil, err
@@ -64,9 +64,7 @@ func (us *UserService) DeleteUserById(id uint) (*models.User, error) {
 	return user, nil
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-func (us *UserService) CreateLongTermGoalForUser(userID uint, longTermGoalID uint) (models.UserLongTermGoals, error) {
+func (us *UserService) CreateLongTermGoalForUser(userID string, longTermGoalID uint) (models.UserLongTermGoals, error) {
 	goal := models.UserLongTermGoals{
 		UserID:         userID,
 		LongTermGoalID: longTermGoalID,
@@ -79,7 +77,7 @@ func (us *UserService) CreateLongTermGoalForUser(userID uint, longTermGoalID uin
 	return goal, nil
 }
 
-func (us *UserService) GetLongTermGoalsForUser(userID uint) ([]models.UserLongTermGoals, error) {
+func (us *UserService) GetLongTermGoalsForUser(userID string) ([]models.UserLongTermGoals, error) {
 	var userLongTermGoals []models.UserLongTermGoals
 	if err := us.DB.Preload("User").Preload("LongTermGoal").Where("user_id = ?", userID).Find(&userLongTermGoals).Error; err != nil {
 		return nil, err
@@ -87,7 +85,7 @@ func (us *UserService) GetLongTermGoalsForUser(userID uint) ([]models.UserLongTe
 	return userLongTermGoals, nil
 }
 
-func (us *UserService) UpdateLongTermGoalForUser(userID uint, goalID uint, longTermGoalID uint) (models.UserLongTermGoals, error) {
+func (us *UserService) UpdateLongTermGoalForUser(userID string, goalID uint, longTermGoalID uint) (models.UserLongTermGoals, error) {
 	var userLongTermGoal models.UserLongTermGoals
 	if err := us.DB.First(&userLongTermGoal, goalID).Error; err != nil {
 		return models.UserLongTermGoals{}, err
@@ -104,7 +102,7 @@ func (us *UserService) UpdateLongTermGoalForUser(userID uint, goalID uint, longT
 	return userLongTermGoal, nil
 }
 
-func (us *UserService) DeleteLongTermGoalForUser(userID uint, goalID uint) error {
+func (us *UserService) DeleteLongTermGoalForUser(userID string, goalID uint) error {
 	var userLongTermGoal models.UserLongTermGoals
 	if err := us.DB.First(&userLongTermGoal, goalID).Error; err != nil {
 		return err
@@ -121,9 +119,7 @@ func (us *UserService) DeleteLongTermGoalForUser(userID uint, goalID uint) error
 	return nil
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-func (us *UserService) CreateShortTermGoalForUser(userID uint, shortTermGoalID uint) (models.UserShortTermGoals, error) {
+func (us *UserService) CreateShortTermGoalForUser(userID string, shortTermGoalID uint) (models.UserShortTermGoals, error) {
 	goal := models.UserShortTermGoals{
 		UserID:          userID,
 		ShortTermGoalID: shortTermGoalID,
@@ -136,7 +132,7 @@ func (us *UserService) CreateShortTermGoalForUser(userID uint, shortTermGoalID u
 	return goal, nil
 }
 
-func (us *UserService) GetShortTermGoalsForUser(userID uint) ([]models.UserShortTermGoals, error) {
+func (us *UserService) GetShortTermGoalsForUser(userID string) ([]models.UserShortTermGoals, error) {
 	var userShortTermGoals []models.UserShortTermGoals
 	if err := us.DB.Preload("User").Preload("ShortTermGoal").Where("user_id = ?", userID).Find(&userShortTermGoals).Error; err != nil {
 		return nil, err
@@ -144,7 +140,7 @@ func (us *UserService) GetShortTermGoalsForUser(userID uint) ([]models.UserShort
 	return userShortTermGoals, nil
 }
 
-func (us *UserService) UpdateShortTermGoalForUser(userID uint, goalID uint, shortTermGoalID uint) (models.UserShortTermGoals, error) {
+func (us *UserService) UpdateShortTermGoalForUser(userID string, goalID uint, shortTermGoalID uint) (models.UserShortTermGoals, error) {
 	var userShortTermGoal models.UserShortTermGoals
 	if err := us.DB.First(&userShortTermGoal, goalID).Error; err != nil {
 		return models.UserShortTermGoals{}, err
@@ -161,7 +157,7 @@ func (us *UserService) UpdateShortTermGoalForUser(userID uint, goalID uint, shor
 	return userShortTermGoal, nil
 }
 
-func (us *UserService) DeleteShortTermGoalForUser(userID uint, goalID uint) error {
+func (us *UserService) DeleteShortTermGoalForUser(userID string, goalID uint) error {
 	var userShortTermGoal models.UserShortTermGoals
 	if err := us.DB.First(&userShortTermGoal, goalID).Error; err != nil {
 		return err
@@ -176,24 +172,4 @@ func (us *UserService) DeleteShortTermGoalForUser(userID uint, goalID uint) erro
 	}
 
 	return nil
-}
-
-func (us *UserService) OnboardUser(user *models.User, shortTermGoals []models.ShortTermGoal, longTermGoals []models.LongTermGoal) (*models.User, error) {
-	if _, err := us.CreateUser(user); err != nil {
-		return nil, err
-	}
-
-	for _, shortTermGoal := range shortTermGoals {
-		if _, err := us.CreateShortTermGoalForUser(user.ID, shortTermGoal.ID); err != nil {
-			return nil, err
-		}
-	}
-
-	for _, longTermGoal := range longTermGoals {
-		if _, err := us.CreateLongTermGoalForUser(user.ID, longTermGoal.ID); err != nil {
-			return nil, err
-		}
-	}
-
-	return user, nil
 }
