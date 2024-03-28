@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { updateRisk } from '../../reducers/onboarding/onboardingReducer';
 import Slider from '@react-native-community/slider';
 import { AuthNavigationProp } from '../../types/navigationTypes';
+import { useUser } from '@clerk/clerk-expo';
+import { updateMetadata } from '../../services/clerk';
 
 const ExperienceAndRisk: React.FC = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<AuthNavigationProp>();
+  const { isSignedIn, user} = useUser();
 
   const [risk, setRisk] = useState("medium");
   const [experience, setExperience] = React.useState("0");
@@ -34,6 +37,12 @@ const ExperienceAndRisk: React.FC = () => {
   const handleContinue = () => {
     dispatch(updateRisk(risk));
     // dispatch(updateExperience(experience));
+    if (!isSignedIn) {
+      Alert.alert('Something went wrong - not signed in');
+      return
+    }
+    updateMetadata(user, "Risk Tolerance", risk);
+    updateMetadata(user, "Experience", experience);
     // Navigate to the next page
     navigation.navigate('LevelPage');
   };

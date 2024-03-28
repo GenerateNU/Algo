@@ -20,17 +20,19 @@ const Confirmation: React.FC = () => {
       risk_tolerance: onboarding.risk,
       years_of_experience: onboarding.yearsOfExperience,
     };
+    /*
     const newUser = await registerUser(
       user,
       onboarding.financialGoalsShortTerm,
       onboarding.financialGoalsLongTerm,
     );
+    */
 
-    if (newUser) {
+    // if (newUser) {
       dispatch(completeOnboarding());
-    } else {
-      console.log('Error registering user');
-    }
+    // } else {
+    //   console.log('Error registering user');
+    // }
   };
 
   return (
