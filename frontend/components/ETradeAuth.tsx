@@ -1,22 +1,38 @@
-import {Text, View, Linking, TouchableOpacity, TextInput} from 'react-native'
+import {Text, View, Linking, TouchableOpacity, TextInput, Alert} from 'react-native'
 import React, {useState} from 'react'
 import { Button } from 'react-native-paper'
 import {getCallbackUrl, verifyToken} from '../services/users'
 import {Redirect} from '../types/types'
 import {HttpStatusCode} from "axios";
+import { useUser } from '@clerk/clerk-expo'
 
 const AuthPage = (props: { successCallback: () => void }) => {
   const [redirectUrl, setRedirectUrl] = useState("");
+  const { isSignedIn, user } = useUser();
   const [verifierToken, setVerifierToken] = useState("");
 
   const etradeRedirect = async () => {
-    const callback: Redirect = await getCallbackUrl(2);
+    if (!isSignedIn) {
+      Alert.alert("Something went wrong - not signed in");
+      return;
+    }
+
+    const id = user.id;
+
+    const callback: Redirect = await getCallbackUrl(id);
     setRedirectUrl(callback.redirect_url)
     await Linking.openURL(callback.redirect_url);
   }
 
   const onVerifyPress = async () => {
-    const verifierStatus: HttpStatusCode = await verifyToken(2, verifierToken);
+    if (!isSignedIn) {
+      Alert.alert("Something went wrong - not signed in");
+      return;
+    }
+
+    const id = user.id;
+
+    const verifierStatus: HttpStatusCode = await verifyToken(id, verifierToken);
     if (verifierStatus === HttpStatusCode.Ok) {
       props.successCallback()
     } else {
