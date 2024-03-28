@@ -9,11 +9,13 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
+import { useUser } from '@clerk/clerk-expo';
 import {
   updateFirstName,
   updateLastName,
 } from '../../reducers/onboarding/onboardingReducer';
 import { AuthNavigationProp } from '../../types/navigationTypes';
+import { updateFirstAndLast } from '../../services/clerk';
 
 export default function Fullname() {
   const dispatch = useDispatch();
@@ -21,12 +23,20 @@ export default function Fullname() {
 
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
+  const { isSignedIn, user} = useUser();
 
   const handleContinue = async () => {
     if (!firstName || !lastName) {
       Alert.alert('Please enter your name.');
       return;
     }
+
+    if (!isSignedIn) {
+      Alert.alert('Something went wrong - not signed in');
+      return
+    }
+
+    updateFirstAndLast(user, firstName, lastName);
 
     dispatch(updateFirstName(firstName));
     dispatch(updateLastName(lastName));
