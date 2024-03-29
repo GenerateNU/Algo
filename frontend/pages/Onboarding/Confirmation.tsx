@@ -11,15 +11,15 @@ const Confirmation: React.FC = () => {
   const onboarding = useSelector((state: RootState) => state.onboarding);
 
   const handleContinue = async () => {
-    const user: User = {
-      username: onboarding.username,
-      email: onboarding.email,
-      pass_word: onboarding.password,
-      first_name: onboarding.firstName,
-      last_name: onboarding.lastName,
-      risk_tolerance: onboarding.risk,
-      years_of_experience: onboarding.yearsOfExperience,
-    };
+    // const user: User = {
+    //   username: onboarding.username,
+    //   email: onboarding.email,
+    //   pass_word: onboarding.password,
+    //   first_name: onboarding.firstName,
+    //   last_name: onboarding.lastName,
+    //   risk_tolerance: onboarding.risk,
+    //   years_of_experience: onboarding.yearsOfExperience,
+    // };
     /*
     const newUser = await registerUser(
       user,
@@ -29,7 +29,8 @@ const Confirmation: React.FC = () => {
     */
 
     // if (newUser) {
-      dispatch(completeOnboarding());
+    console.log("completting onboarding");
+    dispatch(completeOnboarding());
     // } else {
     //   console.log('Error registering user');
     // }

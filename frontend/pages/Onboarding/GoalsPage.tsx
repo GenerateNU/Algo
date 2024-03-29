@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigationProp } from '../../types/navigationTypes';
@@ -14,6 +15,8 @@ import {
   updateFinancialGoalsShortTerm,
   updateFinancialGoalsLongTerm,
 } from '../../reducers/onboarding/onboardingReducer';
+import { useUser } from '@clerk/clerk-expo';
+import { updateMetadata } from '../../services/clerk';
 
 type FinancialGoalProps = {
   goal: string;
@@ -43,6 +46,7 @@ const GoalsPage: React.FC = () => {
   const [selectedShortTermGoals, setSelectedShortTermGoals] = useState<
     string[]
   >([]);
+  const { isSignedIn, user } = useUser();
 
   const [selectedLongTermGoals, setSelectedLongTermGoals] = useState<string[]>(
     [],
@@ -69,11 +73,26 @@ const GoalsPage: React.FC = () => {
     }
   };
 
+  const handleMetadata = async() => {
+    if (isSignedIn) {
+      await updateMetadata(user, "Short Term Goals", selectedShortTermGoals);
+      updateMetadata(user, "Long Term Goals", selectedLongTermGoals);
+    }
+  }
+
   const handleContinue = () => {
+    if (!isSignedIn) {
+      Alert.alert("Something went wrong - not signed up");
+      return;
+    }
+
     dispatch(updateFinancialGoalsShortTerm(selectedShortTermGoals));
     dispatch(updateFinancialGoalsLongTerm(selectedLongTermGoals));
     console.log('selectedShortTermGoals', selectedShortTermGoals);
     console.log('selectedLongTermGoals', selectedLongTermGoals);
+
+    handleMetadata();
+
     // Navigate to the next page
     navigate.navigate('ExperienceAndRisk');
   };
