@@ -1,21 +1,22 @@
-import { StyleSheet, Text, View, Image, Pressable, Touchable, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 // import { theme } from '../../theme'
-import React, { useContext } from 'react'
+import React from 'react' //{ useContext }
 // import ActionButton from '../ActionButton'
 // import { useNavigation } from '@react-navigation/native'
-import { Button } from 'react-native-paper'
+// import { Button } from 'react-native-paper'
 import ProfileBio from './ProfileBio'
-import { useSession } from '@clerk/clerk-expo'
+//import { useSession } from '@clerk/clerk-expo'
 
-const PROFILE_IMAGE_SIZE = 100
+// const PROFILE_IMAGE_SIZE = 100
 
-interface ProfileBannerProps {
-  user?: any
-}
+// interface ProfileBannerProps {
+//   user?: any
+// }
 
-const ProfileBanner = ({ user }: ProfileBannerProps) => {
+const ProfileBanner = () => {
+  // { user }: ProfileBannerProps
   // const { currentAuth } = useContext(AuthContext)
-  const { session } = useSession()
+  //const { session } = useSession()
   // const navigation = useNavigation()
 
   const navigateToEditProfile = () => {
