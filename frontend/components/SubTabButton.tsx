@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Pressable } from 'react-native'
+import { Text, Pressable } from 'react-native'
 import React, { useState } from 'react'
 
 interface SubTabButtonProps {

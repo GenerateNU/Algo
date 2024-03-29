@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView, Button, FlatList, Image, Pressable } from 'react-native';
+import { View, ScrollView, FlatList, Pressable } from 'react-native';
 import { useSession } from '@clerk/clerk-expo';
 import ProfileBanner from '../components/ProfileBanner';
 import SubTabButton from '../components/SubTabButton';
