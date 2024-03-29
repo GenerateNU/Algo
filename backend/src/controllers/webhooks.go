@@ -47,11 +47,11 @@ func (wc *WebhooksController) CreateUserWebhook(c *gin.Context) {
 	// Access data and transform it to User model
 	userData := event.Data // Access data field from JSON
 	user := models.User{
-		ID:        userData["id"].(string),
-		FirstName: userData["first_name"].(string),
-		LastName:  userData["last_name"].(string),
-		Username:  userData["username"].(string),
-		ImageURL:  userData["image_url"].(string),
+		ID:        getStringValue(userData, "id"),
+		FirstName: getStringValue(userData, "first_name"),
+		LastName:  getStringValue(userData, "last_name"),
+		Username:  getStringValue(userData, "username"),
+		ImageURL:  getStringValue(userData, "image_url"),
 	}
 
 	createdUser, err := wc.userService.CreateUser(&user)
@@ -92,10 +92,10 @@ func (wc *WebhooksController) UpdateUserWebhook(c *gin.Context) {
 	userId := userData["id"].(string)
 	user := models.User{
 		ID:        userId,
-		FirstName: userData["first_name"].(string),
-		LastName:  userData["last_name"].(string),
-		Username:  userData["username"].(string),
-		ImageURL:  userData["image_url"].(string),
+		FirstName: getStringValue(userData, "first_name"),
+		LastName:  getStringValue(userData, "last_name"),
+		Username:  getStringValue(userData, "username"),
+		ImageURL:  getStringValue(userData, "image_url"),
 	}
 
 	createdUser, err := wc.userService.UpdateUserById(userId, &user)
@@ -142,4 +142,13 @@ func (wc *WebhooksController) DeleteUserWebhook(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, createdUser)
+}
+
+func getStringValue(data map[string]interface{}, key string) string {
+	if val, ok := data[key]; ok && val != nil {
+		if strVal, ok := val.(string); ok {
+			return strVal
+		}
+	}
+	return ""
 }
