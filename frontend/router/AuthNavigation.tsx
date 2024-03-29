@@ -12,7 +12,7 @@ import ExperienceAndRisk from '../pages/Onboarding/ExperienceAndRisk';
 import LevelPage from '../pages/Onboarding/LevelPage';
 import ConnectPage from '../pages/Onboarding/ConnectPage';
 import Etrade from '../pages/Onboarding/Etrade';
-import Confirmation from '../pages/Onboarding/ConfirmationOld';
+import Confirmation from '../pages/Onboarding/Confirmation';
 import Login from '../pages/Login';
 // import Profile from '../pages/Profile';
 

@@ -1286,6 +1286,13 @@
   dependencies:
     csstype "3.1.1"
 
+"@clerk/types@^3.62.1":
+  version "3.62.1"
+  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-3.62.1.tgz#cb0c6af58a2825f7e742ca358c0f90d56b9fd9f6"
+  integrity sha512-RmQhWB7EMZw2nE24viQG79VyEUULZYWndYew5oXiZx06DyvysMNCorDyEGRmgBbprv7bnbYhHdOtKmx8Wj0jug==
+  dependencies:
+    csstype "3.1.1"
+
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/@egjs/hammerjs/-/hammerjs-2.0.17.tgz#5dc02af75a6a06e4c2db0202cae38c9263895124"

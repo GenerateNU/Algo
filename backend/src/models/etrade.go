@@ -4,8 +4,8 @@ import "backend/src/types"
 
 type OAuthTokens struct {
 	types.Model
-	UserID        uint `json:"user_id" validate:"required"`
-	User          User
+	UserID        string `gorm:"type:varchar(255);" json:"user_id" validate:"required"`
+	User          User   `gorm:"foreignKey:UserID;references:ID"`
 	RequestToken  string `gorm:"type:varchar(255);"`
 	RequestSecret string `gorm:"type:varchar(255);"`
 	AccessToken   string `gorm:"type:varchar(255);"`

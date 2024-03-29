@@ -11,7 +11,7 @@ export const getAllUsers = async (): Promise<User[]> => {
   return response.data;
 };
 
-export const getCallbackUrl = async (id: number): Promise<Redirect> => {
+export const getCallbackUrl = async (id: string): Promise<Redirect> => {
   const response: AxiosResponse<Redirect> = await axios.get<Redirect>(
     `http://${API_LINK}/etrade/redirect/${id}`,
   );
@@ -20,7 +20,7 @@ export const getCallbackUrl = async (id: number): Promise<Redirect> => {
 };
 
 export const verifyToken = async (
-  id: number,
+  id: string,
   verifier: string,
 ): Promise<HttpStatusCode> => {
   const response: AxiosResponse = await axios.post<Redirect>(

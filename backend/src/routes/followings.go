@@ -19,13 +19,10 @@ func SetupFollowingRoutes(router *gin.Engine, db *gorm.DB) {
 	followingService := services.NewFollowingService(db)
 	followingController := controllers.NewFollowingController(followingService)
 
-	followingRoutes := router.Group("/followings")
+	followingRoutes := router.Group("/following")
 	{
-		//Get all following relations: Done
-		followingRoutes.GET("/", followingController.GetAllFollowings)
-		// Create a following relation: Done
+		followingRoutes.GET("", followingController.GetAllFollowings)
 		followingRoutes.POST("", followingController.CreateFollowings)
-		//Delete a following relation
 		followingRoutes.DELETE("/:follower_user_id/:following_user_id", followingController.UnfollowUser)
 
 	}

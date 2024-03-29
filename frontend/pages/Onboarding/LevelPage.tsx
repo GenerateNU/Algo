@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LevelPageNavigationProp } from '../../types/navigationTypes';
+import { useUser } from '@clerk/clerk-expo';
+import { updateMetadata } from '../../services/clerk';
 
 const FinancialLiteracyLevelPage: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const navigation = useNavigation<LevelPageNavigationProp>();
+  const { isSignedIn, user} = useUser();
 
   const handleSelection = (option: string) => {
     setSelectedOption(option);
@@ -13,6 +16,11 @@ const FinancialLiteracyLevelPage: React.FC = () => {
 
   const handleContinue = () => {
     console.log(selectedOption);
+    if (!isSignedIn) {
+      Alert.alert('Something went wrong - not signed in');
+      return;
+    }
+    updateMetadata(user, "Financial Literacy", selectedOption);
     navigation.navigate('ConnectPage');
   };
 

@@ -14,6 +14,7 @@
     "@babel/preset-env": "^7.1.6",
     "@babel/runtime": "^7.20.6",
     "@clerk/clerk-expo": "^0.20.5",
+    "@clerk/types": "^3.62.1",
     "@expo/ngrok": "^2.5.0",
     "@react-native-community/slider": "^4.5.0",
     "@react-native/metro-config": "^0.73.5",

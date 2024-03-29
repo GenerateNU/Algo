@@ -2,11 +2,14 @@ package controllers
 
 import (
 	"net/http"
+	"os"
 	"strconv"
 
 	"backend/src/models"
 	"backend/src/services"
 
+	"github.com/clerk/clerk-sdk-go/v2"
+	"github.com/clerk/clerk-sdk-go/v2/user"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,11 +23,11 @@ func NewUserController(userService *services.UserService) *UserController {
 	}
 }
 
-// GetAllUsers godoc
+// GetAllInternalUsers godoc
 //
-//	@Summary		Gets all users
+//	@Summary		Gets all users from the database
 //	@Description	Returns all users
-//	@ID				get-all-users
+//	@ID				get-all-internal-users
 //	@Tags			user
 //	@Produce		json
 //	@Success		200	{object}	[]models.User
@@ -40,9 +43,31 @@ func (uc *UserController) GetAllUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 }
 
+// GetAllClerkUsers godoc
+//
+//	@Summary		Gets all users from Clerk
+//	@Description	Returns all users
+//	@ID				get-all-clerk-users
+//	@Tags			user
+//	@Produce		json
+//	@Success		200	{object}	clerk.UserList
+//	@Failure		404	{string}	string	"Failed to fetch users"
+//	@Router			/api/users/clerk  [get]
+func (uc *UserController) GetAllClerkUsers(c *gin.Context) {
+	clerk.SetKey(os.Getenv("EXPO_PUBLIC_CLERK_SECRET_KEY"))
+
+	users, err := user.List(c, &user.ListParams{})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, users)
+}
+
 // CreateUser godoc
 //
-//		@Summary		Creates a user
+//		@Summary		Creates a user in the database
 //		@Description	Creates a user
 //		@ID				create-user
 //		@Tags			user
@@ -72,26 +97,21 @@ func (uc *UserController) CreateUser(c *gin.Context) {
 	c.JSON(http.StatusCreated, createdUser)
 }
 
-// GetUserById godoc
+// GetInternalUserById godoc
 //
-//		@Summary		Gets a user by id
+//		@Summary		Gets a user by id from the database
 //		@Description	Returns a user by id
 //		@ID				get-user-by-id
 //		@Tags			user
 //		@Produce		json
-//		@Param			id		path	int	true		"ID of the user"
+//		@Param			id		path	true		"ID of the user"
 //		@Success		200	  {object}	  models.User
 //	    @Failure        404   {string}    string "Failed to fetch user"
 //		@Router			/api/users/{id}  [get]
 func (uc *UserController) GetUserById(c *gin.Context) {
 	id := c.Param("id")
-	userID, err := strconv.ParseUint(id, 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-		return
-	}
 
-	user, err := uc.userService.GetUserById(uint(userID))
+	user, err := uc.userService.GetUserById(id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch user"})
 		return
@@ -100,10 +120,33 @@ func (uc *UserController) GetUserById(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
+// GetClerkUserById godoc
+//
+//		@Summary		Gets a clerk user by id from the database
+//		@Description	Returns a user by id
+//		@ID				get-user-by-id
+//		@Tags			user
+//		@Produce		json
+//		@Param			id		path	int	true		"ID of the user"
+//		@Success		200	  {object}	  clerk.User
+//	    @Failure        404   {string}    string "Failed to fetch user"
+//		@Router			/api/users/{id}  [get]
+func (uc *UserController) GetClerkUserById(c *gin.Context) {
+	clerk.SetKey(os.Getenv("EXPO_PUBLIC_CLERK_SECRET_KEY"))
+
+	user, err := user.Get(c, c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
+}
+
 // UpdateUserById godoc
 //
-//		@Summary		Updates a user by id
-//		@Description	Updates a user by id
+//		@Summary		Updates a user by id in the database
+//		@Description	Updates a user by id in the database
 //		@ID				update-user-by-id
 //		@Tags			user
 //		@Accept			json
@@ -119,14 +162,13 @@ func (uc *UserController) GetUserById(c *gin.Context) {
 //		@Router			/api/users/{id}  [put]
 func (uc *UserController) UpdateUserById(c *gin.Context) {
 	id := c.Param("id")
-	userID, _ := strconv.ParseUint(id, 10, 32)
 	var user *models.User
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
 		return
 	}
 
-	updatedUser, err := uc.userService.UpdateUserById(uint(userID), user)
+	updatedUser, err := uc.userService.UpdateUserById(id, user)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to update user"})
 		return
@@ -137,8 +179,8 @@ func (uc *UserController) UpdateUserById(c *gin.Context) {
 
 // DeleteUserById godoc
 //
-//		@Summary		Deletes a user by id
-//		@Description	Deletes a user by id
+//		@Summary		Deletes a user by id in the database
+//		@Description	Deletes a user by id in the database
 //		@ID				delete-user-by-id
 //		@Tags			user
 //		@Produce		json
@@ -148,8 +190,7 @@ func (uc *UserController) UpdateUserById(c *gin.Context) {
 //		@Router			/api/users/{id}  [delete]
 func (uc *UserController) DeleteUserById(c *gin.Context) {
 	id := c.Param("id")
-	userID, _ := strconv.ParseUint(id, 10, 32)
-	user, err := uc.userService.DeleteUserById(uint(userID))
+	user, err := uc.userService.DeleteUserById(id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Failed to delete user"})
 		return
@@ -157,8 +198,6 @@ func (uc *UserController) DeleteUserById(c *gin.Context) {
 
 	c.JSON(http.StatusOK, user)
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // CreateLongTermGoalForUser godoc
 //
@@ -183,13 +222,8 @@ func (uc *UserController) CreateLongTermGoalForUser(c *gin.Context) {
 		return
 	}
 
-	userID, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-		return
-	}
-
-	goal, err := uc.userService.CreateLongTermGoalForUser(uint(userID), input.LongTermGoalID)
+	id := c.Param("user_id")
+	goal, err := uc.userService.CreateLongTermGoalForUser(id, input.LongTermGoalID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create long-term goal"})
 		return
@@ -211,13 +245,9 @@ func (uc *UserController) CreateLongTermGoalForUser(c *gin.Context) {
 //	@Failure        404  {string}  string "Failed to fetch long-term goals"
 //	@Router         /api/users/{id}/long-term-goals [get]
 func (uc *UserController) GetLongTermGoalsForUser(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-		return
-	}
+	id := c.Param("user_id")
 
-	userLongTermGoals, err := uc.userService.GetLongTermGoalsForUser(uint(id))
+	userLongTermGoals, err := uc.userService.GetLongTermGoalsForUser(id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch long-term goals"})
 		return
@@ -241,13 +271,9 @@ func (uc *UserController) GetLongTermGoalsForUser(c *gin.Context) {
 // @Failure        400           {string}  string "Invalid request parameters"
 // @Failure        403           {string}  string "User does not have permission to update this goal"
 // @Failure        500           {string}  string "Failed to update long-term goal"
-// @Router         /api/users/{user_id}/update-long-term-goal/{goal_id} [put]
+// @Router         /api/users/{user_id}/{goal_id} [put]
 func (uc *UserController) UpdateLongTermGoalForUser(c *gin.Context) {
-	userID, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-		return
-	}
+	id := c.Param("user_id")
 
 	goalID, err := strconv.ParseUint(c.Param("goal_id"), 10, 32)
 	if err != nil {
@@ -263,7 +289,7 @@ func (uc *UserController) UpdateLongTermGoalForUser(c *gin.Context) {
 		return
 	}
 
-	updatedGoal, err := uc.userService.UpdateLongTermGoalForUser(uint(userID), uint(goalID), input.LongTermGoalID)
+	updatedGoal, err := uc.userService.UpdateLongTermGoalForUser(id, uint(goalID), input.LongTermGoalID)
 	if err != nil {
 		if err.Error() == "User does not have permission to update this goal" {
 			c.JSON(http.StatusForbidden, gin.H{"error": "User does not have permission to update this goal"})
@@ -292,11 +318,7 @@ func (uc *UserController) UpdateLongTermGoalForUser(c *gin.Context) {
 // @Failure        500           {string}  string "Failed to delete long-term goal"
 // @Router         /api/users/{user_id}/delete-long-term-goal/{goal_id} [delete]
 func (uc *UserController) DeleteLongTermGoalForUser(c *gin.Context) {
-	userID, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-		return
-	}
+	id := c.Param("user_id")
 
 	goalID, err := strconv.ParseUint(c.Param("goal_id"), 10, 32)
 	if err != nil {
@@ -304,7 +326,7 @@ func (uc *UserController) DeleteLongTermGoalForUser(c *gin.Context) {
 		return
 	}
 
-	if err := uc.userService.DeleteLongTermGoalForUser(uint(userID), uint(goalID)); err != nil {
+	if err := uc.userService.DeleteLongTermGoalForUser(id, uint(goalID)); err != nil {
 		if err.Error() == "User does not have permission to delete this goal" {
 			c.JSON(http.StatusForbidden, gin.H{"error": "User does not have permission to delete this goal"})
 		} else {
@@ -315,8 +337,6 @@ func (uc *UserController) DeleteLongTermGoalForUser(c *gin.Context) {
 
 	c.Status(http.StatusNoContent)
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // CreateShortTermGoalForUser godoc
 //
@@ -341,13 +361,9 @@ func (uc *UserController) CreateShortTermGoalForUser(c *gin.Context) {
 		return
 	}
 
-	userID, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
-		return
-	}
+	id := c.Param("user_id")
 
-	goal, err := uc.userService.CreateShortTermGoalForUser(uint(userID), input.ShortTermGoalID)
+	goal, err := uc.userService.CreateShortTermGoalForUser(id, input.ShortTermGoalID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create short-term goal"})
 		return
@@ -369,13 +385,9 @@ func (uc *UserController) CreateShortTermGoalForUser(c *gin.Context) {
 //	@Failure        404  {string}  string "Failed to fetch short-term goals"
 //	@Router         /api/users/{id}/short-term-goals [get]
 func (uc *UserController) GetShortTermGoalsForUser(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-		return
-	}
+	id := c.Param("user_id")
 
-	userShortTermGoals, err := uc.userService.GetShortTermGoalsForUser(uint(id))
+	userShortTermGoals, err := uc.userService.GetShortTermGoalsForUser(id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch short-term goals"})
 		return
@@ -401,11 +413,7 @@ func (uc *UserController) GetShortTermGoalsForUser(c *gin.Context) {
 // @Failure        500           {string}  string "Failed to update short-term goal"
 // @Router         /api/users/{user_id}/update-short-term-goal/{goal_id} [put]
 func (uc *UserController) UpdateShortTermGoalForUser(c *gin.Context) {
-	userID, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-		return
-	}
+	id := c.Param("user_id")
 
 	goalID, err := strconv.ParseUint(c.Param("goal_id"), 10, 32)
 	if err != nil {
@@ -421,7 +429,7 @@ func (uc *UserController) UpdateShortTermGoalForUser(c *gin.Context) {
 		return
 	}
 
-	updatedGoal, err := uc.userService.UpdateShortTermGoalForUser(uint(userID), uint(goalID), input.ShortTermGoalID)
+	updatedGoal, err := uc.userService.UpdateShortTermGoalForUser(id, uint(goalID), input.ShortTermGoalID)
 	if err != nil {
 		if err.Error() == "User does not have permission to update this goal" {
 			c.JSON(http.StatusForbidden, gin.H{"error": "User does not have permission to update this goal"})
@@ -450,11 +458,7 @@ func (uc *UserController) UpdateShortTermGoalForUser(c *gin.Context) {
 // @Failure        500           {string}  string "Failed to delete short-term goal"
 // @Router         /api/users/{user_id}/delete-short-term-goal/{goal_id} [delete]
 func (uc *UserController) DeleteShortTermGoalForUser(c *gin.Context) {
-	userID, err := strconv.ParseUint(c.Param("user_id"), 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-		return
-	}
+	id := c.Param("user_id")
 
 	goalID, err := strconv.ParseUint(c.Param("goal_id"), 10, 32)
 	if err != nil {
@@ -462,7 +466,7 @@ func (uc *UserController) DeleteShortTermGoalForUser(c *gin.Context) {
 		return
 	}
 
-	if err := uc.userService.DeleteShortTermGoalForUser(uint(userID), uint(goalID)); err != nil {
+	if err := uc.userService.DeleteShortTermGoalForUser(id, uint(goalID)); err != nil {
 		if err.Error() == "User does not have permission to delete this goal" {
 			c.JSON(http.StatusForbidden, gin.H{"error": "User does not have permission to delete this goal"})
 		} else {
@@ -474,23 +478,15 @@ func (uc *UserController) DeleteShortTermGoalForUser(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
-func (uc *UserController) OnboardUser(c *gin.Context) {
-	var input struct {
-		User           models.User            `json:"user"`
-		ShortTermGoals []models.ShortTermGoal `json:"short_term_goals"`
-		LongTermGoals  []models.LongTermGoal  `json:"long_term_goals"`
-	}
+func (uc *UserController) SearchUserByQuery(c *gin.Context) {
+	clerk.SetKey(os.Getenv("EXPO_PUBLIC_CLERK_SECRET_KEY"))
 
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
-		return
-	}
-
-	user, err := uc.userService.OnboardUser(&input.User, input.ShortTermGoals, input.LongTermGoals)
+	query := c.Query("query")
+	users, err := user.List(c, &user.ListParams{Query: &query})
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to onboard user"})
+		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
 
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, users)
 }

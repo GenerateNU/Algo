@@ -12,6 +12,8 @@ export type FinancialGoal = {
     goal: string;
 };
 
+export type Metadata = number | string | string[];
+
 export interface Redirect {
     redirect_url: string;
 }

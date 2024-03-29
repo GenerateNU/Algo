@@ -18,13 +18,13 @@ func NewPostService(db *gorm.DB) *PostService {
 
 func (ps *PostService) GetAllPosts() ([]models.Post, error) {
 	var posts []models.Post
-	if err := ps.DB.Find(&posts).Error; err != nil {
+	if err := ps.DB.Preload("User").Find(&posts).Error; err != nil {
 		return nil, err
 	}
 	return posts, nil
 }
 
-func (ps *PostService) GetPostsByUserId(userId uint) ([]models.Post, error) {
+func (ps *PostService) GetPostsByUserId(userId string) ([]models.Post, error) {
 	var posts []models.Post
 	if err := ps.DB.Where("user_id = ?", userId).Find(&posts).Error; err != nil {
 		return nil, err
@@ -32,11 +32,11 @@ func (ps *PostService) GetPostsByUserId(userId uint) ([]models.Post, error) {
 	return posts, nil
 }
 
-func (ps *PostService) GetPostsFromFollowedUsers(userId uint) ([]models.Post, error) {
+func (ps *PostService) GetPostsFromFollowedUsers(userId string) ([]models.Post, error) {
 	var followedUserIDs []uint
-    if err := ps.DB.Model(&models.Followings{}).Where("follower_user_id = ?", userId).Pluck("following_user_id", &followedUserIDs).Error; err != nil {
-        return nil, err
-    }
+	if err := ps.DB.Model(&models.Followings{}).Where("follower_user_id = ?", userId).Pluck("following_user_id", &followedUserIDs).Error; err != nil {
+		return nil, err
+	}
 
 	var posts []models.Post
 	for _, id := range followedUserIDs {
@@ -50,26 +50,24 @@ func (ps *PostService) GetPostsFromFollowedUsers(userId uint) ([]models.Post, er
 	return posts, nil
 }
 
-
 // Abstracted Get Posts Function, Add More Parameters as Needed
 func (ps *PostService) GetPostsFromSearch(postContentSearchTerm string) ([]models.Post, error) {
-    var posts []models.Post
+	var posts []models.Post
 
-    // Start with a base query
-    query := ps.DB.Model(&models.Post{})
+	// Start with a base query
+	query := ps.DB.Model(&models.Post{})
 
 	if postContentSearchTerm != "" {
 		postContentSearch := "%" + postContentSearchTerm + "%"
 		query = query.Where("ticker_symbol LIKE ? OR comment LIKE ? OR title LIKE ?", postContentSearch, postContentSearch, postContentSearch)
 	}
 
-    if err := query.Find(&posts).Error; err != nil {
-        return nil, err
-    }
+	if err := query.Find(&posts).Error; err != nil {
+		return nil, err
+	}
 
-    return posts, nil
+	return posts, nil
 }
-
 
 func (ps *PostService) CreatePost(post *models.Post) (*models.Post, error) {
 	if err := ps.DB.Create(post).Error; err != nil {
