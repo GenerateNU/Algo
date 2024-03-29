@@ -94,49 +94,6 @@ func (pc *PostController) GetPostsFromFollowedUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, posts)
 }
 
-// GetPostsFromSearch godoc
-//
-// @Summary Gets posts based on filters
-// @Description Retrieves posts based on following status, search term, and post type.
-// @ID get-posts
-// @Tags post
-// @Produce json
-// @Param userId path uint true "User ID"
-// @Param tickerSymbolSearchTerm query string false "Search term for post ticker symbol"
-// @Param ofFollowedOnly query bool false "Flag to filter posts by followed users only"
-// @Param titleSearchTerm query string false "Search term for post title"
-// @Param commentSearchTerm query string false "Search term for post comment"
-// @Param postType query string false "Filter by post type"
-// @Success 200 {object} []models.Post
-// @Failure 400 {string} string "Invalid parameters"
-// @Failure 404 {string} string "Failed to fetch posts"
-// @Router /api/posts [get]
-func (pc *PostController) GetPostsFromSearch(c *gin.Context) {
-	/*
-    userId, err := strconv.ParseUint(c.Param("userId"), 10, 32)
-    if err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-        return
-    }
-	*/
-
-	//userNameSearchTerm := c.Query("userNameSearchTerm")
-	postContentSearchTerm := c.Query("postContentSearchTerm")
-    //postType := c.Query("postType")
-	//tickerSymbolSearchTerm := c.Query("tickerSymbolSearchTerm")
-	//commentSearchTerm := c.Query("commentSearchTerm")
-    //titleSearchTerm := c.Query("titleSearchTerm")
-    //ofFollowedOnly, _ := strconv.ParseBool(c.Query("ofFollowedOnly"))
-
-    posts, err := pc.postService.GetPostsFromSearch(postContentSearchTerm)
-    if err != nil {
-        c.JSON(http.StatusNotFound, gin.H{"error": "Failed to fetch posts"})
-        return
-    }
-
-    c.JSON(http.StatusOK, posts)
-}
-
 // CreatePost godoc
 //
 //		@Summary		Creates a post

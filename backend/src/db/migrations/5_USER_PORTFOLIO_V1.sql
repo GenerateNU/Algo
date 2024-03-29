@@ -1,14 +1,12 @@
-DROP TABLE IF EXISTS user_portfolios;
+DROP TABLE IF EXISTS user_portfolio;
 
 -- Create UserPortfolio table (Columns to define)
-CREATE TABLE user_portfolios
-(
-    id             SERIAL PRIMARY KEY,
-    created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    user_id        INTEGER REFERENCES users (id),
-    day_gain       NUMERIC(12, 2),
-    day_gain_pct   NUMERIC(12, 2),
-    total_gain     NUMERIC(12, 2),
-    total_gain_pct NUMERIC(12, 2)
+CREATE TABLE user_portfolio (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id)
 );
+
+INSERT INTO user_portfolio (user_id)
+VALUES
+  (1),
+  (2);
