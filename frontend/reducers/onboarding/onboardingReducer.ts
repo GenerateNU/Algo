@@ -13,7 +13,7 @@ const onboardingSlice = createSlice({
     financialGoalsShortTerm: [],
     financialGoalsLongTerm: [],
     financialLiteracy: [],
-    isOnboarding: false,
+    isOnboarding: true,
   },
   reducers: {
     updateFirstName(state, action) {

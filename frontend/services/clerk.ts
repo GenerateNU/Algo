@@ -8,9 +8,11 @@ export const updateFirstAndLast = async (user: UserResource, firstName: string, 
 }
 
 export const updateMetadata = async (user: UserResource, metadataName: string, metadata: any) => {
+    const prevMeta = user.unsafeMetadata;
     await user.update({
         unsafeMetadata: {
-            metadataName: metadata
+            ...prevMeta,
+            [metadataName]: metadata
         }
     })
 }

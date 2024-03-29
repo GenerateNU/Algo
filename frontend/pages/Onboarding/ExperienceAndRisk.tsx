@@ -13,6 +13,16 @@ const ExperienceAndRisk: React.FC = () => {
   const navigation = useNavigation<AuthNavigationProp>();
   const { isSignedIn, user} = useUser();
 
+  const updateMetada = async () => {
+    if (!isSignedIn) {
+      Alert.alert('Something went wrong - not signed in');
+      return
+    }
+
+    await updateMetadata(user, "Risk Tolerance", risk);
+    updateMetadata(user, "Experience", experience);
+  }
+
   const [risk, setRisk] = useState("medium");
   const [experience, setExperience] = React.useState("0");
   // const [experience, setExperience] = useState<number | null>();
@@ -41,11 +51,11 @@ const ExperienceAndRisk: React.FC = () => {
       Alert.alert('Something went wrong - not signed in');
       return
     }
-    updateMetadata(user, "Risk Tolerance", risk);
-    updateMetadata(user, "Experience", experience);
+    updateMetada();
     // Navigate to the next page
     navigation.navigate('LevelPage');
   };
+
 
   return (
     <View style={styles.container}>
