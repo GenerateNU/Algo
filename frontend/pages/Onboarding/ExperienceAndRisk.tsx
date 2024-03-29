@@ -19,8 +19,10 @@ const ExperienceAndRisk: React.FC = () => {
       return
     }
 
+    const exp: number = +experience;
+
     await updateMetadata(user, "Risk Tolerance", risk);
-    updateMetadata(user, "Experience", experience);
+    updateMetadata(user, "Experience", exp);
   }
 
   const [risk, setRisk] = useState("medium");
