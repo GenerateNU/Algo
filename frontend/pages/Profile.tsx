@@ -17,7 +17,6 @@ const Profile = () => {
   const navigation = useNavigation();
   const [isPortfolioSelected, setIsPortfolioSelected] = useState<boolean>(true);
   const [isActivitySelected, setIsActivitySelected] = useState<boolean>(false);
-  const [pageNumber, setPageNumber] = useState<number>(0);
 
   const OnActivitySelected = () => {
     setIsPortfolioSelected(false);
@@ -66,36 +65,25 @@ const Profile = () => {
           <SubTabButton title='Activity' selected={true} onPress={OnActivitySelected} />
         </View>
 
-        <ScrollView
-          horizontal={true} className='flex flex-row h-screen' pagingEnabled={true}
-          showsHorizontalScrollIndicator={true}
-          onMomentumScrollEnd={(event) => {
-            const offset = event.nativeEvent.contentOffset.x;
-            const page = Math.round(offset / 375);
-            console.log(`Page number: ${page}`);
-            setPageNumber(page);
-          }}
-        >
-          <View className='flex flex-col w-screen'>
-            {pageNumber == 0 && (
-              <ProfilePerformance portfolioValue='+10000.99' />
-            )}
+        {isPortfolioSelected && (
+          <View className='flex flex-col'>
+            <ProfilePerformance portfolioValue='+10000.99' />
           </View>
-          <View className='flex flex-col w-screen'>
-            {pageNumber == 1 && (
-              <FlatList
-                data={ProfileActivityData}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                  <ActivityItem
-                    title={item.title}
-                    description={item.description}
-                    icon={item.icon} />
-                )} />
-            )}
-          </View>
-        </ScrollView>
+        )}
 
+        {isActivitySelected && (
+          <View className='flex flex-col'>
+            <FlatList
+              data={ProfileActivityData}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item }) => (
+                <ActivityItem
+                  title={item.title}
+                  description={item.description}
+                  icon={item.icon} />
+              )} />
+          </View>
+        )}
       </View>
     </ScrollView>
   );
