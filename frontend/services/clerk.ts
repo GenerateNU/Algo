@@ -1,4 +1,5 @@
 import { UserResource } from "@clerk/types"
+import { Metadata } from "../types/types";
 
 export const updateFirstAndLast = async (user: UserResource, firstName: string, lastName: string) => {
     await user.update({
@@ -7,7 +8,7 @@ export const updateFirstAndLast = async (user: UserResource, firstName: string, 
     })
 }
 
-export const updateMetadata = async (user: UserResource, metadataName: string, metadata: any) => {
+export const updateMetadata = async (user: UserResource, metadataName: string, metadata: Metadata) => {
     const prevMeta = user.unsafeMetadata;
     await user.update({
         unsafeMetadata: {

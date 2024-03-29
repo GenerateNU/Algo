@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { completeOnboarding } from '../../reducers/onboarding/onboardingReducer';
-import { registerUser } from '../../services/users';
-import { RootState } from '../../components/LayoutWrapper';
-import { User } from '../../types/types';
+// import { registerUser } from '../../services/users';
+//import { RootState } from '../../components/LayoutWrapper';
+//import { User } from '../../types/types';
 
 const Confirmation: React.FC = () => {
   const dispatch = useDispatch();
-  const onboarding = useSelector((state: RootState) => state.onboarding);
+  //const onboarding = useSelector((state: RootState) => state.onboarding);
 
   const handleContinue = async () => {
     //console.log("completting onboarding");
