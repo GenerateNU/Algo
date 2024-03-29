@@ -44,7 +44,7 @@ const Confirmation: React.FC = () => {
         {/* You will insert your app walkthrough component here */}
         <Text style={styles.walkthroughText}>*insert walk through of app</Text>
       </View>
-      <TouchableOpacity onPress={handleContinue} style={styles.continueButton}>
+      <TouchableOpacity onPress={() => console.log("pressed")} style={styles.continueButton}>
         <Text style={styles.continueButtonText}>Continue →</Text>
       </TouchableOpacity>
     </View>
