@@ -18,6 +18,7 @@ const AuthPage = (props: { successCallback: () => void }) => {
     }
 
     const id = user.id;
+    console.log(id)
 
     const callback: Redirect = await getCallbackUrl(id);
     setRedirectUrl(callback.redirect_url)
