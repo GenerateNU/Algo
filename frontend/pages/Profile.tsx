@@ -10,7 +10,7 @@ import { ProfileActivityData } from '../constants';
 import ProfilePerformance from '../components/ProfilePerformance';
 // import SettingsSvg from '../assets/SettingsIcon.svg';
 
-const PROFILE_IMAGE_SIZE = 100;
+// const PROFILE_IMAGE_SIZE = 100;
 
 const Profile = () => {
   const { session } = useSession();

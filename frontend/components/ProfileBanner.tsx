@@ -19,9 +19,9 @@ const ProfileBanner = () => {
   //const { session } = useSession()
   // const navigation = useNavigation()
 
-  const navigateToEditProfile = () => {
-    // navigation.navigate({ name: "Edit My Profile" })
-  }
+  // const navigateToEditProfile = () => {
+  //   // navigation.navigate({ name: "Edit My Profile" })
+  // }
 
   return (
     <View className='flex flex-col px-3 mb-2'>
