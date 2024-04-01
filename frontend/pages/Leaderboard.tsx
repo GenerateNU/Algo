@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
       padding: 20,
-      backgroundColor: '#f5f5f5', // You can set your own color scheme
+      backgroundColor: '#f5f5f5',
     },
     leaderboard: {
         flex: 1,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
         borderColor: '#999999',
         borderWidth: 2,
         marginTop: 12,
-        padding: 18,
+        padding: 0,
     }
 });  
 
