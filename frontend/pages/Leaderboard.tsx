@@ -36,12 +36,12 @@ const Leaderboard: React.FC = () => {
         <View style={styles.container}>
             <Text className='pt-7 font-bold text-lg'>Leaderboard</Text>
             <View style={styles.leaderboard} className='rounded-md tabBar'>
-                <TabHeader activeTab={tab} allTabs={allTabs} setTab={setTab} />
+                <TabHeader activeTab={tab} allTabs={allTabs} setTab={setTab} style={styles.tabBar} />
                 <PopularLeaderboard leaderboard={leaderboard}/>
             </View>
             
         </View>
-    )
+    ) //Can't figure out warnings, or style tab bar. Moving on.
 }
 
 const styles = StyleSheet.create({
@@ -61,8 +61,10 @@ const styles = StyleSheet.create({
         padding: 0,
     },
     tabBar: {
-        marginHorizontal: 5,
+        marginHorizontal: 80,
+        paddingHorizontal: 80,
     }
+
 });  
 
 export default Leaderboard;

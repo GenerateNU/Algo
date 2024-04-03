@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
-import React from 'react'; //TODO: Check on this import with Leroy or Ania
+import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import { Leader } from '../types/types';
 
@@ -21,7 +21,6 @@ const PopularUser: React.FC<PopularUserProps> = ({ leader }: PopularUserProps) =
                 </View>
             </View>
 
-            {/* Column for name and action text */}
             <View style={[styles.column, styles.textColumn]}>
                 <View style={styles.textContainer}>
                     <Text style={styles.nameText}>
@@ -33,7 +32,7 @@ const PopularUser: React.FC<PopularUserProps> = ({ leader }: PopularUserProps) =
                 </View>
             </View>
 
-            {/* Column for follower text */}
+
             <View style={[styles.column, styles.followersColumn]}>
                 <Image
                     source={require("../assets/followers_logo.png")}
