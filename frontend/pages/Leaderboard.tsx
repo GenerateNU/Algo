@@ -35,7 +35,7 @@ const Leaderboard: React.FC = () => {
     return (
         <View style={styles.container}>
             <Text className='pt-7 font-bold text-lg'>Leaderboard</Text>
-            <View style={styles.leaderboard} className='rounded-md'>
+            <View style={styles.leaderboard} className='rounded-md tabBar'>
                 <TabHeader activeTab={tab} allTabs={allTabs} setTab={setTab} />
                 <PopularLeaderboard leaderboard={leaderboard}/>
             </View>
@@ -59,6 +59,9 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         marginTop: 12,
         padding: 0,
+    },
+    tabBar: {
+        marginHorizontal: 5,
     }
 });  
 

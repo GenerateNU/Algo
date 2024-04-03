@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { Leader } from '../types/types';
 import PopularUser from './PopularUser';
 
@@ -10,15 +10,19 @@ type PopularProps = {
 }
 
 const PopularLeaderboard: React.FC<PopularProps> = ({leaderboard}: PopularProps) => {
+
     return (
-        <View>
+        <ScrollView>
             {
                 leaderboard.map((leader, index) => (
-                   <PopularUser key={index} leader={leader} />
+                    <React.Fragment key={index}>
+                        <PopularUser leader={leader} />
+                        {index < leaderboard.length - 1 && <Separator />}
+                    </React.Fragment>
             ))}
-
-        </View>
+        </ScrollView>
     )
 }
+const Separator = () => <View style={{ height: 15 }} />;
 
 export default PopularLeaderboard;

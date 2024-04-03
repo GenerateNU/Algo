@@ -4,54 +4,75 @@ import React from 'react'; //TODO: Check on this import with Leroy or Ania
 import {Image, StyleSheet, Text, View} from 'react-native';
 import { Leader } from '../types/types';
 
-// Infinite scroll->Option for leaderboard
-
-
 type PopularUserProps = {
-    leader: Leader
+leader: Leader;
 }
 
-const PopularUser : React.FC<PopularUserProps> = ({leader}:  PopularUserProps) => {
+const PopularUser: React.FC<PopularUserProps> = ({ leader }: PopularUserProps) => {
     return (
-        <View style={PopularUserStyles.container}>
-            <View style={PopularUserStyles.imageContainer}>
-                <Image
-                    source={require("../assets/temp_pfp.png")}
-                    style={PopularUserStyles.image}
-                />
+        <View style={styles.container}>
+            {/* Column for image */}
+            <View style={[styles.column, styles.imageColumn]}>
+                <View style={styles.imageContainer}>
+                    <Image
+                        source={require("../assets/temp_pfp.png")}
+                        style={styles.image}
+                    />
+                </View>
             </View>
-            <View style={PopularUserStyles.textContainer}>
-                <Text style={PopularUserStyles.nameText}>
-                    {leader.leader_user.first_name} {leader.leader_user.last_name}
+
+            {/* Column for name and action text */}
+            <View style={[styles.column, styles.textColumn]}>
+                <View style={styles.textContainer}>
+                    <Text style={styles.nameText}>
+                        {leader.leader_user.first_name} {leader.leader_user.last_name}
+                    </Text>
+                    <Text style={styles.actionText}>
+                        Recent: Recent actions will display{"\n"} here
+                    </Text>
+                </View>
+            </View>
+
+            {/* Column for follower text */}
+            <View style={[styles.column, styles.followersColumn]}>
+                <Image
+                    source={require("../assets/followers_logo.png")}
+                    style={styles.followersLogo}
+                />
+                <Text style={styles.followersText}>
+                   {leader.follower_count}
                 </Text>
-                <Text style={PopularUserStyles.actionText}>Recent: Recent actions will display{"\n"}
-                    here</Text>
-                <Text style={PopularUserStyles.followersText}>Followers: {leader.follower_count}</Text>
             </View>
         </View>
-    )
-}
+    );
+};
 
-
-const PopularUserStyles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-        marginVertical: 0,
-        marginHorizontal: 0,
-        height : "20%",
         flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        paddingHorizontal: 10,
     },
-    followersText: {
-        alignSelf: 'flex-end',
-        color: '#787878',
+    column: {
+        flex: 1,
+    },
+    imageColumn: {
+        flex: 0.17,
+    },
+    textColumn: {
+        flex: 0.65,
+    },
+    followersColumn: {
+        flex: 0.18,
+        flexDirection: 'row', // Check
+        justifyContent: 'flex-end', //check
     },
     imageContainer: {
         width: 40,
         height: 40,
         borderRadius: 20,
         overflow: 'hidden',
-        marginRight: 12,
-        marginLeft: 4,
     },
     image: {
         width: "100%",
@@ -59,19 +80,25 @@ const PopularUserStyles = StyleSheet.create({
     },
     textContainer: {
         flex: 1,
-        justifyContent: 'center',
     },
     actionText: {
-        fontFamily: 'inter',
         fontSize: 8,
         color: '#787878',
     },
     nameText: {
-        fontFamily: 'inter',
         fontWeight: 'bold',
         fontSize: 12,
         marginBottom: 1,
         color: '#787878',
+    },
+    followersText: {
+        alignSelf: 'flex-end',
+        color: '#787878',
+    },
+    followersLogo: {
+        width: 20,
+        height: 20,
+        marginRight: 5,
     }
 });
 
