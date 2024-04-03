@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 import React, { useEffect, useState } from 'react';
 // import { User } from '../types/types';
 // import { getAllUsers } from '../services/users';
@@ -15,365 +15,1139 @@ const VectorSvg = `
 </svg>
 `;
 
+const AddSvg = `
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.999 23.9963C18.5714 23.9963 23.9974 18.5627 23.9974 12C23.9974 5.42768 18.5618 0.00369263 11.9895 0.00369263C5.42871 0.00369263 0.00260925 5.42768 0.00260925 12C0.00260925 18.5627 5.43823 23.9963 11.999 23.9963Z" fill="#666666"/>
+<path d="M6.32292 12.0074C6.32292 11.3346 6.79536 10.858 7.46407 10.858H10.8587V7.46124C10.8587 6.79462 11.3279 6.31058 11.9892 6.31058C12.6621 6.31058 13.1387 6.79462 13.1387 7.46124V10.858H16.545C17.2041 10.858 17.6861 11.3346 17.6861 12.0074C17.6861 12.6709 17.2041 13.1284 16.545 13.1284H13.1387V16.5347C13.1387 17.2012 12.6621 17.6737 11.9892 17.6737C11.3279 17.6737 10.8587 17.1917 10.8587 16.5347V13.1284H7.46407C6.79536 13.1284 6.32292 12.6709 6.32292 12.0074Z" fill="white"/>
+</svg>
+`;
+
 export default function ProfileExplore() {
+  const [password, setPassword] = useState('');
+
+  const handlePasswordChange = (text: string) => {
+    setPassword(text);
+  };
+
   return (
-    // <View style={styles.post1}>
-    //   <View style={styles.horizontalLine} />
-    //   <View style={styles.circle1}></View>
-    //   <View style={styles.person1}>
-    //     <Text style={styles.name1}>{name}</Text>
-    //     <Text style={styles.comment1}>{comment}</Text>
-    //   </View>
-    // </View>
-    <View
-      style={{
-        width: 393,
-        height: 160,
-        paddingLeft: 24,
-        paddingRight: 24,
-        paddingTop: 25,
-        paddingBottom: 25,
-        borderTopWidth: 1,
-        borderTopColor: 'rgba(0, 0, 0, 0.08)',
-        borderBottomWidth: 1,
-        borderBottomColor: 'rgba(0, 0, 0, 0.08)',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        // gap: 81,
-        // display: 'inline-flex',
-        flexDirection: 'row',
-        top: 20,
-      }}>
-      <View
-        style={{
-          justifyContent: 'flex-start',
-          alignItems: 'flex-start',
-          gap: 15,
-          display: 'flex',
-        }}>
-        <View style={styles.circle1}></View>
-        <View
-          style={{
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            gap: 10,
-            // display: 'inline-flex',
-            left: 55,
-          }}>
-          <View
-            style={{
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-              gap: 5,
-              // display: 'inline-flex',
-            }}>
-            <Text
-              style={{
-                color: 'black',
-                fontSize: 16,
-                // fontFamily: 'SF Pro Text',
-                fontFamily: 'Arial',
-                fontWeight: '400',
-                // wordWrap: 'break-word',
-                flexWrap: 'wrap',
-              }}>
-              Bryan Carson
-            </Text>
-            <Text
-              style={{
-                color: '#888888',
-                fontSize: 16,
-                // fontFamily: 'SF Pro Text',
-                fontFamily: 'Arial',
-                fontWeight: '400',
-                // wordWrap: 'break-word',
-                flexWrap: 'wrap',
-              }}>
-              @bryan
-            </Text>
+    <View style={styles.container}>
+      <View>
+        <View style={styles.top_bar}>
+          <Text style={styles.explore}>Explore</Text>
+          <Text style={styles.follow}>Following</Text>
+        </View>
+        <View style={styles.horizontalLine3}></View>
+        <View style={styles.horizontalLine4}></View>
+        <View style={styles.search_box}>
+          <TextInput
+            style={styles.search_txt}
+            value={password}
+            onChangeText={handlePasswordChange}
+            placeholder="Search"
+          />
+          <View style={styles.search_add}>
+            <SvgXml xml={AddSvg} width="30" height="30" />
           </View>
+        </View>
+
+        <View style={{ width: 393, height: 709, position: 'relative' }}>
+          <View
+            style={{ width: 393, left: -1, top: 579.64, position: 'absolute' }}
+          />
           <View
             style={{
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-              gap: 5,
-              display: 'flex',
+              width: 393,
+              height: 197,
+              left: -17,
+              top: 195.64,
+              position: 'absolute',
             }}>
             <View
               style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: 52,
-                // display: 'inline-flex',
+                width: 393,
+                height: 197,
+                left: 0,
+                top: 0,
+                position: 'absolute',
               }}>
-              <Text
+              <View
                 style={{
-                  color: '#121212',
-                  fontSize: 16,
-                  // fontFamily: 'SF Pro Text',
-                  fontFamily: 'Arial',
-                  fontWeight: '500',
-                  // wordWrap: 'break-word',
-                  flexWrap: 'wrap',
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  left: 24,
+                  top: 0,
+                  position: 'absolute',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 15,
                 }}>
-                Netflix Returns
-              </Text>
+                <View
+                  style={{
+                    width: 100,
+                    height: 100,
+                    backgroundColor: '#D9D9D9',
+                    borderRadius: 9999,
+                  }}
+                />
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 5,
+                    display: 'flex',
+                  }}>
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 24,
+                      }}>
+                      Michael
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'rgba(0, 0, 0, 0.48)',
+                        fontSize: 10,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 18,
+                      }}>
+                      10+ mutuals
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  left: 181,
+                  top: -16,
+                  position: 'absolute',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 15,
+                }}>
+                <View
+                  style={{
+                    width: 75,
+                    height: 75,
+                    backgroundColor: '#D9D9D9',
+                    borderRadius: 9999,
+                  }}
+                />
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 5,
+                    display: 'flex',
+                  }}>
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 24,
+                      }}>
+                      Isabella
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'rgba(0, 0, 0, 0.48)',
+                        fontSize: 10,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 18,
+                      }}>
+                      trending
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: 96,
+                  height: 166,
+                  left: 297,
+                  top: 31,
+                  position: 'absolute',
+                }}>
+                <View
+                  style={{
+                    width: 85,
+                    height: 85,
+                    left: 10.5,
+                    top: 20,
+                    position: 'absolute',
+                    backgroundColor: '#D9D9D9',
+                    borderRadius: 9999,
+                  }}
+                />
+                <View
+                  style={{
+                    left: 0,
+                    top: 110,
+                    position: 'absolute',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 5,
+                  }}>
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 24,
+                      }}>
+                      Tony Alvarez
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'rgba(0, 0, 0, 0.48)',
+                        fontSize: 10,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 18,
+                      }}>
+                      similar
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  left: 169,
+                  top: 141,
+                  position: 'absolute',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 15,
+                }}>
+                <View
+                  style={{
+                    width: 100,
+                    height: 100,
+                    backgroundColor: '#D9D9D9',
+                    borderRadius: 9999,
+                  }}
+                />
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 5,
+                    display: 'flex',
+                  }}>
+                  <View
+                    style={{
+                      width: 58,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 24,
+                      }}>
+                      Rue
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'rgba(0, 0, 0, 0.48)',
+                        fontSize: 10,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 18,
+                      }}>
+                      trending
+                    </Text>
+                  </View>
+                </View>
+              </View>
             </View>
+          </View>
+          <View
+            style={{
+              width: 393,
+              height: 197,
+              left: 0,
+              top: 372.64,
+              position: 'absolute',
+            }}>
             <View
               style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: 52,
-                // display: 'inline-flex',
+                width: 393,
+                height: 197,
+                left: 0,
+                top: 0,
+                position: 'absolute',
               }}>
-              <Text
+              <View
                 style={{
-                  width: 292,
-                  opacity: 0.5,
-                  color: '#121212',
-                  fontSize: 16,
-                  // fontFamily: 'SF Pro Text',
-                  fontFamily: 'Arial',
-                  fontWeight: '400',
-                  // wordWrap: 'break-word',
-                  flexWrap: 'wrap',
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  left: 28,
+                  top: 0,
+                  position: 'absolute',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 15,
                 }}>
-                I wanted you guys to check out my netflix trade! Let me know
-                what yall think..
-              </Text>
+                <View
+                  style={{
+                    width: 75,
+                    height: 75,
+                    backgroundColor: '#D9D9D9',
+                    borderRadius: 9999,
+                  }}
+                />
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 5,
+                    display: 'flex',
+                  }}>
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 24,
+                      }}>
+                      John
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'rgba(0, 0, 0, 0.48)',
+                        fontSize: 10,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 18,
+                      }}>
+                      10+ mutuals
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  left: 294,
+                  top: 24,
+                  position: 'absolute',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 15,
+                }}>
+                <View
+                  style={{
+                    width: 75,
+                    height: 75,
+                    backgroundColor: '#D9D9D9',
+                    borderRadius: 9999,
+                  }}
+                />
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 5,
+                    display: 'flex',
+                  }}>
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 24,
+                      }}>
+                      Pepita
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'rgba(0, 0, 0, 0.48)',
+                        fontSize: 10,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 18,
+                      }}>
+                      similar
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{
+              width: 393,
+              left: 1,
+              top: 544.64,
+              position: 'absolute',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+              gap: 10,
+            }}>
+            <View style={{ width: 393, height: 172, position: 'relative' }}>
+              <View
+                style={{
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  left: 32,
+                  top: 13,
+                  position: 'absolute',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 15,
+                }}>
+                <View
+                  style={{
+                    width: 75,
+                    height: 75,
+                    backgroundColor: '#D9D9D9',
+                    borderRadius: 9999,
+                  }}
+                />
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 5,
+                    display: 'flex',
+                  }}>
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 24,
+                      }}>
+                      Megan
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'rgba(0, 0, 0, 0.48)',
+                        fontSize: 10,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 18,
+                      }}>
+                      10+ mutuals
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  left: 154,
+                  top: -21,
+                  position: 'absolute',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 15,
+                }}>
+                <View
+                  style={{
+                    width: 85,
+                    height: 85,
+                    backgroundColor: '#D9D9D9',
+                    borderRadius: 9999,
+                  }}
+                />
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 5,
+                    display: 'flex',
+                  }}>
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 24,
+                      }}>
+                      Rocco
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'rgba(0, 0, 0, 0.48)',
+                        fontSize: 10,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 18,
+                      }}>
+                      trending
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  left: 275,
+                  top: 0,
+                  position: 'absolute',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 15,
+                }}>
+                <View
+                  style={{
+                    width: 100,
+                    height: 100,
+                    backgroundColor: '#D9D9D9',
+                    borderRadius: 9999,
+                  }}
+                />
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 5,
+                    display: 'flex',
+                  }}>
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 24,
+                      }}>
+                      Blair
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'rgba(0, 0, 0, 0.48)',
+                        fontSize: 10,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 18,
+                      }}>
+                      similar
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{
+              width: 393,
+              left: 2,
+              top: 716.64,
+              position: 'absolute',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+              gap: 10,
+            }}>
+            <View
+              style={{
+                height: 172,
+                paddingLeft: 24,
+                paddingRight: 24,
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                gap: 57,
+                display: 'flex',
+              }}>
+              <View
+                style={{
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 15,
+                }}>
+                <View
+                  style={{
+                    width: 75,
+                    height: 75,
+                    borderRadius: 9999,
+                  }}
+                />
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 5,
+                    display: 'flex',
+                  }}>
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 24,
+                      }}>
+                      Michael
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'rgba(0, 0, 0, 0.48)',
+                        fontSize: 10,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 18,
+                      }}>
+                      10+ mutuals
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 15,
+                }}>
+                {/* <img
+                  style={{ width: 75, height: 75, borderRadius: 9999 }}
+                  src="https://via.placeholder.com/75x75"
+                /> */}
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 5,
+                    display: 'flex',
+                  }}>
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 24,
+                      }}>
+                      Isabella
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'rgba(0, 0, 0, 0.48)',
+                        fontSize: 10,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 18,
+                      }}>
+                      trending
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 15,
+                }}>
+                {/* <img
+                  style={{ width: 75, height: 75, borderRadius: 9999 }}
+                  src="https://via.placeholder.com/75x75"
+                /> */}
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 5,
+                    display: 'flex',
+                  }}>
+                  <View
+                    style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 24,
+                      }}>
+                      Tony Alvarez
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'rgba(0, 0, 0, 0.48)',
+                        fontSize: 10,
+                        fontFamily: 'SF Pro',
+                        fontWeight: '400',
+                        lineHeight: 18,
+                      }}>
+                      similar
+                    </Text>
+                  </View>
+                </View>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-      <View style={{ position: 'relative' }}>
-        <View
-          style={{
-            // width: 15,
-            //height: 19.99,
-            // left: 0,
-            top: 5,
-            // position: 'absolute',
-            // transform: 'rotate(-45deg)',
-            // transformOrigin: '0 0',
-            // backgroundColor: '#3F943D',
-          }}>
-          <SvgXml xml={VectorSvg} width="12" height="14" />
-        </View>
-        <Text
-          style={{
-            left: 16.14,
-            top: 0,
-            position: 'absolute',
-            color: '#3F943D',
-            fontSize: 17,
-            fontFamily: 'SF Pro',
-            // fontFamily: 'Arial',
-            fontWeight: 'normal', //510
-            lineHeight: 24,
-            // wordWrap: 'break-word',
-            // flexWrap: 'wrap',
-            width: 50,
-          }}>
-          17%
-        </Text>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  post1: {
+  container: {
+    // boxSizing: 'border-box',
+    top: -50,
+  },
+  body: {
+    fontSize: 14,
+  },
+  v124_1260: {
     width: 393,
-    height: 93,
-    // background: 'url("../images/v124_1271.png")',
-    // backgroundRepeat: 'no-repeat',
-    // backgroundPosition: 'center center',
-    // backgroundSize: 'cover',
-    padding: 20,
-    margin: 20,
+    height: 852,
+    backgroundColor: 'rgba(255,255,255,1)',
     opacity: 1,
     position: 'relative',
     top: 0,
     left: 0,
     overflow: 'hidden',
   },
-  circle1: {
-    width: 40,
-    height: 40,
-    backgroundColor: 'rgba(217,217,217,1)',
-    opacity: 1,
-    position: 'absolute',
-    top: 6,
-    left: 0,
-    borderRadius: 50,
+  name: {
+    color: '#fff',
   },
-  person1: {
-    width: 198,
-    height: 53,
-    // background: 'url("../images/v124_1273.png")',
+  top_bar: {
+    width: 393,
+    height: 65,
+    backgroundColor: '#F7F7F7',
     // backgroundRepeat: 'no-repeat',
     // backgroundPosition: 'center center',
     // backgroundSize: 'cover',
-    margin: 5,
-    opacity: 1,
+    padding: 20,
+    margin: 100,
     position: 'absolute',
-    top: 20,
-    left: 84,
+    top: -49,
+    left: -100,
     overflow: 'hidden',
+    zIndex: 2,
   },
-  name1: {
+  explore: {
     width: 67,
     color: 'rgba(0,0,0,1)',
-    position: 'relative',
-    top: 0,
-    left: 0,
+    position: 'absolute',
+    top: 30,
+    left: 55,
     fontFamily: 'Circular Std',
     fontWeight: '500',
     fontSize: 17,
     opacity: 1,
-    textAlign: 'left',
+    textAlign: 'center',
   },
-  comment1: {
-    width: 198,
-    color: 'rgba(0,0,0,1)',
+  follow: {
+    width: 83,
+    color: 'rgba(102,102,102,1)',
     position: 'absolute',
-    top: 29,
-    left: 0,
+    top: 30,
+    right: 65,
     fontFamily: 'Circular Std',
-    fontWeight: 'normal',
+    fontWeight: '500',
     fontSize: 17,
-    opacity: 0.5,
-    textAlign: 'left',
+    opacity: 1,
+    textAlign: 'center',
   },
-  v124_1276: {
-    width: 393,
-    height: 93,
-    // background: 'url("../images/v124_1276.png")',
+  // v124_1267: {
+  //   width: 202,
+  //   // background: 'url("../images/v124_1267.png")',
+  //   opacity: 1,
+  //   position: 'absolute',
+  //   top: 116,
+  //   left: 3,
+  //   borderWidth: 1.5,
+  //   borderColor: 'rgba(0,0,0,1)',
+  // },
+  post_pos: {
+    width: 493,
+    height: 522,
+    // background: 'url("../images/v124_1268.png")',
     // backgroundRepeat: 'no-repeat',
     // backgroundPosition: 'center center',
     // backgroundSize: 'cover',
-    padding: 20,
-    margin: 20,
+    opacity: 1,
+    // position: 'absolute',
+    top: 215,
+    left: 0,
+  },
+  post_txt: {
+    width: 50,
+    color: 'rgba(102,102,102,1)',
+    position: 'absolute',
+    top: 0,
+    left: 28,
+    fontFamily: 'Circular Std',
+    fontWeight: '500',
+    fontSize: 17,
+    opacity: 1,
+    textAlign: 'center',
+  },
+  posts: {
+    width: 493,
+    height: 379,
+    // background: 'url("../images/v124_1270.png")',
+    // backgroundRepeat: 'no-repeat',
+    // backgroundPosition: 'center center',
+    // backgroundSize: 'cover',
     opacity: 1,
     position: 'absolute',
-    top: 93,
+    top: 15,
     left: 0,
     overflow: 'hidden',
   },
-  circle2: {
-    width: 40,
-    height: 40,
-    backgroundColor: 'rgba(217,217,217,1)',
+  // v124_1271: {
+  //   width: 393,
+  //   height: 93,
+  //   // background: 'url("../images/v124_1271.png")',
+  //   // backgroundRepeat: 'no-repeat',
+  //   // backgroundPosition: 'center center',
+  //   // backgroundSize: 'cover',
+  //   padding: 20,
+  //   margin: 20,
+  //   opacity: 1,
+  //   position: 'relative',
+  //   top: 0,
+  //   left: 0,
+  //   overflow: 'hidden',
+  // },
+  // v124_1272: {
+  //   width: 40,
+  //   height: 40,
+  //   backgroundColor: 'rgba(217,217,217,1)',
+  //   opacity: 1,
+  //   position: 'absolute',
+  //   top: 26,
+  //   left: 24,
+  //   borderRadius: 50,
+  // },
+  // v124_1273: {
+  //   width: 198,
+  //   height: 53,
+  //   // background: 'url("../images/v124_1273.png")',
+  //   // backgroundRepeat: 'no-repeat',
+  //   // backgroundPosition: 'center center',
+  //   // backgroundSize: 'cover',
+  //   margin: 5,
+  //   opacity: 1,
+  //   position: 'absolute',
+  //   top: 20,
+  //   left: 84,
+  //   overflow: 'hidden',
+  // },
+  // v124_1274: {
+  //   width: 67,
+  //   color: 'rgba(0,0,0,1)',
+  //   position: 'relative',
+  //   top: 0,
+  //   left: 0,
+  //   fontFamily: 'Circular Std',
+  //   fontWeight: '500',
+  //   fontSize: 17,
+  //   opacity: 1,
+  //   textAlign: 'left',
+  // },
+  // v124_1275: {
+  //   width: 198,
+  //   color: 'rgba(0,0,0,1)',
+  //   position: 'absolute',
+  //   top: 29,
+  //   left: 0,
+  //   fontFamily: 'Circular Std',
+  //   fontWeight: 'normal',
+  //   fontSize: 17,
+  //   opacity: 0.5,
+  //   textAlign: 'left',
+  // },
+  // v124_1276: {
+  //   width: 393,
+  //   height: 93,
+  //   // background: 'url("../images/v124_1276.png")',
+  //   // backgroundRepeat: 'no-repeat',
+  //   // backgroundPosition: 'center center',
+  //   // backgroundSize: 'cover',
+  //   padding: 20,
+  //   margin: 20,
+  //   opacity: 1,
+  //   position: 'absolute',
+  //   top: 93,
+  //   left: 0,
+  //   overflow: 'hidden',
+  // },
+  // v124_1277: {
+  //   width: 40,
+  //   height: 40,
+  //   backgroundColor: 'rgba(217,217,217,1)',
+  //   opacity: 1,
+  //   position: 'absolute',
+  //   top: 26,
+  //   left: 24,
+  //   borderRadius: 50,
+  // },
+  // v124_1278: {
+  //   width: 160,
+  //   height: 53,
+  //   // background: 'url("../images/v124_1278.png")',
+  //   // backgroundRepeat: 'no-repeat',
+  //   // backgroundPosition: 'center center',
+  //   // backgroundSize: 'cover',
+  //   margin: 5,
+  //   opacity: 1,
+  //   position: 'absolute',
+  //   top: 20,
+  //   left: 84,
+  //   overflow: 'hidden',
+  // },
+  // v124_1279: {
+  //   width: 89,
+  //   color: 'rgba(0,0,0,1)',
+  //   position: 'relative',
+  //   top: 0,
+  //   left: 0,
+  //   fontFamily: 'Circular Std',
+  //   fontWeight: '500',
+  //   fontSize: 17,
+  //   opacity: 1,
+  //   textAlign: 'left',
+  // },
+  // v124_1280: {
+  //   width: 160,
+  //   color: 'rgba(0,0,0,1)',
+  //   position: 'absolute',
+  //   top: 29,
+  //   left: 0,
+  //   fontFamily: 'Circular Std',
+  //   fontWeight: 'normal',
+  //   fontSize: 17,
+  //   opacity: 0.5,
+  //   textAlign: 'left',
+  // },
+  // v124_1281: {
+  //   width: 393,
+  //   height: 93,
+  //   // background: 'url("../images/v124_1281.png")',
+  //   // backgroundRepeat: 'no-repeat',
+  //   // backgroundPosition: 'center center',
+  //   // backgroundSize: 'cover',
+  //   paddingVertical: 20,
+  //   paddingHorizontal: 24,
+  //   margin: 20,
+  //   opacity: 1,
+  //   position: 'absolute',
+  //   top: 186,
+  //   left: 0,
+  //   overflow: 'hidden',
+  // },
+  // v124_1282: {
+  //   width: 40,
+  //   height: 40,
+  //   backgroundColor: 'rgba(217,217,217,1)',
+  //   opacity: 1,
+  //   position: 'absolute',
+  //   top: 26,
+  //   left: 24,
+  //   borderRadius: 50,
+  // },
+  // v124_1283: {
+  //   width: 143,
+  //   height: 53,
+  //   // background: 'url("../images/v124_1283.png")',
+  //   // backgroundRepeat: 'no-repeat',
+  //   // backgroundPosition: 'center center',
+  //   // backgroundSize: 'cover',
+  //   margin: 5,
+  //   opacity: 1,
+  //   position: 'absolute',
+  //   top: 20,
+  //   left: 84,
+  //   overflow: 'hidden',
+  // },
+  ppl_sec: {
+    width: 370,
+    height: 233,
+    // background: 'url("../images/v124_1286.png")',
+    // backgroundRepeat: 'no-repeat',
+    // backgroundPosition: 'center center',
+    // backgroundSize: 'cover',
+    opacity: 1,
+    // position: 'absolute',
+    top: 70, //562
+    left: 0,
+    overflow: 'hidden',
+  },
+  ppl_txt: {
+    width: 61,
+    color: 'rgba(102,102,102,1)',
+    // position: 'absolute',
+    top: 0,
+    left: 29,
+    fontFamily: 'Circular Std',
+    fontWeight: '500',
+    fontSize: 17,
+    opacity: 1,
+    textAlign: 'center',
+  },
+  people: {
+    width: 350,
+    height: 159,
+    // background: 'url("../images/v124_1288.png")',
+    // backgroundRepeat: 'no-repeat',
+    // backgroundPosition: 'center center',
+    // backgroundSize: 'cover',
+    margin: 0,
+    opacity: 1,
+    // position: 'absolute',
+    bottom: 20,
+    left: 0,
+    overflow: 'hidden',
+  },
+  search_bar: {
+    width: 350,
+    height: 48,
+    // background: 'url("../images/v124_1301.png")',
+    // backgroundRepeat: 'no-repeat',
+    // backgroundPosition: 'center center',
+    // backgroundSize: 'cover',
     opacity: 1,
     position: 'absolute',
-    top: 26,
+    top: 138,
+    left: 22,
+    overflow: 'hidden',
+  },
+  search_box: {
+    width: 350,
+    height: 48,
+    backgroundColor: 'rgba(247,247,247,1)',
+    opacity: 1,
+    position: 'absolute',
+    top: 138,
+    left: 22,
+    borderRadius: 52,
+    overflow: 'hidden',
+  },
+  search_txt: {
+    width: 64,
+    color: 'rgba(0,0,0,1)',
+    position: 'absolute',
+    top: 12,
     left: 24,
-    borderRadius: 50,
+    fontFamily: 'SF Pro Text',
+    fontWeight: '600',
+    fontSize: 17,
+    opacity: 0.6000000238418579,
+    textAlign: 'left',
   },
-  person2: {
-    width: 160,
-    height: 53,
-    // background: 'url("../images/v124_1278.png")',
-    // backgroundRepeat: 'no-repeat',
-    // backgroundPosition: 'center center',
-    // backgroundSize: 'cover',
-    margin: 5,
-    opacity: 1,
+  search_add: {
+    // width: 24,
+    // height: 24,
+    // // background: 'url("../images/v124_1304.png")',
+    // // backgroundRepeat: 'no-repeat',
+    // // backgroundPosition: 'center center',
+    // // backgroundSize: 'cover',
+    margin: 0,
+    // // opacity: 1,
     position: 'absolute',
-    top: 20,
-    left: 84,
+    top: 9,
+    right: 10,
     overflow: 'hidden',
+    // paddingHorizontal: 20,
   },
-  name2: {
-    width: 89,
-    color: 'rgba(0,0,0,1)',
-    position: 'relative',
-    top: 0,
-    left: 0,
-    fontFamily: 'Circular Std',
-    fontWeight: '500',
-    fontSize: 17,
-    opacity: 1,
-    textAlign: 'left',
-  },
-  comment2: {
-    width: 160,
-    color: 'rgba(0,0,0,1)',
-    position: 'absolute',
-    top: 29,
-    left: 0,
-    fontFamily: 'Circular Std',
-    fontWeight: 'normal',
-    fontSize: 17,
-    opacity: 0.5,
-    textAlign: 'left',
-  },
-  v124_1281: {
-    width: 393,
-    height: 93,
-    // background: 'url("../images/v124_1281.png")',
-    // backgroundRepeat: 'no-repeat',
-    // backgroundPosition: 'center center',
-    // backgroundSize: 'cover',
-    paddingVertical: 20,
-    paddingHorizontal: 24,
-    margin: 20,
-    opacity: 1,
-    position: 'absolute',
-    top: 186,
-    left: 0,
-    overflow: 'hidden',
-  },
-  v124_1282: {
-    width: 40,
-    height: 40,
-    backgroundColor: 'rgba(217,217,217,1)',
-    opacity: 1,
-    position: 'absolute',
-    top: 26,
-    left: 24,
-    borderRadius: 50,
-  },
-  v124_1283: {
-    width: 143,
-    height: 53,
-    // background: 'url("../images/v124_1283.png")',
-    // backgroundRepeat: 'no-repeat',
-    // backgroundPosition: 'center center',
-    // backgroundSize: 'cover',
-    margin: 5,
-    opacity: 1,
-    position: 'absolute',
-    top: 20,
-    left: 84,
-    overflow: 'hidden',
-  },
-  v124_1284: {
-    width: 105,
-    color: 'rgba(0,0,0,1)',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    fontFamily: 'Circular Std',
-    fontWeight: '500',
-    fontSize: 17,
-    opacity: 1,
-    textAlign: 'left',
-  },
-  v124_1285: {
-    width: 143,
-    color: 'rgba(0,0,0,1)',
-    position: 'absolute',
-    top: 29,
-    left: 0,
-    fontFamily: 'Circular Std',
-    fontWeight: 'normal',
-    fontSize: 17,
-    opacity: 0.5,
-    textAlign: 'left',
-  },
+  // v124_1305: {
+  //   width: 23,
+  //   height: 23,
+  //   // background: 'url("../images/v124_1305.png")',
+  //   // backgroundRepeat: 'no-repeat',
+  //   // backgroundPosition: 'center center',
+  //   // backgroundSize: 'cover',
+  //   opacity: 1,
+  //   position: 'absolute',
+  //   top: 0,
+  //   left: 1,
+  //   overflow: 'hidden',
+  // },
+  // v124_1306: {
+  //   width: 23,
+  //   height: 23,
+  //   backgroundColor: 'rgba(102,102,102,1)',
+  //   opacity: 1,
+  //   position: 'relative',
+  //   top: 0,
+  //   left: 0,
+  // },
+  // v124_1307: {
+  //   width: 11,
+  //   height: 11,
+  //   backgroundColor: 'rgba(255,255,255,1)',
+  //   opacity: 1,
+  //   position: 'absolute',
+  //   top: 6,
+  //   left: 7,
+  // },
   horizontalLine: {
     borderBottomColor: 'lightgrey',
     borderBottomWidth: 2,
@@ -385,7 +1159,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'lightgrey',
     borderBottomWidth: 2,
     marginVertical: 0,
-    top: 530,
+    top: 570, //530
     left: 0,
   },
   horizontalLine3: {
@@ -399,5 +1173,23 @@ const styles = StyleSheet.create({
     right: 200,
     borderBottomWidth: 2,
     borderBottomColor: 'black',
+  },
+  button1: {
+    width: 493,
+    height: 160,
+    position: 'absolute',
+    top: 15,
+    left: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button2: {
+    width: 493,
+    height: 160,
+    position: 'absolute',
+    bottom: 40,
+    left: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
