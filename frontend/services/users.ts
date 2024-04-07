@@ -1,6 +1,6 @@
-import axios, { AxiosResponse, HttpStatusCode } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { API_LINK } from './CommonDocs';
-import { FinancialGoal, Redirect, TokenStatus, User } from '../types/types';
+import { FinancialGoal, TokenStatus, User } from '../types/types';
 
 export const getAllUsers = async (): Promise<User[]> => {
   console.log(API_LINK);
@@ -9,25 +9,6 @@ export const getAllUsers = async (): Promise<User[]> => {
   );
   // console.log(response.data);
   return response.data;
-};
-
-export const getCallbackUrl = async (id: string): Promise<Redirect> => {
-  const response: AxiosResponse<Redirect> = await axios.get<Redirect>(
-    `http://${API_LINK}/etrade/redirect/${id}`,
-  );
-  console.log(response.data);
-  return response.data;
-};
-
-export const verifyToken = async (
-  id: string,
-  verifier: string,
-): Promise<HttpStatusCode> => {
-  const response: AxiosResponse = await axios.post<Redirect>(
-    `http://${API_LINK}/etrade/verify/${id}`,
-    { verifier: verifier },
-  );
-  return response.status;
 };
 
 export const getTokenStatus = async (id: number): Promise<TokenStatus> => {

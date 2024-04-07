@@ -2,7 +2,7 @@ import { View, Text, Pressable } from 'react-native'
 import React from 'react'
 
 interface ProfilePerformanceProps {
-  portfolioValue: string
+  portfolioValue: number
 }
 
 const ProfilePerformance = ({portfolioValue} : ProfilePerformanceProps) => {

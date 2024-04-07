@@ -1,7 +1,7 @@
 import {Text, View, Linking, TouchableOpacity, TextInput, Alert, StyleSheet} from 'react-native'
 import React, {useState} from 'react'
 import { Button } from 'react-native-paper'
-import {getCallbackUrl, verifyToken} from '../services/users'
+import {getCallbackUrl, verifyToken} from '../services/etrade'
 import {Redirect} from '../types/types'
 import {HttpStatusCode} from "axios";
 import { useUser } from '@clerk/clerk-expo'
@@ -18,7 +18,6 @@ const AuthPage = (props: { successCallback: () => void }) => {
     }
 
     const id = user.id;
-    console.log(id)
 
     const callback: Redirect = await getCallbackUrl(id);
     setRedirectUrl(callback.redirect_url)
