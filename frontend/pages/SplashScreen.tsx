@@ -17,7 +17,7 @@ const SplashScreen: React.FC = () => {
     const timer = setTimeout(() => {
       // console.log(isSignedIn)
       // console.log(user)
-      if (!isSignedIn || user) {
+      if (!isSignedIn || !user) {
         navigation.navigate('Login'); // Ensure 'LoginPage' is defined in your navigation types
       } else {
         dispatch(completeOnboarding());
