@@ -26,6 +26,7 @@ const Login: React.FC = () => {
 
       await setActive({ session: completeSignIn.createdSessionId });
     } catch (error) {
+      console.log(JSON.stringify(error));
       const clerkError = error as ClerkErrorResponse;
       const clerkMessage = clerkError.errors[0].message;
       if(clerkMessage === "Couldn't find your account.") {

@@ -7,16 +7,17 @@ import { useUser } from '@clerk/clerk-expo';
 import { useDispatch} from 'react-redux';
 import { completeOnboarding } from '../reducers/onboarding/onboardingReducer';
 
-
 const SplashScreen: React.FC = () => {
   const navigation = useNavigation<AuthNavigationProp>();
-  const { isSignedIn } = useUser();
+  const { isSignedIn, user } = useUser();
   const dispatch = useDispatch();
 
   useEffect(() => {
     // Wait for 1 second then navigate to the LoginPage
     const timer = setTimeout(() => {
-      if (!isSignedIn) {
+      // console.log(isSignedIn)
+      // console.log(user)
+      if (!isSignedIn || user) {
         navigation.navigate('Login'); // Ensure 'LoginPage' is defined in your navigation types
       } else {
         dispatch(completeOnboarding());
