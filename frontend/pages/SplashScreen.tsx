@@ -3,14 +3,24 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigationProp } from '../types/navigationTypes';
+import { useUser } from '@clerk/clerk-expo';
+import { useDispatch} from 'react-redux';
+import { completeOnboarding } from '../reducers/onboarding/onboardingReducer';
+
 
 const SplashScreen: React.FC = () => {
   const navigation = useNavigation<AuthNavigationProp>();
+  const { isSignedIn } = useUser();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // Wait for 1 second then navigate to the LoginPage
     const timer = setTimeout(() => {
-      navigation.navigate('Login'); // Ensure 'LoginPage' is defined in your navigation types
+      if (!isSignedIn) {
+        navigation.navigate('Login'); // Ensure 'LoginPage' is defined in your navigation types
+      } else {
+        dispatch(completeOnboarding());
+      }
     }, 2000);
 
     return () => clearTimeout(timer);
