@@ -1,26 +1,24 @@
-import { StyleSheet, Text, View, Image, Pressable, Touchable, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 // import { theme } from '../../theme'
-import React, { useContext } from 'react'
+import React from 'react'
 // import ActionButton from '../ActionButton'
 // import { useNavigation } from '@react-navigation/native'
-import { Button } from 'react-native-paper'
 import ProfileBio from './ProfileBio'
-import { useSession } from '@clerk/clerk-expo'
-
-const PROFILE_IMAGE_SIZE = 100
+// import { useSession } from '@clerk/clerk-expo'
 
 interface ProfileBannerProps {
-  user?: any
+  user?: string
 }
 
 const ProfileBanner = ({ user }: ProfileBannerProps) => {
-  // const { currentAuth } = useContext(AuthContext)
+  /*
   const { session } = useSession()
-  // const navigation = useNavigation()
+  const navigation = useNavigation()
 
   const navigateToEditProfile = () => {
-    // navigation.navigate({ name: "Edit My Profile" })
+    navigation.navigate({ name: "Edit My Profile" })
   }
+  */
 
   return (
     <View className='flex flex-col px-3 mb-2'>
@@ -51,7 +49,11 @@ const ProfileBanner = ({ user }: ProfileBannerProps) => {
             </View>
           </View>
 
-          <TouchableOpacity className='flex items-center justify-center flex-1 bg-[#E7E7E7]' style={profileStyles.followButton}>
+          <TouchableOpacity
+            className='flex items-center justify-center flex-1 bg-[#E7E7E7]'
+            style={profileStyles.followButton}
+            onPress={() => console.log(user)}
+          >
             <Text className='font-semibold' style={{ color: "black" }}>Edit Profile</Text>
           </TouchableOpacity>
         </View>
@@ -72,16 +74,12 @@ export default ProfileBanner
 
 const profileStyles = StyleSheet.create({
   profileImage: {
-    //maxWidth: PROFILE_IMAGE_SIZE,
-    // maxHeight: PROFILE_IMAGE_SIZE,
-    //width: 250,
-    // height: 250,
     borderRadius: 180,
-    borderColor: "black", // theme.colors.NEU_RED,
+    borderColor: "black",
     borderWidth: 2,
   },
   followButton: {
-    backgroundColor: "#E7E7E7", //theme.colors.NEU_RED,
+    backgroundColor: "#E7E7E7",
     paddingVertical: 5,
     paddingHorizontal: 20,
     borderRadius: 10

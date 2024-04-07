@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView, Button, FlatList, Image, Pressable } from 'react-native';
+import { View, ScrollView, FlatList, Pressable } from 'react-native';
 import { useSession } from '@clerk/clerk-expo';
 import ProfileBanner from '../components/ProfileBanner';
 import SubTabButton from '../components/SubTabButton';
@@ -10,8 +10,6 @@ import { ProfileActivityData } from '../constants';
 import ProfilePerformance from '../components/ProfilePerformance';
 import SignOut from '../components/SignOutButton';
 // import SettingsSvg from '../assets/SettingsIcon.svg';
-
-const PROFILE_IMAGE_SIZE = 100;
 
 const Profile = () => {
   const { session } = useSession();
@@ -23,11 +21,13 @@ const Profile = () => {
   const OnActivitySelected = () => {
     setIsPortfolioSelected(false);
     setIsActivitySelected(true);
+    console.log(`Activity selected: ${isActivitySelected}`);
   }
 
   const OnPortfolioSelected = () => {
     setIsPortfolioSelected(true);
     setIsActivitySelected(false);
+    console.log(`Portfolio selected: ${isPortfolioSelected}`);
   }
 
   useEffect(() => {

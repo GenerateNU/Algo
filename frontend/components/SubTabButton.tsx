@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Pressable } from 'react-native'
+import { Text, Pressable } from 'react-native'
 import React, { useState } from 'react'
 
 interface SubTabButtonProps {
@@ -8,7 +8,7 @@ interface SubTabButtonProps {
 }
 
 const SubTabButton = ({ title, selected, onPress }: SubTabButtonProps) => {
-  const [isSelected, setIsSelected] = useState<boolean>(selected);
+  const [isSelected] = useState<boolean>(selected);
 
   return (
     <Pressable
