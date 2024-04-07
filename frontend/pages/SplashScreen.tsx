@@ -3,21 +3,20 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigationProp } from '../types/navigationTypes';
-import { useUser } from '@clerk/clerk-expo';
+import { useSession, useUser } from '@clerk/clerk-expo';
 import { useDispatch} from 'react-redux';
 import { completeOnboarding } from '../reducers/onboarding/onboardingReducer';
 
 const SplashScreen: React.FC = () => {
   const navigation = useNavigation<AuthNavigationProp>();
-  const { isSignedIn, user } = useUser();
+  const { session } = useSession();
   const dispatch = useDispatch();
 
   useEffect(() => {
     // Wait for 1 second then navigate to the LoginPage
     const timer = setTimeout(() => {
-      // console.log(isSignedIn)
-      // console.log(user)
-      if (!isSignedIn || !user) {
+      console.log(session)
+      if (!session) {
         navigation.navigate('Login'); // Ensure 'LoginPage' is defined in your navigation types
       } else {
         dispatch(completeOnboarding());
@@ -41,10 +40,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
     backgroundColor: '#fff', // Change the background color if needed
   },
   logo: {
-    width: 150, // Adjust the width as needed
+    width: '100%', // Adjust the width as needed
     height: 150, // Adjust the height as needed
     marginBottom: 20, // Adjust the space between the logo and the "Sign Up" text
     alignSelf: 'center', // This centers the logo horizontally in the container
