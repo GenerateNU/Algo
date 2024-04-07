@@ -123,31 +123,43 @@ export default function Signup() {
   }
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/logomark.png')} style={styles.logo} />
-      {/* <Text style={styles.title}>Sign up</Text> */}
-      <Text style={styles.subtitle}>Start investing smarter with friends</Text>
+      <View style={styles.image}>
+        <Image source={require('../../assets/logomark.png')} style={styles.logo} />
+      </View>
+      
+      <View className='rounded w-full mb-[20]'>
+        <Text style={styles.title}>Sign up</Text>
+        <Text style={styles.subtitle}>Start investing smarter with friends</Text>
+      </View>
+      
+      <View className='rounded w-full'>
+        <TextInput
+          style={styles.input}
+          onChangeText={setUsername}
+          value={username}
+          placeholder="Username"
+        />
+      </View>
 
-      <TextInput
-        style={styles.input}
-        onChangeText={setUsername}
-        value={username}
-        placeholder="Username"
-      />
+      <View className='rounded w-full'>
+        <TextInput
+          style={styles.input}
+          onChangeText={setEmailAddress}
+          value={emailAddress}
+          placeholder="Email"
+        />
+      </View>
 
-      <TextInput
-        style={styles.input}
-        onChangeText={setEmailAddress}
-        value={emailAddress}
-        placeholder="Email"
-      />
-
-      <TextInput
-        style={styles.input}
-        onChangeText={setPassword}
-        value={password}
-        secureTextEntry
-        placeholder="Password"
-      />
+      <View className='rounded w-full mb-[20]'>
+        <TextInput
+          style={styles.input}
+          onChangeText={setPassword}
+          value={password}
+          secureTextEntry
+          placeholder="Password"
+        />
+      </View>
+      
 
       <Button
         mode="contained"
@@ -158,8 +170,8 @@ export default function Signup() {
         Sign Up
       </Button>
 
-      <TouchableOpacity onPress={navigateToLogin}>
-        <Text style={styles.loginText}>Already have an account? Login</Text>
+      <TouchableOpacity onPress={navigateToLogin} className='w-full flex-row justify-center mt-[20]'>
+        <Text style={styles.loginText}>Already have an account? <Text className='font-bold'>Login</Text> </Text>
       </TouchableOpacity>
     </View>
   );
@@ -169,10 +181,16 @@ export default function Signup() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    padding: 25,
+    paddingTop: "30%",
     backgroundColor: '#f5f5f5', // You can set your own color scheme
+  },
+  image: {
+    justifyContent: "center",
+    flexDirection: "row",
+    width: "100%"
   },
   title: {
     fontSize: 24,
@@ -191,21 +209,21 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   input: {
-    height: 50,
+    height: 60,
     width: '100%', // Adjust width as per your layout
     backgroundColor: '#fff', // Background color for the input
     borderWidth: 1,
     borderColor: '#ddd', // Border color for the input
-    borderRadius: 5,
-    padding: 10,
+    borderRadius: 50,
+    padding: 14,
     marginBottom: 15,
     fontSize: 16,
   },
   button: {
     width: '100%',
     // Removed explicit height to allow content to define the button's size
-    borderRadius: 5,
-    backgroundColor: '#6F6F6F',
+    borderRadius: 50,
+    backgroundColor: '#02AD98',
   },
   buttonContent: {
     // Adjusted for better control over the button's internal padding

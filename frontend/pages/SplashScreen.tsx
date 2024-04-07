@@ -29,7 +29,7 @@ const SplashScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       {/* Placeholder for the logo */}
-      <Image source={require('../assets/logomark.png')} style={styles.logo} />
+      <Image source={require('../assets/splash.png')} style={styles.logo} />
       {/* You can replace the Text with an Image component if you have a logo image */}
     </View>
   );
