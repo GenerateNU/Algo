@@ -47,7 +47,7 @@ const Login: React.FC = () => {
         <Image source={require('../assets/logomark.png')} style={styles.logo} />
       </View>
       <View>
-        <Text style={styles.subtitle} className='font-bold'>Login</Text>
+        <Text style={styles.subtitle} className='font-bold'>Log in</Text>
         <Text style={styles.description}>Get back into investing</Text>
       </View>
 
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
       padding: 25,
       paddingTop: "30%",
-      backgroundColor: '#f5f5f5', // You can set your own color scheme
+      backgroundColor: '#FFFFFF', // You can set your own color scheme
     },
     image: {
       justifyContent: "center",
@@ -115,12 +115,12 @@ const styles = StyleSheet.create({
       fontSize: 24,
       fontWeight: 'bold',
       color: '#333', // Choose a color that fits your app theme
-      marginBottom: 20,
+      marginBottom: 30,
     },
     subtitle: {
       fontSize: 22,
       color: '#000000', // Adjust color to match your theme
-      marginBottom: 10,
+      marginBottom: 20,
     },
     description: {
       fontSize: 16,
@@ -130,13 +130,14 @@ const styles = StyleSheet.create({
     input: {
       height: 60,
       width: '100%', // Adjust width as per your layout
-      backgroundColor: '#fff', // Background color for the input
+      backgroundColor: '#F1F1F1', // Background color for the input
       borderWidth: 1,
-      borderColor: '#ddd', // Border color for the input
-      borderRadius: 50,
+      borderColor: '#F1F1F1', // Border color for the input
+      borderRadius: 18,
       padding: 14,
       marginBottom: 15,
       fontSize: 16,
+      color: "#808080",
     },
     button: {
       width: '100%', // Adjust button width as per your layout
