@@ -8,6 +8,7 @@ import {
   ScrollView,
   SafeAreaView,
   Alert,
+  Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigationProp } from '../../types/navigationTypes';
@@ -17,28 +18,30 @@ import {
 } from '../../reducers/onboarding/onboardingReducer';
 import { useUser } from '@clerk/clerk-expo';
 import { updateMetadata } from '../../services/clerk';
+import FinancialGoal from '../../components/FinancialGoal';
+import WizardStep from '../../components/WizardStep';
 
-type FinancialGoalProps = {
-  goal: string;
-  isSelected: boolean;
-  onSelect: (goal: string) => void;
-};
+// type FinancialGoalProps = {
+//   goal: string;
+//   isSelected: boolean;
+//   onSelect: (goal: string) => void;
+// };
 
-const FinancialGoal: React.FC<FinancialGoalProps> = ({
-  goal,
-  isSelected,
-  onSelect,
-}) => {
-  // Based on the isSelected prop determine the styles to apply
-  const goalStyle = isSelected ? styles.goalSelected : styles.goal;
-  const goalTextStyle = isSelected ? styles.goalTextSelected : styles.goalText;
+// const FinancialGoal: React.FC<FinancialGoalProps> = ({
+//   goal,
+//   isSelected,
+//   onSelect,
+// }) => {
+//   // Based on the isSelected prop determine the styles to apply
+//   const goalStyle = isSelected ? styles.goalSelected : styles.goal;
+//   const goalTextStyle = isSelected ? styles.goalTextSelected : styles.goalText;
 
-  return (
-    <TouchableOpacity onPress={() => onSelect(goal)} style={goalStyle}>
-      <Text style={goalTextStyle}>{goal}</Text>
-    </TouchableOpacity>
-  );
-};
+//   return (
+//     <TouchableOpacity onPress={() => onSelect(goal)} style={goalStyle}>
+//       <Text style={goalTextStyle}>{goal}</Text>
+//     </TouchableOpacity>
+//   );
+// };
 
 // main component
 const GoalsPage: React.FC = () => {
@@ -113,38 +116,50 @@ const GoalsPage: React.FC = () => {
 
   // apply the active style when there are selected goals
   const continueButtonStyle =
-    selectedShortTermGoals.length > 0
+    (selectedShortTermGoals.length + selectedLongTermGoals.length) > 2
       ? styles.continueButtonActive
       : pageStyles.continueButton;
 
   return (
     <SafeAreaView style={styles.SafeAreaView}>
       <View style={pageStyles.container}>
-        <Text style={pageStyles.title}>Let's get started</Text>
-        <Text style={pageStyles.subtitle}>What are your financial goals?</Text>
-        <ScrollView style={pageStyles.goalsContainer}>
-          {shortTermGoals.map((goal, index) => (
-            <FinancialGoal
-              key={index}
-              goal={goal}
-              isSelected={selectedShortTermGoals.includes(goal)}
-              onSelect={handleSelectShortTermGoal}
-            />
-          ))}
-        </ScrollView>
-        <ScrollView style={pageStyles.goalsContainer}>
-          {longTermGoals.map((goal, index) => (
-            <FinancialGoal
-              key={index}
-              goal={goal}
-              isSelected={selectedLongTermGoals.includes(goal)}
-              onSelect={handleSelectLongTermGoal}
-            />
-          ))}
-        </ScrollView>
-        <TouchableOpacity onPress={handleContinue} style={continueButtonStyle}>
-          <Text style={pageStyles.continueButtonText}>Continue →</Text>
-        </TouchableOpacity>
+        <View style={pageStyles.top}>
+          <View style={styles.image}>
+            <Image source={require('../../assets/logomark.png')} style={styles.logo} />
+          </View>
+          <Text style={pageStyles.subtitle}>Let's get started</Text>
+          <Text style={pageStyles.description}>What are your financial goals? Select at least 3</Text>
+          <View style={pageStyles.goalsContainer}>
+            {shortTermGoals.map((goal, index) => (
+              <FinancialGoal
+                key={index}
+                goal={goal}
+                isSelected={selectedShortTermGoals.includes(goal)}
+                onSelect={handleSelectShortTermGoal}
+              />
+            ))}
+          </View>
+          <View style={pageStyles.goalsContainer}>
+            {longTermGoals.map((goal, index) => (
+              <FinancialGoal
+                key={index}
+                goal={goal}
+                isSelected={selectedLongTermGoals.includes(goal)}
+                onSelect={handleSelectLongTermGoal}
+              />
+            ))}
+          </View>
+          <View style={styles.buttonCont}>
+            <TouchableOpacity onPress={handleContinue} style={continueButtonStyle}>
+              <Text style={pageStyles.continueButtonText}>Continue →</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.wizard}>
+          <WizardStep step={2}/>
+        </View>
+        
       </View>
     </SafeAreaView>
   );
@@ -161,6 +176,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#f5f5f5', // The color for unselected goal
     marginHorizontal: 5, // Add some horizontal margin for better spacing
+  },
+  wizard: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    flex: 1,
+    marginTop: "5%",
+    width: "100%",
+  },
+  buttonCont: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "flex-end"
+  },
+  image: {
+    justifyContent: "center",
+    flexDirection: "row",
+    width: "100%"
+  },
+  logo: {
+    width: 85,
+    height: 85,
+    marginBottom: 40, 
+    alignSelf: 'center', 
   },
   goalSelected: {
     padding: 10,
@@ -180,12 +218,12 @@ const styles = StyleSheet.create({
     color: '#fff', // Text color for selected goal
   },
   continueButtonActive: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    backgroundColor: '#6F6F6F', // Darker color when active
-    borderRadius: 30,
-    padding: 10,
+    padding: 15,
+    width: '45%',
+    marginTop: 8,
+    backgroundColor: '#333333',
+    alignItems: 'center',
+    borderRadius: 20,
   },
   SafeAreaView: {
     flex: 1,
@@ -196,11 +234,17 @@ const styles = StyleSheet.create({
 const pageStyles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
     padding: 20,
-    paddingTop: 140,
+    paddingTop: "10%",
     backgroundColor: '#FFFFFF', // The background color is white
+  },
+  top: {
+    flex: 29,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    width: "100%"
   },
   title: {
     fontSize: 24,
@@ -209,20 +253,26 @@ const pageStyles = StyleSheet.create({
     marginBottom: 40,
   },
   subtitle: {
-    fontSize: 18,
-    color: '#000000', // Black color for the subtitle
-    marginBottom: 20,
+    fontSize: 22,
+    color: '#7C7C7C', // Adjust color to match your theme
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 16,
+    color: '#7C7C7C', // Adjust color to match your theme
+    marginBottom: 30,
   },
   goalsContainer: {
     width: '100%', // Full width to contain the goals
+    marginBottom: 15,
   },
   continueButton: {
-    position: 'absolute', // Position button over the component
-    bottom: 20, // Distance from the bottom
-    right: 20, // Distance from the right
+    padding: 15,
+    width: '45%',
+    marginTop: 8,
+    alignItems: 'center',
+    borderRadius: 20,
     backgroundColor: '#C0C0C0', // Grey color for the button
-    borderRadius: 30,
-    padding: 10,
   },
   continueButtonText: {
     color: '#ffffff', // White color for the button text

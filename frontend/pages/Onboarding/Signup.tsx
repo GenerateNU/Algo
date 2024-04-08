@@ -107,6 +107,15 @@ export default function Signup() {
   if (pendingVerification) {
     return (
       <View style={styles.verifyContainer}>
+        <View style={styles.image}>
+          <Image source={require('../../assets/logomark.png')} style={styles.logo} />
+        </View>
+        <Text style={styles.subtitle} className='font-bold mb-[16]'>
+          Email Verification
+        </Text>
+        <Text style={styles.description}>
+          Please put in the verification code sent to your email
+        </Text>
           <TextInput
             value={code}
             placeholder="Verification Code"
@@ -195,7 +204,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     padding: 25,
-    paddingTop: "90%",
+    paddingTop: "30%",
     backgroundColor: '#FFFFFF', // You can set your own color scheme
   },
   image: {
@@ -210,7 +219,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 22,
     color: '#7C7C7C', // Adjust color to match your theme
     marginBottom: 10,
   },
