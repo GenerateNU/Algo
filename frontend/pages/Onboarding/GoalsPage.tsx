@@ -236,7 +236,7 @@ const pageStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    padding: 20,
+    padding: 25,
     paddingTop: "10%",
     backgroundColor: '#FFFFFF', // The background color is white
   },

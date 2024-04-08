@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 type WizardStepProps = {
     step: number
 }
-const steps = [1, 2, 3, 4, 5]
+const steps = [1, 2, 3, 4, 5, 6]
 const WizardStep: React.FC<WizardStepProps> = ({ step }) => {
     return (
         <View style={styles.container}>

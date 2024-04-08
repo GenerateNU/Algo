@@ -1,4 +1,4 @@
-import { Text, View, Alert } from 'react-native';
+import { Text, View, Alert, StyleSheet, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native'
 import { RefreshControl, ScrollView } from 'nativewind/dist/preflight';
@@ -6,6 +6,7 @@ import ETradeAuth from '../../components/ETradeAuth';
 import { TokenStatus } from '../../types/types';
 import { getTokenStatus } from '../../services/users';
 import { AuthNavigationProp } from '../../types/navigationTypes';
+import WizardStep from '../../components/WizardStep';
 
 const Etrade = () => {
   const navigation = useNavigation<AuthNavigationProp>();
@@ -13,6 +14,7 @@ const Etrade = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const verifyCallback = async () => {
+    console.log("Called this")
     Alert.alert('Success!', 'E*Trade Auth Successful',
     [ {
       text: "OK",
@@ -43,7 +45,7 @@ const Etrade = () => {
 
   return (
     <ScrollView
-      style={{ flex: 1 }}
+      style={styles.container}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}
@@ -51,16 +53,70 @@ const Etrade = () => {
         />
       }>
       <View className="mt-10 p-3 h-full">
-        <Text className="font-bold mb-8 text-lg">Login with E-Trade</Text>
+        <View style={styles.image}>
+          <Image source={require('../../assets/logomark.png')} style={styles.logo} />
+        </View>
+        <Text style={styles.subtitle}>Login with E-Trade</Text>
+        <Text style={styles.description}>Click to authenticate directly through Morgan Stanley</Text>
         {authenticated ? (
           /* If the access token is active */
-          <Text>E*Trade Account Authenticated!</Text>
+          <Text style={styles.description}>E*Trade Account Authenticated!</Text>
         ) : (
-          <ETradeAuth successCallback={verifyCallback} />
+          <View style={styles.authContainer}>
+            <View style={{flex: 4}}>
+              <ETradeAuth successCallback={verifyCallback} />
+            </View>
+            <View style={styles.wizard}>
+              <WizardStep step={5}/>
+            </View>
+            
+          </View>
+          
         )}
       </View>
     </ScrollView>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: "100%",
+    padding: 25,
+    paddingTop: "25%",
+    backgroundColor: "#FFFFFF"
+  },
+  wizard: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    flex: 1,
+    marginTop: "60%",
+    width: "100%",
+  },
+  authContainer: {
+    flex: 1,
+    width: "100%"
+  },
+  image: {
+    justifyContent: "center",
+    flexDirection: "row",
+    width: "100%"
+  },
+  logo: {
+    width: 85,
+    height: 85,
+    marginBottom: 40, 
+    alignSelf: 'center', 
+  },
+  subtitle: {
+    fontSize: 22,
+    color: '#7C7C7C', // Adjust color to match your theme
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 16,
+    color: '#7C7C7C', // Adjust color to match your theme
+    marginBottom: 30,
+  },
+})
 export default Etrade;
