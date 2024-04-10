@@ -35,25 +35,25 @@ export type ClerkError = {
 };
 
 interface UserPortfolio {
-  user_id?: string;
-  day_gain?: number;
-  day_gain_pct?: number;
-  total_gain?: number;
-  total_gain_pct?: number;
+  user_id: string;
+  day_gain: number;
+  day_gain_pct: number;
+  total_gain: number;
+  total_gain_pct: number;
   positions: Position[];
 }
 
 interface Position {
-  portfolio_id?: number;
-  position_id?: number;
-  ticker?: string;
-  quantity?: number;
-  cost?: number;
-  day_gain?: number;
-  day_gain_pct?: number;
-  total_gain?: number;
-  total_gain_pct?: number;
-  type?: TradeType;
+  portfolio_id: number;
+  position_id: number;
+  ticker: string;
+  quantity: number;
+  cost: number;
+  day_gain: number;
+  day_gain_pct: number;
+  total_gain: number;
+  total_gain_pct: number;
+  type: TradeType;
 }
 enum TradeType {
   LONG = 'LONG',

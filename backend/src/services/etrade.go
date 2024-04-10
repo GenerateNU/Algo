@@ -195,19 +195,19 @@ func (s *ETradeService) SyncPortfolio(userID string) (models.UserPortfolio, erro
 					// For short positions, subtract the gains from the total gains
 					totalGain -= position.TotalGain
 					totalDayGain -= position.DaysGain
-					positionValue = float64(position.Quantity) * position.CostPerShare * -1 // Negate the position value for short positions
+					positionValue = float64(position.Quantity) * position.MarketValue * -1 // Negate the position value for short positions
 				} else {
 					// For long positions, add the gains to the total gains
 					totalGain += position.TotalGain
 					totalDayGain += position.DaysGain
-					positionValue = float64(position.Quantity) * position.CostPerShare
+					positionValue = float64(position.Quantity) * position.MarketValue
 				}
 				totalPortfolioValue += positionValue
 				// Update existing position or add new position
 				if existingPos, ok := existingPositions[position.PositionID]; ok {
 					existingPos.Ticker = position.SymbolDescription
 					existingPos.Quantity = position.Quantity
-					existingPos.Cost = position.CostPerShare
+					existingPos.Cost = position.MarketValue
 					existingPos.DayGain = position.DaysGain
 					existingPos.DayGainPct = position.DaysGainPct
 					existingPos.TotalGain = position.TotalGain
