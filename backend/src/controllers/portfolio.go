@@ -12,11 +12,13 @@ import (
 
 type PortfolioController struct {
 	portfolioService *services.PortfolioService
+	etradeService *services.ETradeService
 }
 
-func NewPortfolioController(portfolioService *services.PortfolioService) *PortfolioController {
+func NewPortfolioController(portfolioService *services.PortfolioService, etradeService *services.ETradeService) *PortfolioController {
 	return &PortfolioController{
 		portfolioService: portfolioService,
+		etradeService: etradeService,
 	}
 }
 
@@ -26,50 +28,32 @@ func (etc *PortfolioController) CopyPortfolio(c *gin.Context) {
 	currentUserID := c.Param("current_user_id")
 
 	// if portfolio doesn't exist, return
-	portfolio, err := etc.portfolioService.GetPortfolio(targetUserID)
+	portfolio, err := etc.etradeService.GetPortfolio(targetUserID)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Portfolio not found"})
 		return
 	}
 
 	// if portfolio exists, get the target user's portfolio
-	targetPortfolio, err := etc.portfolioService.GetPortfolio(targetUserID)
+	targetPortfolio, err := etc.etradeService.GetPortfolio(targetUserID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get target user's portfolio"})
 		return
 	}
 
-	// with the user's target portfolio, get the user's positions
-	positions, err := etc.portfolioService.GetPositions(targetPortfolio)
+	// get positions from target user's portfolio
+	targetPositions, err := etc.portfolioService.GetPositions(targetPortfolio.ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get positions"})
 		return
 	}
 
-	// for each position, create a new position for the current user
-	for _, position := range positions {
-		newPosition := types.Position{
-			ID:         currentUserID,
-			Symbol:     position.Symbol,
-			Quantity:   position.Quantity,
-			AvgPrice:   position.AvgPrice,
-			CreatedAt:  time.Now(),
-			PositionID: position.ID,
-			Ticker:     position.Symbol,
-			Cost:       position.AvgPrice,
-			DayGain:    0.0,
-			DayGainPct: 0.0,
-			TotalGain:  0.0,
-			TotalGainPct: 0.0,
-			Type:       "trade_type_enum",
-		}
-		err := etc.portfolioService.CreatePosition(newPosition)
-		if err != nil {
-			log.Println("Failed to create position:", err)
-		}
+	// copy positions to current user's portfolio
+	_, err = etc.portfolioService.CopyPortfolio(targetPositions, currentUserID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to copy positions"})
+		return
 	}
-
-	
 
 	c.JSON(http.StatusOK, data)
 }

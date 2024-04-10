@@ -10,7 +10,8 @@ import (
 
 func SetupPortfolioRoutes(router *gin.Engine, db *gorm.DB) {
 	portfolioService := services.NewPortfolioService(db)
-	portfolioController := controllers.NewPortfolioController(portfolioService)
+	etradeService := services.NewETradeService(db)
+	portfolioController := controllers.NewPortfolioController(portfolioService, etradeService)
 
 	portfolioRoutes := router.Group("/portfolio")
 	{
