@@ -6,6 +6,10 @@ import Profile from '../pages/Profile';
 import FeedPage from '../pages/FeedPage';
 import Leaderboard from '../pages/Leaderboard';
 
+//import SharePost from '../pages/MakePost/SharePost';
+import SelectTrade from '../pages/MakePost/TradePost/SelectTrade';
+//import TradePostDetails from '../pages/MakePost/TradePost/TradePostDetails';
+
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 type TabRouteName =
   | 'Explore'
@@ -45,7 +49,7 @@ const BottomNavBar = () => {
       })}>
       <Tab.Screen
         name="Explore"
-        component={FeedPage}
+        component={SelectTrade}
         options={{
           tabBarActiveTintColor: '#02AD98',
           tabBarShowLabel: false,
