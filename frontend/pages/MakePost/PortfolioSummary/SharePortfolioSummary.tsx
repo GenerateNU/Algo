@@ -5,9 +5,8 @@ import { AuthNavigationProp } from '../../../types/navigationTypes';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SmallColorText from '../UtilityTextAbstractions/SmallColorText';
-import ColorTrade from './UtilityTradeAbstraction/ColorTrade';
 
-const SelectTrade: React.FC = () => {
+const SharePortfolioSummary: React.FC = () => {
     const navigation = useNavigation<AuthNavigationProp>();
 
     return (
@@ -16,21 +15,32 @@ const SelectTrade: React.FC = () => {
             <Icon name="navigate-before" style={styles.navigateBefore} onPress={() => navigation.goBack()} />
 
             <View style={styles.contentContainer}>
-                <Text style={styles.title}>Select a Trade</Text>
-                <Text style={styles.description}>Choose a recent trade you want to share</Text>
+                <Text style={styles.title}>Share Portfolio Summary</Text>
+                <Text style={styles.description}>Choose the duration you want to share</Text>
             </View>
         
             <View style={styles.buttonsContainer}>
 
-                <ColorTrade action="BUY" ticker="AAPL" amount={150.55} percent={-17} />
+                <TouchableOpacity style={styles.button}>
+                    <View style={styles.buttonContentContainer}>
+                        <Text style={styles.buttonTitle}>One Month Summary</Text>
+                    </View>
+                    <SmallColorText amount={-7} />
+                </TouchableOpacity>
 
-                <ColorTrade action="SELL" ticker="NVDA" amount={170.55} percent={17} />
+                <TouchableOpacity style={styles.button}>
+                    <View style={styles.buttonContentContainer}>
+                        <Text style={styles.buttonTitle}>Six Month Summary</Text>
+                    </View>
+                    <SmallColorText amount={21} />
+                </TouchableOpacity>
 
-                <ColorTrade action="SELL" ticker="AAPL" amount={170.55} percent={21} />
-
-                <ColorTrade action="SELL" ticker="TSLA" amount={170.55} percent={4} />
-
-                <ColorTrade action="BUY" ticker="AAPL" amount={150.55} percent={-11} />
+                <TouchableOpacity style={styles.button}>
+                    <View style={styles.buttonContentContainer}>
+                        <Text style={styles.buttonTitle}>One Year Summary</Text>
+                    </View>
+                    <SmallColorText amount={7} />
+                </TouchableOpacity>
 
             </View>
 
@@ -52,7 +62,7 @@ const styles = StyleSheet.create({
         top: 158,
         left: 24,
         width: 327,
-        height: 52,
+        height: 71,
         gap: 15,
         justifyContent: 'center',
     },
@@ -74,50 +84,39 @@ const styles = StyleSheet.create({
     },
     buttonsContainer: {
         position: 'absolute',
-        top: 260,
+        top: 279,
         left: 24,
         width: 346,
-        height: 435,
+        height: 330,
         gap: 15
     },
     buttonContentContainer: {
-        minWidth: 150,
-        height: 17,
-        gap: 3, // Added to create space
+        width: 260, // Increased to fit description
+        height: 41,
+        gap: 6,
         flexDirection: 'row',
         alignItems: 'center'
     },
-    buyDescription: {
+    buttonTitle: {
         fontSize: 16,
         lineHeight: 19.09,
-        letterSpacing: -0.02,
+        letterSpacing: -0.03,
         fontWeight: "500",
         fontFamily: 'SF Pro Text',
-        color: '#FF2B51', 
+        color: '#333333',
     },
-    sellDescription: {
-        fontSize: 16,
-        lineHeight: 19.09,
-        letterSpacing: -0.02,
-        fontWeight: "500",
-        fontFamily: 'SF Pro Text',
-        color: '#02AD98', 
-    },
-    symbolDescription: {
-        fontSize: 16,
-        lineHeight: 19.09,
-        letterSpacing: -0.02,
-        fontWeight: "700",
-        fontFamily: 'SF Pro Text',
-        color: '#121212', 
-    },
-    priceDescription: {
-        fontSize: 16,
-        lineHeight: 19.09,
-        letterSpacing: -0.02,
-        fontWeight: "500",
-        fontFamily: 'SF Pro Text',
-        color: '#121212', 
+    button: {
+        width: 346,
+        height: 100,
+        paddingVertical: 22,
+        paddingHorizontal: 19,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#00000008',
+        backgroundColor: '#FDFDFD',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     buy: {
         width: 346,
@@ -147,4 +146,4 @@ const styles = StyleSheet.create({
     }
 });  
 
-export default SelectTrade;
+export default SharePortfolioSummary;

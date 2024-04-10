@@ -1,52 +1,22 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { AuthNavigationProp } from '../../../types/navigationTypes';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import SmallColorText from '../UtilityTextAbstractions/SmallColorText';
-import ColorTrade from './UtilityTradeAbstraction/ColorTrade';
+import SmallColorText from '../../UtilityTextAbstractions/SmallColorText';
 
-const SelectTrade: React.FC = () => {
-    const navigation = useNavigation<AuthNavigationProp>();
-
+const ColorTrade = ({ action, ticker, amount, percent }: { action: string, ticker: string, amount: number, percent: number }) => {
     return (
-        <View>
-
-            <Icon name="navigate-before" style={styles.navigateBefore} onPress={() => navigation.goBack()} />
-
-            <View style={styles.contentContainer}>
-                <Text style={styles.title}>Select a Trade</Text>
-                <Text style={styles.description}>Choose a recent trade you want to share</Text>
+        <TouchableOpacity style={percent < 0 ? styles.buy : styles.sell}>
+            <View style={styles.buttonContentContainer}>
+                <Text style={action == "BUY" ? styles.buyDescription : styles.sellDescription}>{action}</Text>
+                <Text style={styles.symbolDescription}>{ticker}</Text>
+                <Text style={styles.priceDescription}>@ {amount}</Text>
             </View>
-        
-            <View style={styles.buttonsContainer}>
-
-                <ColorTrade action="BUY" ticker="AAPL" amount={150.55} percent={-17} />
-
-                <ColorTrade action="SELL" ticker="NVDA" amount={170.55} percent={17} />
-
-                <ColorTrade action="SELL" ticker="AAPL" amount={170.55} percent={21} />
-
-                <ColorTrade action="SELL" ticker="TSLA" amount={170.55} percent={4} />
-
-                <ColorTrade action="BUY" ticker="AAPL" amount={150.55} percent={-11} />
-
-            </View>
-
-        </View>
+            <SmallColorText amount={percent} />
+        </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
-    navigateBefore: {
-        fontSize: 25,
-        opacity: 0.25,
-        position: 'absolute',
-        top: 83,
-        left: 24,
-        color: '#000000'
-    },
     contentContainer: {
         position: 'absolute',
         top: 158,
@@ -147,4 +117,4 @@ const styles = StyleSheet.create({
     }
 });  
 
-export default SelectTrade;
+export default ColorTrade;

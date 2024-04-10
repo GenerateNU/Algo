@@ -6,7 +6,7 @@ import { AuthNavigationProp } from '../../../types/navigationTypes';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import LargeColorText from '../UtilityTextAbstractions/LargeColorText';
 
-const TradePostDetails: React.FC = () => {
+const PortfolioSummary: React.FC = () => {
     const navigation = useNavigation<AuthNavigationProp>();
 
     return (
@@ -19,21 +19,26 @@ const TradePostDetails: React.FC = () => {
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.detailsContainer}>
-                <View style={styles.statsContainer}>
-                    <View style={styles.buySellContainer}>
-                        <Text style={styles.buySellText}>Sell</Text>
-                        <Text style={styles.buySellAmountText}>$170.55</Text>
-                    </View>
-                    <View style={styles.allTimeContainer}>
-                        <Text style={styles.allTimeText}>All Time</Text>
-                        <LargeColorText amount={-7} />
-                    </View>
+            <View style={styles.timelineContainer}>
+                <View style={styles.timelineStartContainer}>
+                    <Text style={styles.timelineStartText}>OCT 14</Text>
                 </View>
-
-                <View style={styles.descriptionContainer}>
-                    <TextInput style={styles.descriptionTitleText}>Check out my Apple trade</TextInput>
-                    <TextInput style={styles.descriptionText}>Description</TextInput>
+                <View style={styles.timelineEndContainer}>
+                    <Text style={styles.timelineEndText}>NOW</Text>
+                </View>
+            </View>
+            <View style={styles.statsContainer}>
+                <View style={styles.buySellContainer}>
+                    <Text style={styles.buySellText}>Performance</Text>
+                    <LargeColorText amount={-7} />
+                </View>
+                <View style={styles.allTimeContainer}>
+                    <Text style={styles.allTimeText}>Yield Cost Ratio</Text>
+                    <Text style={styles.buySellAmountText}>4.6%</Text>
+                </View>
+                <View style={styles.balanceContainer}>
+                    <Text style={styles.buySellText}>Balance</Text>
+                    <Text style={styles.buySellAmountText}>$1900.3</Text>
                 </View>
             </View>
 
@@ -75,24 +80,67 @@ const styles = StyleSheet.create({
         fontFamily: 'Inter',
         color: '#FFFFFF', 
     },
-    detailsContainer: {
+    timelineContainer: {
         position: 'absolute',
-        top: 328,
-        left: 24,
-        width: 327,
-        height: 164,
-        gap: 50,
+        top: 303,
+        left: 25,
+        width: 343,
+        height: 26,
+        gap: 226,
         justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    timelineStartContainer: {
+        width: 65,
+        height: 26,
+        gap: 10,
+        borderRadius: 5,
+        paddingHorizontal: 5,
+        paddingVertical: 5,
+        justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    timelineStartText: {
+        fontSize: 13,
+        lineHeight: 15.51,
+        letterSpacing: -0.03,
+        fontWeight: "500",
+        fontFamily: 'SF Pro Text',
+        color: '#A5A5A5'
+    },
+    timelineEndContainer: {
+        width: 65,
+        height: 26,
+        gap: 10,
+        borderRadius: 5,
+        paddingHorizontal: 5,
+        paddingVertical: 5,
+        justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    timelineEndText: {
+        fontSize: 13,
+        lineHeight: 15.51,
+        letterSpacing: -0.03,
+        fontWeight: "500",
+        fontFamily: 'SF Pro Text',
+        color: '#A5A5A5'
     },
     statsContainer: {
-        width: 181.21,
+        position: 'absolute',
+        top: 388,
+        left: 24,
+        width: 318,
         height: 52,
         gap: 25,
         flexDirection: 'row',
         alignItems: 'center'
     },
     buySellContainer: {
-        minWidth: 94,
+        minWidth: 77,
         height: 52,
         gap: 5
     },
@@ -113,7 +161,7 @@ const styles = StyleSheet.create({
         color: '#666666'
     },
     allTimeContainer: {
-        width: 62.21,
+        minWidth: 94,
         height: 52,
         gap: 5
     },
@@ -155,27 +203,11 @@ const styles = StyleSheet.create({
         fontFamily: 'SF Pro Display',
         color: '#02AD98',
     },
-    descriptionContainer: {
-        width: 327,
-        height: 62,
-        gap: 25
+    balanceContainer: {
+        minWidth: 97,
+        height: 52,
+        gap: 5
     },
-    descriptionTitleText: {
-        fontSize: 22,
-        lineHeight: 26.25,
-        letterSpacing: -0.01,
-        fontWeight: "500",
-        fontFamily: 'SF Pro Display',
-        color: '#333333'
-    },
-    descriptionText: {
-        fontSize: 16,
-        lineHeight: 19.09,
-        letterSpacing: -0.02,
-        fontWeight: "400",
-        fontFamily: 'SF Pro Text',
-        color: '#666666'
-    }
 });  
 
-export default TradePostDetails;
+export default PortfolioSummary;
