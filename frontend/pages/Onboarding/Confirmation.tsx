@@ -75,9 +75,9 @@ const styles = StyleSheet.create({
   },
   carbon: {
     fontWeight: 'bold',
-    fontSize: 48,
+    fontSize: 42,
     color: '#02AD98',
-    lineHeight: 48
+    lineHeight: 42
   },
   left: {
     width: "50%",
@@ -92,20 +92,20 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: 'bold',
-    fontSize: 48,
+    fontSize: 42,
     color: '#B7B7B7',
-    lineHeight: 48
+    lineHeight: 42
   },
   copy: {
     fontWeight: 'bold',
-    fontSize: 48,
+    fontSize: 42,
     color: '#666666',
-    lineHeight: 48
+    lineHeight: 42
   },
   logo: {
     width: "100%",
     objectFit: "contain",
-    height: 120,
+    height: 140,
     //marginBottom: 40, 
     alignSelf: 'flex-end', 
     justifyContent: 'center',
