@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Pressable, ScrollView, Text, View } from 'react-native';
+import { FlatList, Pressable, ScrollView, View } from 'react-native';
 import { useSession } from '@clerk/clerk-expo';
 import ProfileBanner from '../components/ProfileBanner';
 import SubTabButton from '../components/SubTabButton';
@@ -11,8 +11,7 @@ import ProfilePerformance from '../components/ProfilePerformance';
 import SignOut from '../components/SignOutButton';
 import { getPortoflio } from '../services/etrade';
 import { UserPortfolio } from '../types/types';
-import { DataTable } from 'react-native-paper';
-import { prettifyMoney } from '../components/lib/utils';
+import { ProfilePositions } from '../components/ProfilePositions';
 // import SettingsSvg from '../assets/SettingsIcon.svg';
 
 const Profile = () => {
@@ -26,12 +25,14 @@ const Profile = () => {
   const OnActivitySelected = () => {
     setIsPortfolioSelected(false);
     setIsActivitySelected(true);
+    setPageNumber(1)
     console.log(`Activity selected: ${isActivitySelected}`);
   }
 
   const OnPortfolioSelected = () => {
     setIsPortfolioSelected(true);
     setIsActivitySelected(false);
+    setPageNumber(0)
     console.log(`Portfolio selected: ${isPortfolioSelected}`);
   }
 
@@ -72,8 +73,8 @@ const Profile = () => {
         <ProfileBanner />
 
         <View className='flex flex-row'>
-          <SubTabButton title='Portfolio' selected={true} onPress={OnPortfolioSelected} />
-          <SubTabButton title='Activity' selected={true} onPress={OnActivitySelected} />
+          <SubTabButton title='Portfolio' selected={pageNumber == 0} onPress={OnPortfolioSelected} />
+          <SubTabButton title='Activity' selected={pageNumber == 1} onPress={OnActivitySelected} />
         </View>
 
         <ScrollView
@@ -86,44 +87,12 @@ const Profile = () => {
             setPageNumber(page);
           }}
         >
-          <View className='flex flex-col w-screen'>
             {pageNumber === 0 && (
-              <ProfilePerformance portfolioValue={portfolio?.total_gain_pct || 0} />
+              <View className='flex flex-col w-screen'>
+                <ProfilePerformance portfolioValue={portfolio?.total_gain_pct || 0} />
+                <ProfilePositions positions={portfolio?.positions}/>
+              </View>
             )}
-            <DataTable>
-              <DataTable.Header>
-                <DataTable.Title>Symbol</DataTable.Title>
-                <DataTable.Title>Last Price</DataTable.Title>
-                <DataTable.Title>Mkt Val / Qty</DataTable.Title>
-                <DataTable.Title>Open P/L</DataTable.Title>
-              </DataTable.Header>
-              {portfolio && portfolio.positions.map((position, index) => (
-                <DataTable.Row key={index}>
-                  <DataTable.Cell>{position.ticker}</DataTable.Cell>
-                  <DataTable.Cell>{prettifyMoney(position.cost)}</DataTable.Cell>
-                  <DataTable.Cell>
-                    <View className='flex flex-col'>
-                      <Text>
-                        {prettifyMoney(position.cost * position.quantity)}
-                      </Text>
-                      <Text>
-                        {prettifyMoney(position.quantity)}
-                      </Text>
-                    </View>
-                  </DataTable.Cell>
-                  <DataTable.Cell>
-                    <View className='flex flex-col'>
-                      <Text>
-                        {prettifyMoney(position.total_gain)}
-                      </Text>
-                      <Text>
-                        {position.total_gain_pct}%
-                      </Text>
-                    </View></DataTable.Cell>
-                </DataTable.Row>
-              ))}
-            </DataTable>
-          </View>
           <View className='flex flex-col w-screen'>
             {pageNumber == 1 && (
               <FlatList

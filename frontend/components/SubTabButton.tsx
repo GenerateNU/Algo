@@ -1,5 +1,5 @@
 import { Text, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
 
 interface SubTabButtonProps {
   title: string
@@ -8,12 +8,10 @@ interface SubTabButtonProps {
 }
 
 const SubTabButton = ({ title, selected, onPress }: SubTabButtonProps) => {
-  const [isSelected] = useState<boolean>(selected);
-
   return (
     <Pressable
       className={`flex flex-1 items-center border-b-2 py-3 border-black ${
-        isSelected ? 'border-black' : ' border-[#D5D5D5]'
+        selected ? 'border-black' : ' border-[#D5D5D5]'
       }`}
       onPress={() => {
         //setIsSelected(!isSelected);
@@ -21,7 +19,7 @@ const SubTabButton = ({ title, selected, onPress }: SubTabButtonProps) => {
       }}
     >
       <Text className={`font-medium text-black ${ 
-        isSelected ? ' text-[#000000]' : ' text-[#848484]'
+        selected ? ' text-[#000000]' : ' text-[#848484]'
       }`}>
         {title}
       </Text>
