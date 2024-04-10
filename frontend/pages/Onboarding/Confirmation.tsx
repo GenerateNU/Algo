@@ -26,7 +26,7 @@ const Confirmation: React.FC = () => {
       </View> */}
       <View className='w-full flex-row items-center'>
         <Animated.View
-          entering={FadeIn.delay(500)} style={styles.left}>
+          entering={FadeIn.delay(200)} style={styles.left}>
           <ImageBackground 
             source={require('../../assets/logomark.png')} 
             style={styles.logo} 
@@ -35,23 +35,23 @@ const Confirmation: React.FC = () => {
                 opacity: 0.15,
                 objectFit: "contain"
               }}>
-            <Animated.View entering={FadeIn.delay(1000)}>
+            <Animated.View entering={FadeIn.delay(600)}>
               <Text style={styles.carbon}>carbon</Text>
             </Animated.View>
           </ImageBackground>
         </Animated.View>
         <View style={styles.right}>
-          <Animated.View entering={FadeIn.delay(1500)}>
+          <Animated.View entering={FadeIn.delay(1000)}>
             <Text style={styles.text}>
               learn
             </Text>
           </Animated.View>
-          <Animated.View entering={FadeIn.delay(2000)}>
+          <Animated.View entering={FadeIn.delay(1400)}>
             <Text style={styles.copy}>
               copy
             </Text>
           </Animated.View>
-          <Animated.View entering={FadeIn.delay(2500)}>
+          <Animated.View entering={FadeIn.delay(1800)}>
             <Text style={styles.text}>
               socialize
             </Text>
