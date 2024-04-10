@@ -16,18 +16,37 @@ func NewPortfolioService(db *gorm.DB) *PortfolioService {
 	}
 }
 
-func (os *PortfolioService) CopyPortfolio(targetUserID, currentUserID int) ([]models.ShortTermPortfolio, error) {
-	var portfolio []models.Portfolio
-	if err := os.DB.Where("user_id = ?", currentUserID).Find(&portfolio).Error; err != nil {
-		return nil, err
+func (os *PortfolioService) CopyPortfolio(targetPositions []models.Position, currentUserID int) ([]models.Position, error) {
+	// given a list of positions, copy them to the current user's portfolio
+	var newPositions []models.Position
+	for _, position := range targetPositions {
+		newPosition := models.Position{
+			UserPortfolioID: currentUserID,
+			PositionID: position.PositionID,
+			Ticker: position.Ticker,
+			Quantity: position.Quantity,
+			Cost: position.Cost,
+			DayGain: position.DayGain,
+			DayGainPct: position.DayGainPct,
+			TotalGain: position.TotalGain,
+			TotalGainPct: position.TotalGainPct,
+			Type: position.Type,
+		}
+		newPositions = append(newPositions, newPosition)
 	}
-	return portfolio, nil
+	result := os.DB.Create(&newPositions)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	
+	return result, nil
 }
 
-func (os *PortfolioService) GetPortfolio(userID int) ([]models.Portfolio, error) {
-	var portfolio []models.Portfolio
-	if err := os.DB.Where("user_id = ?", userID).Find(&portfolio).Error; err != nil {
-		return nil, err
+func (os *PortfolioService) GetPositions(portfolioID int) ([]models.Position, error) {
+	var positions []models.Position
+	result := os.DB.Where("portfolio_id = ?", portfolioID).Find(&positions)
+	if result.Error != nil {
+		return nil, result.Error
 	}
-	return portfolio, nil
+	return positions, nil
 }
