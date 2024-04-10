@@ -25,11 +25,18 @@ export default function LayoutWrapper() {
 
   return (
     <NavigationContainer>
-      {session?.user !== undefined && !onboarding.isOnboarding ? (
+      {
+        {
+          onboarding: <AuthNavigator/>,
+          normal: <BottomNavBar/>,
+          makingPost: (null),
+        }[onboarding.isOnboarding]
+      }
+      {/* {session?.user !== undefined && !onboarding.isOnboarding  ? (
         <BottomNavBar />
       ) : (
         <AuthNavigator />
-      )}
+      )} */}
     </NavigationContainer>
   );
 }

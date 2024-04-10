@@ -13,7 +13,7 @@ const onboardingSlice = createSlice({
     financialGoalsShortTerm: [],
     financialGoalsLongTerm: [],
     financialLiteracy: [],
-    isOnboarding: true,
+    isOnboarding: 'onboarding', // 'onboarding', 'normal', 'makingPost'
   },
   reducers: {
     updateFirstName(state, action) {
@@ -47,10 +47,19 @@ const onboardingSlice = createSlice({
       state.financialLiteracy = action.payload;
     },
     beginOnboarding(state) {
-      state.isOnboarding = true;
+      state.isOnboarding = 'onboarding';
     },
     completeOnboarding(state) {
-      state.isOnboarding = false;
+      state.isOnboarding = 'normal';
+    },
+    makePost(state) {
+      state.isOnboarding = 'makingPost';
+    },
+    signOutUser(state) {
+      state.isOnboarding = 'onboarding';
+    },
+    finishPost(state) {
+      state.isOnboarding = 'normal';
     },
   },
 });
@@ -67,6 +76,9 @@ export const {
   updateFinancialGoalsLongTerm,
   updateFinancialLiteracy,
   completeOnboarding,
+  makePost,
+  signOutUser,
+  finishPost,
   beginOnboarding,
 } = onboardingSlice.actions;
 export default onboardingSlice.reducer;
