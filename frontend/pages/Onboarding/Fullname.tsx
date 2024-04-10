@@ -43,7 +43,7 @@ export default function Fullname() {
     dispatch(updateFirstName(firstName));
     dispatch(updateLastName(lastName));
 
-    navigation.navigate('GoalsPage');
+    navigation.navigate('ShortTermGoals');
   };
 
   return (
@@ -112,9 +112,9 @@ const styles = StyleSheet.create({
   },
   wizard: {
     flexDirection: "column",
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
     flex: 1,
-    marginTop: "10%",
+    marginBottom: "10%",
     width: "100%",
   },
   image: {
@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
   },
   bottomCont: {
     flexDirection: "row",
-    marginTop: "35%",
     justifyContent: "flex-end",
     width: "100%",
   },

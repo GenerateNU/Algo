@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 4,
-    height: 45,
+    height: 65,
     width: '100%', // Adjust width as per your layout
     backgroundColor: '#F1F1F1', // Background color for the input
     borderColor: '#F1F1F1', // Border color for the input
@@ -43,16 +43,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 4,
-    height: 45,
+    height: 65,
     width: '100%', // Adjust width as per your layout
-    backgroundColor: '#02AD98', // Background color for the input
+    backgroundColor:'rgba(2, 173, 152, 0.08)', // Background color for the input
     fontSize: 16,
   },
   goalText: {
     color: '#000',
   },
   goalTextSelected: {
-    color: '#FFFFFF',
+    color: '#02AD98',
   },
 });
 

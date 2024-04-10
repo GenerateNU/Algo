@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   subtitle: {
-    fontSize: 22,
+    fontSize: 16,
     color: '#7C7C7C', // Adjust color to match your theme
     marginBottom: 10,
   },

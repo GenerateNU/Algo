@@ -28,8 +28,8 @@ const ConnectPage: React.FC = () => {
       <View style={styles.image}>
         <Image source={require('../../assets/logomark.png')} style={styles.logo} />
       </View>
-      <Text style={styles.subtitle}>Let's get started</Text>
-      <Text style={styles.description}>Connect your brokerage</Text>
+      <Text style={styles.subtitle}>Brokerage</Text>
+      <Text style={styles.description}>Connect your brokerage account</Text>
 
       <Button mode="outlined" onPress={() => handleConnect('Etrade')} style={styles.button} labelStyle={{ color: 'black'}}>
         Etrade
@@ -48,7 +48,7 @@ const ConnectPage: React.FC = () => {
       </TouchableOpacity>
 
       <View style={styles.wizard}>
-        <View className='w-full flex-row justify-end mb-[12]'><Text style={styles.almost}>Allmost done!</Text></View>
+        <View className='w-full flex-row justify-end mb-[12]'><Text style={styles.almost}>Almost done!</Text></View>
         <WizardStep step={5}/>
       </View>
     </View>
@@ -69,9 +69,9 @@ const styles = StyleSheet.create({
   },
   wizard: {
     flexDirection: "column",
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
     flex: 1,
-    marginTop: "30%",
+    marginBottom: "10%",
     width: "100%",
   },
   image: {
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 22,
+    fontWeight: "bold",
     color: '#7C7C7C', // Adjust color to match your theme
     marginBottom: 10,
   },

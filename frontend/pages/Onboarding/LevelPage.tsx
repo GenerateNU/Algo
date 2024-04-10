@@ -58,7 +58,7 @@ const FinancialLiteracyLevelPage: React.FC = () => {
       </View>
 
       <View style={styles.wizard}>
-        <WizardStep step={4}/>
+        <WizardStep step={5}/>
       </View>
       
     </View>

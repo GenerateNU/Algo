@@ -13,46 +13,20 @@ import { useNavigation } from '@react-navigation/native';
 import { AuthNavigationProp } from '../../types/navigationTypes';
 import {
   updateFinancialGoalsShortTerm,
-  updateFinancialGoalsLongTerm,
 } from '../../reducers/onboarding/onboardingReducer';
 import { useUser } from '@clerk/clerk-expo';
 import { updateMetadata } from '../../services/clerk';
 import FinancialGoal from '../../components/FinancialGoal';
 import WizardStep from '../../components/WizardStep';
 
-// type FinancialGoalProps = {
-//   goal: string;
-//   isSelected: boolean;
-//   onSelect: (goal: string) => void;
-// };
-
-// const FinancialGoal: React.FC<FinancialGoalProps> = ({
-//   goal,
-//   isSelected,
-//   onSelect,
-// }) => {
-//   // Based on the isSelected prop determine the styles to apply
-//   const goalStyle = isSelected ? styles.goalSelected : styles.goal;
-//   const goalTextStyle = isSelected ? styles.goalTextSelected : styles.goalText;
-
-//   return (
-//     <TouchableOpacity onPress={() => onSelect(goal)} style={goalStyle}>
-//       <Text style={goalTextStyle}>{goal}</Text>
-//     </TouchableOpacity>
-//   );
-// };
-
 // main component
-const GoalsPage: React.FC = () => {
+const ShortTermGoals: React.FC = () => {
   const dispatch = useDispatch();
   const [selectedShortTermGoals, setSelectedShortTermGoals] = useState<
     string[]
   >([]);
   const { isSignedIn, user } = useUser();
 
-  const [selectedLongTermGoals, setSelectedLongTermGoals] = useState<string[]>(
-    [],
-  );
   const navigate = useNavigation<AuthNavigationProp>();
 
   const handleSelectShortTermGoal = (goal: string) => {
@@ -65,20 +39,9 @@ const GoalsPage: React.FC = () => {
     }
   };
 
-  const handleSelectLongTermGoal = (goal: string) => {
-    if (selectedLongTermGoals.includes(goal)) {
-      setSelectedLongTermGoals(
-        selectedLongTermGoals.filter(item => item !== goal),
-      );
-    } else {
-      setSelectedLongTermGoals([...selectedLongTermGoals, goal]);
-    }
-  };
-
   const handleMetadata = async() => {
     if (isSignedIn) {
       await updateMetadata(user, "Short Term Goals", selectedShortTermGoals);
-      updateMetadata(user, "Long Term Goals", selectedLongTermGoals);
     }
   }
 
@@ -89,14 +52,11 @@ const GoalsPage: React.FC = () => {
     }
 
     dispatch(updateFinancialGoalsShortTerm(selectedShortTermGoals));
-    dispatch(updateFinancialGoalsLongTerm(selectedLongTermGoals));
-    console.log('selectedShortTermGoals', selectedShortTermGoals);
-    console.log('selectedLongTermGoals', selectedLongTermGoals);
 
     handleMetadata();
 
     // Navigate to the next page
-    navigate.navigate('ExperienceAndRisk');
+    navigate.navigate('LongTermGoals');
   };
 
   const shortTermGoals = [
@@ -106,16 +66,9 @@ const GoalsPage: React.FC = () => {
     'Set a savings target',
   ];
 
-  const longTermGoals = [
-    'Build a legacy portfolio',
-    'Build a retirement fund',
-    'Create a passive income stream',
-    'Fund a major life goal',
-  ];
-
   // apply the active style when there are selected goals
   const continueButtonStyle =
-    (selectedShortTermGoals.length + selectedLongTermGoals.length) > 2
+    (selectedShortTermGoals.length) > 0
       ? styles.continueButtonActive
       : pageStyles.continueButton;
 
@@ -127,7 +80,7 @@ const GoalsPage: React.FC = () => {
             <Image source={require('../../assets/logomark.png')} style={styles.logo} />
           </View>
           <Text style={pageStyles.subtitle}>Financial Goals</Text>
-          <Text style={pageStyles.description}>Select at least three short-term financial goals.</Text>
+          <Text style={pageStyles.description}>Select at least one short-term financial goal</Text>
           <View style={pageStyles.goalsContainer}>
             {shortTermGoals.map((goal, index) => (
               <FinancialGoal
@@ -135,16 +88,6 @@ const GoalsPage: React.FC = () => {
                 goal={goal}
                 isSelected={selectedShortTermGoals.includes(goal)}
                 onSelect={handleSelectShortTermGoal}
-              />
-            ))}
-          </View>
-          <View style={pageStyles.goalsContainer}>
-            {longTermGoals.map((goal, index) => (
-              <FinancialGoal
-                key={index}
-                goal={goal}
-                isSelected={selectedLongTermGoals.includes(goal)}
-                onSelect={handleSelectLongTermGoal}
               />
             ))}
           </View>
@@ -178,7 +121,7 @@ const styles = StyleSheet.create({
   },
   wizard: {
     flexDirection: "column",
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
     flex: 1,
     marginTop: "5%",
     width: "100%",
@@ -253,7 +196,7 @@ const pageStyles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 22,
-    color: '#7C7C7C', // Adjust color to match your theme
+    color: '#7C7C7C',
     marginBottom: 10,
     fontWeight: 'bold',
   },
@@ -280,4 +223,4 @@ const pageStyles = StyleSheet.create({
   },
 });
 
-export default GoalsPage;
+export default ShortTermGoals;
