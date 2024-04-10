@@ -43,11 +43,11 @@ const Profile = () => {
       headerTitle: `@${session?.user.username}`,
       headerTitleAlign: 'center',
       headerRight: () => (
-        <Icon type='material-community' name='cog' size={30} color='black' />
+        <Icon type='material-community' name='cog' size={30} color='black' style={{paddingRight: 10}} />
       ),
       headerLeft: () => (
         <Pressable onPress={() => navigation.goBack()}>
-          <Icon type='material-community' name='chevron-left' size={30} color='black' />
+          <Icon type='material-community' name='chevron-left' size={30} color='black' style={{paddingLeft: 5}} />
         </Pressable>
       ),
     })
