@@ -17,7 +17,7 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export default function LayoutWrapper() {
-  const { session } = useSession();
+  //const { session } = useSession();
 
   const onboarding = useSelector((state: RootState) => {
     return state.onboarding;
