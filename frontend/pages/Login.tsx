@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import { Button } from 'react-native-paper';
-import { useSignIn } from '@clerk/clerk-expo';
+import { useSession, useSignIn } from '@clerk/clerk-expo';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigationProp } from '../types/navigationTypes'; 
 import { ClerkErrorResponse } from '../types/types';
+import { useDispatch } from 'react-redux';
+import { completeOnboarding } from '../reducers/onboarding/onboardingReducer';
 
 const Login: React.FC = () => {
   const navigation = useNavigation<AuthNavigationProp>();
   const { signIn, setActive, isLoaded } = useSignIn();
   const [identifier, setIdentifier] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [password, setPassword] = useState<string>('')
+  const { session } = useSession();
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (session) {
+      dispatch(completeOnboarding());
+    }
+  }, [])
 
   const handleLogin = async () => {
     if (!isLoaded) {
@@ -25,6 +35,7 @@ const Login: React.FC = () => {
       });
 
       await setActive({ session: completeSignIn.createdSessionId });
+      dispatch(completeOnboarding());
     } catch (error) {
       console.log(JSON.stringify(error));
       const clerkError = error as ClerkErrorResponse;
