@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigationProp } from '../types/navigationTypes';
-import { useSession, useUser } from '@clerk/clerk-expo';
+import { useSession } from '@clerk/clerk-expo';
 import { useDispatch} from 'react-redux';
 import { completeOnboarding } from '../reducers/onboarding/onboardingReducer';
 
