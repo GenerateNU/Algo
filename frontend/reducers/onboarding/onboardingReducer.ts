@@ -9,11 +9,11 @@ const onboardingSlice = createSlice({
     password: '',
     email: '',
     risk: '',
-    yearsOfExperience: 0,
+    knowledge: '',
     financialGoalsShortTerm: [],
     financialGoalsLongTerm: [],
     financialLiteracy: [],
-    isOnboarding: true,
+    isOnboarding: 'onboarding', // 'onboarding', 'normal', 'makingPost'
   },
   reducers: {
     updateFirstName(state, action) {
@@ -34,8 +34,8 @@ const onboardingSlice = createSlice({
     updateRisk(state, action) {
       state.risk = action.payload;
     },
-    updateYearsOfExperience(state, action) {
-      state.yearsOfExperience = action.payload;
+    updateKnowledge(state, action) {
+      state.knowledge = action.payload;
     },
     updateFinancialGoalsShortTerm(state, action) {
       state.financialGoalsShortTerm = action.payload;
@@ -47,10 +47,19 @@ const onboardingSlice = createSlice({
       state.financialLiteracy = action.payload;
     },
     beginOnboarding(state) {
-      state.isOnboarding = true;
+      state.isOnboarding = 'onboarding';
     },
     completeOnboarding(state) {
-      state.isOnboarding = false;
+      state.isOnboarding = 'normal';
+    },
+    makePost(state) {
+      state.isOnboarding = 'makingPost';
+    },
+    signOutUser(state) {
+      state.isOnboarding = 'onboarding';
+    },
+    finishPost(state) {
+      state.isOnboarding = 'normal';
     },
   },
 });
@@ -62,11 +71,14 @@ export const {
   updateEmail,
   updatePassword,
   updateRisk,
-  updateYearsOfExperience,
+  updateKnowledge,
   updateFinancialGoalsShortTerm,
   updateFinancialGoalsLongTerm,
   updateFinancialLiteracy,
   completeOnboarding,
+  makePost,
+  signOutUser,
+  finishPost,
   beginOnboarding,
 } = onboardingSlice.actions;
 export default onboardingSlice.reducer;

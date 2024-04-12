@@ -13,6 +13,8 @@ export type RootStackParamList = {
   ConnectPage: undefined;
   Etrade: undefined;
   Confirmation: undefined;
+  LongTermGoals: undefined;
+  ShortTermGoals: undefined;
 
   // AuthPage: undefined;
   // TutorialPage: undefined;

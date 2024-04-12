@@ -7,13 +7,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from '../pages/SplashScreen';
 import Signup from '../pages/Onboarding/Signup';
 import Fullname from '../pages/Onboarding/Fullname';
-import GoalsPage from '../pages/Onboarding/GoalsPage';
 import ExperienceAndRisk from '../pages/Onboarding/ExperienceAndRisk';
 import LevelPage from '../pages/Onboarding/LevelPage';
 import ConnectPage from '../pages/Onboarding/ConnectPage';
 import Etrade from '../pages/Onboarding/Etrade';
 import Confirmation from '../pages/Onboarding/Confirmation';
 import Login from '../pages/Login';
+import LongTermGoals from '../pages/Onboarding/LongTermGoals';
+import ShortTermGoals from '../pages/Onboarding/ShortTermGoals';
 // import Profile from '../pages/Profile';
 
 const Stack = createStackNavigator();
@@ -44,8 +45,13 @@ const AuthNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="GoalsPage"
-        component={GoalsPage}
+        name="ShortTermGoals"
+        component={ShortTermGoals}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LongTermGoals"
+        component={LongTermGoals}
         options={{ headerShown: false }}
       />
       <Stack.Screen
