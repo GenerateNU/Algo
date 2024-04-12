@@ -114,7 +114,7 @@ func (etc *ETradeController) Status(c *gin.Context) {
 //	@ID				etrade-sync-portfolio
 //	@Tags			etrade
 //	@Produce		json
-//	@Success		200		{object}	[]UserPortfolio
+//	@Success		200		{object}	UserPortfolio
 //	@Failure		500		{string}	string				"Failed to sync portfolio"
 //	@Router			/etrade/sync/{user_id}  [post]
 func (etc *ETradeController) Sync(c *gin.Context) {
@@ -137,7 +137,7 @@ func (etc *ETradeController) Sync(c *gin.Context) {
 //	@ID				etrade-get-portfolio
 //	@Tags			etrade
 //	@Produce		json
-//	@Success		200		{object}	[]UserPortfolio
+//	@Success		200		{object}	UserPortfolio
 //	@Failure		500		{string}	string				"Failed to sync portfolio"
 //	@Router			/etrade/portfolio/{user_id}  [get]
 func (etc *ETradeController) GetPortfolio(c *gin.Context) {
