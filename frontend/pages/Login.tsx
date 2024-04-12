@@ -5,12 +5,15 @@ import { useSignIn } from '@clerk/clerk-expo';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigationProp } from '../types/navigationTypes'; 
 import { ClerkErrorResponse } from '../types/types';
+import { useDispatch } from 'react-redux';
+import { completeOnboarding } from '../reducers/onboarding/onboardingReducer';
 
 const Login: React.FC = () => {
   const navigation = useNavigation<AuthNavigationProp>();
   const { signIn, setActive, isLoaded } = useSignIn();
   const [identifier, setIdentifier] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const dispatch = useDispatch();
 
   const handleLogin = async () => {
     if (!isLoaded) {
@@ -32,8 +35,9 @@ const Login: React.FC = () => {
         Alert.alert('Username or email does not exist');
         return;
       }
-      Alert.alert('Invalid password. Please try again.');
+      Alert.alert(clerkMessage);
     }
+    dispatch(completeOnboarding());
   };
 
   const navigateToSignUp = () => {
