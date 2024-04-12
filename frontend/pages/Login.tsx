@@ -28,6 +28,7 @@ const Login: React.FC = () => {
       });
 
       await setActive({ session: completeSignIn.createdSessionId });
+      dispatch(completeOnboarding());
     } catch (error) {
       const clerkError = error as ClerkErrorResponse;
       const clerkMessage = clerkError.errors[0].message;
@@ -37,7 +38,6 @@ const Login: React.FC = () => {
       }
       Alert.alert(clerkMessage);
     }
-    dispatch(completeOnboarding());
   };
 
   const navigateToSignUp = () => {
