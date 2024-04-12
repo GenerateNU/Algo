@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useSession } from '@clerk/clerk-expo';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomNavBar from '../router/BottomNavBar';
 import AuthNavigator from '../router/AuthNavigation';

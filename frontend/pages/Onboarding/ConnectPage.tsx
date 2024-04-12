@@ -19,10 +19,6 @@ const ConnectPage: React.FC = () => {
     navigation.navigate('Confirmation');
   };
 
-  // const handleBack = () => {
-  //   navigation.navigate('GoalsPage'); 
-  // };
-
   return (
     <View style={styles.container}>
       <View style={styles.image}>

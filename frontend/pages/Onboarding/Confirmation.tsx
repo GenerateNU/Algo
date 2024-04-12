@@ -3,10 +3,6 @@ import { View, Text, TouchableOpacity, StyleSheet, ImageBackground,} from 'react
 import Animated, {FadeIn} from 'react-native-reanimated';
 import { useDispatch} from 'react-redux';
 import { completeOnboarding } from '../../reducers/onboarding/onboardingReducer';
-// import { registerUser } from '../../services/users';
-//import { RootState } from '../../components/LayoutWrapper';
-//import { User } from '../../types/types';
-
 const Confirmation: React.FC = () => {
   const dispatch = useDispatch();
   //const onboarding = useSelector((state: RootState) => state.onboarding);
@@ -19,11 +15,6 @@ const Confirmation: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Welcome To</Text>
-      {/* <Text style={styles.subHeader}>How do I use Carbon?</Text>
-      <View style={styles.walkthroughContainer}>
-        
-        <Text style={styles.walkthroughText}>*insert walk through of app</Text>
-      </View> */}
       <View className='w-full flex-row items-center'>
         <Animated.View
           entering={FadeIn.delay(200)} style={styles.left}>

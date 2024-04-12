@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     flex: 1,
-    marginTop: "60%",
+    marginTop: "50%",
     width: "100%",
   },
   authContainer: {

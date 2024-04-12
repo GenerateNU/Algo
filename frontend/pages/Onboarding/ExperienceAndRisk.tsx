@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { updateRisk } from '../../reducers/onboarding/onboardingReducer';
+import { updateKnowledge, updateRisk } from '../../reducers/onboarding/onboardingReducer';
 import Slider from '@react-native-community/slider';
 import { AuthNavigationProp } from '../../types/navigationTypes';
 import { useUser } from '@clerk/clerk-expo';
@@ -58,7 +58,7 @@ const ExperienceAndRisk: React.FC = () => {
 
   const handleContinue = () => {
     dispatch(updateRisk(risk));
-    // dispatch(updateExperience(experience));
+    dispatch(updateKnowledge(knowledge))
     if (!isSignedIn) {
       Alert.alert('Something went wrong - not signed in');
       return

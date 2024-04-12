@@ -9,7 +9,7 @@ const onboardingSlice = createSlice({
     password: '',
     email: '',
     risk: '',
-    yearsOfExperience: 0,
+    knowledge: '',
     financialGoalsShortTerm: [],
     financialGoalsLongTerm: [],
     financialLiteracy: [],
@@ -34,8 +34,8 @@ const onboardingSlice = createSlice({
     updateRisk(state, action) {
       state.risk = action.payload;
     },
-    updateYearsOfExperience(state, action) {
-      state.yearsOfExperience = action.payload;
+    updateKnowledge(state, action) {
+      state.knowledge = action.payload;
     },
     updateFinancialGoalsShortTerm(state, action) {
       state.financialGoalsShortTerm = action.payload;
@@ -71,7 +71,7 @@ export const {
   updateEmail,
   updatePassword,
   updateRisk,
-  updateYearsOfExperience,
+  updateKnowledge,
   updateFinancialGoalsShortTerm,
   updateFinancialGoalsLongTerm,
   updateFinancialLiteracy,
