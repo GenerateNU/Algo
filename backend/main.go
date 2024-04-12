@@ -47,6 +47,7 @@ func main() {
 	routes.SetupPostRoutes(r, db)
 	routes.SetupOnboardingRoutes(r, db)
 	routes.SetupFollowingRoutes(r, db)
+	routes.SetupPortfolioRoutes(r, db)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
