@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { AuthNavigationProp } from '../../types/navigationTypes';
+import { MakePostNavigationProp } from '../../types/navigationTypes';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const SharePost: React.FC = () => {
-    const navigation = useNavigation<AuthNavigationProp>();
+    const navigation = useNavigation<MakePostNavigationProp>();
 
     return (
         <View>
@@ -20,7 +20,7 @@ const SharePost: React.FC = () => {
         
             <View style={styles.buttonsContainer}>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('SelectTrade') }}>
                     <View style={styles.buttonContentContainer}>
                         <Text style={styles.buttonTitle}>Trade Post</Text>
                         <Text style={styles.buttonDescription}>Show people a trade that you made</Text>
@@ -28,7 +28,7 @@ const SharePost: React.FC = () => {
                     <Icon name="navigate-next" style={styles.navigateNext} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('SharePortfolioSummary') }}>
                     <View style={styles.buttonContentContainer}>
                         <Text style={styles.buttonTitle}>Portfolio Summary</Text>
                         <Text style={styles.buttonDescription}>Show people a summary of your portfolio</Text>
@@ -36,7 +36,7 @@ const SharePost: React.FC = () => {
                     <Icon name="navigate-next" style={styles.navigateNext} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('TextBasedPost') }}>
                     <View style={styles.buttonContentContainer}>
                         <Text style={styles.buttonTitle}>Text Based Post</Text>
                         <Text style={styles.buttonDescription}>Talk about what's on your mind</Text>

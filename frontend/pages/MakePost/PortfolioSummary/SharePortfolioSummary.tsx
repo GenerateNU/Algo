@@ -1,13 +1,33 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { AuthNavigationProp } from '../../../types/navigationTypes';
+import { MakePostNavigationProp } from '../../../types/navigationTypes';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SmallColorText from '../UtilityTextAbstractions/SmallColorText';
 
+import { useDispatch } from 'react-redux';
+import { updateSummaryType } from '../../../reducers/makePost/makePostReducer';
+
 const SharePortfolioSummary: React.FC = () => {
-    const navigation = useNavigation<AuthNavigationProp>();
+    const navigation = useNavigation<MakePostNavigationProp>();
+
+    const dispatch = useDispatch();
+
+    const oneMonthSummary = () => {
+        dispatch(updateSummaryType('One Month Summary'));
+        navigation.navigate('PortfolioSummary');
+    }
+
+    const sixMonthSummary = () => {
+        dispatch(updateSummaryType('Six Month Summary'));
+        navigation.navigate('PortfolioSummary');
+    }
+
+    const oneYearSummary = () => {
+        dispatch(updateSummaryType('One Year Summary'));
+        navigation.navigate('PortfolioSummary');
+    }
 
     return (
         <View>
@@ -21,21 +41,21 @@ const SharePortfolioSummary: React.FC = () => {
         
             <View style={styles.buttonsContainer}>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={oneMonthSummary}>
                     <View style={styles.buttonContentContainer}>
                         <Text style={styles.buttonTitle}>One Month Summary</Text>
                     </View>
                     <SmallColorText amount={-7} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={sixMonthSummary}>
                     <View style={styles.buttonContentContainer}>
                         <Text style={styles.buttonTitle}>Six Month Summary</Text>
                     </View>
                     <SmallColorText amount={21} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={oneYearSummary}>
                     <View style={styles.buttonContentContainer}>
                         <Text style={styles.buttonTitle}>One Year Summary</Text>
                     </View>

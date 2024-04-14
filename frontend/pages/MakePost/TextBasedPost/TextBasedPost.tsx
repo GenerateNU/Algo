@@ -1,26 +1,67 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { AuthNavigationProp } from '../../../types/navigationTypes';
+import { MakePostNavigationProp } from '../../../types/navigationTypes';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import { useSelector } from 'react-redux';
+import { createTextPost } from '../../../services/post';
+import { useSession } from '@clerk/clerk-expo';
+import { RootState } from '../../../components/LayoutWrapper';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateTitle, updateDescription } from '../../../reducers/makePost/makePostReducer';
+
 const TextBasedPost: React.FC = () => {
-    const navigation = useNavigation<AuthNavigationProp>();
+    const navigation = useNavigation<MakePostNavigationProp>();
+
+    const makePost = useSelector((state: RootState) => {
+        return state.makePost;
+    });
+
+    const session = useSession();
+
+    const dispatch = useDispatch();
+
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+
+    const createPost = async () => {
+        dispatch(updateTitle(title));
+        dispatch(updateDescription(description));
+
+        await createTextPost(
+            "user_2chL8dX6HdbBAuvu3DDM9f9NzKK",
+            //session.session?.id ?? '',
+            title,
+            description,
+        );
+    }
 
     return (
         <View>
 
             <View style={styles.actionContainer}>
                 <Icon name="navigate-before" style={styles.navigateBefore} onPress={() => navigation.goBack()} />
-                <TouchableOpacity style={styles.postButton}>
+                <TouchableOpacity style={styles.postButton} onPress={createPost}>
                     <Text style={styles.postButtonText}>Post</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.descriptionContainer}>
-                <TextInput style={styles.descriptionTitleText}>Title</TextInput>
-                <TextInput style={styles.descriptionText}>What's on your mind?</TextInput>
+                <TextInput
+                    style={styles.descriptionTitleText}
+                    value={title}
+                    onChangeText={setTitle}
+                    placeholder="Title"
+                />
+                <TextInput
+                    style={styles.descriptionText}
+                    value={description}
+                    onChangeText={setDescription}
+                    placeholder="What's on your mind?"
+                />
             </View>
 
         </View>

@@ -118,3 +118,20 @@ type ClerkWebhookEvent struct {
 	Object string                 `json:"object"`
 	Type   string                 `json:"type"`
 }
+
+type CreateTradePostRequest struct {
+	PercentData   float64 `json:"percent_data" binding:"required"`
+	TickerSymbol  string  `json:"ticker_symbol" binding:"required"`
+	Title         string  `json:"title" binding:"required"`
+	Description   string  `json:"description" binding:"required"`
+}
+
+type CreatePortfolioPostRequest struct {
+	PercentData  float64 `json:"percent_data" binding:"required"`
+	SummaryType  string  `json:"summary_type" binding:"required"`
+}
+
+type CreateTextPostRequest struct {
+	Title       string `json:"title" binding:"required"`
+	Description string `json:"description" binding:"required"`
+}

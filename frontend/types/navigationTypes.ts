@@ -21,6 +21,19 @@ export type RootStackParamList = {
   // MainApp: undefined;
 };
 
+export type MakePostParamList = {
+  SharePost: undefined;
+  SelectTrade: undefined;
+  TradePostDetails: undefined;
+  TextBasedPost: undefined;
+  SharePortfolioSummary: undefined;
+  PortfolioSummary: undefined;
+};
+
+export type MakePostNavigationProp = StackNavigationProp<
+  MakePostParamList
+>;
+
 export type AuthNavigationProp = StackNavigationProp<
   RootStackParamList
 >;

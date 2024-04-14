@@ -1,20 +1,40 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { AuthNavigationProp } from '../../../types/navigationTypes';
+import { MakePostNavigationProp } from '../../../types/navigationTypes';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import LargeColorText from '../UtilityTextAbstractions/LargeColorText';
 
+import { createPortfolioPost } from '../../../services/post';
+import { useSelector } from 'react-redux';
+import { useSession } from '@clerk/clerk-expo';
+import { RootState } from '../../../components/LayoutWrapper';
+
 const PortfolioSummary: React.FC = () => {
-    const navigation = useNavigation<AuthNavigationProp>();
+    const navigation = useNavigation<MakePostNavigationProp>();
+
+    const makePost = useSelector((state: RootState) => {
+        return state.makePost;
+    });
+
+    const session = useSession();
+
+    const createPost = () => {
+        createPortfolioPost(
+            "user_2chL8dX6HdbBAuvu3DDM9f9NzKK",
+            //session.session?.id ?? '',
+            makePost.percentData, // TODO: Fetch using financial API
+            makePost.summaryType, // TODO: Fetch using financial API
+        );
+    }
 
     return (
         <View>
 
             <View style={styles.actionContainer}>
                 <Icon name="navigate-before" style={styles.navigateBefore} onPress={() => navigation.goBack()} />
-                <TouchableOpacity style={styles.postButton}>
+                <TouchableOpacity style={styles.postButton} onPress={createPost}>
                     <Text style={styles.postButtonText}>Post</Text>
                 </TouchableOpacity>
             </View>

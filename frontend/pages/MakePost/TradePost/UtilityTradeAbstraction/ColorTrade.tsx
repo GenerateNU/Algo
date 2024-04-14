@@ -1,11 +1,27 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { MakePostNavigationProp } from '../../../../types/navigationTypes';
 
 import SmallColorText from '../../UtilityTextAbstractions/SmallColorText';
 
+import { useDispatch } from 'react-redux';
+import { updatePercentData, updateTickerSymbol } from '../../../../reducers/makePost/makePostReducer';
+
 const ColorTrade = ({ action, ticker, amount, percent }: { action: string, ticker: string, amount: number, percent: number }) => {
+    const navigation = useNavigation<MakePostNavigationProp>();
+
+    const dispatch = useDispatch();
+
+    const nextStep = () => {
+        dispatch(updateTickerSymbol(ticker));
+        dispatch(updatePercentData(percent));
+
+        navigation.navigate('TradePostDetails')
+    }
+
     return (
-        <TouchableOpacity style={percent < 0 ? styles.buy : styles.sell}>
+        <TouchableOpacity style={percent < 0 ? styles.buy : styles.sell} onPress={nextStep}>
             <View style={styles.buttonContentContainer}>
                 <Text style={action == "BUY" ? styles.buyDescription : styles.sellDescription}>{action}</Text>
                 <Text style={styles.symbolDescription}>{ticker}</Text>

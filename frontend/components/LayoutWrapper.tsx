@@ -4,11 +4,14 @@ import BottomNavBar from '../router/BottomNavBar';
 import AuthNavigator from '../router/AuthNavigation';
 import { configureStore } from '@reduxjs/toolkit';
 import onboardingReducer from '../reducers/onboarding/onboardingReducer';
+import makePostReducer from '../reducers/makePost/makePostReducer';
 import { useSelector } from 'react-redux';
+import MakePostNavigator from '../router/MakePostNavigation';
 
 const store = configureStore({
   reducer: {
     onboarding: onboardingReducer,
+    makePost: makePostReducer,
   },
 });
 
@@ -22,13 +25,17 @@ export default function LayoutWrapper() {
     return state.onboarding;
   });
 
+  const makePost = useSelector((state: RootState) => {
+    return state.makePost;
+  });
+
   return (
     <NavigationContainer>
       {
         {
           onboarding: <AuthNavigator/>,
           normal: <BottomNavBar/>,
-          makingPost: (null),
+          makingPost: <MakePostNavigator/>,
         }[onboarding.isOnboarding]
       }
       {/* {session?.user !== undefined && !onboarding.isOnboarding  ? (

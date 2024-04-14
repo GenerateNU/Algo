@@ -11,8 +11,8 @@ CREATE TYPE post_type_enum AS ENUM (
 --Create post table
 CREATE TABLE IF NOT EXISTS posts (
     id SERIAL PRIMARY KEY,
-    created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user_id VARCHAR(255) REFERENCES users(id) ON DELETE CASCADE,
     post_type post_type_enum NOT NULL,
     num_data FLOAT NOT NULL,

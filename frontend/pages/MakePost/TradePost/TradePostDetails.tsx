@@ -1,20 +1,53 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { AuthNavigationProp } from '../../../types/navigationTypes';
+import { MakePostNavigationProp } from '../../../types/navigationTypes';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import LargeColorText from '../UtilityTextAbstractions/LargeColorText';
 
+import { useSelector } from 'react-redux';
+import { createTradePost } from '../../../services/post';
+import { useSession } from '@clerk/clerk-expo';
+import { RootState } from '../../../components/LayoutWrapper';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateTitle, updateDescription } from '../../../reducers/makePost/makePostReducer';
+
 const TradePostDetails: React.FC = () => {
-    const navigation = useNavigation<AuthNavigationProp>();
+    const navigation = useNavigation<MakePostNavigationProp>();
+
+    const makePost = useSelector((state: RootState) => {
+        return state.makePost;
+    });
+
+    const session = useSession();
+
+    const dispatch = useDispatch();
+
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+
+    const createPost = async () => {
+        dispatch(updateTitle(title));
+        dispatch(updateDescription(description));
+
+        await createTradePost(
+            "user_2chL8dX6HdbBAuvu3DDM9f9NzKK",
+            //session.session?.id ?? '',
+            makePost.percentData, // TODO: Fetch using financial API
+            makePost.tickerSymbol, // TODO: Fetch using financial API
+            title,
+            description,
+        );
+    }
 
     return (
         <View>
 
             <View style={styles.actionContainer}>
                 <Icon name="navigate-before" style={styles.navigateBefore} onPress={() => navigation.goBack()} />
-                <TouchableOpacity style={styles.postButton}>
+                <TouchableOpacity style={styles.postButton} onPress={createPost}>
                     <Text style={styles.postButtonText}>Post</Text>
                 </TouchableOpacity>
             </View>
@@ -32,8 +65,18 @@ const TradePostDetails: React.FC = () => {
                 </View>
 
                 <View style={styles.descriptionContainer}>
-                    <TextInput style={styles.descriptionTitleText}>Check out my Apple trade</TextInput>
-                    <TextInput style={styles.descriptionText}>Description</TextInput>
+                    <TextInput
+                        style={styles.descriptionTitleText}
+                        value={title}
+                        onChangeText={setTitle}
+                        placeholder="Trade"
+                    />
+                    <TextInput
+                        style={styles.descriptionText}
+                        value={description}
+                        onChangeText={setDescription}
+                        placeholder="Check out this trade!"
+                    />
                 </View>
             </View>
 
