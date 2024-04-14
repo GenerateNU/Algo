@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { API_LINK } from './CommonDocs';
-import { FinancialGoal, TokenStatus, User } from '../types/types';
+import { FinancialGoal, User } from '../types/types';
 
 export const getAllUsers = async (): Promise<User[]> => {
   console.log(API_LINK);
@@ -8,13 +8,6 @@ export const getAllUsers = async (): Promise<User[]> => {
     `http://${API_LINK}/users`,
   );
   // console.log(response.data);
-  return response.data;
-};
-
-export const getTokenStatus = async (id: number): Promise<TokenStatus> => {
-  const response: AxiosResponse = await axios.get<TokenStatus>(
-    `http://${API_LINK}/etrade/status/${id}`,
-  );
   return response.data;
 };
 
