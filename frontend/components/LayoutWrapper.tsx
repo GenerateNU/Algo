@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSession } from '@clerk/clerk-expo';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomNavBar from '../router/BottomNavBar';
 import AuthNavigator from '../router/AuthNavigation';
@@ -17,7 +16,7 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export default function LayoutWrapper() {
-  const { session } = useSession();
+  //const { session } = useSession();
 
   const onboarding = useSelector((state: RootState) => {
     return state.onboarding;
@@ -25,11 +24,18 @@ export default function LayoutWrapper() {
 
   return (
     <NavigationContainer>
-      {session?.user !== undefined && !onboarding.isOnboarding ? (
+      {
+        {
+          onboarding: <AuthNavigator/>,
+          normal: <BottomNavBar/>,
+          makingPost: (null),
+        }[onboarding.isOnboarding]
+      }
+      {/* {session?.user !== undefined && !onboarding.isOnboarding  ? (
         <BottomNavBar />
       ) : (
         <AuthNavigator />
-      )}
+      )} */}
     </NavigationContainer>
   );
 }

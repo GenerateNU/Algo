@@ -1,8 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-// import { User } from '../types/types';
-// import { getAllUsers } from '../services/users';
-// import Logo from '../assets/test.svg';
 import { SvgXml } from 'react-native-svg';
 import Post from '../components/Post';
 

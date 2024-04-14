@@ -23,32 +23,36 @@ const FinancialGoal: React.FC<FinancialGoalProps> = ({ goal, isSelected, onSelec
 // Define the styles for the component
 const styles = StyleSheet.create({
   goal: {
-    padding: 10,
+    paddingHorizontal: 14,
     borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 20,
-    marginBottom: 10,
+    borderRadius: 18,
+    //marginBottom: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
     marginVertical: 4,
+    height: 65,
+    width: '100%', // Adjust width as per your layout
+    backgroundColor: '#F1F1F1', // Background color for the input
+    borderColor: '#F1F1F1', // Border color for the input
+    fontSize: 16,
   },
   goalSelected: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#6F6F6F',
-    borderRadius: 20,
-    marginBottom: 10,
+    paddingHorizontal: 14,
+    borderRadius: 18,
+    //marginBottom: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#6F6F6F', 
-    marginHorizontal: 5, // Keep the horizontal margin consistent
+    marginVertical: 4,
+    height: 65,
+    width: '100%', // Adjust width as per your layout
+    backgroundColor:'rgba(2, 173, 152, 0.08)', // Background color for the input
+    fontSize: 16,
   },
   goalText: {
     color: '#000',
   },
   goalTextSelected: {
-    color: '#6F6F6F',
+    color: '#02AD98',
   },
 });
 

@@ -1,11 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground,} from 'react-native';
+import Animated, {FadeIn} from 'react-native-reanimated';
 import { useDispatch} from 'react-redux';
 import { completeOnboarding } from '../../reducers/onboarding/onboardingReducer';
-// import { registerUser } from '../../services/users';
-//import { RootState } from '../../components/LayoutWrapper';
-//import { User } from '../../types/types';
-
 const Confirmation: React.FC = () => {
   const dispatch = useDispatch();
   //const onboarding = useSelector((state: RootState) => state.onboarding);
@@ -17,12 +14,42 @@ const Confirmation: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>All set!</Text>
-      <Text style={styles.subHeader}>How do I use Carbon?</Text>
-      <View style={styles.walkthroughContainer}>
-        {/* You will insert your app walkthrough component here */}
-        <Text style={styles.walkthroughText}>*insert walk through of app</Text>
+      <Text style={styles.header}>Welcome To</Text>
+      <View className='w-full flex-row items-center'>
+        <Animated.View
+          entering={FadeIn.delay(200)} style={styles.left}>
+          <ImageBackground 
+            source={require('../../assets/logomark.png')} 
+            style={styles.logo} 
+            imageStyle={
+              {
+                opacity: 0.15,
+                objectFit: "contain"
+              }}>
+            <Animated.View entering={FadeIn.delay(600)}>
+              <Text style={styles.carbon}>carbon</Text>
+            </Animated.View>
+          </ImageBackground>
+        </Animated.View>
+        <View style={styles.right}>
+          <Animated.View entering={FadeIn.delay(1000)}>
+            <Text style={styles.text}>
+              learn
+            </Text>
+          </Animated.View>
+          <Animated.View entering={FadeIn.delay(1400)}>
+            <Text style={styles.copy}>
+              copy
+            </Text>
+          </Animated.View>
+          <Animated.View entering={FadeIn.delay(1800)}>
+            <Text style={styles.text}>
+              socialize
+            </Text>
+          </Animated.View>
+        </View>
       </View>
+      
       <TouchableOpacity onPress={handleContinue} style={styles.continueButton}>
         <Text style={styles.continueButtonText}>Continue →</Text>
       </TouchableOpacity>
@@ -37,9 +64,48 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FFFFFF', // Set the background color to white
   },
-  header: {
-    fontSize: 28,
+  carbon: {
     fontWeight: 'bold',
+    fontSize: 42,
+    color: '#02AD98',
+    lineHeight: 42
+  },
+  left: {
+    width: "50%",
+    paddingVertical: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  right: {
+    width: "50%",
+    paddingVertical: 20,
+    justifyContent: "center",
+  },
+  text: {
+    fontWeight: 'bold',
+    fontSize: 42,
+    color: '#B7B7B7',
+    lineHeight: 42
+  },
+  copy: {
+    fontWeight: 'bold',
+    fontSize: 42,
+    color: '#666666',
+    lineHeight: 42
+  },
+  logo: {
+    width: "100%",
+    objectFit: "contain",
+    height: 140,
+    //marginBottom: 40, 
+    alignSelf: 'flex-end', 
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  header: {
+    fontSize: 48,
+    fontWeight: 'bold',
+    color: "#B7B7B7",
     marginBottom: 8,
   },
   subHeader: {
@@ -62,14 +128,18 @@ const styles = StyleSheet.create({
     color: '#FFFFFF', // The text color is white for contrast
   },
   continueButton: {
-    backgroundColor: '#D3D3D3', // Continue button background color
-    borderRadius: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 30,
+    marginTop: "10%",
+    width: "45%",
+    backgroundColor: '#333333', // Darker grey color for active state
   },
   continueButtonText: {
     fontSize: 18,
-    color: '#000000', // Continue button text color
+    color: '#FFFFFF', // Continue button text color
   },
 });
 

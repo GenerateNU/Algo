@@ -1,13 +1,11 @@
 import {Text, View, Alert} from 'react-native'
 import React, {useEffect, useState} from 'react'
-//import { useNavigation } from '@react-navigation/native'
 import {RefreshControl, ScrollView} from "nativewind/dist/preflight";
 import ETradeAuth from "../components/ETradeAuth";
 import {TokenStatus} from "../types/types";
 import {getTokenStatus} from "../services/users";
 
 const AuthPage = () => {
-  //const navigation = useNavigation();
   const [authenticated, setAuthenticated] = useState(false)
   const [refreshing, setRefreshing] = useState(false);
 

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gomodule/oauth1/oauth"
@@ -17,10 +18,8 @@ const APIEnv = "apisb" // "apisb" = SANDBOX, "api" = PROD
 
 var oauthClient = oauth.Client{
 	Credentials: oauth.Credentials{
-		// Token:  os.Getenv("OAUTH_KEY"),
-		// Secret: os.Getenv("OAUTH_SECRET"),
-		Token:  "a60539449cf51fe24ea8b618f26ce2692d4732255b2f310fb803e1c25bd06d1c",
-		Secret: "a60539449cf51fe24ea8b618f26ce2692d4732255b2f310fb803e1c25bd06d1c",
+		Token:  os.Getenv("OAUTH_KEY"),
+		Secret: os.Getenv("OAUTH_SECRET"),
 	},
 	TemporaryCredentialRequestURI: fmt.Sprintf("https://%s.etrade.com/oauth/request_token", APIEnv),
 	ResourceOwnerAuthorizationURI: "https://us.etrade.com/e/t/etws/authorize",
@@ -140,17 +139,17 @@ func (s *ETradeService) GetAccessTokenStatus(userID string) (string, error) {
 
 // SyncPortfolio fetches the portfolio data for each account
 // inserts new trades, updates existing, and deletes ones not returned from ETrade
-func (s *ETradeService) SyncPortfolio(userID string) ([]models.UserPortfolio, error) {
+func (s *ETradeService) SyncPortfolio(userID string) (models.UserPortfolio, error) {
 	oauthTokens, err := s.getLastOAuthTokens(userID)
 	if err != nil {
-		return []models.UserPortfolio{}, fmt.Errorf("error getting oauth token: %s", err)
+		return models.UserPortfolio{}, fmt.Errorf("error getting oauth token: %s", err)
 	}
 
 	client := newJSONClient()
 
 	accounts, err := getETradeAccounts(client, oauthTokens)
 	if err != nil {
-		return []models.UserPortfolio{}, fmt.Errorf("error getting etrade accounts: %s", err)
+		return models.UserPortfolio{}, fmt.Errorf("error getting etrade accounts: %s", err)
 	}
 
 	visitedAccounts := make(map[string]bool)
@@ -160,13 +159,13 @@ func (s *ETradeService) SyncPortfolio(userID string) ([]models.UserPortfolio, er
 	if err := s.DB.Where("user_id = ?", userID).FirstOrCreate(
 		&dbPortfolio, models.UserPortfolio{UserID: userID},
 	).Error; err != nil {
-		return []models.UserPortfolio{}, fmt.Errorf("error retrieving portfolio from the database: %s", err)
+		return models.UserPortfolio{}, fmt.Errorf("error retrieving portfolio from the database: %s", err)
 	}
 
 	// Retrieve current positions from the database
 	var dbPositions []models.Position
 	if err := s.DB.Where("user_portfolio_id = ?", dbPortfolio.ID).Find(&dbPositions).Error; err != nil {
-		return []models.UserPortfolio{}, fmt.Errorf("error retrieving positions from the database: %s", err)
+		return models.UserPortfolio{}, fmt.Errorf("error retrieving positions from the database: %s", err)
 	}
 
 	// Map to store existing positions for quick lookup
@@ -182,7 +181,7 @@ func (s *ETradeService) SyncPortfolio(userID string) ([]models.UserPortfolio, er
 	for _, account := range accounts {
 		portfolioList, err = getETradePortfolio(client, oauthTokens, account.AccountIDKey)
 		if err != nil {
-			return []models.UserPortfolio{}, fmt.Errorf("error getting portfolio: %s", err)
+			return models.UserPortfolio{}, fmt.Errorf("error getting portfolio: %s", err)
 		}
 
 		for _, portfolio := range portfolioList {
@@ -216,7 +215,7 @@ func (s *ETradeService) SyncPortfolio(userID string) ([]models.UserPortfolio, er
 					existingPos.Type = models.TradeType(position.PositionType)
 					// Save updates to the database
 					if err := s.DB.Save(&existingPos).Error; err != nil {
-						return []models.UserPortfolio{}, fmt.Errorf("error updating position: %s", err)
+						return models.UserPortfolio{}, fmt.Errorf("error updating position: %s", err)
 					}
 					delete(existingPositions, position.PositionID) // Remove from existing positions map
 				} else {
@@ -252,19 +251,19 @@ func (s *ETradeService) SyncPortfolio(userID string) ([]models.UserPortfolio, er
 	dbPortfolio.DayGainPct = dayGainPct
 
 	if err := s.DB.Save(&dbPortfolio).Error; err != nil {
-		return []models.UserPortfolio{}, fmt.Errorf("error updating portfolio: %s", err)
+		return models.UserPortfolio{}, fmt.Errorf("error updating portfolio: %s", err)
 	}
 
 	// Delete positions that are not present in the current data set
 	for _, pos := range existingPositions {
 		if err := s.DB.Delete(&pos).Error; err != nil {
-			return []models.UserPortfolio{}, fmt.Errorf("error deleting position: %s", err)
+			return models.UserPortfolio{}, fmt.Errorf("error deleting position: %s", err)
 		}
 	}
 
 	tx := s.DB.CreateInBatches(&positions, 10)
 	if tx.Error != nil {
-		return []models.UserPortfolio{}, fmt.Errorf("error creating positions: %s", tx.Error.Error())
+		return models.UserPortfolio{}, fmt.Errorf("error creating positions: %s", tx.Error.Error())
 	}
 
 	return s.GetUserPortfolio(userID)
@@ -324,13 +323,13 @@ func getETradePortfolio(client *http.Client, tokens *models.OAuthTokens, account
 }
 
 // GetUserPortfolio returns the user portfolio from our db
-func (s *ETradeService) GetUserPortfolio(userID string) ([]models.UserPortfolio, error) {
-	var allPositions []models.UserPortfolio
-	if err := s.DB.Preload("Positions").Where("user_id = ?", userID).Find(&allPositions).Error; err != nil {
-		return []models.UserPortfolio{}, fmt.Errorf("error retrieving all positions from the database: %s", err)
+func (s *ETradeService) GetUserPortfolio(userID string) (models.UserPortfolio, error) {
+	var portfolio models.UserPortfolio
+	if err := s.DB.Preload("Positions").Where("user_id = ?", userID).First(&portfolio).Error; err != nil {
+		return models.UserPortfolio{}, fmt.Errorf("error retrieving all positions from the database: %s", err)
 	}
 
-	return allPositions, nil
+	return portfolio, nil
 }
 
 // newJSONClient is a helper function that creates an HTTP client to interact with the E*Trade API
