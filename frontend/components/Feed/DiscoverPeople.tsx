@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import User from "../User";
 import { SvgXml } from "react-native-svg";
+import { ScrollView } from "react-native-gesture-handler";
 
 const NextSvg = `
 <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,11 +20,11 @@ const DiscoverPeople: React.FC = () => {
                 </View>
             </View>
             
-            <View style={styles.people}>
+            <ScrollView style={styles.people} horizontal={true}>
               <User name="Michael" postIndex={1} />
               <User name="Isabella" postIndex={2} />
               <User name="Tony Alvarez" postIndex={3} />
-            </View>
+            </ScrollView>
         </View>
     )
 }
