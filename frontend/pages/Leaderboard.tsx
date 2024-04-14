@@ -2,13 +2,15 @@ import React, {useEffect, useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import PopularLeaderboard from '../components/PopularLeaderboard';
+import PopularTrendingBoard from '../components/PopularTrendingBoard';
 import TabHeader from '../components/TabHeader';
-import {Leader} from "../types/types";
-import {getPopularLeaderboard} from "../services/leaderboard";
+import {Leader, Trending} from "../types/types";
+import {getPopularLeaderboard, getPopularTrending} from "../services/leaderboard";
 
 const Leaderboard: React.FC = () => {
     //Fetch Leaders
     const [leaderboard, setLeaderboard] = useState<Leader[]>([]);
+    const [trendingboard, setTrendingBoard] = useState<Trending[]>([]);
     useEffect(() => {
         const fetchLeaderboard = async () => {
             try {
@@ -19,12 +21,18 @@ const Leaderboard: React.FC = () => {
             }
         };
 
-        fetchLeaderboard();
+        const fetchTrendingBoard = async () => {
+            try {
+                const trending = await getPopularTrending();
+                setTrendingBoard(trending);
+            } catch (error) {
+                console.error('Error fetching trendingboard')
+            }
 
-        // Cleanup function if needed
-       // return () => {
-            // Perform any cleanup if necessary
-       // };
+        };
+
+        fetchLeaderboard();
+        fetchTrendingBoard();
     }, []);
 
 
@@ -37,9 +45,12 @@ const Leaderboard: React.FC = () => {
             <Text className='pt-7 font-bold text-lg'>Leaderboard</Text>
             <View style={styles.leaderboard} className='rounded-md tabBar'>
                 <TabHeader activeTab={tab} allTabs={allTabs} setTab={setTab} style={styles.tabBar} />
-                <PopularLeaderboard leaderboard={leaderboard}/>
+                {
+                    tab == 'Popular Now' ? 
+                        (<PopularLeaderboard leaderboard={leaderboard}/>) :
+                        (<PopularTrendingBoard trendingboard={trendingboard}/>)
+                }
             </View>
-            
         </View>
     ) //Can't figure out warnings, or style tab bar. Moving on.
 }

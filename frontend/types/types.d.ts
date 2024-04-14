@@ -23,6 +23,11 @@ export type Leader = {
   follower_count: number;
 }
 
+export type Trending = {
+  trending_user: User;
+  day_gain_pct: number;
+}
+
 export interface TokenStatus {
     status: string;
 }
