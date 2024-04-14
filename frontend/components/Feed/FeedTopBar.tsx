@@ -1,11 +1,24 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const FeedTopBar: React.FC = () => {
+type FeedBarProps  = {
+    tab: string,
+    setTab: React.Dispatch<React.SetStateAction<string>>,
+}
+
+const FeedTopBar: React.FC<FeedBarProps> = ({tab, setTab}) => {
     return (
         <View style={styles.top_bar}>
-          <Text style={styles.explore}>Explore</Text>
-          <Text style={styles.follow}>Following</Text>
+          <Text 
+            style={tab == 'Explore' ? styles.explore : styles.follow}
+            onPress={() => setTab('Explore')}>
+                Explore
+            </Text>
+          <Text 
+            style={tab == 'Following' ? styles.explore : styles.follow}
+            onPress={() => setTab('Following')}>
+                Following
+            </Text>
         </View>
     )
 }
@@ -33,6 +46,8 @@ const styles = StyleSheet.create({
         fontSize: 17,
         opacity: 1,
         textAlign: 'center',
+        borderBottomColor: 'rgba(0,0,0,1)',
+        borderBottomWidth: 1,
     },
     follow: {
         width: "50%",

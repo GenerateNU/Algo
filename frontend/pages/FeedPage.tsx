@@ -18,6 +18,7 @@ import { ScrollView } from 'react-native';
 import ProfileExplore from './ProfileExplore';
 import { useNavigation } from '@react-navigation/native';
 import FeedTopBar from '../components/Feed/FeedTopBar';
+import DiscoverPeople from '../components/Feed/DiscoverPeople';
 
 const AddSvg = `
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,14 +27,9 @@ const AddSvg = `
 </svg>
 `;
 
-const NextSvg = `
-<svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0 5.99997H16M16 5.99997L9.06667 0.999969M16 5.99997L9.06667 11" stroke="#666666"/>
-</svg>
-`;
-
 const FeedPage = () => {
   const [password, setPassword] = useState('');
+  const [tab, setTab] = useState<string>('Explore')
 
   const handlePasswordChange = (text: string) => {
     setPassword(text);
@@ -48,19 +44,15 @@ const FeedPage = () => {
   return (
     <View style={styles.container}>
       <View>
-        <FeedTopBar/>
-        <View style={styles.horizontalLine3}></View>
-        <View style={styles.horizontalLine4}></View>
-        <ScrollView>
+        <FeedTopBar tab={tab} setTab={setTab}/>
+        <ScrollView style={styles.scroll_view}>
           <View style={styles.post_pos}>
             <View style={{ left: 350, top: 10 }}>
-              <SvgXml xml={NextSvg} width="17" height="12" />
               <Button
                 title="Go to Profile Explore"
                 onPress={handleButtonPress}
               />
             </View>
-            <Text style={styles.post_txt}>Posts</Text>
 
             <View style={styles.posts}>
               <Post
@@ -85,30 +77,14 @@ const FeedPage = () => {
               <TouchableOpacity
                 style={styles.button2}
                 onPress={handleButtonPress}></TouchableOpacity>
-              {/* <Post
-                name="Kevin Daliri"
-                comment="Check out this trade."
-                postIndex={2}
-              />
-              <Post
-                name="Bryan Carson"
-                comment="Thank you carbon!"
-                postIndex={3}
-              /> */}
+
             </View>
           </View>
 
           <View style={styles.horizontalLine2}></View>
           <View style={styles.ppl_sec}>
-            <View style={{ left: 350, top: 10 }}>
-              <SvgXml xml={NextSvg} width="17" height="12" />
-            </View>
-            <Text style={styles.ppl_txt}>People</Text>
-            <View style={styles.people}>
-              <User name="Michael" postIndex={1} />
-              <User name="Isabella" postIndex={2} />
-              <User name="Tony Alvarez" postIndex={3} />
-            </View>
+            
+            <DiscoverPeople />
           </View>
         </ScrollView>
         <View style={styles.search_box}>
@@ -134,272 +110,54 @@ const styles = StyleSheet.create({
     // boxSizing: 'border-box',
     flexDirection: "column",
   },
+  scroll_view: {
+    flexDirection: 'column',
+    padding: 25,
+  },
   body: {
     fontSize: 14,
   },
-  v124_1260: {
-    width: 393,
-    height: 852,
-    backgroundColor: 'rgba(255,255,255,1)',
-    opacity: 1,
-    position: 'relative',
-    top: 0,
-    left: 0,
-    overflow: 'hidden',
-  },
+
   name: {
     color: '#fff',
   },
-  // v124_1267: {
-  //   width: 202,
-  //   // background: 'url("../images/v124_1267.png")',
-  //   opacity: 1,
-  //   position: 'absolute',
-  //   top: 116,
-  //   left: 3,
-  //   borderWidth: 1.5,
-  //   borderColor: 'rgba(0,0,0,1)',
-  // },
   post_pos: {
-    width: 493,
-    height: 522,
+    width: '100%',
     // background: 'url("../images/v124_1268.png")',
     // backgroundRepeat: 'no-repeat',
     // backgroundPosition: 'center center',
     // backgroundSize: 'cover',
     opacity: 1,
+    flexDirection: "column"
     // position: 'absolute',
-    top: 215,
-    left: 0,
   },
   post_txt: {
-    width: 50,
+    marginTop: "20%",
+    width: "100%",
     color: 'rgba(102,102,102,1)',
-    position: 'absolute',
-    top: 0,
-    left: 28,
     fontFamily: 'Circular Std',
+    marginBottom: 12,
     fontWeight: '500',
     fontSize: 17,
     opacity: 1,
     textAlign: 'center',
   },
   posts: {
-    width: 493,
-    height: 379,
+    width: "100%",
     // background: 'url("../images/v124_1270.png")',
     // backgroundRepeat: 'no-repeat',
     // backgroundPosition: 'center center',
     // backgroundSize: 'cover',
     opacity: 1,
-    position: 'absolute',
-    top: 15,
-    left: 0,
     overflow: 'hidden',
   },
-  // v124_1271: {
-  //   width: 393,
-  //   height: 93,
-  //   // background: 'url("../images/v124_1271.png")',
-  //   // backgroundRepeat: 'no-repeat',
-  //   // backgroundPosition: 'center center',
-  //   // backgroundSize: 'cover',
-  //   padding: 20,
-  //   margin: 20,
-  //   opacity: 1,
-  //   position: 'relative',
-  //   top: 0,
-  //   left: 0,
-  //   overflow: 'hidden',
-  // },
-  // v124_1272: {
-  //   width: 40,
-  //   height: 40,
-  //   backgroundColor: 'rgba(217,217,217,1)',
-  //   opacity: 1,
-  //   position: 'absolute',
-  //   top: 26,
-  //   left: 24,
-  //   borderRadius: 50,
-  // },
-  // v124_1273: {
-  //   width: 198,
-  //   height: 53,
-  //   // background: 'url("../images/v124_1273.png")',
-  //   // backgroundRepeat: 'no-repeat',
-  //   // backgroundPosition: 'center center',
-  //   // backgroundSize: 'cover',
-  //   margin: 5,
-  //   opacity: 1,
-  //   position: 'absolute',
-  //   top: 20,
-  //   left: 84,
-  //   overflow: 'hidden',
-  // },
-  // v124_1274: {
-  //   width: 67,
-  //   color: 'rgba(0,0,0,1)',
-  //   position: 'relative',
-  //   top: 0,
-  //   left: 0,
-  //   fontFamily: 'Circular Std',
-  //   fontWeight: '500',
-  //   fontSize: 17,
-  //   opacity: 1,
-  //   textAlign: 'left',
-  // },
-  // v124_1275: {
-  //   width: 198,
-  //   color: 'rgba(0,0,0,1)',
-  //   position: 'absolute',
-  //   top: 29,
-  //   left: 0,
-  //   fontFamily: 'Circular Std',
-  //   fontWeight: 'normal',
-  //   fontSize: 17,
-  //   opacity: 0.5,
-  //   textAlign: 'left',
-  // },
-  // v124_1276: {
-  //   width: 393,
-  //   height: 93,
-  //   // background: 'url("../images/v124_1276.png")',
-  //   // backgroundRepeat: 'no-repeat',
-  //   // backgroundPosition: 'center center',
-  //   // backgroundSize: 'cover',
-  //   padding: 20,
-  //   margin: 20,
-  //   opacity: 1,
-  //   position: 'absolute',
-  //   top: 93,
-  //   left: 0,
-  //   overflow: 'hidden',
-  // },
-  // v124_1277: {
-  //   width: 40,
-  //   height: 40,
-  //   backgroundColor: 'rgba(217,217,217,1)',
-  //   opacity: 1,
-  //   position: 'absolute',
-  //   top: 26,
-  //   left: 24,
-  //   borderRadius: 50,
-  // },
-  // v124_1278: {
-  //   width: 160,
-  //   height: 53,
-  //   // background: 'url("../images/v124_1278.png")',
-  //   // backgroundRepeat: 'no-repeat',
-  //   // backgroundPosition: 'center center',
-  //   // backgroundSize: 'cover',
-  //   margin: 5,
-  //   opacity: 1,
-  //   position: 'absolute',
-  //   top: 20,
-  //   left: 84,
-  //   overflow: 'hidden',
-  // },
-  // v124_1279: {
-  //   width: 89,
-  //   color: 'rgba(0,0,0,1)',
-  //   position: 'relative',
-  //   top: 0,
-  //   left: 0,
-  //   fontFamily: 'Circular Std',
-  //   fontWeight: '500',
-  //   fontSize: 17,
-  //   opacity: 1,
-  //   textAlign: 'left',
-  // },
-  // v124_1280: {
-  //   width: 160,
-  //   color: 'rgba(0,0,0,1)',
-  //   position: 'absolute',
-  //   top: 29,
-  //   left: 0,
-  //   fontFamily: 'Circular Std',
-  //   fontWeight: 'normal',
-  //   fontSize: 17,
-  //   opacity: 0.5,
-  //   textAlign: 'left',
-  // },
-  // v124_1281: {
-  //   width: 393,
-  //   height: 93,
-  //   // background: 'url("../images/v124_1281.png")',
-  //   // backgroundRepeat: 'no-repeat',
-  //   // backgroundPosition: 'center center',
-  //   // backgroundSize: 'cover',
-  //   paddingVertical: 20,
-  //   paddingHorizontal: 24,
-  //   margin: 20,
-  //   opacity: 1,
-  //   position: 'absolute',
-  //   top: 186,
-  //   left: 0,
-  //   overflow: 'hidden',
-  // },
-  // v124_1282: {
-  //   width: 40,
-  //   height: 40,
-  //   backgroundColor: 'rgba(217,217,217,1)',
-  //   opacity: 1,
-  //   position: 'absolute',
-  //   top: 26,
-  //   left: 24,
-  //   borderRadius: 50,
-  // },
-  // v124_1283: {
-  //   width: 143,
-  //   height: 53,
-  //   // background: 'url("../images/v124_1283.png")',
-  //   // backgroundRepeat: 'no-repeat',
-  //   // backgroundPosition: 'center center',
-  //   // backgroundSize: 'cover',
-  //   margin: 5,
-  //   opacity: 1,
-  //   position: 'absolute',
-  //   top: 20,
-  //   left: 84,
-  //   overflow: 'hidden',
-  // },
   ppl_sec: {
-    width: 370,
-    height: 233,
+    width: "100%",
     // background: 'url("../images/v124_1286.png")',
     // backgroundRepeat: 'no-repeat',
     // backgroundPosition: 'center center',
     // backgroundSize: 'cover',
     opacity: 1,
-    // position: 'absolute',
-    top: 70, //562
-    left: 0,
-    overflow: 'hidden',
-  },
-  ppl_txt: {
-    width: 61,
-    color: 'rgba(102,102,102,1)',
-    // position: 'absolute',
-    top: 0,
-    left: 29,
-    fontFamily: 'Circular Std',
-    fontWeight: '500',
-    fontSize: 17,
-    opacity: 1,
-    textAlign: 'center',
-  },
-  people: {
-    width: 350,
-    height: 159,
-    // background: 'url("../images/v124_1288.png")',
-    // backgroundRepeat: 'no-repeat',
-    // backgroundPosition: 'center center',
-    // backgroundSize: 'cover',
-    margin: 0,
-    opacity: 1,
-    // position: 'absolute',
-    bottom: 20,
-    left: 0,
     overflow: 'hidden',
   },
   search_bar: {
@@ -439,12 +197,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   search_add: {
-    // width: 24,
-    // height: 24,
-    // // background: 'url("../images/v124_1304.png")',
-    // // backgroundRepeat: 'no-repeat',
-    // // backgroundPosition: 'center center',
-    // // backgroundSize: 'cover',
     margin: 0,
     // // opacity: 1,
     position: 'absolute',
@@ -453,60 +205,21 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     // paddingHorizontal: 20,
   },
-  // v124_1305: {
-  //   width: 23,
-  //   height: 23,
-  //   // background: 'url("../images/v124_1305.png")',
-  //   // backgroundRepeat: 'no-repeat',
-  //   // backgroundPosition: 'center center',
-  //   // backgroundSize: 'cover',
-  //   opacity: 1,
-  //   position: 'absolute',
-  //   top: 0,
-  //   left: 1,
-  //   overflow: 'hidden',
-  // },
-  // v124_1306: {
-  //   width: 23,
-  //   height: 23,
-  //   backgroundColor: 'rgba(102,102,102,1)',
-  //   opacity: 1,
-  //   position: 'relative',
-  //   top: 0,
-  //   left: 0,
-  // },
-  // v124_1307: {
-  //   width: 11,
-  //   height: 11,
-  //   backgroundColor: 'rgba(255,255,255,1)',
-  //   opacity: 1,
-  //   position: 'absolute',
-  //   top: 6,
-  //   left: 7,
-  // },
   horizontalLine: {
     borderBottomColor: 'lightgrey',
     borderBottomWidth: 2,
     // marginVertical: 0,
-    bottom: 10,
-    right: 20,
   },
   horizontalLine2: {
     borderBottomColor: 'lightgrey',
     borderBottomWidth: 2,
     marginVertical: 0,
-    top: 570, //530
-    left: 0,
   },
   horizontalLine3: {
-    top: 116,
-    left: 0,
     borderBottomWidth: 2,
     borderBottomColor: 'lightgrey',
   },
   horizontalLine4: {
-    top: 114,
-    right: 200,
     borderBottomWidth: 2,
     borderBottomColor: 'black',
   },
