@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"time"
 
 	"github.com/gomodule/oauth1/oauth"
@@ -335,6 +336,77 @@ func (s *ETradeService) GetUserPortfolio(userID string) (models.UserPortfolio, e
 	}
 
 	return portfolio, nil
+}
+
+// PlaceOrder places an order on the E*Trade API
+func (s *ETradeService) PlaceOrder(userID string, order types.Order) error {
+	oauthTokens, err := s.getLastOAuthTokens(userID)
+	if err != nil {
+		return fmt.Errorf("error getting oauth token: %s", err)
+	}
+
+	client := newJSONClient()
+
+	// Create the required order details structure
+	orderDetails := types.PreviewOrderRequest{
+		ClientOrderID: fmt.Sprintf("%d", time.Now().UnixMilli()), // Use unique client order ID
+		Order: []types.OrderEntry{
+			{
+				Instrument: []types.Instrument{
+					{
+						Product: types.Product{
+							SecurityType: order.SecurityType, // "EQ" for stocks, "OPTION" for options, etc.
+							Symbol:       order.Symbol,
+						},
+						OrderAction:  order.Action,                           // "BUY", "SELL", etc.
+						QuantityType: types.QuantityType(order.QuantityType), // "QUANTITY", "DOLLARS", etc.
+						Quantity:     order.Quantity,
+					},
+				},
+				OrderTerm:     order.OrderTerm,     // "GOOD_FOR_DAY", "IMMEDIATE_OR_CANCEL", etc.
+				MarketSession: order.MarketSession, // "REGULAR", "EXTENDED_HOURS"
+				PriceType:     order.PriceType,     // "MARKET", "LIMIT", etc.
+				StopPrice:     order.StopPrice,     // Used for stop orders
+				LimitPrice:    order.LimitPrice,    // Used for limit orders
+				AllOrNone:     order.AllOrNone,     // Boolean
+			},
+		},
+	}
+
+	// Serialize orderDetails into JSON
+	orderData, err := json.Marshal(orderDetails)
+	if err != nil {
+		return fmt.Errorf("error serializing order details: %s", err)
+	}
+
+	// Calculate the URL based on order preview vs. actual placement
+	baseURL := fmt.Sprintf("https://%s.etrade.com/v1/accounts/%s/orders/place", APIEnv, order.AccountID)
+
+	// Make the API call using the OAuth credentials
+	orderValues, err := url.ParseQuery(string(orderData))
+	if err != nil {
+		return fmt.Errorf("error parsing order data: %s", err)
+	}
+
+	resp, err := oauthClient.Post(client, &oauth.Credentials{
+		Token:  oauthTokens.AccessToken,
+		Secret: oauthTokens.AccessSecret,
+	}, baseURL, orderValues)
+	if err != nil {
+		return fmt.Errorf("error sending order to E*Trade: %s", err)
+	}
+	defer resp.Body.Close()
+
+	// Handle potential API errors
+	if resp.StatusCode >= 400 {
+		body, _ := io.ReadAll(resp.Body)
+		return fmt.Errorf("E*Trade API error: %s", body)
+	}
+
+	// On success, you can extract the order ID from the response for confirmation
+	// or further tracking.
+
+	return nil
 }
 
 // newJSONClient is a helper function that creates an HTTP client to interact with the E*Trade API

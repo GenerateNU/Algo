@@ -34,3 +34,19 @@ export const getPortoflio = async (id: string): Promise<UserPortfolio> => {
   );
   return response.data;
 }
+
+// export const copyPortfolio = async (id: string, portfolio: UserPortfolio): Promise<HttpStatusCode> => {
+//   const response: AxiosResponse = await axios.post<UserPortfolio>(
+//     `http://${API_LINK}/etrade/portfolio/${id}`,
+//     portfolio,
+//   );
+//   return response.status;
+// }
+
+export const makeOrder = async (id: string, ticker: string, quantity: number, type: string): Promise<HttpStatusCode> => {
+  const response: AxiosResponse = await axios.post<UserPortfolio>(
+    `http://${API_LINK}/etrade/order/${id}`,
+    { ticker: ticker, quantity: quantity, type: type },
+  );
+  return response.status;
+}
