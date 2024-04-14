@@ -1,10 +1,18 @@
-import { Redirect, UserPortfolio } from '../types/types';
+import { Redirect, TokenStatus, UserPortfolio } from '../types/types';
 import axios, { AxiosResponse, HttpStatusCode } from 'axios';
 import { API_LINK } from './CommonDocs';
 
 export const getCallbackUrl = async (id: string): Promise<Redirect> => {
   const response: AxiosResponse<Redirect> = await axios.get<Redirect>(
     `http://${API_LINK}/etrade/redirect/${id}`,
+  );
+  return response.data;
+};
+
+
+export const getTokenStatus = async (id: string): Promise<TokenStatus> => {
+  const response: AxiosResponse = await axios.get<TokenStatus>(
+    `http://${API_LINK}/etrade/status/${id}`,
   );
   return response.data;
 };
