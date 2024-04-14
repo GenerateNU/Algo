@@ -4,7 +4,8 @@ import AuthPage from '../pages/AuthPage';
 import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
 import Profile from '../pages/Profile';
-import FeedPage from '../pages/FeedPage';
+//import FeedPage from '../pages/FeedPage';
+import Feed from '../pages/Feed';
 // import AuthNavigator from './AuthNavigation';
 // import { useSession } from '@clerk/clerk-expo';
 
@@ -47,7 +48,7 @@ const BottomNavBar = () => {
       })}>
       <Tab.Screen
         name="Explore"
-        component={FeedPage}
+        component={Feed}
         options={{
           headerShown: false,
         }}

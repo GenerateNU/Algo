@@ -193,7 +193,7 @@ const Post: React.FC<PostProps> = ({
               position: 'absolute',
               color: '#3F943D',
               fontSize: 17,
-              fontFamily: 'SF Pro',
+              // fontFamily: 'SF Pro',
               // fontFamily: 'Arial',
               fontWeight: 'normal', //510
               lineHeight: 24,
