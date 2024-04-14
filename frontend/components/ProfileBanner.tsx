@@ -1,24 +1,41 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Pressable } from 'react-native';
 // import { theme } from '../../theme'
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 // import ActionButton from '../ActionButton'
 // import { useNavigation } from '@react-navigation/native'
 import ProfileBio from './ProfileBio'
+import { useNavigation } from '@react-navigation/native';
+import { AuthNavigationProp } from '../types/navigationTypes';
+import { getUserFollowers, getUserFollowing } from '../services/followers';
+import { User } from '../types/types';
 // import { useSession } from '@clerk/clerk-expo'
 
 interface ProfileBannerProps {
-  user?: string
+  userId: string
 }
 
-const ProfileBanner = ({ user }: ProfileBannerProps) => {
-  /*
-  const { session } = useSession()
-  const navigation = useNavigation()
-
-  const navigateToEditProfile = () => {
-    navigation.navigate({ name: "Edit My Profile" })
+const ProfileBanner = ({ userId }: ProfileBannerProps) => {
+  const navigation = useNavigation<AuthNavigationProp>();
+  const [following, setFollowing] = useState<User[]>([]);
+  const [followers, setFollowers] = useState<User[]>([]);
+  
+  const navigateToFollowers = () => {
+    navigation.navigate('Followers', {label: "Followers", users: followers})
   }
-  */
+
+
+  const navigateToFollowing = () => {
+    navigation.navigate('Followers', {label: "Followers", users: following})
+  }
+
+  useEffect(() => {
+    getUserFollowers(userId).then((users) => {
+      setFollowers(users)
+    })
+    getUserFollowing(userId).then((users) => {
+      setFollowing(users)
+    })
+  }, []);
 
   return (
     <View className='flex flex-col px-4 mb-2'>
@@ -33,26 +50,25 @@ const ProfileBanner = ({ user }: ProfileBannerProps) => {
 
         <View className='flex flex-col items-center flex-1 gap-2'>
           <View className='flex flex-row justify-evenly flex-1' >
-            
-            <View className='flex flex-col items-center px-4 py-2'>
-              <Text className='text-sm font-semibold'>10</Text>
+
+            <Pressable className='flex flex-col items-center px-4 py-2' onPress={navigateToFollowers}>
+              <Text className='text-sm font-semibold'>{followers?.length | 0}</Text>
               <Text className='text-sm font-semibold'>
                 Followers
               </Text>
-            </View>
+            </Pressable>
 
-            <View className='flex flex-col items-center px-4 py-2'>
-              <Text className='text-sm font-semibold'>{10}</Text>
+            <Pressable className='flex flex-col items-center px-4 py-2' onPress={navigateToFollowing}>
+              <Text className='text-sm font-semibold'>{following?.length | 0}</Text>
               <Text adjustsFontSizeToFit={true} numberOfLines={1} className='text-sm font-semibold'>
                 Following
               </Text>
-            </View>
+            </Pressable>
           </View>
 
           <TouchableOpacity
             className='flex items-center justify-center flex-1 mb-5 w-48'
             style={profileStyles.followButton}
-            onPress={() => console.log(user)}
           >
             <Text className='font-semibold text-[#02AD98]'>Edit Profile</Text>
           </TouchableOpacity>

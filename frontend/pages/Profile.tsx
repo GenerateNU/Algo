@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Pressable, ScrollView, View } from 'react-native';
 import { useSession } from '@clerk/clerk-expo';
@@ -10,30 +10,26 @@ import { ProfileActivityData } from '../constants';
 import ProfilePerformance from '../components/ProfilePerformance';
 import SignOut from '../components/SignOutButton';
 import { getPortoflio } from '../services/etrade';
-import { UserPortfolio } from '../types/types';
+import { ProfileRouteParams, UserPortfolio } from '../types/types';
 import { ProfilePositions } from '../components/ProfilePositions';
 // import SettingsSvg from '../assets/SettingsIcon.svg';
+
+
 
 const Profile = () => {
   const { session } = useSession();
   const navigation = useNavigation();
-  const [isPortfolioSelected, setIsPortfolioSelected] = useState<boolean>(true);
-  const [isActivitySelected, setIsActivitySelected] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [portfolio, setPortfolio] = useState<UserPortfolio>()
+  const route = useRoute()
+  const profileUserId = (route.params as ProfileRouteParams)?.userId;
 
   const OnActivitySelected = () => {
-    setIsPortfolioSelected(false);
-    setIsActivitySelected(true);
     setPageNumber(1)
-    console.log(`Activity selected: ${isActivitySelected}`);
   }
 
   const OnPortfolioSelected = () => {
-    setIsPortfolioSelected(true);
-    setIsActivitySelected(false);
     setPageNumber(0)
-    console.log(`Portfolio selected: ${isPortfolioSelected}`);
   }
 
   useEffect(() => {
@@ -62,7 +58,7 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    getPortoflio("user_2ceWSEk1tU7bByPHmtwsla94w7e").then(userPortfolio => {
+    getPortoflio(profileUserId).then(userPortfolio => {
       setPortfolio(userPortfolio)
     })
   }, []);
@@ -70,7 +66,7 @@ const Profile = () => {
   return (
     <ScrollView className='bg-white'>
       <View className='flex flex-col space-y-2'>
-        <ProfileBanner />
+        <ProfileBanner userId={profileUserId}/>
 
         <View className='flex flex-row'>
           <SubTabButton title='Portfolio' selected={pageNumber == 0} onPress={OnPortfolioSelected} />
