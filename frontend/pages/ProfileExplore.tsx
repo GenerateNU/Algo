@@ -104,7 +104,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'black',
                         fontSize: 16,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 24,
                       }}>
@@ -114,7 +114,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'rgba(0, 0, 0, 0.48)',
                         fontSize: 10,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 18,
                       }}>
@@ -157,7 +157,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'black',
                         fontSize: 16,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 24,
                       }}>
@@ -167,7 +167,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'rgba(0, 0, 0, 0.48)',
                         fontSize: 10,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 18,
                       }}>
@@ -211,7 +211,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'black',
                         fontSize: 16,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 24,
                       }}>
@@ -221,7 +221,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'rgba(0, 0, 0, 0.48)',
                         fontSize: 10,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 18,
                       }}>
@@ -268,7 +268,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'black',
                         fontSize: 16,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 24,
                       }}>
@@ -278,7 +278,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'rgba(0, 0, 0, 0.48)',
                         fontSize: 10,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 18,
                       }}>
@@ -339,7 +339,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'black',
                         fontSize: 16,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 24,
                       }}>
@@ -349,7 +349,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'rgba(0, 0, 0, 0.48)',
                         fontSize: 10,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 18,
                       }}>
@@ -392,7 +392,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'black',
                         fontSize: 16,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 24,
                       }}>
@@ -402,7 +402,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'rgba(0, 0, 0, 0.48)',
                         fontSize: 10,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 18,
                       }}>
@@ -468,7 +468,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'rgba(0, 0, 0, 0.48)',
                         fontSize: 10,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 18,
                       }}>
@@ -511,7 +511,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'black',
                         fontSize: 16,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 24,
                       }}>
@@ -521,7 +521,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'rgba(0, 0, 0, 0.48)',
                         fontSize: 10,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 18,
                       }}>
@@ -564,7 +564,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'black',
                         fontSize: 16,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 24,
                       }}>
@@ -574,7 +574,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'rgba(0, 0, 0, 0.48)',
                         fontSize: 10,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 18,
                       }}>
@@ -635,7 +635,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'black',
                         fontSize: 16,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 24,
                       }}>
@@ -645,7 +645,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'rgba(0, 0, 0, 0.48)',
                         fontSize: 10,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 18,
                       }}>
@@ -681,7 +681,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'black',
                         fontSize: 16,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 24,
                       }}>
@@ -691,7 +691,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'rgba(0, 0, 0, 0.48)',
                         fontSize: 10,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 18,
                       }}>
@@ -727,7 +727,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'black',
                         fontSize: 16,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 24,
                       }}>
@@ -737,7 +737,7 @@ export default function ProfileExplore() {
                       style={{
                         color: 'rgba(0, 0, 0, 0.48)',
                         fontSize: 10,
-                        fontFamily: 'SF Pro',
+                        //fontFamily: 'SF Pro',
                         fontWeight: '400',
                         lineHeight: 18,
                       }}>
@@ -1096,7 +1096,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 12,
     left: 24,
-    fontFamily: 'SF Pro Text',
+    //fontFamily: 'SF Pro Text',
     fontWeight: '600',
     fontSize: 17,
     opacity: 0.6000000238418579,

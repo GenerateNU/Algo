@@ -103,7 +103,7 @@ const Post1: React.FC<PostProps> = ({
                   style={{
                     color: '#666666',
                     fontSize: 16,
-                    fontFamily: 'SF Pro Text',
+                    //fontFamily: 'SF Pro Text',
                     fontWeight: '500',
                   }}>
                   Bryan Carson
@@ -121,7 +121,7 @@ const Post1: React.FC<PostProps> = ({
                   style={{
                     color: '#333333',
                     fontSize: 16,
-                    fontFamily: 'SF Pro Text',
+                    // fontFamily: 'SF Pro Text',
                     fontWeight: '500',
                   }}>
                   Netflix Returns
@@ -131,7 +131,7 @@ const Post1: React.FC<PostProps> = ({
                     width: 292,
                     color: '#666666',
                     fontSize: 16,
-                    fontFamily: 'SF Pro Text',
+                    // fontFamily: 'SF Pro Text',
                     fontWeight: '400',
                   }}>
                   I wanted you guys to check out my netflix trade! Let me know
@@ -168,7 +168,7 @@ const Post1: React.FC<PostProps> = ({
                   style={{
                     color: '#999999',
                     fontSize: 13,
-                    fontFamily: 'SF Pro Text',
+                    // fontFamily: 'SF Pro Text',
                     fontWeight: '500',
                     bottom: 10,
                   }}>
@@ -198,7 +198,7 @@ const Post1: React.FC<PostProps> = ({
                   style={{
                     color: '#999999',
                     fontSize: 13,
-                    fontFamily: 'SF Pro Text',
+                    // fontFamily: 'SF Pro Text',
                     fontWeight: '500',
                     bottom: 32,
                     left: 70,

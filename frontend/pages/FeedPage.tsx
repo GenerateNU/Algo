@@ -17,6 +17,7 @@ import User from '../components/User';
 import { ScrollView } from 'react-native';
 import ProfileExplore from './ProfileExplore';
 import { useNavigation } from '@react-navigation/native';
+import FeedTopBar from '../components/Feed/FeedTopBar';
 
 const AddSvg = `
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,10 +48,7 @@ const FeedPage = () => {
   return (
     <View style={styles.container}>
       <View>
-        <View style={styles.top_bar}>
-          <Text style={styles.explore}>Explore</Text>
-          <Text style={styles.follow}>Following</Text>
-        </View>
+        <FeedTopBar/>
         <View style={styles.horizontalLine3}></View>
         <View style={styles.horizontalLine4}></View>
         <ScrollView>
@@ -134,7 +132,7 @@ export default FeedPage;
 const styles = StyleSheet.create({
   container: {
     // boxSizing: 'border-box',
-    top: -50,
+    flexDirection: "column",
   },
   body: {
     fontSize: 14,
@@ -151,45 +149,6 @@ const styles = StyleSheet.create({
   },
   name: {
     color: '#fff',
-  },
-  top_bar: {
-    width: 393,
-    height: 65,
-    backgroundColor: '#F7F7F7',
-    // backgroundRepeat: 'no-repeat',
-    // backgroundPosition: 'center center',
-    // backgroundSize: 'cover',
-    padding: 20,
-    margin: 100,
-    position: 'absolute',
-    top: -49,
-    left: -100,
-    overflow: 'hidden',
-    zIndex: 2,
-  },
-  explore: {
-    width: 67,
-    color: 'rgba(0,0,0,1)',
-    position: 'absolute',
-    top: 30,
-    left: 55,
-    fontFamily: 'Circular Std',
-    fontWeight: '500',
-    fontSize: 17,
-    opacity: 1,
-    textAlign: 'center',
-  },
-  follow: {
-    width: 83,
-    color: 'rgba(102,102,102,1)',
-    position: 'absolute',
-    top: 30,
-    right: 65,
-    fontFamily: 'Circular Std',
-    fontWeight: '500',
-    fontSize: 17,
-    opacity: 1,
-    textAlign: 'center',
   },
   // v124_1267: {
   //   width: 202,
@@ -473,7 +432,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 12,
     left: 24,
-    fontFamily: 'SF Pro Text',
+    // fontFamily: 'SF Pro Text',
     fontWeight: '600',
     fontSize: 17,
     opacity: 0.6000000238418579,
