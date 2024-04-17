@@ -3,15 +3,18 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import { Leader } from '../types/types';
+import { Ionicons } from '@expo/vector-icons';
 
 type PopularUserProps = {
 leader: Leader;
+index: number
 }
 
-const PopularUser: React.FC<PopularUserProps> = ({ leader }: PopularUserProps) => {
+const PopularUser: React.FC<PopularUserProps> = ({ leader, index }: PopularUserProps) => {
     return (
         <View style={styles.container}>
             {/* Column for image */}
+            <Text style={styles.rank}>{index + 1}</Text>
             <View style={[styles.column, styles.imageColumn]}>
                 <View style={styles.imageContainer}>
                     <Image
@@ -26,18 +29,16 @@ const PopularUser: React.FC<PopularUserProps> = ({ leader }: PopularUserProps) =
                     <Text style={styles.nameText}>
                         {leader.leader_user.first_name} {leader.leader_user.last_name}
                     </Text>
-                    <Text style={styles.actionText}>
-                        Recent: Recent actions will display{"\n"} here
-                    </Text>
                 </View>
             </View>
 
 
             <View style={[styles.column, styles.followersColumn]}>
-                <Image
+                {/* <Image
                     source={require("../assets/followers_logo.png")}
                     style={styles.followersLogo}
-                />
+                /> */}
+                <Ionicons name="person-outline" size={18} color="#333333" />
                 <Text style={styles.followersText}>
                    {leader.follower_count}
                 </Text>
@@ -52,6 +53,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 10,
+        borderBottomColor: "#adc4ba",
+        borderBottomWidth: 1,
+        paddingVertical: 15,
     },
     column: {
         flex: 1,
@@ -60,12 +64,14 @@ const styles = StyleSheet.create({
         flex: 0.17,
     },
     textColumn: {
-        flex: 0.65,
+        marginRight: 12,
+        justifyContent: "center"
     },
     followersColumn: {
         flex: 0.18,
         flexDirection: 'row', // Check
         justifyContent: 'flex-end', //check
+        alignItems: "center"
     },
     imageContainer: {
         width: 40,
@@ -78,7 +84,7 @@ const styles = StyleSheet.create({
         height: "100%",
     },
     textContainer: {
-        flex: 1,
+        marginLeft: 18
     },
     actionText: {
         fontSize: 8,
@@ -86,17 +92,21 @@ const styles = StyleSheet.create({
     },
     nameText: {
         fontWeight: 'bold',
-        fontSize: 12,
+        fontSize: 18,
         marginBottom: 1,
-        color: '#787878',
+        color: '#333333',
+    },
+    rank: {
+        fontSize: 18,
+        marginRight: 15
     },
     followersText: {
-        alignSelf: 'flex-end',
-        color: '#787878',
+        color: '#333333',
+        fontSize: 18
     },
     followersLogo: {
-        width: 20,
-        height: 20,
+        width: 40,
+        height: 40,
         marginRight: 5,
     }
 });

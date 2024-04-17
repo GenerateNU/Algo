@@ -8,43 +8,57 @@ import {Leader, Trending} from "../types/types";
 import {getPopularLeaderboard, getPopularTrending} from "../services/leaderboard";
 
 const Leaderboard: React.FC = () => {
+
+    const [tab, setTab] = useState("Popular Now");
+    const allTabs = [{title: "Popular Now"}, {title: "All time Bests"}];
+
     //Fetch Leaders
     const [leaderboard, setLeaderboard] = useState<Leader[]>([]);
+    
     const [trendingboard, setTrendingBoard] = useState<Trending[]>([]);
+    const fetchLeaderboard = async () => {
+        try {
+            const leaders = await getPopularLeaderboard();
+            setLeaderboard(leaders);
+        } catch (error) {
+            console.error('Error fetching leaderboard:', error);
+        }
+    };
+
+    const fetchTrendingBoard = async () => {
+        try {
+            const trending = await getPopularTrending();
+            setTrendingBoard(trending);
+        } catch (error) {
+            console.error('Error fetching trendingboard')
+        }
+
+    };
+
     useEffect(() => {
-        const fetchLeaderboard = async () => {
-            try {
-                const leaders = await getPopularLeaderboard();
-                setLeaderboard(leaders);
-            } catch (error) {
-                console.error('Error fetching leaderboard:', error);
-            }
-        };
+        if (tab == "PopularNow") {
+            fetchLeaderboard();
+            fetchTrendingBoard()
+        }
+    }, [tab]);
 
-        const fetchTrendingBoard = async () => {
-            try {
-                const trending = await getPopularTrending();
-                setTrendingBoard(trending);
-            } catch (error) {
-                console.error('Error fetching trendingboard')
-            }
-
-        };
-
+    useEffect(() => {
         fetchLeaderboard();
         fetchTrendingBoard();
     }, []);
 
-
-
-    //END ATTEMPT
-    const [tab, setTab] = useState("Popular Now");
-    const allTabs = ["Popular Now", "All time Bests"];
     return (
         <View style={styles.container}>
-            <Text className='pt-7 font-bold text-lg'>Leaderboard</Text>
+            <View className='flex-row justify-between w-full mb-2'>
+                <View>
+                    <Text className='pt-7 font-bold text-lg'>Leaderboard</Text>
+                    <Text className="text-sm">Check out the top 20 people</Text>
+                </View>
+                
+                <TabHeader activeTab={tab} allTabs={allTabs} setTab={setTab} />
+            </View>
+            
             <View style={styles.leaderboard} className='rounded-md tabBar'>
-                <TabHeader activeTab={tab} allTabs={allTabs} setTab={setTab} style={styles.tabBar} />
                 {
                     tab == 'Popular Now' ? 
                         (<PopularLeaderboard leaderboard={leaderboard}/>) :
@@ -61,13 +75,13 @@ const styles = StyleSheet.create({
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
       padding: 20,
-      backgroundColor: '#f5f5f5',
+      paddingTop: "15%",
+      backgroundColor: '#FFFFFF',
     },
     leaderboard: {
         flex: 1,
+        width: "100%",
         justifyContent: 'flex-start',
-        borderColor: '#999999',
-        borderWidth: 2,
         marginTop: 12,
         padding: 0,
     },
