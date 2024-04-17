@@ -16,6 +16,7 @@ interface PostProps {
   subject: string;
   up: number;
   down: number;
+  type: number;
   // user_id: number;
   // user: User;
   // PostType: PostType;
@@ -39,8 +40,9 @@ const Post1: React.FC<PostProps> = ({
   subject,
   up,
   down,
+  type,
 }) => {
-  if (postIndex == 1) {
+  if (type == 1) {
     return (
       <View
         style={{
@@ -103,7 +105,7 @@ const Post1: React.FC<PostProps> = ({
                   style={{
                     color: '#666666',
                     fontSize: 16,
-                    //fontFamily: 'SF Pro Text',
+                    fontFamily: 'SF Pro Text',
                     fontWeight: '500',
                   }}>
                   Bryan Carson
@@ -121,7 +123,7 @@ const Post1: React.FC<PostProps> = ({
                   style={{
                     color: '#333333',
                     fontSize: 16,
-                    // fontFamily: 'SF Pro Text',
+                    fontFamily: 'SF Pro Text',
                     fontWeight: '500',
                   }}>
                   Netflix Returns
@@ -131,7 +133,7 @@ const Post1: React.FC<PostProps> = ({
                     width: 292,
                     color: '#666666',
                     fontSize: 16,
-                    // fontFamily: 'SF Pro Text',
+                    fontFamily: 'SF Pro Text',
                     fontWeight: '400',
                   }}>
                   I wanted you guys to check out my netflix trade! Let me know
@@ -168,7 +170,7 @@ const Post1: React.FC<PostProps> = ({
                   style={{
                     color: '#999999',
                     fontSize: 13,
-                    // fontFamily: 'SF Pro Text',
+                    fontFamily: 'SF Pro Text',
                     fontWeight: '500',
                     bottom: 10,
                   }}>
@@ -198,7 +200,7 @@ const Post1: React.FC<PostProps> = ({
                   style={{
                     color: '#999999',
                     fontSize: 13,
-                    // fontFamily: 'SF Pro Text',
+                    fontFamily: 'SF Pro Text',
                     fontWeight: '500',
                     bottom: 32,
                     left: 70,
@@ -212,7 +214,7 @@ const Post1: React.FC<PostProps> = ({
       </View>
     );
   }
-  if (postIndex == 2) {
+  if (type == 2) {
     return (
       <View style={styles.v124_1276}>
         <View style={styles.horizontalLine}></View>
@@ -220,6 +222,215 @@ const Post1: React.FC<PostProps> = ({
         <View style={styles.person2}>
           <Text style={styles.name2}>{name}</Text>
           <Text style={styles.comment2}>{comment}</Text>
+        </View>
+      </View>
+    );
+  }
+  if (type == 3) {
+    return (
+      <View
+        style={{
+          width: 393,
+          height: 160,
+          paddingLeft: 24,
+          paddingRight: 24,
+          paddingTop: 25,
+          paddingBottom: 25,
+          borderTopWidth: 1,
+          borderTopColor: 'rgba(0, 0, 0, 0.08)',
+          borderBottomWidth: 1,
+          borderBottomColor: 'rgba(0, 0, 0, 0.08)',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+          // gap: 81,
+          // display: 'inline-flex',
+          flexDirection: 'row',
+          top: 20,
+        }}>
+        <View
+          style={{
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            gap: 15,
+            display: 'flex',
+          }}>
+          <View
+            style={{
+              width: 35,
+              height: 35,
+              backgroundColor: '#999999',
+              borderRadius: 9999,
+            }}
+          />
+          <View
+            style={{
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+              gap: 15,
+            }}>
+            <View
+              style={{
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                gap: 10,
+                display: 'flex',
+                left: 55,
+                bottom: 60,
+              }}>
+              <View
+                style={{
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  gap: 5,
+                }}>
+                <Text
+                  style={{
+                    color: '#666666',
+                    fontSize: 16,
+                    fontFamily: 'SF Pro Text',
+                    fontWeight: '500',
+                  }}>
+                  Bryan Carson
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'column',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  gap: 5,
+                  display: 'flex',
+                }}>
+                <Text
+                  style={{
+                    color: '#333333',
+                    fontSize: 16,
+                    fontFamily: 'SF Pro Text',
+                    fontWeight: '500',
+                  }}>
+                  Netflix Returns
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    paddingLeft: 15,
+                    paddingRight: 15,
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    backgroundColor: 'rgba(2, 173, 152, 0.10)',
+                    borderRadius: 5,
+                    width: 220,
+                  }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                    }}>
+                    <Text
+                      style={{
+                        color: '#02AD98',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro Text',
+                        fontWeight: '400',
+                        width: 40,
+                      }}>
+                      BUY
+                    </Text>
+                    <Text
+                      style={{
+                        color: '#121212',
+                        fontSize: 16,
+                        fontFamily: 'SF Pro Text',
+                        fontWeight: '400',
+                        width: 120,
+                      }}>
+                      AAPL @ 150.55
+                    </Text>
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        color: '#02AD98',
+                        fontSize: 17,
+                        fontFamily: 'SF Pro',
+                        lineHeight: 20,
+                      }}>
+                      17%
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View style={{ bottom: 80, left: 70 }}>
+              <View
+                style={{
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    width: 24,
+                    height: 24,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <View style={{ width: 18, height: 18, position: 'relative' }}>
+                    <View
+                      style={{
+                        width: 18,
+                        height: 18,
+                        left: 50,
+                        top: 10,
+                        position: 'absolute',
+                        backgroundColor: '#C2C2C2',
+                      }}></View>
+                  </View>
+                </View>
+                <Text
+                  style={{
+                    color: '#999999',
+                    fontSize: 13,
+                    fontFamily: 'SF Pro Text',
+                    fontWeight: '500',
+                    bottom: 10,
+                  }}>
+                  18
+                </Text>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  gap: 0,
+                  display: 'flex',
+                }}>
+                <View style={{ width: 8, height: 8, position: 'relative' }}>
+                  <View
+                    style={{
+                      width: 18,
+                      height: 18,
+                      right: 15,
+                      bottom: 18,
+                      position: 'absolute',
+                      backgroundColor: '#C2C2C2',
+                    }}></View>
+                </View>
+
+                <Text
+                  style={{
+                    color: '#999999',
+                    fontSize: 13,
+                    fontFamily: 'SF Pro Text',
+                    fontWeight: '500',
+                    bottom: 32,
+                    left: 70,
+                  }}>
+                  2
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
     );
