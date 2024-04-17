@@ -4,14 +4,23 @@ import { useNavigation } from '@react-navigation/native';
 import { MakePostNavigationProp } from '../../types/navigationTypes';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useDispatch } from 'react-redux';
+import { finishPost } from '../../reducers/onboarding/onboardingReducer';
 
 const SharePost: React.FC = () => {
     const navigation = useNavigation<MakePostNavigationProp>();
 
+    const dispatch = useDispatch();
+
+    const cancelMakePost = () => {
+        navigation.goBack();
+        dispatch(finishPost());
+    };
+
     return (
         <View>
 
-            <Icon name="navigate-before" style={styles.navigateBefore} onPress={() => navigation.goBack()} />
+            <Icon name="navigate-before" style={styles.navigateBefore} onPress={cancelMakePost} />
 
             <View style={styles.contentContainer}>
                 <Text style={styles.title}>Share a Post</Text>
