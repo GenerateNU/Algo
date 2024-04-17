@@ -8,7 +8,7 @@ interface PostProps {
   postIndex: number;
 }
 
-const Post: React.FC<PostProps> = ({ name, postIndex }) => {
+const Post: React.FC<PostProps> = ({}) => {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
