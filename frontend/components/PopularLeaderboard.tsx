@@ -16,8 +16,8 @@ const PopularLeaderboard: React.FC<PopularProps> = ({leaderboard}: PopularProps)
             {
                 leaderboard.map((leader, index) => (
                     <React.Fragment key={index}>
-                        <PopularUser leader={leader} />
-                        {index < leaderboard.length - 1 && <Separator />}
+                        <PopularUser leader={leader} index={index} />
+                        {/* {index < leaderboard.length - 1 && <Separator />} */}
                     </React.Fragment>
             ))}
         </ScrollView>

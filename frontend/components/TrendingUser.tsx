@@ -2,17 +2,20 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import { Trending } from '../types/types';
-//import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 type TrendingUserProps = {
 trending: Trending;
+index: number,
 }
 
-const TrendingUser: React.FC<TrendingUserProps> = ({ trending }: TrendingUserProps) => {
-    console.log(trending)
+const TrendingUser: React.FC<TrendingUserProps> = ({ trending, index }: TrendingUserProps) => {
+    console.log(trending);
+    
     return (
         <View style={styles.container}>
             {/* Column for image */}
+            <Text style={styles.rank}>{index + 1}</Text>
             <View style={[styles.column, styles.imageColumn]}>
                 <View style={styles.imageContainer}>
                     <Image
@@ -27,14 +30,20 @@ const TrendingUser: React.FC<TrendingUserProps> = ({ trending }: TrendingUserPro
                     <Text style={styles.nameText}>
                         {trending.trending_user_reference.first_name} {trending.trending_user_reference.last_name}
                     </Text>
-                    <Text style={styles.actionText}>
-                        Recent: Recent actions will display{"\n"} here
-                    </Text>
                 </View>
             </View>
 
 
             <View style={[styles.column, styles.followersColumn]}>
+                {
+                    trending.day_gain_pct > 0 ?
+                    (
+                        <AntDesign name="arrowup" size={18} color="#02AD98" />
+                    ) :
+                    (
+                        <AntDesign name="arrowdown" size={18} color="#FF2B51" />
+                    )
+                }
                 {/* {
                     trending.day_gain_pct > 0 ?
                     (
@@ -43,8 +52,8 @@ const TrendingUser: React.FC<TrendingUserProps> = ({ trending }: TrendingUserPro
                         <FontAwesome name="arrow-trend-down" size={20} color="black"/>
                     )
                 } */}
-                <Text style={styles.followersText}>
-                    {trending.day_gain_pct}%
+                <Text style={trending.day_gain_pct > 0 ? styles.followersText : styles.downFollText}>
+                    {Math.abs(trending.day_gain_pct)}%
                 </Text>
             </View>
         </View>
@@ -57,15 +66,23 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 10,
+        borderBottomColor: "#adc4ba",
+        borderBottomWidth: 1,
+        paddingVertical: 15,
     },
     column: {
         flex: 1,
+    },
+    rank: {
+        fontSize: 18,
+        marginRight: 15
     },
     imageColumn: {
         flex: 0.17,
     },
     textColumn: {
-        flex: 0.65,
+        marginRight: 12,
+        justifyContent: "center"
     },
     followersColumn: {
         flex: 0.18,
@@ -83,7 +100,7 @@ const styles = StyleSheet.create({
         height: "100%",
     },
     textContainer: {
-        flex: 1,
+        marginLeft: 18
     },
     actionText: {
         fontSize: 8,
@@ -91,13 +108,19 @@ const styles = StyleSheet.create({
     },
     nameText: {
         fontWeight: 'bold',
-        fontSize: 12,
+        fontSize: 18,
         marginBottom: 1,
         color: '#787878',
     },
     followersText: {
         alignSelf: 'flex-end',
-        color: '#787878',
+        color: '#02AD98',
+        fontSize: 18,
+    },
+    downFollText: {
+        alignSelf: 'flex-end',
+        color: '#FF2B51',
+        fontSize: 18,
     },
     followersLogo: {
         width: 20,

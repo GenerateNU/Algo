@@ -16,8 +16,8 @@ const PopularTrendingBoard: React.FC<TrendingProps> = ({trendingboard}: Trending
             {
                 trendingboard.map((trending, index) => (
                     <React.Fragment key={index}>
-                        <TrendingUser trending={trending} />
-                        {index < trendingboard.length - 1 && <Separator />}
+                        <TrendingUser trending={trending} index={index}/>
+                        {/* {index < trendingboard.length - 1 && <Separator />} */}
                     </React.Fragment>
             ))}
         </ScrollView>

@@ -49,7 +49,7 @@ const Leaderboard: React.FC = () => {
 
     return (
         <View style={styles.container}>
-            <View className='flex-row justify-between w-full'>
+            <View className='flex-row justify-between w-full mb-2'>
                 <View>
                     <Text className='pt-7 font-bold text-lg'>Leaderboard</Text>
                     <Text className="text-sm">Check out the top 20 people</Text>

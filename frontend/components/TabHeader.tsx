@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
+import { AntDesign } from '@expo/vector-icons';
+
 
 type Item = {
     title: string
@@ -32,7 +34,15 @@ const TabHeader: React.FC<TabParams> = ({activeTab, allTabs, setTab}: TabParams)
                                 <Text style={styles.buttonText}>{selectedItem.title}</Text>
 
                             }
-                            <Text style={styles.buttonText}>⌄</Text>
+                            {
+                                isOpened ? 
+                                (
+                                    <AntDesign name="up" size={18} color="white" />
+                                ) : (
+                                    <AntDesign name="down" size={18} color="white" />
+                                )
+                            }
+                            
                         </View>
                     )
                 }}
@@ -68,7 +78,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         paddingVertical: 12,
         borderRadius: 20,
-        justifyContent: "center",
+        justifyContent: "space-between",
         flexDirection: "row",
     },
     openButton: {
@@ -77,7 +87,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        justifyContent: "center",
+        justifyContent: "space-between",
         flexDirection: "row",
     },
     buttonText: {
