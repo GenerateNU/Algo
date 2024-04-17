@@ -1,6 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import FeedPage from '../pages/FeedPage';
+
 import SharePost from '../pages/MakePost/SharePost';
 
 // Trade Post
@@ -18,7 +20,13 @@ const Stack = createStackNavigator();
 
 const MakePostNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="SharePost">
+    <Stack.Navigator initialRouteName="FeedPage">
+      <Stack.Screen
+        name="FeedPage"
+        component={FeedPage}
+        options={{ headerShown: false }}
+      />
+
       <Stack.Screen
         name="SharePost"
         component={SharePost}

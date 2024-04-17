@@ -6,7 +6,7 @@ import Profile from '../pages/Profile';
 import FeedPage from '../pages/FeedPage';
 import Leaderboard from '../pages/Leaderboard';
 
-import SharePost from '../pages/MakePost/SharePost';
+//import SharePost from '../pages/MakePost/SharePost';
 //import SelectTrade from '../pages/MakePost/TradePost/SelectTrade';
 //import TradePostDetails from '../pages/MakePost/TradePost/TradePostDetails';
 //import TextBasedPost from '../pages/MakePost/TextBasedPost/TextBasedPost';
@@ -52,7 +52,7 @@ const BottomNavBar = () => {
       })}>
       <Tab.Screen
         name="Explore"
-        component={SharePost}
+        component={FeedPage}
         options={{
           tabBarActiveTintColor: '#02AD98',
           tabBarShowLabel: false,
