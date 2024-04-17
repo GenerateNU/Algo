@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SvgXml } from 'react-native-svg';
-import { ScrollView, SectionList } from 'react-native';
+import { SectionList } from 'react-native';
 import FeedTopBar from '../components/Feed/FeedTopBar';
 import DiscoverPeople from '../components/Feed/DiscoverPeople';
 import PostNew from '../components/Feed/PostNew';
@@ -36,10 +36,6 @@ const FeedPage = () => {
       setPosts(data.slice(1));
     });
   }, []);
-
-  const handleButtonPress = () => {
-    // navigation.navigate('ProfileExplore');
-  };
 
   return (
     <View style={styles.container}>
@@ -143,6 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     opacity: 1,
     textAlign: 'left',
+    paddingTop: 15,
 },
   scroll_view: {
     flexDirection: 'column',
