@@ -117,6 +117,7 @@ export default function Signup() {
           Please put in the verification code sent to your email
         </Text>
           <TextInput
+            keyboardType='numeric'
             value={code}
             placeholder="Verification Code"
             onChangeText={code => setCode(code)}

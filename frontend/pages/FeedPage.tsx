@@ -2,23 +2,16 @@ import {
   TextInput,
   Button,
   StyleSheet,
-  Text,
   View,
-  TouchableOpacity,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
-// import { User } from '../types/types';
-// import { getAllUsers } from '../services/users';
-// import Logo from '../assets/test.svg';
+import React, { useState } from 'react';
 import { SvgXml } from 'react-native-svg';
-// import './Feed-Page.css';
-import Post from '../components/Post';
-import User from '../components/User';
 import { ScrollView } from 'react-native';
-import ProfileExplore from './ProfileExplore';
-import { useNavigation } from '@react-navigation/native';
 import FeedTopBar from '../components/Feed/FeedTopBar';
 import DiscoverPeople from '../components/Feed/DiscoverPeople';
+import PostNew from '../components/Feed/PostNew';
+import { FlatList } from 'react-native-gesture-handler';
+// import { Post, PostType } from '../types/types';
 
 const AddSvg = `
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +28,48 @@ const FeedPage = () => {
     setSearch(text);
   };
 
-  const navigation: any = useNavigation();
+  const u = {
+    id: "user_2chL8dX6HdbBAuvu3DDM9f9NzKK",
+    first_name: "Ania",
+    last_name: "Misiorek",
+    username: "ania",
+    image_url: "https://ca.slack-edge.com/T2CHL6FEG-U05QP4M4M3P-349be7323f07-512"
+  }
+  
+  const posts = [
+    {
+      user: u,
+      post_type: 'Share Comment',
+      num_data: 100,
+      ticker_symbol: 'APPL',
+      title: 'Netflix Returns',
+      comment: 'Check out my returns this month! Let me know what you guys think!'
+    },
+    {
+      user: u,
+      post_type: 'Recent Trade',
+      num_data: 100,
+      ticker_symbol: 'APPL',
+      title: 'Apple Trade',
+      comment: 'Just sold my APPL stock. Thoughts on the new M&A?'
+    },
+    {
+      user: u,
+      post_type: 'Recent Trade',
+      num_data: 100,
+      ticker_symbol: 'APPL',
+      title: 'Apple Trade',
+      comment: 'Just sold my APPL stock. Thoughts on the new M&A?'
+    },
+    {
+      user: u,
+      post_type: 'Recent Trade',
+      num_data: 100,
+      ticker_symbol: 'APPL',
+      title: 'Apple Trade',
+      comment: 'Just sold my APPL stock. Thoughts on the new M&A?'
+    },
+  ];
 
   const handleButtonPress = () => {
     navigation.navigate('ProfileExplore');
@@ -55,35 +89,16 @@ const FeedPage = () => {
             </View> */}
 
             <View style={styles.posts}>
-              <Post
-                name="Anthony"
-                comment="Sweet returns this month!"
-                postIndex={1}
-                tag="@bryan"
-                subject="Netflix Returns"
-                stat="17%"
+            {posts.map((p) => (
+              <PostNew
+                post={p}
               />
-              <TouchableOpacity
-                style={styles.button1}
-                onPress={handleButtonPress}></TouchableOpacity>
-              <Post
-                name="Anthony"
-                comment="Sweet returns this month!"
-                postIndex={1}
-                tag="@bryan"
-                subject="Netflix Returns"
-                stat="17%"
-              />
-              <TouchableOpacity
-                style={styles.button2}
-                onPress={handleButtonPress}></TouchableOpacity>
+            ))}
 
             </View>
           </View>
 
-          <View style={styles.horizontalLine2}></View>
           <View style={styles.ppl_sec}>
-            
             <DiscoverPeople />
           </View>
         </ScrollView>
@@ -110,12 +125,12 @@ const styles = StyleSheet.create({
   container: {
     // boxSizing: 'border-box',
     flexDirection: "column",
-    height: "100%"
+    height: "100%",
+    backgroundColor: "#FFFFFF"
   },
   scroll_view: {
     flexDirection: 'column',
-    paddingHorizontal: 25,
-    height: "100%"
+    padding: 25,
   },
   body: {
     fontSize: 14,
