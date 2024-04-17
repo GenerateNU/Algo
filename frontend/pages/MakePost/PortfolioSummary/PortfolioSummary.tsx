@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
         color: '#FFFFFF', 
     },
     lineGraphContainer: {
+        position: 'absolute',
         top: 190
     },
     timelineContainer: {
@@ -246,8 +247,9 @@ const styles = StyleSheet.create({
         gap: 5
     },
     pieChartContainer: {
+        position: 'absolute',
         left: 24,
-        top: 401
+        top: 485
     },
 });  
 
