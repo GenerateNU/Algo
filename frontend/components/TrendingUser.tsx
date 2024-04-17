@@ -2,13 +2,14 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import { Trending } from '../types/types';
-import { TrendingUp, TrendingDown } from '@mui/icons-material';
+import { FontAwesome } from '@expo/vector-icons';
 
 type TrendingUserProps = {
 trending: Trending;
 }
 
 const TrendingUser: React.FC<TrendingUserProps> = ({ trending }: TrendingUserProps) => {
+    console.log(trending)
     return (
         <View style={styles.container}>
             {/* Column for image */}
@@ -34,14 +35,14 @@ const TrendingUser: React.FC<TrendingUserProps> = ({ trending }: TrendingUserPro
 
 
             <View style={[styles.column, styles.followersColumn]}>
-                {
+                {/* {
                     trending.day_gain_pct > 0 ?
                     (
-                        <TrendingUp sx={styles.followersLogo}/>
+                        <FontAwesome name="arrow-trend-up" size={20} color="black"/>
                     ) : (
-                        <TrendingDown sx={styles.followersLogo}/>
+                        <FontAwesome name="arrow-trend-down" size={20} color="black"/>
                     )
-                }
+                } */}
                 <Text style={styles.followersText}>
                     {trending.day_gain_pct}%
                 </Text>
