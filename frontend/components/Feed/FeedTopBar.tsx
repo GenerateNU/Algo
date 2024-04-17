@@ -28,8 +28,8 @@ export default FeedTopBar;
 const styles = StyleSheet.create({
     top_bar: {
         width: "100%",
-        marginTop: "10%",
-        backgroundColor: '#F7F7F7',
+        marginTop: "15%",
+        backgroundColor: '#FFFFFF',
         flexDirection: "row",
         // backgroundRepeat: 'no-repeat',
         // backgroundPosition: 'center center',

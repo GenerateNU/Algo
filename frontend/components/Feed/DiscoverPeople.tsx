@@ -12,7 +12,7 @@ const NextSvg = `
 
 const DiscoverPeople: React.FC = () => {
     return (
-        <View className="mt-12">
+        <View style={styles.container}>
             <View className="flex-row justify-between">
                 <Text style={styles.ppl_txt}>People</Text>
                 <View>
@@ -32,6 +32,10 @@ const DiscoverPeople: React.FC = () => {
 export default DiscoverPeople;
 
 const styles = StyleSheet.create({
+    container: {
+        marginTop: 30,
+
+    },
     ppl_txt: {
         width: 61,
         color: 'rgba(102,102,102,1)',
