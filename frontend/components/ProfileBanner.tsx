@@ -11,10 +11,10 @@ import { User } from '../types/types';
 // import { useSession } from '@clerk/clerk-expo'
 
 interface ProfileBannerProps {
-  userId: string
+  user: User
 }
 
-const ProfileBanner = ({ userId }: ProfileBannerProps) => {
+const ProfileBanner = ({ user }: ProfileBannerProps) => {
   const navigation = useNavigation<AuthNavigationProp>();
   const [following, setFollowing] = useState<User[]>([]);
   const [followers, setFollowers] = useState<User[]>([]);
@@ -29,10 +29,10 @@ const ProfileBanner = ({ userId }: ProfileBannerProps) => {
   }
 
   useEffect(() => {
-    getUserFollowers(userId).then((users) => {
+    getUserFollowers(user.id).then((users) => {
       setFollowers(users)
     })
-    getUserFollowing(userId).then((users) => {
+    getUserFollowing(user.id).then((users) => {
       setFollowing(users)
     })
   }, []);
@@ -76,7 +76,7 @@ const ProfileBanner = ({ userId }: ProfileBannerProps) => {
       </View>
 
       <ProfileBio
-        fullName="first_name last_name"
+        fullName={`${user.first_name} ${user.last_name}`}
         description="profile description? Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent vel nisi sed diam ultricies viverra sit amet nec dolor...."
       />
 

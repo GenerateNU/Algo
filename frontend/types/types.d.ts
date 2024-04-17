@@ -1,4 +1,5 @@
 export interface User {
+    id: string;
     first_name: string;
     last_name: string;
     username: string;
@@ -72,7 +73,7 @@ enum TradeType {
 }
 
 export interface ProfileRouteParams {
-  userId: string;
+  user: User;
 }
 
 export interface FollowerRouteParams {

@@ -16,7 +16,9 @@ export type RootStackParamList = {
   Confirmation: undefined;
   LongTermGoals: undefined;
   ShortTermGoals: undefined;
-  Profile: { userId: string };
+  Profile: undefined;
+  ProfilePage: undefined;
+  FollowerProfile: { user: User }
   Followers: { label: string, users: User[] };
 
   // AuthPage: undefined;

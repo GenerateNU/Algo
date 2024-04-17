@@ -22,7 +22,7 @@ const Profile = () => {
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [portfolio, setPortfolio] = useState<UserPortfolio>()
   const route = useRoute()
-  const profileUserId = (route.params as ProfileRouteParams)?.userId;
+  const user = (route.params as ProfileRouteParams)?.user || session!.user!;
 
   const OnActivitySelected = () => {
     setPageNumber(1)
@@ -36,7 +36,7 @@ const Profile = () => {
     // set the title of the page
     navigation.setOptions({
       headerShown: true,
-      headerTitle: `@${session?.user.username}`,
+      headerTitle: `@${user.username}`,
       headerTitleAlign: 'center',
       headerRight: () => (
         <Icon type='material-community' name='cog' size={30} color='black' style={{paddingRight: 10}} />
@@ -58,15 +58,17 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    getPortoflio(profileUserId).then(userPortfolio => {
+    getPortoflio(user.id).then(userPortfolio => {
       setPortfolio(userPortfolio)
     })
   }, []);
 
+  console.log(user.id)
+
   return (
     <ScrollView className='bg-white'>
       <View className='flex flex-col space-y-2'>
-        <ProfileBanner userId={profileUserId}/>
+        <ProfileBanner user={user}/>
 
         <View className='flex flex-row'>
           <SubTabButton title='Portfolio' selected={pageNumber == 0} onPress={OnPortfolioSelected} />
