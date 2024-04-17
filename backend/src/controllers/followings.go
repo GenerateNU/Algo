@@ -81,6 +81,26 @@ func (fol *FollowingController) GetFollowers(c *gin.Context) {
 	c.JSON(http.StatusOK, followings)
 }
 
+// GetLeaders godoc
+//
+// @Summary Gets the 10 users with the most followers
+// @ID get-leaders
+// @Tags user-followings
+// @Produce json
+// @Success 200 {object} []models.Leaders
+// @Failure 404 {string} string "Failed to fetch leaders: 404 Error"
+// @Router /api/leaders [get]
+func (fol *FollowingController) GetLeaders(c *gin.Context) {
+	leaders, err := fol.followingService.GetLeaders()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users", "msg": err})
+		return
+	}
+	c.JSON(http.StatusOK, leaders)
+}
+
+//////////////////////////////////////////Create////////////////////////////////////////
+
 // CreateFollowings godoc
 //
 // @Summary Creates a Followings relation

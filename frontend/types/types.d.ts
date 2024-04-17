@@ -6,6 +6,7 @@ export interface User {
     email: string;
     risk_tolerance: string;
     years_of_experience: number;
+    image_url: string;
 }
 
 export type FinancialGoal = {
@@ -16,6 +17,16 @@ export type Metadata = number | string | string[];
 
 export interface Redirect {
     redirect_url: string;
+}
+
+export type Leader = {
+  leader_user: User;
+  follower_count: number;
+}
+
+export type Trending = {
+  trending_user_reference: User;
+  day_gain_pct: number;
 }
 
 export interface TokenStatus {
