@@ -11,12 +11,12 @@ const PostNew: React.FC<PostProps> = ({ post }) => {
     <View style={styles.border}>
     <View style={styles.container}>
       <View style={styles.profile}>
-        <Image style={styles.image} source={{uri: post.user.image_url}}>
+        <Image style={styles.image} source={{uri: post.User.image_url}}>
         </Image>
       </View>
       <View style={styles.body}>
         <Text style={styles.name}>
-          {post.user.first_name} {post.user.last_name}
+          {post.User.first_name} {post.User.last_name}
         </Text>
        <Text style={styles.title}>
         {post.title}
@@ -30,7 +30,6 @@ const PostNew: React.FC<PostProps> = ({ post }) => {
   );
 };
 
-// Define the styles for the component
 const styles = StyleSheet.create({
   border: {
     width: '100%',
@@ -58,7 +57,8 @@ const styles = StyleSheet.create({
     width: '85%',
   },
   title: {
-    fontWeight: '500'
+    fontWeight: '500',
+    fontSize: 16,
   },
   name: {
     fontWeight: '500',
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
   },
   comment: {
     color: '#666666',
+    fontSize: 16,
   }
 });
 

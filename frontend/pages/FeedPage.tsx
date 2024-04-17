@@ -1,17 +1,16 @@
 import {
   TextInput,
-  Button,
   StyleSheet,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SvgXml } from 'react-native-svg';
 import { ScrollView } from 'react-native';
 import FeedTopBar from '../components/Feed/FeedTopBar';
 import DiscoverPeople from '../components/Feed/DiscoverPeople';
 import PostNew from '../components/Feed/PostNew';
-import { FlatList } from 'react-native-gesture-handler';
-// import { Post, PostType } from '../types/types';
+import { getPosts } from '../services/users';
+import { Post } from '../types/types';
 
 const AddSvg = `
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,53 +22,15 @@ const AddSvg = `
 const FeedPage = () => {
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState<string>('Explore')
+  const [posts, setPosts] = useState<Post[]>([]);
 
   const handleSearchChange = (text: string) => {
     setSearch(text);
   };
 
-  const u = {
-    id: "user_2chL8dX6HdbBAuvu3DDM9f9NzKK",
-    first_name: "Ania",
-    last_name: "Misiorek",
-    username: "ania",
-    image_url: "https://ca.slack-edge.com/T2CHL6FEG-U05QP4M4M3P-349be7323f07-512"
-  }
-  
-  const posts = [
-    {
-      user: u,
-      post_type: 'Share Comment',
-      num_data: 100,
-      ticker_symbol: 'APPL',
-      title: 'Netflix Returns',
-      comment: 'Check out my returns this month! Let me know what you guys think!'
-    },
-    {
-      user: u,
-      post_type: 'Recent Trade',
-      num_data: 100,
-      ticker_symbol: 'APPL',
-      title: 'Apple Trade',
-      comment: 'Just sold my APPL stock. Thoughts on the new M&A?'
-    },
-    {
-      user: u,
-      post_type: 'Recent Trade',
-      num_data: 100,
-      ticker_symbol: 'APPL',
-      title: 'Apple Trade',
-      comment: 'Just sold my APPL stock. Thoughts on the new M&A?'
-    },
-    {
-      user: u,
-      post_type: 'Recent Trade',
-      num_data: 100,
-      ticker_symbol: 'APPL',
-      title: 'Apple Trade',
-      comment: 'Just sold my APPL stock. Thoughts on the new M&A?'
-    },
-  ];
+  useEffect(() => {
+    getPosts().then(data => setPosts(data.slice(1)));
+  }, []);
 
   const handleButtonPress = () => {
     navigation.navigate('ProfileExplore');
@@ -88,7 +49,11 @@ const FeedPage = () => {
               />
             </View> */}
 
-            <View style={styles.posts}>
+          </View>
+          <View style={styles.ppl_sec}>
+            <DiscoverPeople />
+          </View>
+          <View style={styles.posts}>
             {posts.map((p) => (
               <PostNew
                 post={p}
@@ -96,11 +61,6 @@ const FeedPage = () => {
             ))}
 
             </View>
-          </View>
-
-          <View style={styles.ppl_sec}>
-            <DiscoverPeople />
-          </View>
         </ScrollView>
         <View style={styles.search_box}>
           <TextInput
