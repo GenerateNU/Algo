@@ -1,13 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-//import AuthPage from '../pages/AuthPage';
 import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
 import Profile from '../pages/Profile';
 import FeedPage from '../pages/FeedPage';
 import Leaderboard from '../pages/Leaderboard';
-// import AuthNavigator from './AuthNavigation';
-// import { useSession } from '@clerk/clerk-expo';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 type TabRouteName =
@@ -17,7 +14,7 @@ type TabRouteName =
 
 const tabBarIconMapping: Record<TabRouteName, string> = {
   Explore: 'feature-search',
-  Leaderboard: 'podium',
+  Leaderboard: 'podium-gold',
   Profile: 'account-circle',
 };
 
@@ -27,7 +24,7 @@ const screenOptionsIcon = (
 ) => {
   const iconName = tabBarIconMapping[route.name];
   return (
-    <Icon type="material-community" name={iconName} size={22} color={color} />
+    <Icon type="material-community" name={iconName} size={24} color={color} />
   );
 };
 
@@ -50,22 +47,27 @@ const BottomNavBar = () => {
         name="Explore"
         component={FeedPage}
         options={{
-          headerShown: false,
+          tabBarActiveTintColor: '#02AD98',
+          tabBarShowLabel: false,
+          tabBarInactiveTintColor: '#333333'
         }}
       />
       <Tab.Screen
         name="Leaderboard"
         component={Leaderboard}
         options={{
-          headerShown: false,
-          title: 'Leaderboard',
+          tabBarActiveTintColor: '#02AD98',
+          tabBarShowLabel: false,
+          tabBarInactiveTintColor: '#333333'
         }}
       />
       <Tab.Screen
         name="Profile"
         component={Profile}
         options={{
-          headerShown: false,
+          tabBarActiveTintColor: '#02AD98',
+          tabBarShowLabel: false,
+          tabBarInactiveTintColor: '#333333'
         }}
       />
     </Tab.Navigator>

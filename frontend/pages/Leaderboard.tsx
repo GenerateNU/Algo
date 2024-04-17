@@ -10,7 +10,7 @@ import {getPopularLeaderboard, getPopularTrending} from "../services/leaderboard
 const Leaderboard: React.FC = () => {
 
     const [tab, setTab] = useState("Popular Now");
-    const allTabs = ["Popular Now", "All time Bests"];
+    const allTabs = [{title: "Popular Now"}, {title: "All time Bests"}];
 
     //Fetch Leaders
     const [leaderboard, setLeaderboard] = useState<Leader[]>([]);
@@ -49,9 +49,16 @@ const Leaderboard: React.FC = () => {
 
     return (
         <View style={styles.container}>
-            <Text className='pt-7 font-bold text-lg'>Leaderboard</Text>
-            <View style={styles.leaderboard} className='rounded-md tabBar'>
+            <View className='flex-row justify-between w-full'>
+                <View>
+                    <Text className='pt-7 font-bold text-lg'>Leaderboard</Text>
+                    <Text className="text-sm">Check out the top 20 people</Text>
+                </View>
+                
                 <TabHeader activeTab={tab} allTabs={allTabs} setTab={setTab} />
+            </View>
+            
+            <View style={styles.leaderboard} className='rounded-md tabBar'>
                 {
                     tab == 'Popular Now' ? 
                         (<PopularLeaderboard leaderboard={leaderboard}/>) :
@@ -68,13 +75,13 @@ const styles = StyleSheet.create({
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
       padding: 20,
+      paddingTop: "15%",
       backgroundColor: '#f5f5f5',
     },
     leaderboard: {
         flex: 1,
+        width: "100%",
         justifyContent: 'flex-start',
-        borderColor: '#999999',
-        borderWidth: 2,
         marginTop: 12,
         padding: 0,
     },
