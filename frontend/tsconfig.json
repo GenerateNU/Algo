@@ -4,5 +4,9 @@
         "types": ["node"],
         // "jsx": "react",
 
-    }
+    },
+    "include": [
+        "frontend", // Assuming your source code is located in the "src" directory
+        "assets" // Add the "assets" directory to include
+    ]
 }

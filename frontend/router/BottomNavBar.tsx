@@ -1,10 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import AuthPage from '../pages/AuthPage';
 import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
 import Profile from '../pages/Profile';
 import FeedPage from '../pages/FeedPage';
+import Leaderboard from '../pages/Leaderboard';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 type TabRouteName =
@@ -54,7 +54,7 @@ const BottomNavBar = () => {
       />
       <Tab.Screen
         name="Leaderboard"
-        component={AuthPage}
+        component={Leaderboard}
         options={{
           tabBarActiveTintColor: '#02AD98',
           tabBarShowLabel: false,
