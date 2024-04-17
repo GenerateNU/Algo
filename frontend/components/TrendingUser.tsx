@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18,
         marginBottom: 1,
-        color: '#787878',
+        color: '#333333',
     },
     followersText: {
         alignSelf: 'flex-end',
