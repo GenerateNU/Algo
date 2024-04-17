@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MakePostNavigationProp } from '../../../types/navigationTypes';
 
@@ -10,6 +10,8 @@ import { createPortfolioPost } from '../../../services/post';
 import { useSelector } from 'react-redux';
 import { useSession } from '@clerk/clerk-expo';
 import { RootState } from '../../../components/LayoutWrapper';
+import { useDispatch } from 'react-redux';
+import { finishPost } from '../../../reducers/onboarding/onboardingReducer';
 
 const PortfolioSummary: React.FC = () => {
     const navigation = useNavigation<MakePostNavigationProp>();
@@ -18,15 +20,23 @@ const PortfolioSummary: React.FC = () => {
         return state.makePost;
     });
 
+    const onboarding = useSelector((state: RootState) => {
+        return state.onboarding;
+    });
+
+    const dispatch = useDispatch();
+
     const session = useSession();
 
-    const createPost = () => {
-        createPortfolioPost(
+    const createPost = async () => {
+        await createPortfolioPost(
             "user_2chL8dX6HdbBAuvu3DDM9f9NzKK",
             //session.session?.id ?? '',
             makePost.percentData, // TODO: Fetch using financial API
             makePost.summaryType, // TODO: Fetch using financial API
-        );
+        ).then(() => {
+            dispatch(finishPost());
+        });
     }
 
     return (
@@ -38,6 +48,8 @@ const PortfolioSummary: React.FC = () => {
                     <Text style={styles.postButtonText}>Post</Text>
                 </TouchableOpacity>
             </View>
+
+            <Image source={makePost.percentData < 0 ? require('./TradeGraphs/BadTrade.png') : require('./TradeGraphs/GoodTrade.png')} style={styles.lineGraphContainer} />
 
             <View style={styles.timelineContainer}>
                 <View style={styles.timelineStartContainer}>
@@ -61,6 +73,8 @@ const PortfolioSummary: React.FC = () => {
                     <Text style={styles.buySellAmountText}>$1900.3</Text>
                 </View>
             </View>
+
+            <Image source={require('./TradeGraphs/PieChart.png')} style={styles.pieChartContainer} />
 
         </View>
     );
@@ -99,6 +113,9 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         fontFamily: 'Inter',
         color: '#FFFFFF', 
+    },
+    lineGraphContainer: {
+        top: 190
     },
     timelineContainer: {
         position: 'absolute',
@@ -227,6 +244,10 @@ const styles = StyleSheet.create({
         minWidth: 97,
         height: 52,
         gap: 5
+    },
+    pieChartContainer: {
+        left: 24,
+        top: 401
     },
 });  
 

@@ -13,6 +13,7 @@ import { RootState } from '../../../components/LayoutWrapper';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateTitle, updateDescription } from '../../../reducers/makePost/makePostReducer';
+import { finishPost } from '../../../reducers/onboarding/onboardingReducer';
 
 const TradePostDetails: React.FC = () => {
     const navigation = useNavigation<MakePostNavigationProp>();
@@ -39,7 +40,9 @@ const TradePostDetails: React.FC = () => {
             makePost.tickerSymbol, // TODO: Fetch using financial API
             title,
             description,
-        );
+        ).then(() => {
+            dispatch(finishPost());
+        });
     }
 
     return (

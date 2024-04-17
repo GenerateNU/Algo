@@ -12,6 +12,7 @@ import { RootState } from '../../../components/LayoutWrapper';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateTitle, updateDescription } from '../../../reducers/makePost/makePostReducer';
+import { finishPost } from '../../../reducers/onboarding/onboardingReducer';
 
 const TextBasedPost: React.FC = () => {
     const navigation = useNavigation<MakePostNavigationProp>();
@@ -36,7 +37,9 @@ const TextBasedPost: React.FC = () => {
             //session.session?.id ?? '',
             title,
             description,
-        );
+        ).then(() => {
+            dispatch(finishPost());
+        });
     }
 
     return (
