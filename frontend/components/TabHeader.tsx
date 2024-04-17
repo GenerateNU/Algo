@@ -24,6 +24,7 @@ const TabHeader: React.FC<TabParams> = ({activeTab, allTabs, setTab}: TabParams)
                 dropdownOverlayColor={"rgb(255, 255, 255, 0.4)"}
                 onSelect={(selectedItem: Item, index: number) => {
                     setTab(selectedItem.title)
+                    console.log(index)
                 }}
                 defaultValue={{title: activeTab}}
                 renderButton={(selectedItem: Item, isOpened: boolean) => {
