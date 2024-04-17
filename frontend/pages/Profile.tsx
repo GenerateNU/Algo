@@ -49,7 +49,6 @@ const Profile = () => {
     })
 
     return navigation.addListener('focus', () => {
-      console.log(`Profile Page | session token: ${session?.getToken()}`);
       if (session?.user.username === undefined) {
         /* Unsure why casting to never is required, issue to look into */
         navigation.navigate('Signin' as never);
@@ -62,8 +61,6 @@ const Profile = () => {
       setPortfolio(userPortfolio)
     })
   }, []);
-
-  console.log(user.id)
 
   return (
     <ScrollView className='bg-white'>
