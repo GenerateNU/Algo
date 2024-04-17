@@ -72,11 +72,58 @@ const PostDetails = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Sell</Text>
-      <Text>money</Text>
-      <Text>All Time</Text>
-      <Text>17%</Text>
-      <Text>description</Text>
+      <View style={{ width: 393, height: 852, position: 'relative' }}>
+        <View
+          style={{
+            left: 24,
+            top: 157,
+            position: 'absolute',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            gap: 50,
+          }}>
+          <View
+            style={{
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+              gap: 20,
+              display: 'flex',
+            }}>
+            <Text
+              style={{
+                width: 327,
+                color: '#333333',
+                fontSize: 22,
+                fontFamily: 'SF Pro Display',
+                fontWeight: '500',
+              }}>
+              Check out my Apple trade
+            </Text>
+            <Text
+              style={{
+                width: 327,
+                color: '#666666',
+                fontSize: 16,
+                fontFamily: 'SF Pro Text',
+                fontWeight: '400',
+                lineHeight: 20,
+              }}>
+              I sold my apple shares and made a 17% profit. Super happy with my
+              progress so far and wanted to know what people think! I sold my
+              apple shares and made a 17% profit. Super happy with my progress
+              so far and wanted to know what people think!I sold my apple shares
+              and made a 17% profit. Super happy with my progress so far and
+              wanted to know what people think!I sold my apple shares and made a
+              17% profit. Super happy with my progress so far and wanted to know
+              what people think! I sold my apple shares and made a 17% profit.
+              Super happy with my progress so far and wanted to know what people
+              think!
+            </Text>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
