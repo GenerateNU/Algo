@@ -28,6 +28,7 @@ export default FeedTopBar;
 const styles = StyleSheet.create({
     top_bar: {
         width: "100%",
+        flex: 1,
         marginTop: "15%",
         backgroundColor: '#FFFFFF',
         flexDirection: "row",

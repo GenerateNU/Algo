@@ -1,5 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { User } from '../types/types';
+import { getAllUsers } from '../services/users';
 
 interface PostProps {
   name: string;
@@ -7,41 +9,54 @@ interface PostProps {
 }
 
 const Post: React.FC<PostProps> = ({ name, postIndex }) => {
-  if (postIndex == 1) {
-    return (
-      <View style={styles.person1}>
-        <View style={styles.circle1}></View>
-        <View style={styles.name1_pos}>
-          <Text style={styles.name1_txt}>{name}</Text>
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    getAllUsers().then(data => {
+      setUsers(data);
+    });
+  }, []);
+
+  return (
+    <View style={styles.container}>
+{
+      users.map((u) => (
+        <View style={styles.body}>
+        <Image style={styles.image} source={{uri: u.image_url}}>
+        </Image>
+        <Text style={styles.name}>{u.first_name}</Text>
         </View>
+      ))
+    }
       </View>
-    );
-  }
-  if (postIndex == 2) {
-    return (
-      <View style={styles.person2}>
-        <View style={styles.circle2}></View>
-        <View style={styles.name2_pos}>
-          <Text style={styles.name2_txt}>{name}</Text>
-        </View>
-      </View>
-    );
-  }
-  if (postIndex == 3) {
-    return (
-      <View style={styles.person3}>
-        <View style={styles.circle3}></View>
-        <View style={styles.name3_pos}>
-          <Text style={styles.name3_txt}>{name}</Text>
-        </View>
-      </View>
-    );
-  }
+  )
 };
 
 export default Post;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row"
+  },
+  body: {
+    flex: 1,
+    flexDirection: "column",
+    alignContent: "center",
+    padding: 20,
+  },
+  image: {
+    width: 70,
+    height: 70,
+    borderRadius: 50,
+  },
+  name:{
+    paddingTop: 10,
+    color: 'rgba(0,0,0,1)',
+    fontFamily: 'Circular Std',
+    fontSize: 18,
+    textAlign: 'center'
+  },
   person1: {
     width: 75,
     height: 159,
@@ -52,9 +67,6 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 20,
     opacity: 1,
-    position: 'absolute',
-    top: 0,
-    left: 24,
     overflow: 'hidden',
   },
   circle1: {
