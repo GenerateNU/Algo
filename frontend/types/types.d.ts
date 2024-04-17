@@ -1,12 +1,9 @@
 export interface User {
-    first_name: string;
-    last_name: string;
-    username: string;
-    pass_word: string;
-    email: string;
-    risk_tolerance: string;
-    years_of_experience: number;
-    image_url: string;
+  id: string,
+  first_name: string;
+  last_name: string;
+  username: string;
+  image_url: string;
 }
 
 export type FinancialGoal = {
@@ -45,6 +42,15 @@ export type ClerkError = {
   longMessage: string;
 };
 
+export type Post = {
+  User: User,
+  post_type: PostType,
+  num_data: number,
+  ticker_symbol: string,
+  comment: string,
+  title: string
+}
+
 interface UserPortfolio {
   user_id: string;
   day_gain: number;
@@ -69,4 +75,9 @@ interface Position {
 enum TradeType {
   LONG = 'LONG',
   SHORT = 'SHORT'
+}
+export enum PostType {
+  ONE_MONTH_SUMMARY = '1 month summary',
+  RECENT_TRADE = 'Recent Trade',
+  SHARE_COMMENT = 'Share comment'
 }
