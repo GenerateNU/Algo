@@ -1,5 +1,6 @@
 import { Text, StyleSheet, View, Image } from 'react-native';
 import { Post } from '../../types/types';
+import Vote from './Vote';
 
 type PostProps = {
   post: Post;
@@ -25,6 +26,9 @@ const PostNew: React.FC<PostProps> = ({ post }) => {
         {post.comment}
        </Text>
       </View>
+    </View>
+    <View style={styles.vote}>
+      <Vote />
     </View>
     </View>
   );
@@ -69,6 +73,13 @@ const styles = StyleSheet.create({
   comment: {
     color: '#666666',
     fontSize: 16,
+  },
+  vote: {
+    left: 0,
+    top: 60,
+    width: 20,
+    height: 20,
+    zIndex: 1,
   }
 });
 
