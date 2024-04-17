@@ -37,9 +37,56 @@ const FeedPage = () => {
     });
   }, []);
 
+  const navigation: any = useNavigation();
+  
   const handleButtonPress = () => {
-    // navigation.navigate('ProfileExplore');
+    navigation.navigate('ProfileExplore');
   };
+
+  const u = {
+    id: 'user_2chL8dX6HdbBAuvu3DDM9f9NzKK',
+    first_name: 'Ania',
+    last_name: 'Misiorek',
+    username: 'ania',
+    image_url:
+      'https://ca.slack-edge.com/T2CHL6FEG-U05QP4M4M3P-349be7323f07-512',
+  };
+
+  const posts = [
+    {
+      user: u,
+      post_type: PostType.SHARE_COMMENT,
+      num_data: 100,
+      ticker_symbol: 'APPL',
+      title: 'Netflix Returns',
+      comment:
+        'Check out my returns this month! Let me know what you guys think!',
+    },
+    {
+      user: u,
+      post_type: PostType.RECENT_TRADE,
+      num_data: 100,
+      ticker_symbol: 'APPL',
+      title: 'Apple Trade',
+      comment: 'Just sold my APPL stock. Thoughts on the new M&A?',
+    },
+    {
+      user: u,
+      post_type: PostType.RECENT_TRADE,
+      num_data: 100,
+      ticker_symbol: 'APPL',
+      title: 'Apple Trade',
+      comment: 'Just sold my APPL stock. Thoughts on the new M&A?',
+    },
+    {
+      user: u,
+      post_type: PostType.RECENT_TRADE,
+      num_data: 100,
+      ticker_symbol: 'APPL',
+      title: 'Apple Trade',
+      comment: 'Just sold my APPL stock. Thoughts on the new M&A?',
+    },
+  ];
 
   return (
     <View style={styles.container}>
