@@ -2,20 +2,21 @@
 // @ts-expect-error
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import { Leader } from '../types/types';
+import { Trending } from '../types/types';
+import { TrendingUp, TrendingDown } from '@mui/icons-material';
 
-type PopularUserProps = {
-leader: Leader;
+type TrendingUserProps = {
+trending: Trending;
 }
 
-const PopularUser: React.FC<PopularUserProps> = ({ leader }: PopularUserProps) => {
+const TrendingUser: React.FC<TrendingUserProps> = ({ trending }: TrendingUserProps) => {
     return (
         <View style={styles.container}>
             {/* Column for image */}
             <View style={[styles.column, styles.imageColumn]}>
                 <View style={styles.imageContainer}>
                     <Image
-                        source={{uri: leader.leader_user.image_url}}
+                        source={{uri: trending.trending_user_reference.image_url}}
                         style={styles.image}
                     />
                 </View>
@@ -24,7 +25,7 @@ const PopularUser: React.FC<PopularUserProps> = ({ leader }: PopularUserProps) =
             <View style={[styles.column, styles.textColumn]}>
                 <View style={styles.textContainer}>
                     <Text style={styles.nameText}>
-                        {leader.leader_user.first_name} {leader.leader_user.last_name}
+                        {trending.trending_user_reference.first_name} {trending.trending_user_reference.last_name}
                     </Text>
                     <Text style={styles.actionText}>
                         Recent: Recent actions will display{"\n"} here
@@ -34,12 +35,17 @@ const PopularUser: React.FC<PopularUserProps> = ({ leader }: PopularUserProps) =
 
 
             <View style={[styles.column, styles.followersColumn]}>
-                <Image
-                    source={require("../assets/followers_logo.png")}
+
+            {trending.day_gain_pct > 0 ?
+                (<Image
+                    source={require("../assets/trend-up-green.png")}
                     style={styles.followersLogo}
-                />
+                />) : (<Image
+                    source={require("../assets/trend-down-red.png")}
+                    style={styles.followersLogo}
+                />)}
                 <Text style={styles.followersText}>
-                   {leader.follower_count}
+                   {trending.day_gain_pct}%
                 </Text>
             </View>
         </View>
@@ -64,8 +70,8 @@ const styles = StyleSheet.create({
     },
     followersColumn: {
         flex: 0.18,
-        flexDirection: 'row', // Check
-        justifyContent: 'flex-end', //check
+        flexDirection: 'row', 
+        justifyContent: 'flex-end', 
     },
     imageContainer: {
         width: 40,
@@ -98,7 +104,19 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         marginRight: 5,
-    }
+    },
+    greenIcon: {
+        width: 20,
+        height: 20,
+        marginRight: 5,
+        color: 'green', // Adjust the color as needed
+    },
+    redIcon: {
+        width: 20,
+        height: 20,
+        marginRight: 5,
+        color: 'red', // Adjust the color as needed
+    },
 });
 
-export default PopularUser;
+export default TrendingUser;

@@ -6,6 +6,7 @@ export interface User {
     email: string;
     risk_tolerance: string;
     years_of_experience: number;
+    image_url: string;
 }
 
 export type FinancialGoal = {
@@ -24,7 +25,7 @@ export type Leader = {
 }
 
 export type Trending = {
-  trending_user: User;
+  trending_user_reference: User;
   day_gain_pct: number;
 }
 
