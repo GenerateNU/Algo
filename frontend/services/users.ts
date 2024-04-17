@@ -15,7 +15,7 @@ export const getPosts = async (): Promise<Post[]> => {
   const response: AxiosResponse<Post[]> = await axios.get<Post[]>(
     `http://${API_LINK}/posts`,
   );
-  // console.log(response.data);
+
   return response.data;
 };
 

@@ -43,7 +43,7 @@ export type ClerkError = {
 };
 
 export type Post = {
-  user: User,
+  User: User,
   post_type: PostType,
   num_data: number,
   ticker_symbol: string,
