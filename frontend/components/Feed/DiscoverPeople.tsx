@@ -14,16 +14,14 @@ const DiscoverPeople: React.FC = () => {
     return (
         <View style={styles.container}>
             <View className="flex-row justify-between">
-                <Text style={styles.ppl_txt}>People</Text>
+                <Text style={styles.ppl_txt}>Discover People</Text>
                 <View>
                     <SvgXml xml={NextSvg} width="17" height="12" />
                 </View>
             </View>
             
             <ScrollView style={styles.people} horizontal={true}>
-              <User name="Michael" postIndex={1} />
-              <User name="Isabella" postIndex={2} />
-              <User name="Tony Alvarez" postIndex={3} />
+              <User name="Michael" postIndex={1}/>
             </ScrollView>
         </View>
     )
@@ -34,10 +32,9 @@ export default DiscoverPeople;
 const styles = StyleSheet.create({
     container: {
         marginTop: 30,
-
+        marginBottom: 30,
     },
     ppl_txt: {
-        width: 61,
         color: 'rgba(102,102,102,1)',
         // position: 'absolute',
         fontFamily: 'Circular Std',
@@ -47,8 +44,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     people: {
-        width: 350,
-        height: 159,
         // background: 'url("../images/v124_1288.png")',
         // backgroundRepeat: 'no-repeat',
         // backgroundPosition: 'center center',

@@ -2,10 +2,11 @@ import {
   TextInput,
   StyleSheet,
   View,
+  Text,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SvgXml } from 'react-native-svg';
-import { ScrollView } from 'react-native';
+import { ScrollView, SectionList } from 'react-native';
 import FeedTopBar from '../components/Feed/FeedTopBar';
 import DiscoverPeople from '../components/Feed/DiscoverPeople';
 import PostNew from '../components/Feed/PostNew';
@@ -22,6 +23,7 @@ const AddSvg = `
 const FeedPage = () => {
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState<string>('Explore')
+  const [firstPost, setFirstPost] = useState<Post | null>(null)
   const [posts, setPosts] = useState<Post[]>([]);
 
   const handleSearchChange = (text: string) => {
@@ -29,39 +31,76 @@ const FeedPage = () => {
   };
 
   useEffect(() => {
-    getPosts().then(data => setPosts(data.slice(1)));
+    getPosts().then(data => {
+      setFirstPost(data[0])
+      setPosts(data.slice(1));
+    });
   }, []);
 
   const handleButtonPress = () => {
-    navigation.navigate('ProfileExplore');
+    // navigation.navigate('ProfileExplore');
   };
 
   return (
     <View style={styles.container}>
-      <View>
-        <FeedTopBar tab={tab} setTab={setTab}/>
-        <ScrollView style={styles.scroll_view}>
-          <View style={styles.post_pos}>
-            {/* <View>
-              <Button
-                title="Go to Profile Explore"
-                onPress={handleButtonPress}
-              />
-            </View> */}
+        <View style={styles.top_bar}>
+          <FeedTopBar tab={tab} setTab={setTab}/>
+        </View>
+        
+        <View style={styles.list}>
+          <SectionList
+            style={styles.scroll_view}
+            //overScrollMode='never'
+            alwaysBounceVertical={true}
+            sections={[
+              {
+                data: [
+                  <View>
+                    {
+                      firstPost &&
+                      <View>
+                      <Text style={styles.title}>Featured Post</Text>
+                        <PostNew post={firstPost}/>
+                      </View>
+                    }
+                  </View>
 
-          </View>
-          <View style={styles.ppl_sec}>
-            <DiscoverPeople />
-          </View>
-          <View style={styles.posts}>
-            {posts.map((p) => (
-              <PostNew
-                post={p}
-              />
-            ))}
-
-            </View>
-        </ScrollView>
+                ]
+              },
+              {
+                data: [
+                  <View style={styles.ppl_sec}>
+                    <DiscoverPeople />
+                  </View>
+                ]
+              },
+              {
+                data: [
+                  <View style={styles.posts}>
+                    {
+                        posts.map((p) => (
+                          <PostNew
+                            post={p}
+                          />
+                        ))
+                    }
+                  </View>
+                ]
+              },
+              {
+                data: [
+                  <View style={styles.end}></View>
+                ]
+              }
+              
+            ]}
+            keyExtractor={(_, index) => index.toString()}
+            renderItem={({ item }) => <>{item}</>}
+            renderSectionHeader={() => <View className="" />}
+            stickySectionHeadersEnabled={false}
+          />
+        </View>
+        
         <View style={styles.search_box}>
           <TextInput
             style={styles.search_txt}
@@ -71,7 +110,6 @@ const FeedPage = () => {
           />
           
         </View>
-      </View>
       <View style={styles.search_add}>
             <SvgXml xml={AddSvg} width="40" height="40" className='shadow'/>
       </View>
@@ -86,11 +124,33 @@ const styles = StyleSheet.create({
     // boxSizing: 'border-box',
     flexDirection: "column",
     height: "100%",
+    flex: 1,
     backgroundColor: "#FFFFFF"
   },
+  top_bar: {
+    flex: 1,
+  },
+  end: {
+    height: 100,
+  },
+  list: {
+    flex: 5,
+  },
+  title: {
+    color: 'rgba(102,102,102,1)',
+    fontFamily: 'Circular Std',
+    fontWeight: '500',
+    fontSize: 17,
+    opacity: 1,
+    textAlign: 'left',
+},
   scroll_view: {
     flexDirection: 'column',
-    padding: 25,
+    paddingHorizontal: 25,
+    //flex: 10,
+    //height: "100%",
+    paddingTop: "15%",
+    paddingBottom: "50%"
   },
   body: {
     fontSize: 14,
@@ -100,7 +160,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   post_pos: {
-    marginTop: "20%",
+    marginTop: "15%",
     width: '100%',
     // background: 'url("../images/v124_1268.png")',
     // backgroundRepeat: 'no-repeat',
@@ -164,9 +224,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   search_txt: {
-    width: 64,
+    width: "100%",
     color: 'rgba(0,0,0,1)',
     position: 'absolute',
+    paddingRight: 12,
     top: 12,
     left: 24,
     // fontFamily: 'SF Pro Text',
