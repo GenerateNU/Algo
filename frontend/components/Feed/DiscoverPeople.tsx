@@ -20,7 +20,7 @@ const DiscoverPeople: React.FC = () => {
             </View>
             
             <ScrollView style={styles.people} horizontal={true}>
-              <User name="Michael" postIndex={1}/>
+              <User/>
             </ScrollView>
         </View>
     )
