@@ -4,7 +4,6 @@ import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
 import FeedPage from '../pages/FeedPage';
 import ProfileNavigator from './ProfileNavigation';
-import { useSession } from '@clerk/clerk-expo';
 import Leaderboard from '../pages/Leaderboard';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -36,8 +35,6 @@ export type BottomTabParamList = {
 };
 
 const BottomNavBar = () => {
-  const { session } = useSession();
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
