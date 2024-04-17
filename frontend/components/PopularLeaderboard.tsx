@@ -23,6 +23,6 @@ const PopularLeaderboard: React.FC<PopularProps> = ({leaderboard}: PopularProps)
         </ScrollView>
     )
 }
-const Separator = () => <View style={{ height: 15 }} />;
+//const Separator = () => <View style={{ height: 15 }} />;
 
 export default PopularLeaderboard;

@@ -23,6 +23,6 @@ const PopularTrendingBoard: React.FC<TrendingProps> = ({trendingboard}: Trending
         </ScrollView>
     )
 }
-const Separator = () => <View style={{ height: 15 }} />;
+//const Separator = () => <View style={{ height: 15 }} />;
 
 export default PopularTrendingBoard;
