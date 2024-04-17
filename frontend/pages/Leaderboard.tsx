@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
       padding: 20,
       paddingTop: "15%",
-      backgroundColor: '#f5f5f5',
+      backgroundColor: '#FFFFFF',
     },
     leaderboard: {
         flex: 1,

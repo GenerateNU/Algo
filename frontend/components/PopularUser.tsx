@@ -3,6 +3,7 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import { Leader } from '../types/types';
+import { Ionicons } from '@expo/vector-icons';
 
 type PopularUserProps = {
 leader: Leader;
@@ -33,10 +34,11 @@ const PopularUser: React.FC<PopularUserProps> = ({ leader, index }: PopularUserP
 
 
             <View style={[styles.column, styles.followersColumn]}>
-                <Image
+                {/* <Image
                     source={require("../assets/followers_logo.png")}
                     style={styles.followersLogo}
-                />
+                /> */}
+                <Ionicons name="person-outline" size={18} color="#333333" />
                 <Text style={styles.followersText}>
                    {leader.follower_count}
                 </Text>
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     followersText: {
-        color: '#787878',
+        color: '#333333',
         fontSize: 18
     },
     followersLogo: {
