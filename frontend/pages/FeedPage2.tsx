@@ -16,7 +16,9 @@ import Post1 from '../components/Post1';
 //import Post2 from '../components/Post2';
 import User from '../components/User';
 import { ScrollView } from 'react-native';
-import ProfileExplore from './ProfileExplore';
+//import ProfileExplore from './ProfileExplore';
+import PostDetails from './PostDetails';
+import Discover from './Discover';
 //import Follow from './Follow';
 import { useNavigation } from '@react-navigation/native';
 import { getPosts } from '../services/users';
@@ -57,11 +59,11 @@ const FeedPage = () => {
   const navigation: any = useNavigation();
 
   const handleButtonPress = () => {
-    navigation.navigate('ProfileExplore');
+    navigation.navigate('PostDetails');
   };
 
   const handleButtonPress2 = () => {
-    navigation.navigate('Follow');
+    navigation.navigate('Discover');
   };
 
   return (
@@ -111,6 +113,9 @@ const FeedPage = () => {
               <User name="Isabella" postIndex={2} />
               <User name="Tony Alvarez" postIndex={3} />
             </View>
+            <TouchableOpacity
+              style={styles.button2}
+              onPress={handleButtonPress2}></TouchableOpacity>
           </View>
           <View style={styles.post2}>
             <Post1
@@ -444,7 +449,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   v124_1286: {
-    width: 350,
+    width: 550,
     height: 203,
     // background: 'url("../images/v124_1286.png")',
     // backgroundRepeat: 'no-repeat',
@@ -454,7 +459,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 370,
     left: 0,
-    overflow: 'hidden',
   },
   v124_1287: {
     width: 150,
@@ -762,7 +766,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button2: {
-    width: 493,
+    width: 503,
     height: 160,
     position: 'absolute',
     bottom: 40,
