@@ -38,6 +38,11 @@ export type MakePostParamList = {
   PortfolioSummary: undefined;
 };
 
+export type ProfileStackParamList = {
+  Profile: undefined;
+  CopyTrades: undefined;
+};
+
 export type MakePostNavigationProp = StackNavigationProp<
   MakePostParamList
 >;
@@ -57,6 +62,10 @@ export type ProfileParamList = {
 export type LevelPageNavigationProp = StackNavigationProp<
   RootStackParamList,
   'LevelPage'
+>;
+
+export type ProfileNavigationProp = StackNavigationProp<
+  ProfileStackParamList
 >;
 
 // export type ConnectPageNavigationProp = StackNavigationProp<
