@@ -80,6 +80,8 @@ const Discover = () => {
     <View style={styles.container}>
       <View>
         <FeedTopBar tab={tab} setTab={setTab} />
+        <View style={styles.horizontalLine3}></View>
+        <View style={styles.horizontalLine4}></View>
         <ScrollView style={styles.scroll_view}>
           <View style={styles.post_pos}>
             {/* <View>
@@ -120,10 +122,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     height: '100%',
     backgroundColor: '#FFFFFF',
+    top: -50,
   },
   scroll_view: {
     flexDirection: 'column',
     padding: 25,
+    top: 100,
   },
   body: {
     fontSize: 14,
