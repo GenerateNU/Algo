@@ -1,5 +1,4 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import { Trending } from '../types/types';
@@ -35,17 +34,16 @@ const TrendingUser: React.FC<TrendingUserProps> = ({ trending }: TrendingUserPro
 
 
             <View style={[styles.column, styles.followersColumn]}>
-
-            {trending.day_gain_pct > 0 ?
-                (<Image
-                    source={require("../assets/trend-up-green.png")}
-                    style={styles.followersLogo}
-                />) : (<Image
-                    source={require("../assets/trend-down-red.png")}
-                    style={styles.followersLogo}
-                />)}
+                {
+                    trending.day_gain_pct > 0 ?
+                    (
+                        <TrendingUp sx={styles.followersLogo}/>
+                    ) : (
+                        <TrendingDown sx={styles.followersLogo}/>
+                    )
+                }
                 <Text style={styles.followersText}>
-                   {trending.day_gain_pct}%
+                    {trending.day_gain_pct}%
                 </Text>
             </View>
         </View>
