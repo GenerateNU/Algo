@@ -50,7 +50,7 @@ const PortfolioSummary: React.FC = () => {
             <View style={styles.statsContainer}>
                 <View style={styles.buySellContainer}>
                     <Text style={styles.buySellText}>Performance</Text>
-                    <LargeColorText amount={-7} />
+                    <LargeColorText amount={makePost.percentData} />
                 </View>
                 <View style={styles.allTimeContainer}>
                     <Text style={styles.allTimeText}>Yield Cost Ratio</Text>

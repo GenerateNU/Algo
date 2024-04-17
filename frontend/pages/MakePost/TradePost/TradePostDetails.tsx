@@ -60,7 +60,7 @@ const TradePostDetails: React.FC = () => {
                     </View>
                     <View style={styles.allTimeContainer}>
                         <Text style={styles.allTimeText}>All Time</Text>
-                        <LargeColorText amount={-7} />
+                        <LargeColorText amount={makePost.percentData} />
                     </View>
                 </View>
 

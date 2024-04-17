@@ -1,33 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MakePostNavigationProp } from '../../../types/navigationTypes';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import SmallColorText from '../UtilityTextAbstractions/SmallColorText';
-
-import { useDispatch } from 'react-redux';
-import { updateSummaryType } from '../../../reducers/makePost/makePostReducer';
+import SummaryOption from './UtilitySummaryAbstraction/SummaryOption';
 
 const SharePortfolioSummary: React.FC = () => {
     const navigation = useNavigation<MakePostNavigationProp>();
-
-    const dispatch = useDispatch();
-
-    const oneMonthSummary = () => {
-        dispatch(updateSummaryType('One Month Summary'));
-        navigation.navigate('PortfolioSummary');
-    }
-
-    const sixMonthSummary = () => {
-        dispatch(updateSummaryType('Six Month Summary'));
-        navigation.navigate('PortfolioSummary');
-    }
-
-    const oneYearSummary = () => {
-        dispatch(updateSummaryType('One Year Summary'));
-        navigation.navigate('PortfolioSummary');
-    }
 
     return (
         <View>
@@ -41,26 +21,11 @@ const SharePortfolioSummary: React.FC = () => {
         
             <View style={styles.buttonsContainer}>
 
-                <TouchableOpacity style={styles.button} onPress={oneMonthSummary}>
-                    <View style={styles.buttonContentContainer}>
-                        <Text style={styles.buttonTitle}>One Month Summary</Text>
-                    </View>
-                    <SmallColorText amount={-7} />
-                </TouchableOpacity>
+                <SummaryOption summaryType="One Month Summary" percent={-7} />
 
-                <TouchableOpacity style={styles.button} onPress={sixMonthSummary}>
-                    <View style={styles.buttonContentContainer}>
-                        <Text style={styles.buttonTitle}>Six Month Summary</Text>
-                    </View>
-                    <SmallColorText amount={21} />
-                </TouchableOpacity>
+                <SummaryOption summaryType="Six Month Summary" percent={21} />
 
-                <TouchableOpacity style={styles.button} onPress={oneYearSummary}>
-                    <View style={styles.buttonContentContainer}>
-                        <Text style={styles.buttonTitle}>One Year Summary</Text>
-                    </View>
-                    <SmallColorText amount={7} />
-                </TouchableOpacity>
+                <SummaryOption summaryType="One Year Summary" percent={7} />
 
             </View>
 
@@ -110,60 +75,6 @@ const styles = StyleSheet.create({
         height: 330,
         gap: 15
     },
-    buttonContentContainer: {
-        width: 260, // Increased to fit description
-        height: 41,
-        gap: 6,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    buttonTitle: {
-        fontSize: 16,
-        lineHeight: 19.09,
-        letterSpacing: -0.03,
-        fontWeight: "500",
-        fontFamily: 'SF Pro Text',
-        color: '#333333',
-    },
-    button: {
-        width: 346,
-        height: 100,
-        paddingVertical: 22,
-        paddingHorizontal: 19,
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#00000008',
-        backgroundColor: '#FDFDFD',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    buy: {
-        width: 346,
-        height: 75,
-        paddingVertical: 22,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: '#FF385C0F',
-        backgroundColor: '#FF2B511A',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    sell: {
-        width: 346,
-        height: 75,
-        paddingVertical: 22,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: '#FF385C0F',
-        backgroundColor: '#02AD9814',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        alignItems: 'center'
-    }
 });  
 
 export default SharePortfolioSummary;
