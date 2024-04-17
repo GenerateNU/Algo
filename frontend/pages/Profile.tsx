@@ -22,6 +22,7 @@ const Profile = () => {
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [portfolio, setPortfolio] = useState<UserPortfolio>()
   const route = useRoute()
+  const isFollowerProfile = (route.params as ProfileRouteParams)?.user !== undefined;
   const user = (route.params as ProfileRouteParams)?.user || session!.user!;
 
   const OnActivitySelected = () => {
@@ -69,7 +70,9 @@ const Profile = () => {
 
         <View className='flex flex-row'>
           <SubTabButton title='Portfolio' selected={pageNumber == 0} onPress={OnPortfolioSelected} />
-          <SubTabButton title='Activity' selected={pageNumber == 1} onPress={OnActivitySelected} />
+          {!isFollowerProfile && (
+            <SubTabButton title='Activity' selected={pageNumber == 1} onPress={OnActivitySelected} />
+          )}
         </View>
 
         <ScrollView
