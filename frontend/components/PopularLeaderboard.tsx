@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { Leader } from '../types/types';
 import PopularUser from './PopularUser';

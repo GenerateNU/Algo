@@ -2,7 +2,7 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import { Trending } from '../types/types';
-import { FontAwesome } from '@expo/vector-icons';
+//import { FontAwesome } from '@expo/vector-icons';
 
 type TrendingUserProps = {
 trending: Trending;
