@@ -3,12 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { User } from '../types/types';
 import { getAllUsers } from '../services/users';
 
-// interface PostProps {
-//   name: string;
-//   postIndex: number;
-// }
-
-const Post: React.FC = ({}) => {
+const Post: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
