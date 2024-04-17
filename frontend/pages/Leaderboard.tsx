@@ -8,43 +8,50 @@ import {Leader, Trending} from "../types/types";
 import {getPopularLeaderboard, getPopularTrending} from "../services/leaderboard";
 
 const Leaderboard: React.FC = () => {
+
+    const [tab, setTab] = useState("Popular Now");
+    const allTabs = ["Popular Now", "All time Bests"];
+
     //Fetch Leaders
     const [leaderboard, setLeaderboard] = useState<Leader[]>([]);
+    
     const [trendingboard, setTrendingBoard] = useState<Trending[]>([]);
+    const fetchLeaderboard = async () => {
+        try {
+            const leaders = await getPopularLeaderboard();
+            setLeaderboard(leaders);
+        } catch (error) {
+            console.error('Error fetching leaderboard:', error);
+        }
+    };
+
+    const fetchTrendingBoard = async () => {
+        try {
+            const trending = await getPopularTrending();
+            setTrendingBoard(trending);
+        } catch (error) {
+            console.error('Error fetching trendingboard')
+        }
+
+    };
+
     useEffect(() => {
-        const fetchLeaderboard = async () => {
-            try {
-                const leaders = await getPopularLeaderboard();
-                setLeaderboard(leaders);
-            } catch (error) {
-                console.error('Error fetching leaderboard:', error);
-            }
-        };
+        if (tab == "PopularNow") {
+            fetchLeaderboard();
+            fetchTrendingBoard()
+        }
+    }, [tab]);
 
-        const fetchTrendingBoard = async () => {
-            try {
-                const trending = await getPopularTrending();
-                setTrendingBoard(trending);
-            } catch (error) {
-                console.error('Error fetching trendingboard')
-            }
-
-        };
-
+    useEffect(() => {
         fetchLeaderboard();
         fetchTrendingBoard();
     }, []);
 
-
-
-    //END ATTEMPT
-    const [tab, setTab] = useState("Popular Now");
-    const allTabs = ["Popular Now", "All time Bests"];
     return (
         <View style={styles.container}>
             <Text className='pt-7 font-bold text-lg'>Leaderboard</Text>
             <View style={styles.leaderboard} className='rounded-md tabBar'>
-                <TabHeader activeTab={tab} allTabs={allTabs} setTab={setTab} style={styles.tabBar} />
+                <TabHeader activeTab={tab} allTabs={allTabs} setTab={setTab} />
                 {
                     tab == 'Popular Now' ? 
                         (<PopularLeaderboard leaderboard={leaderboard}/>) :
