@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Pressable, ScrollView, Text, View } from 'react-native';
+import { FlatList, Pressable, ScrollView, View } from 'react-native';
 import { useSession } from '@clerk/clerk-expo';
 import ProfileBanner from '../components/ProfileBanner';
 import SubTabButton from '../components/SubTabButton';
@@ -10,28 +10,34 @@ import { ProfileActivityData } from '../constants';
 import ProfilePerformance from '../components/ProfilePerformance';
 import SignOut from '../components/SignOutButton';
 import { getPortoflio } from '../services/etrade';
-import { ProfileRouteParams, UserPortfolio } from '../types/types';
+import { ProfileRouteParams } from '../types/types';
 import { ProfilePositions } from '../components/ProfilePositions';
+import { useSelector } from 'react-redux';
+import { RootState } from '../components/LayoutWrapper';
+import { useDispatch } from 'react-redux';
+import { updatePortfolio } from '../reducers/portfolio/portfolioReducer';
 // import SettingsSvg from '../assets/SettingsIcon.svg';
 
-
-
 const Profile = () => {
+  const dispatch = useDispatch();
   const { session } = useSession();
   const navigation = useNavigation();
   const [pageNumber, setPageNumber] = useState<number>(0);
-  const [portfolio, setPortfolio] = useState<UserPortfolio>()
-  const route = useRoute()
-  const isFollowerProfile = (route.params as ProfileRouteParams)?.user !== undefined;
+  const route = useRoute();
+  const isFollowerProfile =
+  (route.params as ProfileRouteParams)?.user !== undefined;
   const user = (route.params as ProfileRouteParams)?.user || session!.user!;
+  const {portfolio} = useSelector((state: RootState) => {
+    return state.portfolio;
+  });
 
   const OnActivitySelected = () => {
-    setPageNumber(1)
-  }
+    setPageNumber(1);
+  };
 
   const OnPortfolioSelected = () => {
-    setPageNumber(0)
-  }
+    setPageNumber(0);
+  };
 
   useEffect(() => {
     // set the title of the page
@@ -40,14 +46,26 @@ const Profile = () => {
       headerTitle: `@${user.username}`,
       headerTitleAlign: 'center',
       headerRight: () => (
-        <Icon type='material-community' name='cog' size={30} color='black' style={{paddingRight: 10}} />
+        <Icon
+          type="material-community"
+          name="cog"
+          size={30}
+          color="black"
+          style={{ paddingRight: 10 }}
+        />
       ),
       headerLeft: () => (
         <Pressable onPress={() => navigation.goBack()}>
-          <Icon type='material-community' name='chevron-left' size={30} color='black' style={{paddingLeft: 5}} />
+          <Icon
+            type="material-community"
+            name="chevron-left"
+            size={30}
+            color="black"
+            style={{ paddingLeft: 5 }}
+          />
         </Pressable>
       ),
-    })
+    });
 
     return navigation.addListener('focus', () => {
       if (session?.user.username === undefined) {
@@ -58,9 +76,11 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    getPortoflio(user.id).then(userPortfolio => {
-      setPortfolio(userPortfolio)
-    })
+    const fetchPortfolio = async () => {
+      const portfolio = await getPortoflio(user.id);
+      dispatch(updatePortfolio(portfolio));
+    };
+    fetchPortfolio();
   }, []);
 
   return (
@@ -120,7 +140,6 @@ const Profile = () => {
           </View>
         </ScrollView>
       </View>
-      <Text>{user.username}</Text>
       <SignOut />
     </ScrollView>
   );

@@ -11,14 +11,17 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useSession } from '@clerk/clerk-expo';
+import { useDispatch } from 'react-redux';
 import {
   ProfileNavigationProp,
   AuthNavigationProp,
 } from '../../types/navigationTypes';
 import { CopyRouteParams } from '../../types/types';
 import { copyTrades } from '../../services/copy';
+import { updatePortfolio } from '../../reducers/portfolio/portfolioReducer';
 
 function CopyTradesPage() {
+  const dispatch = useDispatch();
   const { session } = useSession();
   const navigation = useNavigation<ProfileNavigationProp>();
   const authNavigation = useNavigation<AuthNavigationProp>();
@@ -37,15 +40,15 @@ function CopyTradesPage() {
     }
 
     try {
-      await copyTrades(session?.user.id as string, user?.id);
-      // Alert.alert(`session?.user.id: ${session?.user.id} | user.id: ${user?.id}`);
+      const copiedPortfolio = await copyTrades(session?.user.id as string, user?.id);
+      dispatch(updatePortfolio(copiedPortfolio));
     } catch (error) {
       Alert.alert('Error', 'Failed to copy trades');
       return;
     }
 
     Alert.alert('Success', 'Trades copied successfully');
-    navigation.navigate('Profile');
+    navigation.navigate('FollowerProfile', { user });
   };
 
   return (

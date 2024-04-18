@@ -2,7 +2,6 @@ package services
 
 import (
 	"backend/src/models"
-	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -37,10 +36,8 @@ func (os *PortfolioService) CopyPortfolio(currentUserPortfolio models.UserPortfo
 
 		// if position exists, update the quantity -> skip to next position
 		if positionExists {
-			fmt.Println("position exists", matchingPosition.Ticker, matchingPosition.Quantity, position.Quantity)
 			matchingPosition.Quantity += position.Quantity
 			updatedPositions = append(updatedPositions, matchingPosition)
-			fmt.Println("position exists after", matchingPosition.Ticker, matchingPosition.Quantity, position.Quantity)
 			continue
 		}
 
