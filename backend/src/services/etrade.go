@@ -9,6 +9,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 
 	"github.com/gomodule/oauth1/oauth"
@@ -19,10 +20,8 @@ const APIEnv = "apisb" // "apisb" = SANDBOX, "api" = PROD
 
 var oauthClient = oauth.Client{
 	Credentials: oauth.Credentials{
-		// Token:  os.Getenv("OAUTH_KEY"),
-		// Secret: os.Getenv("OAUTH_SECRET"),
-		Token:  "a60539449cf51fe24ea8b618f26ce2692d4732255b2f310fb803e1c25bd06d1c",
-		Secret: "a60539449cf51fe24ea8b618f26ce2692d4732255b2f310fb803e1c25bd06d1c",
+		Token:  os.Getenv("OAUTH_KEY"),
+		Secret: os.Getenv("OAUTH_SECRET"),
 	},
 	TemporaryCredentialRequestURI: fmt.Sprintf("https://%s.etrade.com/oauth/request_token", APIEnv),
 	ResourceOwnerAuthorizationURI: "https://us.etrade.com/e/t/etws/authorize",
