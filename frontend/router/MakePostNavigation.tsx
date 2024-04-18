@@ -1,8 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import FeedPage from '../pages/FeedPage';
-
 import SharePost from '../pages/MakePost/SharePost';
 
 // Trade Post
