@@ -26,12 +26,12 @@ const PortfolioSummary: React.FC = () => {
 
     const dispatch = useDispatch();
 
-    const session = useSession();
+    const { session } = useSession();
 
     const createPost = async () => {
         await createPortfolioPost(
-            "user_2chL8dX6HdbBAuvu3DDM9f9NzKK",
-            //session.session?.id ?? '',
+            //"user_2chL8dX6HdbBAuvu3DDM9f9NzKK",
+            session?.user.id ?? '',
             makePost.percentData, // TODO: Fetch using financial API
             makePost.summaryType, // TODO: Fetch using financial API
         ).then(() => {

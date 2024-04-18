@@ -22,7 +22,7 @@ const TradePostDetails: React.FC = () => {
         return state.makePost;
     });
 
-    const session = useSession();
+    const { session } = useSession();
 
     const dispatch = useDispatch();
 
@@ -34,8 +34,8 @@ const TradePostDetails: React.FC = () => {
         dispatch(updateDescription(description));
 
         await createTradePost(
-            "user_2chL8dX6HdbBAuvu3DDM9f9NzKK",
-            //session.session?.id ?? '',
+            //"user_2chL8dX6HdbBAuvu3DDM9f9NzKK",
+            session?.user.id ?? '',
             makePost.percentData, // TODO: Fetch using financial API
             makePost.tickerSymbol, // TODO: Fetch using financial API
             title,
