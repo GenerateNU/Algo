@@ -15,10 +15,6 @@ index: number
 const PopularUser: React.FC<PopularUserProps> = ({ leader, index }: PopularUserProps) => {
     const navigation = useNavigation<OutsideProfileNavProp>();
     const handlePress = () => {
-        // navigation.navigate("Profile", {
-        //         screen: "FollowerProfile", {user: leader.leader_user}
-        //     }
-        // );
         navigation.navigate('Profile', 
         {screen: "FollowerProfile", params: { user: leader.leader_user}
         });
