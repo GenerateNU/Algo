@@ -4,7 +4,11 @@ import (
 	"backend/src/services"
 	"net/http"
 
+	// "fmt"
+
 	"github.com/gin-gonic/gin"
+
+	"backend/src/models"
 )
 
 type PortfolioController struct {
@@ -21,20 +25,26 @@ func NewPortfolioController(portfolioService *services.PortfolioService, etradeS
 
 // CopyPortfolio copies the target user's portfolio to the current user's portfolio
 func (etc *PortfolioController) CopyPortfolio(c *gin.Context) {
-	targetUserID := c.Param("target_user_id")
-	currentUserID := c.Param("current_user_id")
+	currentUserID := c.Query("current_user_id")
+	targetUserID := c.Query("target_user_id")
 
-	// get current user's portfolio. If it doesn't exist, return error
+	// get current user's portfolio. If it doesn't exist, create empty portfolio
 	currentUserPortfolio, err := etc.portfolioService.GetUserPortfolio(currentUserID)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Current User does not have an existing portfolio"})
-		return
+		// create empty portfolio for the user
+		emptyPortfolio := &models.UserPortfolio{}
+		newPortfolio, createErr := etc.portfolioService.CreateUserPortfolio(currentUserID, emptyPortfolio)
+		currentUserPortfolio = newPortfolio
+		if createErr != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create empty portfolio", "errorMessage": createErr.Error()})
+			return
+		}
 	}
 
 	// get target user's portfolio. If it doesn't exist, return error
 	targetPortfolio, err := etc.portfolioService.GetUserPortfolio(targetUserID)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Target User does not have portfolio to copy"})
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Target User does not have portfolio to copy", "errorMessage": err.Error()})
 		return
 	}
 
@@ -59,6 +69,7 @@ func (etc *PortfolioController) CopyPortfolio(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, updatedPortfolio)
+	// c.JSON(http.StatusOK, copiedPortfolio)
 }
 
 // GetUserPortfolio returns the user's portfolio

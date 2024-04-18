@@ -22,6 +22,24 @@ func (os *PortfolioService) CopyPortfolio(currentUserPortfolio models.UserPortfo
 	var newPositions []models.Position
 	targetPositions := targetPortfolio.Positions
 	for _, position := range targetPositions {
+		// check if position exists in currentUserPortfolio.positions (matching by position.Ticker)
+		positionExists := false
+		var matchingPosition models.Position
+		for i, p := range currentUserPortfolio.Positions {
+			if p.Ticker == position.Ticker {
+				positionExists = true
+				matchingPosition = currentUserPortfolio.Positions[i]
+				break
+			}
+		}
+
+		// if position exists, update the quantity -> skip to next position
+		if positionExists {
+			matchingPosition.Quantity += position.Quantity
+			continue
+		}
+
+		// if position doesn't already exist, copy the position
 		newPosition := models.Position{
 			UserPortfolioID: currentUserPortfolio.ID,
 			PositionID:      position.PositionID,
@@ -65,4 +83,14 @@ func (os *PortfolioService) GetUserPortfolio(userID string) (*models.UserPortfol
 		return nil, err
 	}
 	return &portfolio, nil
+}
+
+// CreateUserPortfolio creates a new portfolio for the user.
+func (os *PortfolioService) CreateUserPortfolio(userID string, portfolio *models.UserPortfolio) (*models.UserPortfolio, error) {
+	portfolio.UserID = userID
+	err := os.DB.Create(portfolio).Error
+	if err != nil {
+		return nil, err
+	}
+	return portfolio, nil
 }

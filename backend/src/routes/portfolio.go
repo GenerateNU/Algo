@@ -15,7 +15,7 @@ func SetupPortfolioRoutes(router *gin.Engine, db *gorm.DB) {
 
 	portfolioRoutes := router.Group("/portfolio")
 	{
-		portfolioRoutes.PUT("/:target_user_id/:current_user_id", portfolioController.CopyPortfolio)
+		portfolioRoutes.PUT("", portfolioController.CopyPortfolio)
 		/* different than getportfolio in etrade, returns single object for simplicity
 		keep etrade getportfolio route to match actual Etrade data
 		use either call depending on what you need

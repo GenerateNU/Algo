@@ -16,8 +16,7 @@ import {
   AuthNavigationProp,
 } from '../../types/navigationTypes';
 import { CopyRouteParams } from '../../types/types';
-// import { User } from '../../types/types';
-// import { copyTrades } from '../../services/copy';
+import { copyTrades } from '../../services/copy';
 
 function CopyTradesPage() {
   const { session } = useSession();
@@ -38,7 +37,8 @@ function CopyTradesPage() {
     }
 
     try {
-      // await copyTrades(session?.user.id as string, user.username);
+      await copyTrades(session?.user.id as string, user?.id);
+      // Alert.alert(`session?.user.id: ${session?.user.id} | user.id: ${user?.id}`);
     } catch (error) {
       Alert.alert('Error', 'Failed to copy trades');
       return;
@@ -69,10 +69,16 @@ function CopyTradesPage() {
         <View style={styles.inputGroup}>
           <Text style={styles.boldLabel}>Investment Amount</Text>
           <TextInput
-            style={styles.input}
-            value={`$${investmentAmount}`}
-            onChangeText={setInvestmentAmount}
             keyboardType="numeric"
+            value={`$${investmentAmount}`}
+            onChangeText={text => {
+              if (text.startsWith('$')) {
+                text = text.slice(1);
+              }
+              text = text.replace(/[^0-9]/g, '');
+              setInvestmentAmount(text);
+            }}
+            style={styles.input}
           />
           <Text style={styles.smallText}>
             This investment will proportionally copy this investor’s portfolio.
@@ -92,10 +98,16 @@ function CopyTradesPage() {
           <View style={styles.stopLossContainer}>
             <Text style={styles.label}>Investment Falls Below</Text>
             <TextInput
-              value={`$${stopLossAmount}`}
-              onChangeText={setStopLossAmount}
-              style={styles.input}
               keyboardType="numeric"
+              value={`$${stopLossAmount}`}
+              onChangeText={text => {
+                if (text.startsWith('$')) {
+                  text = text.slice(1);
+                }
+                text = text.replace(/[^0-9]/g, '');
+                setStopLossAmount(text);
+              }}
+              style={styles.input}
             />
           </View>
         )}
