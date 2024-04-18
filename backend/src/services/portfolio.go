@@ -2,6 +2,7 @@ package services
 
 import (
 	"backend/src/models"
+	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -20,6 +21,7 @@ func NewPortfolioService(db *gorm.DB) *PortfolioService {
 func (os *PortfolioService) CopyPortfolio(currentUserPortfolio models.UserPortfolio, targetPortfolio models.UserPortfolio) (models.UserPortfolio, error) {
 	// get the positions from the target portfolio
 	var newPositions []models.Position
+	var updatedPositions []models.Position
 	targetPositions := targetPortfolio.Positions
 	for _, position := range targetPositions {
 		// check if position exists in currentUserPortfolio.positions (matching by position.Ticker)
@@ -35,7 +37,10 @@ func (os *PortfolioService) CopyPortfolio(currentUserPortfolio models.UserPortfo
 
 		// if position exists, update the quantity -> skip to next position
 		if positionExists {
+			fmt.Println("position exists", matchingPosition.Ticker, matchingPosition.Quantity, position.Quantity)
 			matchingPosition.Quantity += position.Quantity
+			updatedPositions = append(updatedPositions, matchingPosition)
+			fmt.Println("position exists after", matchingPosition.Ticker, matchingPosition.Quantity, position.Quantity)
 			continue
 		}
 
@@ -59,6 +64,20 @@ func (os *PortfolioService) CopyPortfolio(currentUserPortfolio models.UserPortfo
 	err := os.DB.Transaction(func(tx *gorm.DB) error {
 		for _, position := range newPositions {
 			if err := tx.Create(&position).Error; err != nil {
+				return err
+			}
+		}
+		return nil
+	})
+
+	if err != nil {
+		return models.UserPortfolio{}, err
+	}
+
+	// update the positions that were already in the current user's portfolio
+	err = os.DB.Transaction(func(tx *gorm.DB) error {
+		for _, position := range updatedPositions {
+			if err := tx.Save(&position).Error; err != nil {
 				return err
 			}
 		}
