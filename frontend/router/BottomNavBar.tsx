@@ -2,9 +2,9 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
-import Profile from '../pages/Profile';
-import FeedPage from '../pages/FeedPage';
+import ProfileNavigator from './ProfileNavigation';
 import Leaderboard from '../pages/Leaderboard';
+import Feed from '../pages/Feed';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 type TabRouteName =
@@ -35,7 +35,6 @@ export type BottomTabParamList = {
 };
 
 const BottomNavBar = () => {
-  // const { session } = useSession();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -45,7 +44,7 @@ const BottomNavBar = () => {
       })}>
       <Tab.Screen
         name="Explore"
-        component={FeedPage}
+        component={Feed}
         options={{
           tabBarActiveTintColor: '#02AD98',
           tabBarShowLabel: false,
@@ -63,7 +62,7 @@ const BottomNavBar = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={ProfileNavigator}
         options={{
           tabBarActiveTintColor: '#02AD98',
           tabBarShowLabel: false,

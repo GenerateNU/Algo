@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import {RefreshControl, ScrollView} from "nativewind/dist/preflight";
 import ETradeAuth from "../components/ETradeAuth";
 import {TokenStatus} from "../types/types";
-import {getTokenStatus} from "../services/users";
+import {getTokenStatus} from "../services/etrade";
 
 const AuthPage = () => {
   const [authenticated, setAuthenticated] = useState(false)
@@ -15,7 +15,7 @@ const AuthPage = () => {
   }
 
   const getETradeTokenStatus = async () => {
-    const callback: TokenStatus = await getTokenStatus(2);
+    const callback: TokenStatus = await getTokenStatus('user_2chL8dX6HdbBAuvu3DDM9f9NzKK');
     if (callback.status === "active") {
       setAuthenticated(true)
     } else {

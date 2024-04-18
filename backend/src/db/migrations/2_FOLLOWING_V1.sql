@@ -19,4 +19,6 @@ INSERT INTO followings (follower_user_id, following_user_id)
 VALUES
   ('user_2chL8dX6HdbBAuvu3DDM9f9NzKK', 'user_2cpFbBLPGkPbszijtQneek7ZJxg'),
   ('user_2chL8dX6HdbBAuvu3DDM9f9NzKK', 'user_2dv5XFsCMYc4qLcsAnEJ1aUbxnk'),
-  ('user_2cpFbBLPGkPbszijtQneek7ZJxg', 'user_2chL8dX6HdbBAuvu3DDM9f9NzKK');
+  ('user_2cpFbBLPGkPbszijtQneek7ZJxg', 'user_2chL8dX6HdbBAuvu3DDM9f9NzKK'),
+  ('user_2fFVsSf4viW9pjx6Sd5dxEgutJ1', 'user_2dv5XFsCMYc4qLcsAnEJ1aUbxnk'),
+  ('user_2dv5XFsCMYc4qLcsAnEJ1aUbxnk', 'user_2fFVsSf4viW9pjx6Sd5dxEgutJ1');

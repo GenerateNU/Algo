@@ -1,9 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { Leader } from '../types/types';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { OutsideProfileNavProp } from '../types/navigationTypes';
 
 type PopularUserProps = {
 leader: Leader;
@@ -11,8 +13,15 @@ index: number
 }
 
 const PopularUser: React.FC<PopularUserProps> = ({ leader, index }: PopularUserProps) => {
+    const navigation = useNavigation<OutsideProfileNavProp>();
+    const handlePress = () => {
+        navigation.navigate('Profile', 
+        {screen: "FollowerProfile", params: { user: leader.leader_user}
+        });
+    };
+    
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={handlePress}>
             {/* Column for image */}
             <Text style={styles.rank}>{index + 1}</Text>
             <View style={[styles.column, styles.imageColumn]}>
@@ -43,7 +52,7 @@ const PopularUser: React.FC<PopularUserProps> = ({ leader, index }: PopularUserP
                    {leader.follower_count}
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 

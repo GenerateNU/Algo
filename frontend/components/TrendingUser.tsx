@@ -1,8 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { Trending } from '../types/types';
 import { AntDesign } from '@expo/vector-icons';
+import { OutsideProfileNavProp } from '../types/navigationTypes';
+import { useNavigation } from '@react-navigation/native';
 
 type TrendingUserProps = {
 trending: Trending;
@@ -11,9 +13,15 @@ index: number,
 
 const TrendingUser: React.FC<TrendingUserProps> = ({ trending, index }: TrendingUserProps) => {
     console.log(trending);
+    const navigation = useNavigation<OutsideProfileNavProp>();
+    const handlePress = () => {
+        navigation.navigate('Profile', 
+        {screen: "FollowerProfile", params: { user: trending.trending_user_reference}
+        });
+    };
     
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={handlePress}>
             {/* Column for image */}
             <Text style={styles.rank}>{index + 1}</Text>
             <View style={[styles.column, styles.imageColumn]}>
@@ -56,7 +64,7 @@ const TrendingUser: React.FC<TrendingUserProps> = ({ trending, index }: Trending
                     {Math.abs(trending.day_gain_pct)}%
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 
