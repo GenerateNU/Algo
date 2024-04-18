@@ -20,6 +20,8 @@ export type RootStackParamList = {
   ProfilePage: undefined;
   FollowerProfile: { user: User }
   Followers: { label: string, users: User[] };
+  Follow: undefined;
+  Feed: undefined;
 };
 
 export type ProfileOtherStack = {
