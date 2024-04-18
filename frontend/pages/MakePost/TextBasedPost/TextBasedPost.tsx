@@ -33,8 +33,8 @@ const TextBasedPost: React.FC = () => {
         dispatch(updateDescription(description));
 
         await createTextPost(
-            //"user_2chL8dX6HdbBAuvu3DDM9f9NzKK",
-            session.session?.id ?? '',
+            "user_2chL8dX6HdbBAuvu3DDM9f9NzKK",
+            //session.session?.id ?? '',
             title,
             description,
         ).then(() => {
