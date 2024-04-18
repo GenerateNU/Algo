@@ -1,5 +1,6 @@
 import {
   TextInput,
+  TouchableOpacity,
   StyleSheet,
   View,
   Text,
@@ -12,6 +13,10 @@ import DiscoverPeople from '../components/Feed/DiscoverPeople';
 import PostNew from '../components/Feed/PostNew';
 import { getPosts } from '../services/users';
 import { Post } from '../types/types';
+import { useDispatch } from 'react-redux';
+import { makePost } from '../reducers/onboarding/onboardingReducer';
+import { useNavigation } from '@react-navigation/native';
+import { MakePostNavigationProp } from '../types/navigationTypes';
 
 const AddSvg = `
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,78 +42,87 @@ const FeedPage = () => {
     });
   }, []);
 
+  const navigation = useNavigation<MakePostNavigationProp>();
+
+  const dispatch = useDispatch();
+
+  const startMakePost = async () => {
+    dispatch(makePost())
+  };
+
   return (
     <View style={styles.container}>
-        <View style={styles.top_bar}>
-          <FeedTopBar tab={tab} setTab={setTab}/>
-        </View>
-        
-        <View style={styles.list}>
-          <SectionList
-            style={styles.scroll_view}
-            //overScrollMode='never'
-            alwaysBounceVertical={true}
-            sections={[
-              {
-                data: [
-                  <View>
-                    {
-                      firstPost &&
-                      <View>
-                      <Text style={styles.title}>Featured Post</Text>
-                        <PostNew post={firstPost}/>
-                      </View>
-                    }
-                  </View>
-
-                ]
-              },
-              {
-                data: [
-                  <View style={styles.ppl_sec}>
-                    <DiscoverPeople />
-                  </View>
-                ]
-              },
-              {
-                data: [
-                  <View style={styles.posts}>
-                    {
-                        posts.map((p) => (
-                          <PostNew
-                            post={p}
-                          />
-                        ))
-                    }
-                  </View>
-                ]
-              },
-              {
-                data: [
-                  <View style={styles.end}></View>
-                ]
-              }
-              
-            ]}
-            keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item }) => <>{item}</>}
-            renderSectionHeader={() => <View className="" />}
-            stickySectionHeadersEnabled={false}
-          />
-        </View>
-        
-        <View style={styles.search_box}>
-          <TextInput
-            style={styles.search_txt}
-            value={search}
-            onChangeText={handleSearchChange}
-            placeholder="Search"
-          />
-          
-        </View>
-      <View style={styles.search_add}>
-            <SvgXml xml={AddSvg} width="40" height="40" className='shadow'/>
+      <View style={styles.top_bar}>
+        <FeedTopBar tab={tab} setTab={setTab}/>
       </View>
+      
+      <View style={styles.list}>
+        <SectionList
+          style={styles.scroll_view}
+          //overScrollMode='never'
+          alwaysBounceVertical={true}
+          sections={[
+            {
+              data: [
+                <View>
+                  {
+                    firstPost &&
+                    <View>
+                    <Text style={styles.title}>Featured Post</Text>
+                      <PostNew post={firstPost}/>
+                    </View>
+                  }
+                </View>
+
+              ]
+            },
+            {
+              data: [
+                <View style={styles.ppl_sec}>
+                  <DiscoverPeople />
+                </View>
+              ]
+            },
+            {
+              data: [
+                <View style={styles.posts}>
+                  {
+                      posts.map((p) => (
+                        <PostNew
+                          post={p}
+                        />
+                      ))
+                  }
+                </View>
+              ]
+            },
+            {
+              data: [
+                <View style={styles.end}></View>
+              ]
+            }
+            
+          ]}
+          keyExtractor={(_, index) => index.toString()}
+          renderItem={({ item }) => <>{item}</>}
+          renderSectionHeader={() => <View className="" />}
+          stickySectionHeadersEnabled={false}
+        />
+      </View>
+      
+      <View style={styles.search_box}>
+        <TextInput
+          style={styles.search_txt}
+          value={search}
+          onChangeText={handleSearchChange}
+          placeholder="Search"
+        />
+        
+      </View>
+      
+      <TouchableOpacity style={styles.search_add} onPress={startMakePost}>
+        <SvgXml xml={AddSvg} width="40" height="40" style={styles.shadow}/>
+      </TouchableOpacity>
     </View>
   );
 };

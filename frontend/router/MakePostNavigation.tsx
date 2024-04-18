@@ -22,12 +22,6 @@ const MakePostNavigator = () => {
   return (
     <Stack.Navigator initialRouteName="FeedPage">
       <Stack.Screen
-        name="FeedPage"
-        component={FeedPage}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
         name="SharePost"
         component={SharePost}
         options={{ headerShown: false }}

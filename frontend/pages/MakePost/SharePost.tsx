@@ -13,7 +13,6 @@ const SharePost: React.FC = () => {
     const dispatch = useDispatch();
 
     const cancelMakePost = () => {
-        navigation.goBack();
         dispatch(finishPost());
     };
 
