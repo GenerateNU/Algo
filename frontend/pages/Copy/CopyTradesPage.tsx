@@ -48,7 +48,7 @@ function CopyTradesPage() {
     }
 
     Alert.alert('Success', 'Trades copied successfully');
-    navigation.navigate('FollowerProfile', { user });
+    navigation.navigate('ProfilePage');
   };
 
   return (

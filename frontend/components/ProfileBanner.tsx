@@ -82,11 +82,23 @@ const ProfileBanner = ({ user }: ProfileBannerProps) => {
             </Pressable>
           </View>
 
-          <TouchableOpacity
-            className="flex items-center justify-center flex-1 mb-5 w-48"
-            style={profileStyles.followButton}>
-            <Text className="font-semibold text-[#02AD98]">Edit Profile</Text>
-          </TouchableOpacity>
+          {
+            user.id === session?.user.id ?
+            (
+              <TouchableOpacity
+                className="flex items-center justify-center flex-1 mb-5 w-48"
+                style={profileStyles.followButton}>
+                <Text className="font-semibold text-[#02AD98]">Edit Profile</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                className="flex items-center justify-center flex-1 mb-5 w-48"
+                style={profileStyles.followButton2}>
+                <Text className="font-semibold text-[#FFFFFF]">Follow User</Text>
+              </TouchableOpacity>
+            )
+          }
+          
         </View>
       </View>
 
@@ -113,4 +125,10 @@ const profileStyles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
   },
+  followButton2: {
+    backgroundColor: '#333333',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  }
 });

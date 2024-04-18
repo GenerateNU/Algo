@@ -9,7 +9,6 @@ const Stack = createStackNavigator();
 const ProfileNavigator = () => {
   return (
     <Stack.Navigator initialRouteName="ProfilePage">
-      {}
       <Stack.Screen name="ProfilePage" component={Profile} />
       <Stack.Screen name="FollowerProfile" component={Profile} />
       <Stack.Screen name="Followers" component={Followers} />
