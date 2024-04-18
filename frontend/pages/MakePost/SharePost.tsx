@@ -31,7 +31,7 @@ const SharePost: React.FC = () => {
                 <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('SelectTrade') }}>
                     <View style={styles.buttonContentContainer}>
                         <Text style={styles.buttonTitle}>Trade Post</Text>
-                        <Text style={styles.buttonDescription}>Show people a trade that you made</Text>
+                        <Text style={styles.buttonDescription}>Share a recent trade you made</Text>
                     </View>
                     <Icon name="navigate-next" style={styles.navigateNext} />
                 </TouchableOpacity>
@@ -39,7 +39,7 @@ const SharePost: React.FC = () => {
                 <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('SharePortfolioSummary') }}>
                     <View style={styles.buttonContentContainer}>
                         <Text style={styles.buttonTitle}>Portfolio Summary</Text>
-                        <Text style={styles.buttonDescription}>Show people a summary of your portfolio</Text>
+                        <Text style={styles.buttonDescription}>Share a summary of your portfolio</Text>
                     </View>
                     <Icon name="navigate-next" style={styles.navigateNext} />
                 </TouchableOpacity>
