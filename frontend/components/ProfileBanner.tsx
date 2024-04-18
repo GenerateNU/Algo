@@ -92,6 +92,7 @@ const ProfileBanner = ({ user }: ProfileBannerProps) => {
 
       <ProfileBio
         fullName={`${user.first_name || session?.user.firstName} ${user.last_name || session?.user.lastName}`}
+        username={`${user.username || session?.user.username}`}
         description="profile description? Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent vel nisi sed diam ultricies viverra sit amet nec dolor...."
       />
     </View>

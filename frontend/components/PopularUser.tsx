@@ -4,6 +4,8 @@ import React from 'react';
 import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { Leader } from '../types/types';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { OutsideProfileNavProp } from '../types/navigationTypes';
 
 type PopularUserProps = {
 leader: Leader;
@@ -11,9 +13,17 @@ index: number
 }
 
 const PopularUser: React.FC<PopularUserProps> = ({ leader, index }: PopularUserProps) => {
+    const navigation = useNavigation<OutsideProfileNavProp>();
     const handlePress = () => {
-
-    }
+        // navigation.navigate("Profile", {
+        //         screen: "FollowerProfile", {user: leader.leader_user}
+        //     }
+        // );
+        navigation.navigate('Profile', 
+        {screen: "FollowerProfile", params: { user: leader.leader_user}
+        });
+    };
+    
     return (
         <TouchableOpacity style={styles.container} onPress={handlePress}>
             {/* Column for image */}
