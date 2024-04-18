@@ -1,5 +1,5 @@
-import { Redirect, UserPortfolio } from '../types/types';
-import axios, { AxiosResponse, HttpStatusCode } from 'axios';
+import { Redirect } from '../types/types';
+import axios, { AxiosResponse } from 'axios';
 import { API_LINK } from './CommonDocs';
 
 export const createTradePost = async (userId: string, percentData: number, tickerSymbol: string, title: string, description: string): Promise<Redirect> => {

@@ -25,10 +25,6 @@ export default function LayoutWrapper() {
     return state.onboarding;
   });
 
-  const makePost = useSelector((state: RootState) => {
-    return state.makePost;
-  });
-
   return (
     <NavigationContainer>
       {

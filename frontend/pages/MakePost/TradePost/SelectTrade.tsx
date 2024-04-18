@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import SmallColorText from '../UtilityTextAbstractions/SmallColorText';
 import { useNavigation } from '@react-navigation/native';
 import { MakePostNavigationProp } from '../../../types/navigationTypes';
 import ColorTrade from './UtilityTradeAbstraction/ColorTrade';

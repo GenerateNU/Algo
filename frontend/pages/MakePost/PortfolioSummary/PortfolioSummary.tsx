@@ -20,10 +20,6 @@ const PortfolioSummary: React.FC = () => {
         return state.makePost;
     });
 
-    const onboarding = useSelector((state: RootState) => {
-        return state.onboarding;
-    });
-
     const dispatch = useDispatch();
 
     const { session } = useSession();

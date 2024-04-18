@@ -15,8 +15,6 @@ import { getPosts } from '../services/users';
 import { Post } from '../types/types';
 import { useDispatch } from 'react-redux';
 import { makePost } from '../reducers/onboarding/onboardingReducer';
-import { useNavigation } from '@react-navigation/native';
-import { MakePostNavigationProp } from '../types/navigationTypes';
 
 const AddSvg = `
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,8 +39,6 @@ const FeedPage = () => {
       setPosts(data.slice(1));
     });
   }, []);
-
-  const navigation = useNavigation<MakePostNavigationProp>();
 
   const dispatch = useDispatch();
 

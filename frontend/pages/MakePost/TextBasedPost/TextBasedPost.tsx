@@ -17,10 +17,6 @@ import { finishPost } from '../../../reducers/onboarding/onboardingReducer';
 const TextBasedPost: React.FC = () => {
     const navigation = useNavigation<MakePostNavigationProp>();
 
-    const makePost = useSelector((state: RootState) => {
-        return state.makePost;
-    });
-
     const { session } = useSession();
 
     const dispatch = useDispatch();
