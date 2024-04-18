@@ -40,3 +40,10 @@ export const registerUser = async (
   );
   return response.data;
 };
+
+export const getUserById = async (id: string): Promise<User> => {
+  const response: AxiosResponse<User> = await axios.get<User>(
+    `http://${API_LINK}/users/${id}`,
+  );
+  return response.data;
+};

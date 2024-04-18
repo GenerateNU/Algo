@@ -119,16 +119,80 @@ type ClerkWebhookEvent struct {
 	Type   string                 `json:"type"`
 }
 
+// Represents a trade order
+type Order struct {
+	AccountID     string       `json:"accountId"`
+	OrderType     string       `json:"orderType"`
+	Symbol        string       `json:"Product>symbol"`
+	SecurityType  string       `json:"Product>securityType"` // "EQ" for equity, "OPTION"
+	Action        string       `json:"orderAction"`          // "BUY", "SELL"
+	QuantityType  QuantityType `json:"quantityType"`         // "QUANTITY", "DOLLARS"
+	Quantity      int          `json:"quantity"`
+	OrderTerm     string       `json:"orderTerm"`     // "GOOD_FOR_DAY", "GOOD_UNTIL_CANCEL"
+	MarketSession string       `json:"marketSession"` // "REGULAR", "EXTENDED_HOURS"
+	PriceType     string       `json:"priceType"`     // "MARKET", "LIMIT"
+	LimitPrice    float64      `json:"limitPrice"`
+	StopPrice     float64      `json:"stopPrice"`
+	AllOrNone     bool         `json:"allOrNone"`
+	ClientOrderID string       `json:"clientOrderId"`
+	IsPreview     bool         `json:"isPreview"`
+	OrderID       string       `json:"orderId,omitempty"` // Provided by the API after order placement
+	Status        string       `json:"status,omitempty"`  // "OPEN", "FILLED", "CANCELLED"
+	PlacedTime    time.Time    `json:"placedTime,omitempty"`
+}
+
+// QuantityType represents the type of quantity used in an order
+type QuantityType string
+
+const (
+	QuantityTypeQuantity QuantityType = "QUANTITY"
+	QuantityTypeDollars  QuantityType = "DOLLARS"
+)
+
+// PreviewOrderRequest represents the structure for previewing an order on E*Trade
+type PreviewOrderRequest struct {
+	ClientOrderID string       `json:"clientOrderId"`
+	Order         []OrderEntry `json:"Order"`
+}
+
+// OrderEntry represents a single order entry with the order details
+type OrderEntry struct {
+	Instrument    []Instrument `json:"Instrument"`
+	OrderAction   string       `json:"orderAction"`
+	QuantityType  QuantityType `json:"quantityType"`
+	Quantity      int          `json:"quantity"`
+	OrderTerm     string       `json:"orderTerm"`
+	MarketSession string       `json:"marketSession"`
+	PriceType     string       `json:"priceType"`
+	LimitPrice    float64      `json:"limitPrice,omitempty"`
+	StopPrice     float64      `json:"stopPrice,omitempty"`
+	AllOrNone     bool         `json:"allOrNone"`
+}
+
+// Instrument represents a single financial instrument in an order
+type Instrument struct {
+	Product      Product      `json:"Product"`
+	OrderAction  string       `json:"orderAction"`  // Redundant, but sometimes expected by E*Trade APIs
+	QuantityType QuantityType `json:"quantityType"` // Also possibly redundant
+	Quantity     int          `json:"quantity"`
+}
+
+// Product represents product details like security type and symbol
+type Product struct {
+	SecurityType string `json:"securityType"`
+	Symbol       string `json:"symbol"`
+}
+
 type CreateTradePostRequest struct {
-	PercentData   float64 `json:"percent_data" binding:"required"`
-	TickerSymbol  string  `json:"ticker_symbol" binding:"required"`
-	Title         string  `json:"title" binding:"required"`
-	Description   string  `json:"description" binding:"required"`
+	PercentData  float64 `json:"percent_data" binding:"required"`
+	TickerSymbol string  `json:"ticker_symbol" binding:"required"`
+	Title        string  `json:"title" binding:"required"`
+	Description  string  `json:"description" binding:"required"`
 }
 
 type CreatePortfolioPostRequest struct {
-	PercentData  float64 `json:"percent_data" binding:"required"`
-	SummaryType  string  `json:"summary_type" binding:"required"`
+	PercentData float64 `json:"percent_data" binding:"required"`
+	SummaryType string  `json:"summary_type" binding:"required"`
 }
 
 type CreateTextPostRequest struct {

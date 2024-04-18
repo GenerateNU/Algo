@@ -1,6 +1,8 @@
 package models
 
-import "backend/src/types"
+import (
+	"backend/src/types"
+)
 
 type OAuthTokens struct {
 	types.Model

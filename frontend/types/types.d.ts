@@ -72,6 +72,10 @@ export interface ProfileRouteParams {
   user: User;
 }
 
+export interface CopyRouteParams {
+  user: User;
+}
+
 export interface FollowerRouteParams {
   users: User[],
   label: string

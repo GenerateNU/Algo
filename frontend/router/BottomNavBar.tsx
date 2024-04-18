@@ -48,7 +48,7 @@ const BottomNavBar = () => {
         options={{
           tabBarActiveTintColor: '#02AD98',
           tabBarShowLabel: false,
-          tabBarInactiveTintColor: '#333333'
+          tabBarInactiveTintColor: '#333333',
         }}
       />
       <Tab.Screen
@@ -57,7 +57,7 @@ const BottomNavBar = () => {
         options={{
           tabBarActiveTintColor: '#02AD98',
           tabBarShowLabel: false,
-          tabBarInactiveTintColor: '#333333'
+          tabBarInactiveTintColor: '#333333',
         }}
       />
       <Tab.Screen
@@ -66,7 +66,7 @@ const BottomNavBar = () => {
         options={{
           tabBarActiveTintColor: '#02AD98',
           tabBarShowLabel: false,
-          tabBarInactiveTintColor: '#333333'
+          tabBarInactiveTintColor: '#333333',
         }}
       />
     </Tab.Navigator>

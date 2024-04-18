@@ -3,15 +3,16 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import onboardingReducer from './reducers/onboarding/onboardingReducer';
 import makePostReducer from './reducers/makePost/makePostReducer';
+import portfolioReducer from './reducers/portfolio/portfolioReducer';
 import LayoutWrapper from './components/LayoutWrapper';
 import { ClerkProvider } from '@clerk/clerk-expo';
-//import 'react-native-gesture-handler';
 import * as SecureStore from 'expo-secure-store';
 
 const store = configureStore({
   reducer: {
     onboarding: onboardingReducer,
     makePost: makePostReducer,
+    portfolio: portfolioReducer,
   },
 });
 
