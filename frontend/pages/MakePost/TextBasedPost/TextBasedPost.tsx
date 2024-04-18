@@ -43,7 +43,7 @@ const TextBasedPost: React.FC = () => {
     }
 
     return (
-        <View>
+        <View style={styles.background}>
 
             <View style={styles.actionContainer}>
                 <Icon name="navigate-before" style={styles.navigateBefore} onPress={() => navigation.goBack()} />
@@ -72,6 +72,10 @@ const TextBasedPost: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+    background: {
+        backgroundColor: '#FFFFFF',
+        flex: 1,
+    },
     navigateBefore: {
         fontSize: 25,
         opacity: 0.25,

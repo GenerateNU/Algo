@@ -10,7 +10,7 @@ const SharePortfolioSummary: React.FC = () => {
     const navigation = useNavigation<MakePostNavigationProp>();
 
     return (
-        <View>
+        <View style={styles.background}>
 
             <Icon name="navigate-before" style={styles.navigateBefore} onPress={() => navigation.goBack()} />
 
@@ -34,6 +34,10 @@ const SharePortfolioSummary: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+    background: {
+        backgroundColor: '#FFFFFF',
+        flex: 1,
+    },
     navigateBefore: {
         fontSize: 25,
         opacity: 0.25,

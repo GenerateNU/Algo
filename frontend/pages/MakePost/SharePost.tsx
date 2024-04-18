@@ -17,7 +17,7 @@ const SharePost: React.FC = () => {
     };
 
     return (
-        <View>
+        <View style={styles.background}>
 
             <Icon name="navigate-before" style={styles.navigateBefore} onPress={cancelMakePost} />
 
@@ -59,6 +59,10 @@ const SharePost: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+    background: {
+        backgroundColor: '#FFFFFF',
+        flex: 1,
+    },
     navigateBefore: {
         fontSize: 25,
         opacity: 0.25,
