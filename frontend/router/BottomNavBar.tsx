@@ -2,8 +2,8 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
-import Profile from '../pages/Profile';
 import FeedPage from '../pages/FeedPage';
+import ProfileNavigator from './ProfileNavigation';
 import Leaderboard from '../pages/Leaderboard';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -35,7 +35,6 @@ export type BottomTabParamList = {
 };
 
 const BottomNavBar = () => {
-  // const { session } = useSession();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -63,7 +62,7 @@ const BottomNavBar = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={ProfileNavigator}
         options={{
           tabBarActiveTintColor: '#02AD98',
           tabBarShowLabel: false,

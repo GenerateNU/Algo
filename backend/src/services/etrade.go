@@ -4,6 +4,7 @@ import (
 	"backend/src/models"
 	"backend/src/types"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -326,6 +327,9 @@ func getETradePortfolio(client *http.Client, tokens *models.OAuthTokens, account
 func (s *ETradeService) GetUserPortfolio(userID string) (models.UserPortfolio, error) {
 	var portfolio models.UserPortfolio
 	if err := s.DB.Preload("Positions").Where("user_id = ?", userID).First(&portfolio).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return models.UserPortfolio{}, nil
+		}
 		return models.UserPortfolio{}, fmt.Errorf("error retrieving all positions from the database: %s", err)
 	}
 

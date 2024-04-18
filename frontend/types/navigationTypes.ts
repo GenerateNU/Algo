@@ -1,5 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { User } from './types';
 // import { createStackNavigator } from '@react-navigation/stack';
 
 export type RootStackParamList = {
@@ -15,6 +16,10 @@ export type RootStackParamList = {
   Confirmation: undefined;
   LongTermGoals: undefined;
   ShortTermGoals: undefined;
+  Profile: undefined;
+  ProfilePage: undefined;
+  FollowerProfile: { user: User }
+  Followers: { label: string, users: User[] };
 
   // AuthPage: undefined;
   // TutorialPage: undefined;

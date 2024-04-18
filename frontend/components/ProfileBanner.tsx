@@ -1,86 +1,115 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 // import { theme } from '../../theme'
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 // import ActionButton from '../ActionButton'
 // import { useNavigation } from '@react-navigation/native'
-import ProfileBio from './ProfileBio'
-// import { useSession } from '@clerk/clerk-expo'
+import ProfileBio from './ProfileBio';
+import { useNavigation } from '@react-navigation/native';
+import { AuthNavigationProp } from '../types/navigationTypes';
+import { getUserFollowers, getUserFollowing } from '../services/followers';
+import { User } from '../types/types';
+import { useSession } from '@clerk/clerk-expo';
 
 interface ProfileBannerProps {
-  user?: string
+  user: User;
 }
 
 const ProfileBanner = ({ user }: ProfileBannerProps) => {
-  /*
-  const { session } = useSession()
-  const navigation = useNavigation()
+  const { session } = useSession();
+  const navigation = useNavigation<AuthNavigationProp>();
+  const [following, setFollowing] = useState<User[]>([]);
+  const [followers, setFollowers] = useState<User[]>([]);
 
-  const navigateToEditProfile = () => {
-    navigation.navigate({ name: "Edit My Profile" })
-  }
-  */
+  const navigateToFollowers = () => {
+    navigation.navigate('Followers', { label: 'Followers', users: followers });
+  };
+
+  const navigateToFollowing = () => {
+    navigation.navigate('Followers', { label: 'Followers', users: following });
+  };
+
+  useEffect(() => {
+    getUserFollowers(user.id).then(users => {
+      setFollowers(users);
+    });
+    getUserFollowing(user.id).then(users => {
+      setFollowing(users);
+    });
+  }, []);
+
+  console.log(user);
 
   return (
-    <View className='flex flex-col px-4 mb-2'>
-
-      <View className='flex flex-row items-center justify-between gap-1 mb-4 mt-3'>
+    <View className="flex flex-col px-4 mb-2">
+      <View className="flex flex-row items-center justify-between gap-1 mb-4 mt-3">
         <Image
           // must be a perfect circle
-          className='w-32 h-32'
+          className="w-32 h-32"
           style={profileStyles.profileImage}
-          source={{ uri: "currentAuth?.photoURL" }}
+          source={{ uri: session?.user.imageUrl }}
         />
 
-        <View className='flex flex-col items-center flex-1 gap-2'>
-          <View className='flex flex-row justify-evenly flex-1' >
-            
-            <View className='flex flex-col items-center px-4 py-2'>
-              <Text className='text-sm font-semibold'>10</Text>
-              <Text className='text-sm font-semibold'>
-                Followers
+        <View className="flex flex-col items-center flex-1 gap-2">
+          <View className="flex flex-row justify-evenly flex-1">
+            <Pressable
+              className="flex flex-col items-center px-4 py-2"
+              onPress={navigateToFollowers}>
+              <Text className="text-sm font-semibold">
+                {followers?.length | 0}
               </Text>
-            </View>
+              <Text className="text-sm font-semibold">Followers</Text>
+            </Pressable>
 
-            <View className='flex flex-col items-center px-4 py-2'>
-              <Text className='text-sm font-semibold'>{10}</Text>
-              <Text adjustsFontSizeToFit={true} numberOfLines={1} className='text-sm font-semibold'>
+            <Pressable
+              className="flex flex-col items-center px-4 py-2"
+              onPress={navigateToFollowing}>
+              <Text className="text-sm font-semibold">
+                {following?.length | 0}
+              </Text>
+              <Text
+                adjustsFontSizeToFit={true}
+                numberOfLines={1}
+                className="text-sm font-semibold">
                 Following
               </Text>
-            </View>
+            </Pressable>
           </View>
 
           <TouchableOpacity
-            className='flex items-center justify-center flex-1 mb-5 w-48'
-            style={profileStyles.followButton}
-            onPress={() => console.log(user)}
-          >
-            <Text className='font-semibold text-[#02AD98]'>Edit Profile</Text>
+            className="flex items-center justify-center flex-1 mb-5 w-48"
+            style={profileStyles.followButton}>
+            <Text className="font-semibold text-[#02AD98]">Edit Profile</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       <ProfileBio
-        fullName="first_name last_name"
+        fullName={`${user.first_name || session?.user.firstName} ${user.last_name || session?.user.lastName}`}
         description="profile description? Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent vel nisi sed diam ultricies viverra sit amet nec dolor...."
       />
-
     </View>
-  )
-}
+  );
+};
 
-export default ProfileBanner
-
+export default ProfileBanner;
 
 const profileStyles = StyleSheet.create({
   profileImage: {
     borderRadius: 180,
-    borderColor: "black",
-    borderWidth: 2,
+    borderColor: '#CCCCCC',
+    borderWidth: 1,
   },
   followButton: {
-    backgroundColor: "rgba(2, 173, 152, 0.18)",
+    backgroundColor: 'rgba(2, 173, 152, 0.18)',
     paddingVertical: 5,
     paddingHorizontal: 20,
-    borderRadius: 5
+    borderRadius: 5,
   },
-})
+});

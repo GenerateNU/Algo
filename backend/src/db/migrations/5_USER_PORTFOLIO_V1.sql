@@ -19,4 +19,4 @@ VALUES
 ('user_2chL8dX6HdbBAuvu3DDM9f9NzKK', 130, 14, 680, 93),
 ('user_2cpFbBLPGkPbszijtQneek7ZJxg', -14, -8, 680, 93),
 ('user_2dv5XFsCMYc4qLcsAnEJ1aUbxnk', 400, 3, 680, 93),
-('user_2cwGfu9zcjsbxq5Lp8gy2rkVNlc', 200, 9, 680, 93);
+('user_2fFVsSf4viW9pjx6Sd5dxEgutJ1', 200, 9, 680, 93);
