@@ -5,10 +5,8 @@ import { MakePostNavigationProp } from '../../../types/navigationTypes';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { useSelector } from 'react-redux';
 import { createTextPost } from '../../../services/post';
 import { useSession } from '@clerk/clerk-expo';
-import { RootState } from '../../../components/LayoutWrapper';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateTitle, updateDescription } from '../../../reducers/makePost/makePostReducer';
