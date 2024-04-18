@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,15 +9,15 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useSession } from '@clerk/clerk-expo';
 import {
   ProfileNavigationProp,
   AuthNavigationProp,
 } from '../../types/navigationTypes';
-import { User } from '../../types/types';
-import { getUserById } from '../../services/users';
-import { copyTrades } from '../../services/copy';
+import { CopyRouteParams } from '../../types/types';
+// import { User } from '../../types/types';
+// import { copyTrades } from '../../services/copy';
 
 function CopyTradesPage() {
   const { session } = useSession();
@@ -28,20 +28,17 @@ function CopyTradesPage() {
   const [stopLossAmount, setStopLossAmount] = useState('500');
   const [tradeAuthorizationRequired, setTradeAuthorizationRequired] =
     useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const route = useRoute();
+  const user = (route.params as CopyRouteParams)?.user;
 
   const handleSubmit = async () => {
-    if (!user) {
-      Alert.alert('Error', "User doesn't exist");
-      return;
-    }
     if (!session?.user.id) {
       authNavigation.navigate('Login');
       return;
     }
 
     try {
-      await copyTrades(session?.user.id as string, user.username);
+      // await copyTrades(session?.user.id as string, user.username);
     } catch (error) {
       Alert.alert('Error', 'Failed to copy trades');
       return;
@@ -51,24 +48,13 @@ function CopyTradesPage() {
     navigation.navigate('Profile');
   };
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const user = await getUserById('');
-        setUser(user);
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
   return (
     <View style={styles.container}>
       <View style={styles.formWrapper}>
         <View style={styles.header}>
-          <Text style={styles.username}>@kevinkevindaliri</Text>
+          <Text style={styles.username}>
+            @{user?.username || 'kevinkevindaliri'}
+          </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
             <Text style={styles.closeButton}>×</Text>
           </TouchableOpacity>

@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Pressable, ScrollView, View } from 'react-native';
+import { FlatList, Pressable, ScrollView, Text, View } from 'react-native';
 import { useSession } from '@clerk/clerk-expo';
 import ProfileBanner from '../components/ProfileBanner';
 import SubTabButton from '../components/SubTabButton';
@@ -64,49 +64,63 @@ const Profile = () => {
   }, []);
 
   return (
-    <ScrollView className='bg-white'>
-      <View className='flex flex-col space-y-2'>
-        <ProfileBanner user={user}/>
+    <ScrollView className="bg-white">
+      <View className="flex flex-col space-y-2">
+        <ProfileBanner user={user} />
 
-        <View className='flex flex-row'>
-          <SubTabButton title='Portfolio' selected={pageNumber == 0} onPress={OnPortfolioSelected} />
+        <View className="flex flex-row">
+          <SubTabButton
+            title="Portfolio"
+            selected={pageNumber == 0}
+            onPress={OnPortfolioSelected}
+          />
           {!isFollowerProfile && (
-            <SubTabButton title='Activity' selected={pageNumber == 1} onPress={OnActivitySelected} />
+            <SubTabButton
+              title="Activity"
+              selected={pageNumber == 1}
+              onPress={OnActivitySelected}
+            />
           )}
         </View>
 
         <ScrollView
-          horizontal={true} className='flex flex-row h-screen' pagingEnabled={true}
+          horizontal={true}
+          className="flex flex-row h-screen"
+          pagingEnabled={true}
           showsHorizontalScrollIndicator={true}
-          onMomentumScrollEnd={(event) => {
+          onMomentumScrollEnd={event => {
             const offset = event.nativeEvent.contentOffset.x;
             const page = Math.round(offset / 375);
             console.log(`Page number: ${page}`);
             setPageNumber(page);
-          }}
-        >
-            {pageNumber === 0 && (
-              <View className='flex flex-col w-screen'>
-                <ProfilePerformance portfolioValue={portfolio?.total_gain_pct || 0} user={user} />
-                <ProfilePositions positions={portfolio?.positions}/>
-              </View>
-            )}
-          <View className='flex flex-col w-screen'>
+          }}>
+          {pageNumber === 0 && (
+            <View className="flex flex-col w-screen">
+              <ProfilePerformance
+                portfolioValue={portfolio?.total_gain_pct || 0}
+                user={user}
+              />
+              <ProfilePositions positions={portfolio?.positions} />
+            </View>
+          )}
+          <View className="flex flex-col w-screen">
             {pageNumber == 1 && (
               <FlatList
                 data={ProfileActivityData}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={item => item.id.toString()}
                 renderItem={({ item }) => (
                   <ActivityItem
                     title={item.title}
                     description={item.description}
-                    icon={item.icon} />
-                )} />
+                    icon={item.icon}
+                  />
+                )}
+              />
             )}
           </View>
         </ScrollView>
-
       </View>
+      <Text>{user.username}</Text>
       <SignOut />
     </ScrollView>
   );

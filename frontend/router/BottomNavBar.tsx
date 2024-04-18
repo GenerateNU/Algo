@@ -73,13 +73,4 @@ const BottomNavBar = () => {
   );
 };
 
-
-// const ProfileStack = createStackNavigator();
-// const ProfileStackNavigator = () => (
-//   <ProfileStack.Navigator initialRouteName="Profile">
-//     <ProfileStack.Screen name="Profile" component={Profile} />
-//     <ProfileStack.Screen name="CopyTrades" component={CopyTradesPage} />
-//   </ProfileStack.Navigator>
-// );
-
 export default BottomNavBar;
