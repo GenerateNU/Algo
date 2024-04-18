@@ -87,7 +87,7 @@ const Profile = () => {
         >
             {pageNumber === 0 && (
               <View className='flex flex-col w-screen'>
-                <ProfilePerformance portfolioValue={portfolio?.total_gain_pct || 0} />
+                <ProfilePerformance portfolioValue={portfolio?.total_gain_pct || 0} user={user} />
                 <ProfilePositions positions={portfolio?.positions}/>
               </View>
             )}

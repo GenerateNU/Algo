@@ -1,8 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { User } from './types';
-// import { createStackNavigator } from '@react-navigation/stack';
-
 export type RootStackParamList = {
   Login: undefined;
   SplashScreen: undefined;
@@ -40,7 +38,9 @@ export type MakePostParamList = {
 
 export type ProfileStackParamList = {
   Profile: undefined;
-  CopyTrades: undefined;
+  FollowerProfile: { user: User };
+  Followers: { label: string; users: User[] };
+  CopyTrades: { user: User };
 };
 
 export type MakePostNavigationProp = StackNavigationProp<
@@ -65,27 +65,7 @@ export type LevelPageNavigationProp = StackNavigationProp<
 >;
 
 export type ProfileNavigationProp = StackNavigationProp<
-  ProfileStackParamList
+  RootStackParamList
 >;
-
-// export type ConnectPageNavigationProp = StackNavigationProp<
-//   RootStackParamList,
-//   'ConnectPage'
-// >;
-
-// export type TutorialPageNavigationProp = StackNavigationProp<
-//   RootStackParamList,
-//   'TutorialPage'
-// >;
-
-// export type MainAppNavigationProp = StackNavigationProp<
-//   RootStackParamList,
-//   'MainApp'
-// >;
-
-// export type AuthPageNavigationProp = StackNavigationProp<
-//   RootStackParamList,
-//   'AuthPage'
-// >;
 
 export type SplashScreenRouteProp = RouteProp<RootStackParamList, 'SplashScreen'>;
