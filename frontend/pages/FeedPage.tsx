@@ -46,7 +46,7 @@ const FeedPage = () => {
 
   const dispatch = useDispatch();
 
-  const startMakePost = async () => {
+  const startMakePost = () => {
     dispatch(makePost())
   };
 
