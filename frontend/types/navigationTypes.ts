@@ -37,10 +37,6 @@ export type ProfileParamList = {
   Followers: { label: string, users: User[] };
 }
 
-export type ToProfileParamList = {
-  
-}
-
 export type LevelPageNavigationProp = StackNavigationProp<
   RootStackParamList,
   'LevelPage'
