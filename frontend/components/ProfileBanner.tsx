@@ -51,7 +51,7 @@ const ProfileBanner = ({ user }: ProfileBannerProps) => {
           // must be a perfect circle
           className="w-32 h-32"
           style={profileStyles.profileImage}
-          source={{ uri: 'currentAuth?.photoURL' }}
+          source={{ uri: user.image_url }}
         />
 
         <View className="flex flex-col items-center flex-1 gap-2">
