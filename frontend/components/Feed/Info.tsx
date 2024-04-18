@@ -1,4 +1,4 @@
-import { Text, StyleSheet, View, Image } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 // import { Post } from '../../types/types';
 // import Vote from './Vote';
 // import { SvgXml } from 'react-native-svg';
