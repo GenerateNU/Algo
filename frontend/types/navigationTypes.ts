@@ -16,19 +16,26 @@ export type RootStackParamList = {
   Confirmation: undefined;
   LongTermGoals: undefined;
   ShortTermGoals: undefined;
-  Profile: undefined;
+  Profile: undefined | { screen: "FollowerProfile"; params: { user: User } };
   ProfilePage: undefined;
   FollowerProfile: { user: User }
   Followers: { label: string, users: User[] };
-
-  // AuthPage: undefined;
-  // TutorialPage: undefined;
-  // MainApp: undefined;
 };
+
+export type ProfileOtherStack = {
+  Profile: undefined | { screen: "FollowerProfile"; params: { user: User } };
+};
+
+export type OutsideProfileNavProp = StackNavigationProp<ProfileOtherStack>;
 
 export type AuthNavigationProp = StackNavigationProp<
   RootStackParamList
 >;
+
+export type ProfileParamList = {
+  FollowerProfile: { user: User }
+  Followers: { label: string, users: User[] };
+}
 
 export type LevelPageNavigationProp = StackNavigationProp<
   RootStackParamList,
