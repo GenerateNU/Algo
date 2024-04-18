@@ -28,7 +28,22 @@ export type ProfileOtherStack = {
   Profile: undefined | { screen: "FollowerProfile"; params: { user: User } };
 };
 
+
+export type MakePostParamList = {
+  SharePost: undefined;
+  SelectTrade: undefined;
+  TradePostDetails: undefined;
+  TextBasedPost: undefined;
+  SharePortfolioSummary: undefined;
+  PortfolioSummary: undefined;
+};
+
+export type MakePostNavigationProp = StackNavigationProp<
+  MakePostParamList
+>;
+
 export type OutsideProfileNavProp = StackNavigationProp<ProfileOtherStack>;
+
 
 export type AuthNavigationProp = StackNavigationProp<
   RootStackParamList
