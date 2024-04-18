@@ -44,6 +44,8 @@ const ProfileBanner = ({ user }: ProfileBannerProps) => {
     });
   }, []);
 
+  console.log(user);
+
   return (
     <View className="flex flex-col px-4 mb-2">
       <View className="flex flex-row items-center justify-between gap-1 mb-4 mt-3">
@@ -51,7 +53,7 @@ const ProfileBanner = ({ user }: ProfileBannerProps) => {
           // must be a perfect circle
           className="w-32 h-32"
           style={profileStyles.profileImage}
-          source={{ uri: user.image_url }}
+          source={{ uri: session?.user.imageUrl }}
         />
 
         <View className="flex flex-col items-center flex-1 gap-2">
@@ -101,8 +103,8 @@ export default ProfileBanner;
 const profileStyles = StyleSheet.create({
   profileImage: {
     borderRadius: 180,
-    borderColor: 'black',
-    borderWidth: 2,
+    borderColor: '#CCCCCC',
+    borderWidth: 1,
   },
   followButton: {
     backgroundColor: 'rgba(2, 173, 152, 0.18)',
