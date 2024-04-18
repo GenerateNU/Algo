@@ -1,7 +1,9 @@
-import { Text, StyleSheet, View, Image } from 'react-native';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 //import { Post, PostType} from '../../types/types';
 import Vote from './Vote';
 import Info from './Info';
+import { useNavigation } from '@react-navigation/native';
+import { OutsideProfileNavProp } from '../../types/navigationTypes';
 
 type PostProps = {
   post: Post;
@@ -33,18 +35,25 @@ export enum PostType {
 
 const PostNew: React.FC<PostProps> = ({ post }) => {
   console.log(post.post_type);
-  console.log(post)
-  console.log("Is this a recent trade?", post.post_type == PostType.RECENT_TRADE)
+  console.log(post);
+  console.log("Is this a recent trade?", post.post_type == PostType.RECENT_TRADE);
+  const navigation = useNavigation<OutsideProfileNavProp>();
+
+  const handlePress = () => {
+    navigation.navigate('Profile', 
+    {screen: "FollowerProfile", params: { user: post.User}
+    });
+};
   return (
     <View style={styles.border}>
       <View style={styles.container}>
-        <View style={styles.profile}>
+        <TouchableOpacity style={styles.profile} onPress={handlePress}>
           <Image
             style={styles.image}
             source={{ uri: post.User.image_url }}></Image>
-        </View>
+        </TouchableOpacity>
         <View style={styles.body}>
-          <Text style={styles.name}>
+          <Text style={styles.name} onPress={handlePress}>
             {post.User.first_name} {post.User.last_name}
           </Text>
           <Text style={styles.title}>{post.title}</Text>
