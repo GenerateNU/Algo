@@ -1,35 +1,88 @@
-import { Text, StyleSheet, View, Image } from 'react-native';
-import { Post } from '../../types/types';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+//import { Post, PostType} from '../../types/types';
 import Vote from './Vote';
+import Info from './Info';
+import { useNavigation } from '@react-navigation/native';
+import { OutsideProfileNavProp } from '../../types/navigationTypes';
 
 type PostProps = {
   post: Post;
 };
 
-const PostNew: React.FC<PostProps> = ({ post }) => {
+// running into a really weird comp error, see if these can be removed latter
+export interface User {
+  id: string,
+  first_name: string;
+  last_name: string;
+  username: string;
+  image_url: string;
+}
 
+type Post = {
+  User: User,
+  post_type: PostType,
+  num_data: number,
+  ticker_symbol: string,
+  comment: string,
+  title: string
+}
+
+export enum PostType {
+  ONE_MONTH_SUMMARY = '1 month summary',
+  RECENT_TRADE = 'Recent Trade',
+  SHARE_COMMENT = 'Share comment'
+}
+
+const PostNew: React.FC<PostProps> = ({ post }) => {
+  console.log(post.post_type);
+  console.log(post);
+  console.log("Is this a recent trade?", post.post_type == PostType.RECENT_TRADE);
+  const navigation = useNavigation<OutsideProfileNavProp>();
+
+  const handlePress = () => {
+    navigation.navigate('Profile', 
+    {screen: "FollowerProfile", params: { user: post.User}
+    });
+};
   return (
     <View style={styles.border}>
-    <View style={styles.container}>
-      <View style={styles.profile}>
-        <Image style={styles.image} source={{uri: post.User.image_url}}>
-        </Image>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.profile} onPress={handlePress}>
+          <Image
+            style={styles.image}
+            source={{ uri: post.User.image_url }}></Image>
+        </TouchableOpacity>
+        <View style={styles.body}>
+          <Text style={styles.name} onPress={handlePress}>
+            {post.User.first_name} {post.User.last_name}
+          </Text>
+          <Text style={styles.title}>{post.title}</Text>
+          {post.post_type == 'Recent trade' ? (
+            <View style={styles.info}>
+              {post.num_data < 250 ? (
+                <Info
+                  type={1}
+                  company={post.ticker_symbol} //post.ticker_symbol
+                  price={post.num_data} //post.num_data
+                  percent={17}
+                />
+              ) : (
+                <Info
+                  type={2}
+                  company={post.ticker_symbol} //post.ticker_symbol
+                  price={post.num_data} //post.num_data
+                  percent={17}
+                />
+              )}
+            </View>
+          ) : (
+            <Text style={styles.comment}>{post.comment}</Text>
+          )}
+          <View style={styles.vote}>
+            <Vote />
+          </View>
+        </View>
       </View>
-      <View style={styles.body}>
-        <Text style={styles.name}>
-          {post.User.first_name} {post.User.last_name}
-        </Text>
-       <Text style={styles.title}>
-        {post.title}
-       </Text>
-       <Text style={styles.comment}>
-        {post.comment}
-       </Text>
-       <View style={styles.vote}>
-       <Vote />
-       </View>
-      </View>
-    </View>
     </View>
   );
 };
@@ -78,7 +131,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: 100,
     height: 20,
-  }
+  },
+  info: {
+    marginTop: 10,
+  },
 });
 
-export default PostNew; 
+export default PostNew;
