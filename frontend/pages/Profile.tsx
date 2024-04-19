@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Pressable, ScrollView, View } from 'react-native';
+import { FlatList, Pressable, ScrollView, View, Text } from 'react-native';
 import { useSession } from '@clerk/clerk-expo';
 import ProfileBanner from '../components/ProfileBanner';
 import SubTabButton from '../components/SubTabButton';
@@ -10,13 +10,10 @@ import { ProfileActivityData } from '../constants';
 import ProfilePerformance from '../components/ProfilePerformance';
 import SignOut from '../components/SignOutButton';
 import { getPortoflio } from '../services/etrade';
-import { ProfileRouteParams } from '../types/types';
+import { ProfileRouteParams, UserPortfolio } from '../types/types';
 import { ProfilePositions } from '../components/ProfilePositions';
-import { useSelector } from 'react-redux';
-import { RootState } from '../components/LayoutWrapper';
+
 import { useDispatch } from 'react-redux';
-import { updatePortfolio } from '../reducers/portfolio/portfolioReducer';
-// import SettingsSvg from '../assets/SettingsIcon.svg';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -26,10 +23,11 @@ const Profile = () => {
   const route = useRoute();
   const isFollowerProfile =
   (route.params as ProfileRouteParams)?.user !== undefined;
+  const [portfolio, setPortfolio] = useState<UserPortfolio | null>();
   const user = (route.params as ProfileRouteParams)?.user || session!.user!;
-  const {portfolio} = useSelector((state: RootState) => {
-    return state.portfolio;
-  });
+  // const {portfolio} = useSelector((state: RootState) => {
+  //   return state.portfolio;
+  // });
 
   const OnActivitySelected = () => {
     setPageNumber(1);
@@ -38,6 +36,14 @@ const Profile = () => {
   const OnPortfolioSelected = () => {
     setPageNumber(0);
   };
+
+  useEffect(() => {
+    const fetchPortfolio = async () => {
+      const portfolio = await getPortoflio(user.id);
+      setPortfolio(portfolio);
+    };
+    fetchPortfolio();
+  }, [user]);
 
   useEffect(() => {
     // set the title of the page
@@ -75,13 +81,6 @@ const Profile = () => {
     });
   }, []);
 
-  useEffect(() => {
-    const fetchPortfolio = async () => {
-      const portfolio = await getPortoflio(user.id);
-      dispatch(updatePortfolio(portfolio));
-    };
-    fetchPortfolio();
-  }, []);
 
   return (
     <ScrollView className="bg-white">
@@ -114,13 +113,18 @@ const Profile = () => {
             console.log(`Page number: ${page}`);
             setPageNumber(page);
           }}>
-          {pageNumber === 0 && (
+          {(pageNumber === 0 && portfolio != null) && (
             <View className="flex flex-col w-screen">
               <ProfilePerformance
                 portfolioValue={portfolio?.total_gain_pct || 0}
                 user={user}
               />
               <ProfilePositions positions={portfolio?.positions} />
+            </View>
+          )}
+          {(pageNumber === 0 && portfolio == null) && (
+            <View className="flex flex-col w-screen mb-20">
+              <Text>Loading...</Text>
             </View>
           )}
           <View className="flex flex-col w-screen">

@@ -1,10 +1,22 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View , TouchableOpacity} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { User } from '../types/types';
 import { getAllUsers } from '../services/users';
+import { useNavigation } from '@react-navigation/native';
+import { OutsideProfileNavProp } from '../types/navigationTypes';
 
 const Post: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
+
+  const navigation = useNavigation<OutsideProfileNavProp>();
+
+  const handlePress = (u: User) => {
+    console.log("trying to navigate on user, ");
+    console.log(u);
+    navigation.navigate('Profile', 
+      {screen: "FollowerProfile", params: { user: u}
+    });
+  };
 
   useEffect(() => {
     getAllUsers().then(data => {
@@ -16,11 +28,11 @@ const Post: React.FC = () => {
     <View style={styles.container}>
 {
       users.map((u) => (
-        <View style={styles.body}>
-        <Image style={styles.image} source={{uri: u.image_url}}>
-        </Image>
-        <Text style={styles.name}>{u.first_name}</Text>
-        </View>
+        <TouchableOpacity style={styles.body} onPress={() => handlePress(u)}>
+          <Image style={styles.image} source={{uri: u.image_url}}>
+          </Image>
+          <Text style={styles.name}>{u.first_name}</Text>
+        </TouchableOpacity>
       ))
     }
       </View>

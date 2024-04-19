@@ -41,9 +41,9 @@ const PostNew: React.FC<PostProps> = ({ post }) => {
 
   const handlePress = () => {
     navigation.navigate('Profile', 
-    {screen: "FollowerProfile", params: { user: post.User}
+      {screen: "FollowerProfile", params: { user: post.User}
     });
-};
+  };
   return (
     <View style={styles.border}>
       <View style={styles.container}>

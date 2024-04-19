@@ -105,7 +105,7 @@ const ProfileBanner = ({ user }: ProfileBannerProps) => {
       <ProfileBio
         fullName={`${user.first_name || session?.user.firstName} ${user.last_name || session?.user.lastName}`}
         username={`${user.username || session?.user.username}`}
-        description="📈🚀💰"
+        description="📈🚀💰 GMT to the moon!!!!!!"
       />
     </View>
   );
