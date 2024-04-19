@@ -26,7 +26,6 @@ export type ProfileOtherStack = {
   Profile: undefined | { screen: "FollowerProfile"; params: { user: User } };
 };
 
-
 export type MakePostParamList = {
   SharePost: undefined;
   SelectTrade: undefined;

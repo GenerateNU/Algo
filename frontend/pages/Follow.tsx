@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { SvgXml } from 'react-native-svg';
 import { SectionList } from 'react-native';
 import FeedTopBar from '../components/Feed/FeedTopBar';
-//import DiscoverPeople from '../components/Feed/DiscoverPeople';
 import PostNew from '../components/Feed/PostNew';
 import { getPosts } from '../services/users';
 import { Post } from '../types/types';

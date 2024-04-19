@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-// import FeedPage from '../../pages/FeedPage';
-// import Follow from '../../pages/Follow';
+import FeedPage from '../../pages/FeedPage';
+import Follow from '../../pages/Follow';
 import { AuthNavigationProp } from '../../types/navigationTypes';
 
 type FeedBarProps = {
@@ -14,12 +14,10 @@ const FeedTopBar: React.FC<FeedBarProps> = ({ tab, setTab }) => {
   const navigation = useNavigation<AuthNavigationProp>();
 
   const handleButtonPress = () => {
-    setTab('Explore')
     navigation.navigate('Feed');
   };
 
   const handleButtonPress2 = () => {
-    setTab('Explore')
     navigation.navigate('Follow');
   };
 

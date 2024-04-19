@@ -117,6 +117,4 @@ const Info: React.FC<PostProps> = ({ type, company, price, percent }) => {
   }
 };
 
-// Define the styles for the component
-
 export default Info;

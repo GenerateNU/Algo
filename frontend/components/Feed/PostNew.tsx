@@ -62,15 +62,15 @@ const PostNew: React.FC<PostProps> = ({ post }) => {
               {post.num_data < 250 ? (
                 <Info
                   type={1}
-                  company={post.ticker_symbol} //post.ticker_symbol
-                  price={post.num_data} //post.num_data
+                  company={post.ticker_symbol}
+                  price={post.num_data}
                   percent={17}
                 />
               ) : (
                 <Info
                   type={2}
-                  company={post.ticker_symbol} //post.ticker_symbol
-                  price={post.num_data} //post.num_data
+                  company={post.ticker_symbol}
+                  price={post.num_data}
                   percent={17}
                 />
               )}
