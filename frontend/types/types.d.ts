@@ -1,13 +1,9 @@
 export interface User {
-    id: string;
-    first_name: string;
-    last_name: string;
-    username: string;
-    pass_word: string;
-    email: string;
-    risk_tolerance: string;
-    years_of_experience: number;
-    image_url: string;
+  id: string,
+  first_name: string;
+  last_name: string;
+  username: string;
+  image_url: string;
 }
 
 export type FinancialGoal = {
@@ -76,15 +72,13 @@ export interface ProfileRouteParams {
   user: User;
 }
 
+export interface CopyRouteParams {
+  user: User;
+}
+
 export interface FollowerRouteParams {
   users: User[],
   label: string
-}export interface User {
-  id: string,
-  first_name: string;
-  last_name: string;
-  username: string;
-  image_url: string;
 }
 
 export type FinancialGoal = {

@@ -4,8 +4,11 @@ import (
 	"net/http"
 	"strconv"
 
+	"fmt"
+
 	"backend/src/models"
 	"backend/src/services"
+	"backend/src/types"
 
 	"github.com/gin-gonic/gin"
 )
@@ -115,36 +118,64 @@ func (pc *PostController) GetPostsFromSearch(c *gin.Context) {
 	c.JSON(http.StatusOK, posts)
 }
 
-// CreatePost godoc
-//
-//		@Summary		Creates a post
-//		@Description	Creates a post
-//		@ID				create-post
-//		@Tags			post
-//		@Accept			json
-//		@Produce		json
-//		@Param			first_name		body	string	true		"First name of the post"
-//		@Param			last_name		body	string	true		"Last name of the post"
-//		@Param			postname		body	string	true		"Postname of the post"
-//		@Param			email			body	string	true		"Email of the post"
-//		@Param			password		body	string	true		"Password of the post"
-//		@Success		201	  {object}	  models.Post
-//	    @Failure        400   {string}    string "Failed to create post"
-//		@Router			/api/posts/  [post]
-func (pc *PostController) CreatePost(c *gin.Context) {
-	var post models.Post
-	if err := c.ShouldBindJSON(&post); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+// CreateTradePost godoc
+func (pc *PostController) CreateTradePost(c *gin.Context) {
+	var req types.CreateTradePostRequest
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request data"})
 		return
 	}
 
-	createdPost, err := pc.postService.CreatePost(&post)
+	userId := c.Param("user_id")
+
+	fmt.Println(req.Title, req.Description)
+
+	tradePost, err := pc.postService.CreateTradePost(userId, req.PercentData, req.TickerSymbol, req.Title, req.Description)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to create post"})
 		return
 	}
 
-	c.JSON(http.StatusCreated, createdPost)
+	c.JSON(http.StatusCreated, tradePost)
+}
+
+// CreatePortfolioPost godoc
+func (pc *PostController) CreatePortfolioPost(c *gin.Context) {
+	var req types.CreatePortfolioPostRequest
+	if err := c.BindJSON(&req); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request data"})
+		return
+	}
+	
+	userId := c.Param("user_id")
+	
+	portfolioPost, err := pc.postService.CreatePortfolioPost(userId, req.PercentData, req.SummaryType)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to create post"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, portfolioPost)
+}
+
+// CreateTextPost godoc
+func (pc *PostController) CreateTextPost(c *gin.Context) {
+	var req types.CreateTextPostRequest
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request data"})
+		return
+	}
+
+	userId := c.Param("user_id")
+
+	textPost, err := pc.postService.CreateTextPost(userId, req.Title, req.Description)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to create post"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, textPost)
 }
 
 // GetPostById godoc

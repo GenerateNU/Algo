@@ -53,7 +53,7 @@ const ProfileBanner = ({ user }: ProfileBannerProps) => {
           // must be a perfect circle
           className="w-32 h-32"
           style={profileStyles.profileImage}
-          source={{ uri: session?.user.imageUrl }}
+          source={{ uri: user.image_url || session?.user.imageUrl }}
         />
 
         <View className="flex flex-col items-center flex-1 gap-2">
@@ -82,17 +82,30 @@ const ProfileBanner = ({ user }: ProfileBannerProps) => {
             </Pressable>
           </View>
 
-          <TouchableOpacity
-            className="flex items-center justify-center flex-1 mb-5 w-48"
-            style={profileStyles.followButton}>
-            <Text className="font-semibold text-[#02AD98]">Edit Profile</Text>
-          </TouchableOpacity>
+          {
+            user.id === session?.user.id ?
+            (
+              <TouchableOpacity
+                className="flex items-center justify-center flex-1 mb-5 w-48"
+                style={profileStyles.followButton}>
+                <Text className="font-semibold text-[#02AD98]">Edit Profile</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                className="flex items-center justify-center flex-1 mb-5 w-48"
+                style={profileStyles.followButton2}>
+                <Text className="font-semibold text-[#FFFFFF]">Follow User</Text>
+              </TouchableOpacity>
+            )
+          }
+          
         </View>
       </View>
 
       <ProfileBio
         fullName={`${user.first_name || session?.user.firstName} ${user.last_name || session?.user.lastName}`}
-        description="profile description? Lorem ipsum dolor sit amet, consectetur adipiscing elit.Praesent vel nisi sed diam ultricies viverra sit amet nec dolor...."
+        username={`${user.username || session?.user.username}`}
+        description="📈🚀💰"
       />
     </View>
   );
@@ -112,4 +125,10 @@ const profileStyles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
   },
+  followButton2: {
+    backgroundColor: '#333333',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  }
 });

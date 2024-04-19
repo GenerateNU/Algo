@@ -10,28 +10,34 @@ import { ProfileActivityData } from '../constants';
 import ProfilePerformance from '../components/ProfilePerformance';
 import SignOut from '../components/SignOutButton';
 import { getPortoflio } from '../services/etrade';
-import { ProfileRouteParams, UserPortfolio } from '../types/types';
+import { ProfileRouteParams } from '../types/types';
 import { ProfilePositions } from '../components/ProfilePositions';
+import { useSelector } from 'react-redux';
+import { RootState } from '../components/LayoutWrapper';
+import { useDispatch } from 'react-redux';
+import { updatePortfolio } from '../reducers/portfolio/portfolioReducer';
 // import SettingsSvg from '../assets/SettingsIcon.svg';
 
-
-
 const Profile = () => {
+  const dispatch = useDispatch();
   const { session } = useSession();
   const navigation = useNavigation();
   const [pageNumber, setPageNumber] = useState<number>(0);
-  const [portfolio, setPortfolio] = useState<UserPortfolio>()
-  const route = useRoute()
-  const isFollowerProfile = (route.params as ProfileRouteParams)?.user !== undefined;
+  const route = useRoute();
+  const isFollowerProfile =
+  (route.params as ProfileRouteParams)?.user !== undefined;
   const user = (route.params as ProfileRouteParams)?.user || session!.user!;
+  const {portfolio} = useSelector((state: RootState) => {
+    return state.portfolio;
+  });
 
   const OnActivitySelected = () => {
-    setPageNumber(1)
-  }
+    setPageNumber(1);
+  };
 
   const OnPortfolioSelected = () => {
-    setPageNumber(0)
-  }
+    setPageNumber(0);
+  };
 
   useEffect(() => {
     // set the title of the page
@@ -40,14 +46,26 @@ const Profile = () => {
       headerTitle: `@${user.username}`,
       headerTitleAlign: 'center',
       headerRight: () => (
-        <Icon type='material-community' name='cog' size={30} color='black' style={{paddingRight: 10}} />
+        <Icon
+          type="material-community"
+          name="cog"
+          size={30}
+          color="black"
+          style={{ paddingRight: 10 }}
+        />
       ),
       headerLeft: () => (
         <Pressable onPress={() => navigation.goBack()}>
-          <Icon type='material-community' name='chevron-left' size={30} color='black' style={{paddingLeft: 5}} />
+          <Icon
+            type="material-community"
+            name="chevron-left"
+            size={30}
+            color="black"
+            style={{ paddingLeft: 5 }}
+          />
         </Pressable>
       ),
-    })
+    });
 
     return navigation.addListener('focus', () => {
       if (session?.user.username === undefined) {
@@ -58,54 +76,69 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    getPortoflio(user.id).then(userPortfolio => {
-      setPortfolio(userPortfolio)
-    })
+    const fetchPortfolio = async () => {
+      const portfolio = await getPortoflio(user.id);
+      dispatch(updatePortfolio(portfolio));
+    };
+    fetchPortfolio();
   }, []);
 
   return (
-    <ScrollView className='bg-white'>
-      <View className='flex flex-col space-y-2'>
-        <ProfileBanner user={user}/>
+    <ScrollView className="bg-white">
+      <View className="flex flex-col space-y-2">
+        <ProfileBanner user={user} />
 
-        <View className='flex flex-row'>
-          <SubTabButton title='Portfolio' selected={pageNumber == 0} onPress={OnPortfolioSelected} />
+        <View className="flex flex-row">
+          <SubTabButton
+            title="Portfolio"
+            selected={pageNumber == 0}
+            onPress={OnPortfolioSelected}
+          />
           {!isFollowerProfile && (
-            <SubTabButton title='Activity' selected={pageNumber == 1} onPress={OnActivitySelected} />
+            <SubTabButton
+              title="Activity"
+              selected={pageNumber == 1}
+              onPress={OnActivitySelected}
+            />
           )}
         </View>
 
         <ScrollView
-          horizontal={true} className='flex flex-row h-screen' pagingEnabled={true}
+          horizontal={true}
+          className="flex flex-row h-screen"
+          pagingEnabled={true}
           showsHorizontalScrollIndicator={true}
-          onMomentumScrollEnd={(event) => {
+          onMomentumScrollEnd={event => {
             const offset = event.nativeEvent.contentOffset.x;
             const page = Math.round(offset / 375);
             console.log(`Page number: ${page}`);
             setPageNumber(page);
-          }}
-        >
-            {pageNumber === 0 && (
-              <View className='flex flex-col w-screen'>
-                <ProfilePerformance portfolioValue={portfolio?.total_gain_pct || 0} />
-                <ProfilePositions positions={portfolio?.positions}/>
-              </View>
-            )}
-          <View className='flex flex-col w-screen'>
+          }}>
+          {pageNumber === 0 && (
+            <View className="flex flex-col w-screen">
+              <ProfilePerformance
+                portfolioValue={portfolio?.total_gain_pct || 0}
+                user={user}
+              />
+              <ProfilePositions positions={portfolio?.positions} />
+            </View>
+          )}
+          <View className="flex flex-col w-screen">
             {pageNumber == 1 && (
               <FlatList
                 data={ProfileActivityData}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={item => item.id.toString()}
                 renderItem={({ item }) => (
                   <ActivityItem
                     title={item.title}
                     description={item.description}
-                    icon={item.icon} />
-                )} />
+                    icon={item.icon}
+                  />
+                )}
+              />
             )}
           </View>
         </ScrollView>
-
       </View>
       <SignOut />
     </ScrollView>

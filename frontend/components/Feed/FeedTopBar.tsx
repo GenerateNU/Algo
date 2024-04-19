@@ -14,7 +14,7 @@ const FeedTopBar: React.FC<FeedBarProps> = ({ tab, setTab }) => {
   const navigation = useNavigation<AuthNavigationProp>();
 
   const handleButtonPress = () => {
-    navigation.navigate('FeedPage');
+    navigation.navigate('Feed');
   };
 
   const handleButtonPress2 = () => {

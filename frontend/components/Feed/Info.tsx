@@ -1,7 +1,7 @@
-import { Text, StyleSheet, View, Image } from 'react-native';
-import { Post } from '../../types/types';
-import Vote from './Vote';
-import { SvgXml } from 'react-native-svg';
+import { Text, View } from 'react-native';
+// import { Post } from '../../types/types';
+// import Vote from './Vote';
+// import { SvgXml } from 'react-native-svg';
 
 type PostProps = {
   type: number;
@@ -116,58 +116,5 @@ const Info: React.FC<PostProps> = ({ type, company, price, percent }) => {
     );
   }
 };
-
-// Define the styles for the component
-const styles = StyleSheet.create({
-  border: {
-    width: '100%',
-    borderColor: '#C2C2C2',
-    borderBottomWidth: 1,
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    width: '100%',
-    marginTop: 15,
-    marginBottom: 15,
-    marginRight: 20,
-  },
-  profile: {
-    width: '15%',
-  },
-  image: {
-    width: 40,
-    height: 40,
-    marginRight: 15,
-    borderRadius: 50,
-  },
-  body: {
-    width: '85%',
-  },
-  title: {
-    fontWeight: '500',
-  },
-  name: {
-    fontWeight: '500',
-    color: '#666666',
-    marginBottom: 7,
-    fontSize: 16,
-  },
-  comment: {
-    color: '#666666',
-  },
-  vote: {
-    left: 0,
-    top: 60,
-    width: 20,
-    height: 20,
-    zIndex: 1,
-  },
-  add: {
-    bottom: 0,
-    right: 0,
-    zIndex: 1,
-  },
-});
 
 export default Info;

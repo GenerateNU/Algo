@@ -2,9 +2,9 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from '@rneui/themed';
 import { RouteProp } from '@react-navigation/native';
-import FeedPage from '../pages/FeedPage';
 import ProfileNavigator from './ProfileNavigation';
 import Leaderboard from '../pages/Leaderboard';
+import Feed from '../pages/Feed';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 type TabRouteName =
@@ -44,11 +44,11 @@ const BottomNavBar = () => {
       })}>
       <Tab.Screen
         name="Explore"
-        component={FeedPage}
+        component={Feed}
         options={{
           tabBarActiveTintColor: '#02AD98',
           tabBarShowLabel: false,
-          tabBarInactiveTintColor: '#333333'
+          tabBarInactiveTintColor: '#333333',
         }}
       />
       <Tab.Screen
@@ -57,7 +57,7 @@ const BottomNavBar = () => {
         options={{
           tabBarActiveTintColor: '#02AD98',
           tabBarShowLabel: false,
-          tabBarInactiveTintColor: '#333333'
+          tabBarInactiveTintColor: '#333333',
         }}
       />
       <Tab.Screen
@@ -66,7 +66,7 @@ const BottomNavBar = () => {
         options={{
           tabBarActiveTintColor: '#02AD98',
           tabBarShowLabel: false,
-          tabBarInactiveTintColor: '#333333'
+          tabBarInactiveTintColor: '#333333',
         }}
       />
     </Tab.Navigator>

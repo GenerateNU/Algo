@@ -69,11 +69,53 @@ func (ps *PostService) GetPostsFromSearch(postContentSearchTerm string) ([]model
 	return posts, nil
 }
 
-func (ps *PostService) CreatePost(post *models.Post) (*models.Post, error) {
-	if err := ps.DB.Create(post).Error; err != nil {
+func (ps *PostService) CreateTradePost(userId string, percentData float64, tickerSymbol string, title string, description string) (*models.Post, error) {
+	tradePost := &models.Post{
+		UserID: userId,
+		NumData: percentData,
+		PostType: models.RECENT_TRADE,
+		TickerSymbol: tickerSymbol,
+		Title: title,
+		Comment: description,
+	}
+
+	if err := ps.DB.Create(tradePost).Error; err != nil {
 		return nil, err
 	}
-	return post, nil
+	
+	return tradePost, nil
+}
+
+func (ps *PostService) CreatePortfolioPost(userId string, percentData float64, summaryType string) (*models.Post, error) {
+	portfolioPost := &models.Post{
+		UserID: userId,
+		NumData: percentData,
+		PostType: models.ONE_MONTH_SUMMARY,
+		Title: "Portfolio Summary",
+		Comment: summaryType,
+	}
+
+	if err := ps.DB.Create(portfolioPost).Error; err != nil {
+		return nil, err
+	}
+
+	return portfolioPost, nil
+}
+
+func (ps *PostService) CreateTextPost(userId string, title string, description string) (*models.Post, error) {
+	textPost := &models.Post{
+		UserID: userId,
+		NumData: 0,
+		PostType: models.SHARE_COMMENT,
+		Title: title,
+		Comment: description,
+	}
+
+	if err := ps.DB.Create(textPost).Error; err != nil {
+		return nil, err
+	}
+
+	return textPost, nil
 }
 
 func (ps *PostService) GetPostById(id uint) (*models.Post, error) {

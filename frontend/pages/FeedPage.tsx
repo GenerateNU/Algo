@@ -1,9 +1,9 @@
 import {
   TextInput,
+  TouchableOpacity,
   StyleSheet,
   View,
   Text,
-  TouchableOpacity,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SvgXml } from 'react-native-svg';
@@ -13,6 +13,8 @@ import DiscoverPeople from '../components/Feed/DiscoverPeople';
 import PostNew from '../components/Feed/PostNew';
 import { getPosts } from '../services/users';
 import { Post } from '../types/types';
+import { useDispatch } from 'react-redux';
+import { makePost } from '../reducers/onboarding/onboardingReducer';
 
 const AddSvg = `
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,6 +40,7 @@ const FeedPage = () => {
     });
   }, []);
 
+
   const [yes, setYes] = useState(1);
   const handleClick1 = () => {
     setYes(2);
@@ -45,6 +48,11 @@ const FeedPage = () => {
 
   const handleClick2 = () => {
     setYes(1);
+
+  const dispatch = useDispatch();
+
+  const startMakePost = () => {
+    dispatch(makePost())
   };
 
   return (
@@ -64,16 +72,6 @@ const FeedPage = () => {
             onPress={handleClick2}></TouchableOpacity>
         </View>
       </View>
-      {/* <View style={styles.follow_but}>
-        <TouchableOpacity
-          style={styles.button1}
-          onPress={handleButtonPress}></TouchableOpacity>
-      </View>
-      <View style={styles.explore_but}>
-        <TouchableOpacity
-          style={styles.button1}
-          onPress={handleButtonPress2}></TouchableOpacity>
-      </View> */}
       <View style={styles.list}>
         {yes == 1 ? (
           <SectionList
@@ -156,7 +154,6 @@ const FeedPage = () => {
           />
         )}
       </View>
-
       <View style={styles.search_box}>
         <TextInput
           style={styles.search_txt}
@@ -165,9 +162,10 @@ const FeedPage = () => {
           placeholder="Search"
         />
       </View>
-      <View style={styles.search_add}>
-        <SvgXml xml={AddSvg} width="40" height="40" className="shadow" />
-      </View>
+      
+      <TouchableOpacity style={styles.search_add} onPress={startMakePost}>
+        <SvgXml xml={AddSvg} width="40" height="40" style={styles.shadow}/>
+      </TouchableOpacity>
     </View>
   );
 };
