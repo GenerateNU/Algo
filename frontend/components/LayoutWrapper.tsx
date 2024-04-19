@@ -6,6 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import onboardingReducer from '../reducers/onboarding/onboardingReducer';
 import makePostReducer from '../reducers/makePost/makePostReducer';
 import portfolioReducer from '../reducers/portfolio/portfolioReducer';
+import followingReducer from '../reducers/following/followingReducer';
 import { useSelector } from 'react-redux';
 import MakePostNavigator from '../router/MakePostNavigation';
 
@@ -14,6 +15,7 @@ const store = configureStore({
     onboarding: onboardingReducer,
     makePost: makePostReducer,
     portfolio: portfolioReducer,
+    following: followingReducer,
   },
 });
 
@@ -21,8 +23,6 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export default function LayoutWrapper() {
-  //const { session } = useSession();
-
   const onboarding = useSelector((state: RootState) => {
     return state.onboarding;
   });
@@ -36,11 +36,6 @@ export default function LayoutWrapper() {
           makingPost: <MakePostNavigator/>,
         }[onboarding.isOnboarding]
       }
-      {/* {session?.user !== undefined && !onboarding.isOnboarding  ? (
-        <BottomNavBar />
-      ) : (
-        <AuthNavigator />
-      )} */}
     </NavigationContainer>
   );
 }

@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { UserPortfolio } from '../../types/types';
 
-const onboardingSlice = createSlice({
-  name: 'onboarding',
+const portfolioSlice = createSlice({
+  name: 'portfolio',
   initialState: {
     portfolio: null as UserPortfolio | null,
   },
@@ -13,5 +13,5 @@ const onboardingSlice = createSlice({
   },
 });
 
-export const { updatePortfolio } = onboardingSlice.actions;
-export default onboardingSlice.reducer;
+export const { updatePortfolio } = portfolioSlice.actions;
+export default portfolioSlice.reducer;
