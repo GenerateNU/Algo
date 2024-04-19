@@ -123,12 +123,12 @@ const styles = StyleSheet.create({
     followersText: {
         alignSelf: 'flex-end',
         color: '#02AD98',
-        fontSize: 18,
+        fontSize: 12,
     },
     downFollText: {
         alignSelf: 'flex-end',
         color: '#FF2B51',
-        fontSize: 18,
+        fontSize: 12,
     },
     followersLogo: {
         width: 20,

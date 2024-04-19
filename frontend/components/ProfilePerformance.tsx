@@ -19,7 +19,6 @@ const ProfilePerformance = ({
   const handleCopyTrades = () => {
     navigator.navigate('CopyTrades', { user: user });
   };
-  console.log(user);
 
   return (
     <View className="flex flex-col justify-between space-y-1 py-3 px-6 border-b-[1px] border-b-gray-200">

@@ -7,6 +7,7 @@ import portfolioReducer from './reducers/portfolio/portfolioReducer';
 import LayoutWrapper from './components/LayoutWrapper';
 import { ClerkProvider } from '@clerk/clerk-expo';
 import * as SecureStore from 'expo-secure-store';
+import { LogBox } from 'react-native';
 
 const store = configureStore({
   reducer: {
@@ -34,6 +35,7 @@ const tokenCache = {
 };
 
 export default function App() {
+  LogBox.ignoreAllLogs();
   return (
     <ClerkProvider
       publishableKey={process.env.EXPO_PUBLIC_CLERK_API_KEY as string}

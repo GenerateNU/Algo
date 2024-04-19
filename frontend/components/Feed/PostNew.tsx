@@ -29,7 +29,7 @@ type Post = {
 
 export enum PostType {
   ONE_MONTH_SUMMARY = '1 month summary',
-  RECENT_TRADE = 'Recent Trade',
+  RECENT_TRADE = 'Recent trade',
   SHARE_COMMENT = 'Share comment'
 }
 

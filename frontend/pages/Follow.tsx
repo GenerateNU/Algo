@@ -5,8 +5,9 @@ import { SectionList } from 'react-native';
 import FeedTopBar from '../components/Feed/FeedTopBar';
 //import DiscoverPeople from '../components/Feed/DiscoverPeople';
 import PostNew from '../components/Feed/PostNew';
-import { getPosts } from '../services/users';
+import { getFollowingPosts } from '../services/users';
 import { Post } from '../types/types';
+import { useSession } from '@clerk/clerk-expo';
 
 const AddSvg = `
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,9 +17,9 @@ const AddSvg = `
   `;
 
 const Follow = () => {
+  const { session } = useSession();
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState<string>('Following');
-  const [firstPost, setFirstPost] = useState<Post | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
 
   const handleSearchChange = (text: string) => {
@@ -26,9 +27,7 @@ const Follow = () => {
   };
 
   useEffect(() => {
-    getPosts().then(data => {
-      setFirstPost(data[0]);
-      setPosts(data.slice(1));
+    getFollowingPosts(session?.user.id).then(data => { data ? setPosts(data) : setPosts([]);
     });
   }, []);
 
@@ -43,17 +42,6 @@ const Follow = () => {
           //overScrollMode='never'
           alwaysBounceVertical={true}
           sections={[
-            {
-              data: [
-                <View>
-                  {firstPost && (
-                    <View>
-                      <PostNew post={firstPost} />
-                    </View>
-                  )}
-                </View>,
-              ],
-            },
             {
               data: [
                 <View style={styles.posts}>

@@ -33,7 +33,7 @@ func (ps *PostService) GetPostsByUserId(userId string) ([]models.Post, error) {
 }
 
 func (ps *PostService) GetPostsFromFollowedUsers(userId string) ([]models.Post, error) {
-	var followedUserIDs []uint
+	var followedUserIDs []string
 	if err := ps.DB.Model(&models.Followings{}).Where("follower_user_id = ?", userId).Pluck("following_user_id", &followedUserIDs).Error; err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func (ps *PostService) GetPostsFromFollowedUsers(userId string) ([]models.Post, 
 	var posts []models.Post
 	for _, id := range followedUserIDs {
 		var userPosts []models.Post
-		if err := ps.DB.Where("user_id = ?", id).Find(&userPosts).Error; err != nil {
+		if err := ps.DB.Preload("User").Where("user_id = ?", id).Find(&userPosts).Error; err != nil {
 			return nil, err
 		}
 		posts = append(posts, userPosts...)
@@ -71,28 +71,28 @@ func (ps *PostService) GetPostsFromSearch(postContentSearchTerm string) ([]model
 
 func (ps *PostService) CreateTradePost(userId string, percentData float64, tickerSymbol string, title string, description string) (*models.Post, error) {
 	tradePost := &models.Post{
-		UserID: userId,
-		NumData: percentData,
-		PostType: models.RECENT_TRADE,
+		UserID:       userId,
+		NumData:      percentData,
+		PostType:     models.RECENT_TRADE,
 		TickerSymbol: tickerSymbol,
-		Title: title,
-		Comment: description,
+		Title:        title,
+		Comment:      description,
 	}
 
 	if err := ps.DB.Create(tradePost).Error; err != nil {
 		return nil, err
 	}
-	
+
 	return tradePost, nil
 }
 
 func (ps *PostService) CreatePortfolioPost(userId string, percentData float64, summaryType string) (*models.Post, error) {
 	portfolioPost := &models.Post{
-		UserID: userId,
-		NumData: percentData,
+		UserID:   userId,
+		NumData:  percentData,
 		PostType: models.ONE_MONTH_SUMMARY,
-		Title: "Portfolio Summary",
-		Comment: summaryType,
+		Title:    "Portfolio Summary",
+		Comment:  summaryType,
 	}
 
 	if err := ps.DB.Create(portfolioPost).Error; err != nil {
@@ -104,11 +104,11 @@ func (ps *PostService) CreatePortfolioPost(userId string, percentData float64, s
 
 func (ps *PostService) CreateTextPost(userId string, title string, description string) (*models.Post, error) {
 	textPost := &models.Post{
-		UserID: userId,
-		NumData: 0,
+		UserID:   userId,
+		NumData:  0,
 		PostType: models.SHARE_COMMENT,
-		Title: title,
-		Comment: description,
+		Title:    title,
+		Comment:  description,
 	}
 
 	if err := ps.DB.Create(textPost).Error; err != nil {

@@ -16,7 +16,17 @@ CREATE TABLE user_portfolios
 
 INSERT INTO user_portfolios (user_id, day_gain, day_gain_pct, total_gain, total_gain_pct)
 VALUES
-('user_2chL8dX6HdbBAuvu3DDM9f9NzKK', 130, 14, 680, 93),
-('user_2cpFbBLPGkPbszijtQneek7ZJxg', -14, -8, 680, 93),
-('user_2dv5XFsCMYc4qLcsAnEJ1aUbxnk', 400, 3, 680, 93),
-('user_2fFVsSf4viW9pjx6Sd5dxEgutJ1', 200, 9, 680, 93);
+-- Ania
+('user_2chL8dX6HdbBAuvu3DDM9f9NzKK', 10.45, 2.09, 67.09, 7.09),
+-- Leroy
+('user_2cpFbBLPGkPbszijtQneek7ZJxg', -14.09, -8.9, 300.90, 10.88),
+-- Cam
+('user_2dv5XFsCMYc4qLcsAnEJ1aUbxnk', 25.99, 3.09, -78.23, -2.09),
+-- Nathan
+('user_2fFVsSf4viW9pjx6Sd5dxEgutJ1', 100.09, 9.15, 230.87, 24.88),
+-- Adam
+('user_2fFc7GSuJYpOJElO4iEchMUokCN', -9.09, -.09, 18.90, 2.98),
+-- Jessica
+('user_2fFgdKCKoif7NYYDABfk4wLDgrm', 235.09, 15.90, 500.87, 9.3),
+-- Jakob
+('user_2fKllee1LFjb1jY3Zwe3dXFX38Z', -2.47, -2.91, 852.29, 34.38);

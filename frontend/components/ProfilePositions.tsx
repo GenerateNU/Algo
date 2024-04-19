@@ -28,7 +28,7 @@ export const ProfilePositions = ({positions}: ProfilePositionsProps) => {
                 {prettifyMoney(position.cost * position.quantity)}
               </Text>
               <Text>
-                {prettifyMoney(position.quantity)}
+                {position.quantity}
               </Text>
             </View>
           </DataTable.Cell>

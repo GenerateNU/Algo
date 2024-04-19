@@ -18,6 +18,14 @@ export const getPosts = async (): Promise<Post[]> => {
   return response.data;
 };
 
+export const getFollowingPosts = async (id: string | undefined): Promise<Post[]> => {
+  const response: AxiosResponse<Post[]> = await axios.get<Post[]>(
+    `http://${API_LINK}/posts/followed-posts/${id}`,
+  );
+
+  return response.data;
+};
+
 export const getTokenStatus = async (id: number): Promise<TokenStatus> => {
   const response: AxiosResponse = await axios.get<TokenStatus>(
     `http://${API_LINK}/etrade/status/${id}`,

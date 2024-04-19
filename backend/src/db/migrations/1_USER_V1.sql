@@ -9,7 +9,7 @@ CREATE TABLE users (
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     username VARCHAR(255),
-    image_url VARCHAR DEFAULT 'https://cdn-icons-png.freepik.com/256/552/552848.png'
+    image_url VARCHAR
 );
 
   -- Insert sample data into "users" table
@@ -19,5 +19,8 @@ VALUES
     ('user_2cpFbBLPGkPbszijtQneek7ZJxg', 'Leroy', 'Shaigorodsky', 'leroy', 'https://ca.slack-edge.com/T2CHL6FEG-U040ST08HM1-c3d453828123-512'),
     ('user_2dv5XFsCMYc4qLcsAnEJ1aUbxnk', 'Cam', 'Plume', 'campd10', 'https://ca.slack-edge.com/T2CHL6FEG-U06DCDZ3FB8-1c488c509f95-512'),
     ('user_2fFVsSf4viW9pjx6Sd5dxEgutJ1', 'Nathan', 'Jung', 'nathan', 'https://ca.slack-edge.com/T2CHL6FEG-U05QL55RDBQ-8fd6c3499cac-512'),
-    ('user_2dvSY6HpxotzWCfch5m4a4OVpAK', 'Aryan', 'Kale', 'aryankale', 'https://cdn-icons-png.freepik.com/256/552/552848.png');
+    ('user_2fFgdKCKoif7NYYDABfk4wLDgrm', 'Jessica', 'Luo', 'jessica', 'https://ca.slack-edge.com/T2CHL6FEG-U06D79LHPPC-f8bf37e63cd2-512'),
+    ('user_2fFc7GSuJYpOJElO4iEchMUokCN', 'Adam', 'Ma', 'adam', 'https://ca.slack-edge.com/T2CHL6FEG-U05SGJYN7GW-dd92c4e92011-512'),
+    ('user_2fKllee1LFjb1jY3Zwe3dXFX38Z', 'Jakob', 'Philippe', 'jakobphilippe', 'https://ca.slack-edge.com/T2CHL6FEG-U06CT4AR44W-b72441a8bb15-512');
+
     
