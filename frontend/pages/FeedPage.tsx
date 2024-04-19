@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SvgXml } from 'react-native-svg';
@@ -22,8 +23,8 @@ const AddSvg = `
 
 const FeedPage = () => {
   const [search, setSearch] = useState('');
-  const [tab, setTab] = useState<string>('Explore')
-  const [firstPost, setFirstPost] = useState<Post | null>(null)
+  const [tab, setTab] = useState<string>('Explore');
+  const [firstPost, setFirstPost] = useState<Post | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
 
   const handleSearchChange = (text: string) => {
@@ -32,82 +33,140 @@ const FeedPage = () => {
 
   useEffect(() => {
     getPosts().then(data => {
-      setFirstPost(data[0])
+      setFirstPost(data[0]);
       setPosts(data.slice(1));
     });
   }, []);
 
+  const [yes, setYes] = useState(1);
+  const handleClick1 = () => {
+    setYes(2);
+  };
+
+  const handleClick2 = () => {
+    setYes(1);
+  };
+
   return (
     <View style={styles.container}>
-        <View style={styles.top_bar}>
-          <FeedTopBar tab={tab} setTab={setTab}/>
+      <View style={styles.top_bar}>
+        {/* <FeedTopBar tab={tab} setTab={setTab} /> */}
+        <Text style={styles.explore}>Explore</Text>
+        <View style={styles.follow_but}>
+          <TouchableOpacity
+            style={styles.button1}
+            onPress={handleClick1}></TouchableOpacity>
         </View>
-        
-        <View style={styles.list}>
+        <Text style={styles.follow}>Following</Text>
+        <View style={styles.explore_but}>
+          <TouchableOpacity
+            style={styles.button1}
+            onPress={handleClick2}></TouchableOpacity>
+        </View>
+      </View>
+      {/* <View style={styles.follow_but}>
+        <TouchableOpacity
+          style={styles.button1}
+          onPress={handleButtonPress}></TouchableOpacity>
+      </View>
+      <View style={styles.explore_but}>
+        <TouchableOpacity
+          style={styles.button1}
+          onPress={handleButtonPress2}></TouchableOpacity>
+      </View> */}
+      <View style={styles.list}>
+        {yes == 1 ? (
           <SectionList
             style={styles.scroll_view}
-            //overScrollMode='never'
+            //overScrollMode='never's
             alwaysBounceVertical={true}
             sections={[
               {
                 data: [
                   <View>
-                    {
-                      firstPost &&
+                    {firstPost && (
                       <View>
-                      <Text style={styles.title}>Featured Post</Text>
-                        <PostNew post={firstPost}/>
+                        <Text style={styles.title}>Featured Post</Text>
+                        <PostNew post={firstPost} />
                       </View>
-                    }
-                  </View>
-
-                ]
+                    )}
+                  </View>,
+                ],
               },
               {
                 data: [
                   <View style={styles.ppl_sec}>
                     <DiscoverPeople />
-                  </View>
-                ]
+                  </View>,
+                ],
               },
               {
                 data: [
                   <View style={styles.posts}>
-                    {
-                        posts.map((p) => (
-                          <PostNew
-                            post={p}
-                          />
-                        ))
-                    }
-                  </View>
-                ]
+                    {posts.map(p => (
+                      <PostNew post={p} />
+                    ))}
+                  </View>,
+                ],
               },
               {
-                data: [
-                  <View style={styles.end}></View>
-                ]
-              }
-              
+                data: [<View style={styles.end}></View>],
+              },
             ]}
             keyExtractor={(_, index) => index.toString()}
             renderItem={({ item }) => <>{item}</>}
             renderSectionHeader={() => <View className="" />}
             stickySectionHeadersEnabled={false}
           />
-        </View>
-        
-        <View style={styles.search_box}>
-          <TextInput
-            style={styles.search_txt}
-            value={search}
-            onChangeText={handleSearchChange}
-            placeholder="Search"
+        ) : (
+          <SectionList
+            style={styles.scroll_view}
+            //overScrollMode='never's
+            alwaysBounceVertical={true}
+            sections={[
+              {
+                data: [
+                  <View>
+                    {firstPost && (
+                      <View>
+                        <Text style={styles.title}>Featured Post</Text>
+                        <PostNew post={firstPost} />
+                      </View>
+                    )}
+                  </View>,
+                ],
+              },
+              {
+                data: [
+                  <View style={styles.posts}>
+                    {posts.map(p => (
+                      <PostNew post={p} />
+                    ))}
+                  </View>,
+                ],
+              },
+              {
+                data: [<View style={styles.end}></View>],
+              },
+            ]}
+            keyExtractor={(_, index) => index.toString()}
+            renderItem={({ item }) => <>{item}</>}
+            renderSectionHeader={() => <View className="" />}
+            stickySectionHeadersEnabled={false}
           />
-          
-        </View>
+        )}
+      </View>
+
+      <View style={styles.search_box}>
+        <TextInput
+          style={styles.search_txt}
+          value={search}
+          onChangeText={handleSearchChange}
+          placeholder="Search"
+        />
+      </View>
       <View style={styles.search_add}>
-            <SvgXml xml={AddSvg} width="40" height="40" className='shadow'/>
+        <SvgXml xml={AddSvg} width="40" height="40" className="shadow" />
       </View>
     </View>
   );
@@ -118,13 +177,54 @@ export default FeedPage;
 const styles = StyleSheet.create({
   container: {
     // boxSizing: 'border-box',
-    flexDirection: "column",
-    height: "100%",
+    flexDirection: 'column',
+    height: '100%',
     flex: 1,
-    backgroundColor: "#FFFFFF"
+    backgroundColor: '#FFFFFF',
   },
   top_bar: {
     flex: 1,
+    // width: 393,
+    // height: 65,
+    // backgroundColor: '#F7F7F7',
+    // // backgroundRepeat: 'no-repeat',
+    // // backgroundPosition: 'center center',
+    // // backgroundSize: 'cover',
+    // padding: 20,
+    // margin: 100,
+    // position: 'absolute',
+    // top: -49,
+    // left: -100,
+    // overflow: 'hidden',
+    // zIndex: 2,
+  },
+  explore: {
+    width: 67,
+    color: 'rgba(0,0,0,1)',
+    position: 'absolute',
+    top: 75,
+    left: 55,
+    // top: 30,
+    // left: 55,
+    // fontFamily: 'Circular Std',
+    fontWeight: '500',
+    fontSize: 17,
+    opacity: 1,
+    textAlign: 'center',
+  },
+  follow: {
+    width: 83,
+    color: 'rgba(102,102,102,1)',
+    position: 'absolute',
+    top: 75,
+    right: 75,
+    // top: 30,
+    // right: 65,
+    // fontFamily: 'Circular Std',
+    fontWeight: '500',
+    fontSize: 17,
+    opacity: 1,
+    textAlign: 'center',
   },
   end: {
     height: 100,
@@ -140,14 +240,14 @@ const styles = StyleSheet.create({
     opacity: 1,
     textAlign: 'left',
     paddingTop: 15,
-},
+  },
   scroll_view: {
     flexDirection: 'column',
     paddingHorizontal: 25,
     //flex: 10,
     //height: "100%",
-    paddingTop: "15%",
-    paddingBottom: "50%"
+    paddingTop: '15%',
+    paddingBottom: '50%',
   },
   body: {
     fontSize: 14,
@@ -157,19 +257,19 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   post_pos: {
-    marginTop: "15%",
+    marginTop: '15%',
     width: '100%',
     // background: 'url("../images/v124_1268.png")',
     // backgroundRepeat: 'no-repeat',
     // backgroundPosition: 'center center',
     // backgroundSize: 'cover',
     opacity: 1,
-    flexDirection: "column"
+    flexDirection: 'column',
     // position: 'absolute',
   },
   post_txt: {
-    marginTop: "20%",
-    width: "100%",
+    marginTop: '20%',
+    width: '100%',
     color: 'rgba(102,102,102,1)',
     fontFamily: 'Circular Std',
     marginBottom: 12,
@@ -179,7 +279,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   posts: {
-    width: "100%",
+    width: '100%',
     // background: 'url("../images/v124_1270.png")',
     // backgroundRepeat: 'no-repeat',
     // backgroundPosition: 'center center',
@@ -188,7 +288,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   ppl_sec: {
-    width: "100%",
+    width: '100%',
     // background: 'url("../images/v124_1286.png")',
     // backgroundRepeat: 'no-repeat',
     // backgroundPosition: 'center center',
@@ -210,7 +310,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   search_box: {
-    width: "90%",
+    width: '90%',
     height: 48,
     backgroundColor: 'rgba(247,247,247,1)',
     opacity: 1,
@@ -221,7 +321,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   search_txt: {
-    width: "100%",
+    width: '100%',
     color: 'rgba(0,0,0,1)',
     position: 'absolute',
     paddingRight: 12,
@@ -241,7 +341,7 @@ const styles = StyleSheet.create({
     right: 22,
     zIndex: 5,
     overflow: 'hidden',
-    shadowColor: "#666666",
+    shadowColor: '#666666',
     // paddingHorizontal: 20,
   },
   horizontalLine: {
@@ -279,5 +379,33 @@ const styles = StyleSheet.create({
     left: 0,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  follow_but: {
+    width: 200,
+    height: 65,
+    // backgroundRepeat: 'no-repeat',
+    // backgroundPosition: 'center center',
+    // backgroundSize: 'cover',
+    padding: 20,
+    margin: 100,
+    position: 'absolute',
+    top: -50,
+    right: -100,
+    overflow: 'hidden',
+    zIndex: 1,
+  },
+  explore_but: {
+    width: 200,
+    height: 65,
+    // backgroundRepeat: 'no-repeat',
+    // backgroundPosition: 'center center',
+    // backgroundSize: 'cover',
+    padding: 20,
+    margin: 100,
+    position: 'absolute',
+    top: -50,
+    left: -100,
+    overflow: 'hidden',
+    zIndex: 1,
   },
 });
